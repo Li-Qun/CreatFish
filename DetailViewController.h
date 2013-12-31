@@ -20,7 +20,7 @@
 #import "SDWebImageDownloader.h"
 #import "EGORefreshTableHeaderView.h"
 #import "EGORefreshTableFooterView.h"
-@interface DetailViewController : ViewController<UIWebViewDelegate ,UIGestureRecognizerDelegate,UIGestureRecognizerDelegate,SDWebImageManagerDelegate,SDWebImageDownloaderDelegate ,EGORefreshTableDelegate,UIScrollViewDelegate,QuadCurveMenuDelegate>
+@interface DetailViewController : ViewController<UIWebViewDelegate ,UIGestureRecognizerDelegate,UIGestureRecognizerDelegate,SDWebImageManagerDelegate,SDWebImageDownloaderDelegate ,EGORefreshTableDelegate,UIScrollViewDelegate,QuadCurveMenuDelegate,UIAlertViewDelegate>
 {
     UIWebView *showWebView;
     NSMutableDictionary *Data;
@@ -34,6 +34,11 @@
     NSString *pic_url;
     //设字体
     NSString *htmlText;
+    //收藏信息
+    NSString *detailName;
+    NSString *detailImage;
+    NSString *detailID;
+    //
     NSMutableString *htmlTextTotals;
     float fontSize;
     NSString *jsString;
@@ -57,6 +62,10 @@
 @property (retain, nonatomic) NSMutableArray *arrIDList;
 @property (retain, nonatomic)NSMutableArray *arrIDListNew;
 @property (nonatomic,retain)NSString *htmlText;
+@property (nonatomic,retain)NSString *detailName;
+@property (nonatomic,retain)NSString *detailImage;
+@property (nonatomic,retain)NSString *detailID;
+
 @property (nonatomic,retain)NSMutableString *htmlTextTotals;
 
 @property (nonatomic,retain) NSString *jsString;

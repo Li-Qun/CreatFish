@@ -35,6 +35,9 @@
 @synthesize page_num=page_num;
 @synthesize page_label=page_label;
 @synthesize htmlTextTotals=htmlTextTotals;
+@synthesize detailImage=detailImage;
+@synthesize detailName=detailName;
+@synthesize detailID=detailID;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -62,6 +65,7 @@
     Data=[[NSMutableDictionary alloc]init];
     jsString=[[[NSString alloc]init]retain] ;
     htmlTextTotals=[[NSMutableString alloc]init];
+
     [self postURL:[self.dictForData objectForKey:@"id"]];
     showWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 55, 320, 550)];
     showWebView.delegate=self;
@@ -114,7 +118,13 @@
     NSDictionary *jsonObj =[parser objectWithString: receiveStr];
     moment=[[jsonObj objectForKey:@"id"]intValue];
     htmlText=[[NSString alloc]init];
+    detailName=[[NSString alloc]init] ;
+    detailImage=[[NSString alloc]init] ;
+    detailID=[[NSString alloc]init];
     htmlText=[jsonObj objectForKey:@"content"];
+    detailName=[jsonObj objectForKey:@"name"];
+    detailImage=[jsonObj objectForKey:@"image"];
+    detailID=[jsonObj objectForKey:@"id"];
     [htmlTextTotals appendFormat:[NSString stringWithFormat: htmlText]];
    // htmlTextTotals = [htmlTextTotals stringByAppendingString:htmlText];
   //  NSLog(@"%@",htmlTextTotals);
@@ -149,7 +159,7 @@
     
     UIButton *save = [UIButton buttonWithType:UIButtonTypeSystem];
     save.frame=CGRectMake(240, 10, 44, 50);
-    [save addTarget:self action:@selector(clickLeftButton) forControlEvents:UIControlEventTouchDown];
+    [save addTarget:self action:@selector(SaveBook) forControlEvents:UIControlEventTouchDown];
     [save setTitle:@"收藏" forState:UIControlStateNormal];
     
     [navBar addSubview:back];
@@ -419,6 +429,31 @@ didFailWithError:(NSError *)error
 }
 -(void)cameraSaveAction:(id)sender
 {
+    
+}
+///收藏提示对话框
+-(void)SaveBook
+{
+    UIAlertView *alert =[[[UIAlertView alloc] initWithTitle:@"hello"
+                                                   message:@"收藏当前阅读内容"
+                                                  delegate:self
+                                         cancelButtonTitle:@"确定"
+                                         otherButtonTitles:@"取消",nil ]autorelease];
+   [alert show];
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex==0)//确定
+    {
+        app.saveId=detailID;
+        app.saveName=detailName;
+        app.saveImage=detailImage;
+
+    }
+    else if(buttonIndex==1)//取消
+    {
+        
+    }
     
 }
 #pragma mark -响应对UIWebView 文本操作start

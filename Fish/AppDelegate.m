@@ -35,11 +35,21 @@
 @synthesize jsonStringOne=jsonStringOne;
 @synthesize targetCenter=targetCenter;
 @synthesize center=centre;
+@synthesize saveId=saveID;
+@synthesize saveImage=saveImage;
+@synthesize saveName=saveName;
+@synthesize saveDataId=saveDataId;
+@synthesize saveDataImage=saveDataImage;
+@synthesize saveDataName=saveDataName;
+@synthesize saveNum=saveNum;
 -(void)build
 {
    // AppDelegate * app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     array=[[NSMutableArray  alloc]init];
-//    arrayData=[[NSMutableArray alloc]init];
+    arrayData=[[NSMutableArray alloc]init];
+    saveDataId=[[NSMutableArray  alloc]init];
+    saveDataName=[[NSMutableArray  alloc]init];
+    saveDataImage=[[NSMutableArray  alloc]init];
     for(int i=0;i<14;i++)
     {
        

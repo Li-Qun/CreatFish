@@ -11,12 +11,15 @@
 #import "OptionsViewController.h"
 #import "GMGridViewLayoutStrategies.h"
 #import "GMGridView.h"
+
+#import "IIViewDeckController.h"
+
 #define NUMBER_ITEMS_ON_LOAD 250
 #define NUMBER_ITEMS_ON_LOAD2 30
 #define INTERFACE_IS_PHONE 1
 
 
-#define kLabelWidth     100
+#define kLabelWidth     200
 #define kLabelHeight    30.f
 
 //////////////////////////////////////////////////////////////
@@ -33,48 +36,43 @@
 //////////////////////////////////////////////////////////////
 
 @implementation ProtectViewController
+-(void)viewWillAppear:(BOOL)animated
+{
+    //[self.navigationController setNavigationBarHidden:YES animated:YES];
+}
 - (id)init
 {
-    
+    AppDelegate * app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    UIBarButtonItem *leftButton=[[UIBarButtonItem alloc]  initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self  action:@selector(PressBackView)];
+        self.navigationItem.leftBarButtonItem = leftButton;
+        self.navigationItem.hidesBackButton =YES;
+      //  _data = [[NSMutableArray alloc] init];
+        
+        
+   // [_data addObject:[NSString stringWithFormat:@"A %d", 0]];
+ 
+    [app.saveDataId insertObject:app.saveId atIndex:app.saveNum];
+    [app.saveDataImage insertObject:app.saveImage atIndex:app.saveNum];
+    [app.saveDataName insertObject:app.saveName atIndex:app.saveNum];
+    app.saveNum++;
+         //app.saveData=_data;
+    NSLog(@"====%d",app.saveNum);
+    _data2 = [[NSMutableArray alloc] init];
+        
+    for (int i = 0; i < NUMBER_ITEMS_ON_LOAD2; i ++)
     {
-        UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMoreItem)];
-        
-        UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-        space.width = 10;
-        
-        UIBarButtonItem *removeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(removeItem)];
-        
-        UIBarButtonItem *space2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-        space2.width = 10;
-        
-        UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshItem)];
-        
-        if ([self.navigationItem respondsToSelector:@selector(leftBarButtonItems)]) {
-            self.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects: refreshButton ,removeButton, space2, nil];
-        }else {
-            self.navigationItem.leftBarButtonItem = addButton;
-        }
-        
-        _data = [[NSMutableArray alloc] init];
-        
-        for (int i = 0; i < NUMBER_ITEMS_ON_LOAD; i ++)
-        {
-            [_data addObject:[NSString stringWithFormat:@"A %d", i]];
-        }
-        
-        _data2 = [[NSMutableArray alloc] init];
-        
-        for (int i = 0; i < NUMBER_ITEMS_ON_LOAD2; i ++)
-        {
-            [_data2 addObject:[NSString stringWithFormat:@"B %d", i]];
-        }
-        
-        _currentData = _data;
+        [_data2 addObject:[NSString stringWithFormat:@"B %d", i]];
     }
+        
+    _currentData = app.saveDataName;
+    
     
     return self;
 }
-
+-(void)PressBackView
+{
+     [self.viewDeckController toggleLeftViewAnimated:YES];
+}
 //////////////////////////////////////////////////////////////
 #pragma mark controller events
 //////////////////////////////////////////////////////////////
@@ -214,14 +212,14 @@
     
     label = [[UILabel alloc] initWithFrame:cell.contentView.bounds];
    // label.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    NSString *string=[[NSString alloc]initWithFormat:@"杂志编号%@",[_currentData objectAtIndex:index]];
+    NSString *string=[[NSString alloc]initWithFormat:@"%@",[_currentData objectAtIndex:index]];
     label.text = string;//(NSString *)[_currentData objectAtIndex:index];
     label.textAlignment = UITextAlignmentCenter;
     label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor blackColor];
-    label.highlightedTextColor = [UIColor whiteColor];
-    label.font = [UIFont boldSystemFontOfSize:15];
-    label.frame=CGRectMake(5, 80, kLabelWidth, kLabelHeight);
+    label.textColor = [UIColor whiteColor];
+    label.highlightedTextColor = [UIColor blueColor];
+    label.font = [UIFont boldSystemFontOfSize:10];
+    label.frame=CGRectMake(-30, 80, kLabelWidth, kLabelHeight);
     [cell.contentView addSubview:label];
     
     return cell;
@@ -259,9 +257,9 @@
 {
     switch (buttonIndex) {
         case 0:
-            if(_data.count>0)
+            if(app.saveDataName.count>0)
             {
-                NSLog(@"==%@",[_data objectAtIndex:targetNum]);
+                NSLog(@"==%@",[app.saveDataName objectAtIndex:targetNum]);
             }
             else {
                 UIAlertView *alert = [[UIAlertView alloc]
@@ -275,7 +273,7 @@
             break;
         case 1:
         {
-            if(_data.count>0)
+            if(app.saveDataName.count>0)
             {
                 if ([_currentData count] > 0)
                 {
@@ -487,21 +485,22 @@
 - (void)refreshItem
 {
     // Example: reloading last item
-    if ([_currentData count] > 0)
-    {
-        int index = [_currentData count] - 1;
-        
-        NSString *newMessage = [NSString stringWithFormat:@"%d", (arc4random() % 1000)];
-        
-        [_currentData replaceObjectAtIndex:index withObject:newMessage];
-        [_gmGridView reloadObjectAtIndex:index withAnimation:GMGridViewItemAnimationFade | GMGridViewItemAnimationScroll];
-    }
+//    if ([_currentData count] > 0)
+//    {
+//        int index = [_currentData count] - 1;
+//        
+//        NSString *newMessage = [NSString stringWithFormat:@"%d", (arc4random() % 1000)];
+//        
+//        [_currentData replaceObjectAtIndex:index withObject:newMessage];
+//        [_gmGridView reloadObjectAtIndex:index withAnimation:GMGridViewItemAnimationFade | GMGridViewItemAnimationScroll];
+//    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
 - (void)dataSetChange:(UISegmentedControl *)control
 {
-    _currentData = ([control selectedSegmentIndex] == 0) ? _data : _data2;
+    _currentData = ([control selectedSegmentIndex] == 0) ? app.saveDataName : _data2;
     
     [_gmGridView reloadData];
 }
