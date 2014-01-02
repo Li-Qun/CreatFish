@@ -53,8 +53,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {//视图即将可见时调用。默认情况下不执行任何操作
-  
     self.navigationController.toolbarHidden = YES;
+    [self.navigationController setNavigationBarHidden:YES];
     [super viewWillAppear:animated];
 }
 - (void)viewDidLoad
@@ -65,7 +65,7 @@
     Data=[[NSMutableDictionary alloc]init];
     jsString=[[[NSString alloc]init]retain] ;
     htmlTextTotals=[[NSMutableString alloc]init];
-
+    
     [self postURL:[self.dictForData objectForKey:@"id"]];
     showWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 55, 320, 550)];
     showWebView.delegate=self;
@@ -184,17 +184,17 @@
     //UIWebView
     //[receiveStr release];
    
-    arrIDList=[[NSMutableArray alloc]init];
-    int sum=arrIDList.count ;
-    for(int i=0;i<arrIDListNew.count;i++)
-    {
-        [arrIDList insertObject:[NSString stringWithFormat:@"%@",[arrIDListNew objectAtIndex:i]]  atIndex:sum++];
-    }
-     page_num=[[UILabel alloc]initWithFrame:CGRectMake(130, 13, 55,27 )];
-     [toolBar addSubview:page_num];
-     page_num.text=[[NSString stringWithFormat:@"%d/%@",moment,[arrIDList objectAtIndex:arrIDList.count-1] ]retain];
-    
-    
+//    arrIDList=[[NSMutableArray alloc]init];
+//    int sum=arrIDList.count ;
+//    for(int i=0;i<arrIDListNew.count;i++)
+//    {
+//        [arrIDList insertObject:[NSString stringWithFormat:@"%@",[arrIDListNew objectAtIndex:i]]  atIndex:sum++];
+//    }
+//     page_num=[[UILabel alloc]initWithFrame:CGRectMake(130, 13, 55,27 )];
+//     [toolBar addSubview:page_num];
+//     page_num.text=[[NSString stringWithFormat:@"%d/%@",moment,[arrIDList objectAtIndex:arrIDList.count-1] ]retain];
+//    
+//    
     
     
     
@@ -448,6 +448,9 @@ didFailWithError:(NSError *)error
         app.saveId=detailID;
         app.saveName=detailName;
         app.saveImage=detailImage;
+        [app.saveDataId insertObject:app.saveId atIndex:app.saveNum];
+        [app.saveDataImage insertObject:app.saveImage atIndex:app.saveNum];
+        [app.saveDataName insertObject:app.saveName atIndex:app.saveNum];
 
     }
     else if(buttonIndex==1)//取消

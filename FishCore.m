@@ -105,6 +105,52 @@
 
 
 }
+//杂志分期
+-(void)Magazine:(NSString *)ID Out:(NSString *)Offent
+{
+    NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/weekly/read_lst" ];
+    __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
+    [request setRequestMethod:@"POST"];
+    [request setPostValue:ID forKey:@"filter_category_id"];
+    [request setPostValue:Offent forKey:@"offset"];
+    
+    [request setDelegate:self];
+    [request setCompletionBlock :^{
+     
+        NSString * jsonString  =  [request responseString];
+        [delegate getJsonString:jsonString isPri:@"0"];
+        
+    }];
+    [request setFailedBlock :^{
+        NSError *error = [request error ];
+        NSLog ( @"error:%@" ,[error userInfo ]);
+        
+    }];
+    
+    [request startAsynchronous ];//异步
+}
+//杂志查询列表
+-(void)Magazine:(NSString*)ID isPri:(NSString *)flag WeeklyId:(NSString *) Id Out:(NSString *)Offset;
+{
+    NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/content/read_lst" ];
+    __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
+    [request setRequestMethod:@"POST"];
+    [request setPostValue:ID forKey:@"filter_category_id"];
+    [request setPostValue:flag forKey:@"filter_is_sticky"];
+    [request setPostValue:Offset forKey:@"offset"];
+    [request setPostValue:Id forKey:@"filter_weekly_id"];
+   
+    NSLog(@"%d",[request responseStatusCode]);
+    [request setCompletionBlock :^{
+        NSString * jsonString  =  [request responseString];
+       [delegate getJsonString :jsonString isPri:flag ];
+             }];
+    [request setFailedBlock :^{
+        NSError *error = [request error ];
+        NSLog ( @"error:%@" ,[error userInfo ]);
+    }];
+    [request startAsynchronous ]; 
+}
 //查询 - 详细 [content/read_dtl
 -(void)ContentDetail:(NSString*) content_id
 {

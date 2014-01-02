@@ -34,14 +34,6 @@
 {//视图即将可见时调用。默认情况下不执行任何操作
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES ];//把后面的antimated=YES 去掉 就不会过渡出现问题了
-
-    
-}
--(void)getJsonString:(NSString *)jsonString
-{
-    app.jsonString=jsonString;
-    
-  //  NSLog(@"XX%@",app.jsonString);
 }
 -(void)_init
 {
@@ -49,7 +41,6 @@
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [app build ];
    //通过KEY找到value
-   
 }
 - (void)viewDidLoad
 {

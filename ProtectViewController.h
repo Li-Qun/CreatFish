@@ -18,7 +18,7 @@
     UINavigationController *_optionsNav;
     UIPopoverController *_optionsPopOver;
     
-  //  NSMutableArray *_data;
+    NSMutableArray *_data;
     NSMutableArray *_data2;
     NSMutableArray *_currentData;
     NSInteger _lastDeleteItemIndexAsked;

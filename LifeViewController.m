@@ -8,6 +8,8 @@
 
 #import "LifeViewController.h"
 #import "AppDelegate.h"
+#import "FishCore.h"
+#import "MagDetaiViewController.h"
 #define ITEM_SPACING 200
 @interface LifeViewController ()
 
@@ -22,12 +24,15 @@
 @synthesize target=target;
 @synthesize carousel;
 @synthesize wrap;
+@synthesize contentRead=contentRead;
+@synthesize arry_Mag_category_id=arry_Mag_category_id;
+@synthesize arry_Mag_description=arry_Mag_description;
+@synthesize arry_Mag_image=arry_Mag_image;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
        wrap = YES;
-       isTheLeft=1;
     }
     return self;
 }
@@ -36,18 +41,11 @@
     [carousel release];
     [super dealloc];
 }
-- (void)viewDidLoad
-{//@"直线", @"圆圈", @"反向圆圈", @"圆桶", @"反向圆桶", @"封面展示", @"封面展示2", @"纸牌"
-
-    [super viewDidLoad];
-    [self.navigationController setNavigationBarHidden:YES];
-    //[self.navigationController setToolbarHidden:YES animated:YES];//好使了
-    
-    
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+{
     //设置索引标识
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-   // app.jsonString=jsonString;
-   // NSLog(@"name %@", [[app.array objectAtIndex  :target ]objectForKey:@"name"]);
+    
     MagId=[[app.array objectAtIndex  :target ]objectForKey:@"id"];
     MagName=[[app.array objectAtIndex  :target ]objectForKey:@"name"];
     MagPid=[[app.array objectAtIndex  :target ]objectForKey:@"pid"];
@@ -55,7 +53,41 @@
     MagLevel=[[app.array objectAtIndex  :target ]objectForKey:@"level"];
     MagFlag=[[app.array objectAtIndex  :target ]objectForKey:@"flag"];
     
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString:jsonString];
+    total = [[jsonObj objectForKey:@"total"] intValue];
+    NSLog(@"total : %d",total);
+    NSDictionary *data = [jsonObj objectForKey:@"data"];
+    for(int i=0;i<data.count;i++)
+    {
+        [arry_Mag_description insertObject:[data objectAtIndex:i] atIndex: i];
+        [arry_Mag_category_id insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]objectForKey:@"id"]] atIndex:i];
+      //  [arry_Mag_description insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]objectForKey:@"description"]] atIndex:i];
+        [arry_Mag_image insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]objectForKey:@"image"]] atIndex:i];
+    }
+    carousel.delegate = self;
+    carousel.dataSource = self;
     
+    carousel.type = iCarouselTypeCoverFlow;
+    for (UIView *view in carousel.visibleItemViews)
+    {
+        view.alpha = 1.0;
+    }
+    [UIView beginAnimations:nil context:nil];
+    carousel.type=5;
+    [UIView commitAnimations];
+}
+- (void)viewDidLoad
+{//@"直线", @"圆圈", @"反向圆圈", @"圆桶", @"反向圆桶", @"封面展示", @"封面展示2", @"纸牌"
+    arry_Mag_image=[[NSMutableArray alloc]init];
+    arry_Mag_category_id=[[NSMutableArray alloc]init];
+    arry_Mag_description=[[NSMutableArray alloc]init];
+    contentRead =[[[ContentRead alloc]init]autorelease];
+    [contentRead setDelegate:self];//设置代理
+    [contentRead Magazine:@"14" Out:@"0"];
+    [super viewDidLoad];
+    [self.navigationController setNavigationBarHidden:YES];
+    //[self.navigationController setToolbarHidden:YES animated:YES];//好使了
     
     UIBarButtonItem *Left=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back.png"] style: UIBarButtonItemStylePlain target:self action:nil];
     
@@ -69,74 +101,8 @@
     [Left release];
     [flexibleItem release];
     [itemsArry release];
-    
-    
-    
-    
-    
-    
-    
-    //设置按钮start
-    left=[UIButton buttonWithType:UIButtonTypeCustom];
-    left.frame=CGRectMake(20, 433, 129, 34);
-    
-    [left setBackgroundImage:[UIImage imageNamed:@"selectButtonNormal.png"]  forState:UIControlStateNormal];
-    [left setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-     [left setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-    [left setTitle:@"路亚中国" forState:UIControlStateNormal];
-    [left setTitle:@"路亚中国" forState:UIControlStateHighlighted];
-    [left addTarget:self action:@selector(Pressleft) forControlEvents:UIControlEventTouchDown];
-    [left setBackgroundImage:[UIImage imageNamed:@"selectedButton.png"] forState:UIControlStateHighlighted ];
-    [self.view addSubview:left];
-    
-    //////
-    
-    right=[UIButton buttonWithType:UIButtonTypeCustom];
-    right.frame=CGRectMake(157, 433, 129, 34);
- 
-    [right setBackgroundImage:[UIImage imageNamed:@"selectButtonNormal.png"]  forState:UIControlStateNormal];
-    [right setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [right setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-    [right setTitle:@"钓鱼" forState:UIControlStateNormal];
-    [right setTitle:@"钓鱼" forState:UIControlStateHighlighted];
-    [right addTarget:self action:@selector(Pressright) forControlEvents:UIControlEventTouchDown];
-    [right setBackgroundImage:[UIImage imageNamed:@"selectedButton.png"] forState:UIControlStateHighlighted ];
-    [self.view addSubview:right];
-    //设置按钮end
-    carousel.delegate = self;
-    carousel.dataSource = self;
-    
-    carousel.type = iCarouselTypeCoverFlow;
-    for (UIView *view in carousel.visibleItemViews)
-    {
-        view.alpha = 1.0;
-    }
-    [UIView beginAnimations:nil context:nil];
-    carousel.type=5;
-    [UIView commitAnimations];
+}
 
- 
-}
--(void)Pressleft
-{
-    isTheLeft=0;
-    left.frame=CGRectMake(20, 433, 129, 34);
-    [left setBackgroundImage:[UIImage imageNamed:@"selectedButton.png"]  forState:UIControlStateNormal];
-    right.frame=CGRectMake(157, 433, 129, 34);
-    [right setBackgroundImage:[UIImage imageNamed:@"selectButtonNormal.png"]  forState:UIControlStateNormal];
-  //  [self re];
-    
-    [self.carousel reloadData];
-}
--(void)Pressright
-{
-    isTheLeft=1;
-    left.frame=CGRectMake(20, 433, 129, 34);
-    [left setBackgroundImage:[UIImage imageNamed:@"selectButtonNormal.png"]  forState:UIControlStateNormal];
-    right.frame=CGRectMake(157, 433, 129, 34);
-    [right setBackgroundImage:[UIImage imageNamed:@"selectedButton.png"]  forState:UIControlStateNormal];
-    [self.carousel reloadData];
-}
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -151,34 +117,36 @@
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    return 30;
+    return  total;
 }
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index
 {
-    NSLog(@"%d",isTheLeft);
-    if(isTheLeft==0)
-    {
-        view1 = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg",index ]]] autorelease];
-        view1.frame = CGRectMake(70, 80, 280, 346);
-        view1.layer.shadowColor = [UIColor blackColor].CGColor;
-        view1.layer.shadowOpacity = 1.0;
-        view1.layer.shadowRadius = 5.0;
-        view1.layer.shadowOffset = CGSizeMake(1, 1);
-        view1.clipsToBounds = NO;
-        return view1;
-    }
-    else //if(isTheLeft==1)
-    {
-        view2 = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"face.png" ]]] autorelease];
-        view2.frame = CGRectMake(70, 80, 280, 346);
-        view2.layer.shadowColor = [UIColor blackColor].CGColor;
-        view2.layer.shadowOpacity = 1.0;
-        view2.layer.shadowRadius = 5.0;
-        view2.layer.shadowOffset = CGSizeMake(1, 1);
-        view2.clipsToBounds = NO;
-        return view2;
-    }
+    NSDictionary* dict = [arry_Mag_description objectAtIndex:(index)];
+    view1 = [[[UIImageView alloc] init ] autorelease];
+    NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
+    [view1 setImageWithURL:[NSURL URLWithString: imgURL]
+                 placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                          success:^(UIImage *image) {NSLog(@"OK");}
+                          failure:^(NSError *error) {NSLog(@"NO");}];
+    UILabel *label=[[[UILabel alloc]initWithFrame:CGRectMake(0, 300, 280, 55)]autorelease];
+    label.text=[dict objectForKey:@"description"];
+    label.textColor=[UIColor blueColor];
+    label.backgroundColor=[UIColor whiteColor];
+    label.layer.shadowColor = [UIColor blackColor].CGColor;
+    label.layer.shadowOpacity = 1.0;
+    label.layer.shadowRadius = 5.0;
+    label.layer.shadowOffset = CGSizeMake(1, 1);
+    label.clipsToBounds = NO;
+
+    [view1 addSubview:label];
+    view1.frame = CGRectMake(70, 80, 280, 346);
+    view1.layer.shadowColor = [UIColor blackColor].CGColor;
+    view1.layer.shadowOpacity = 1.0;
+    view1.layer.shadowRadius = 5.0;
+    view1.layer.shadowOffset = CGSizeMake(1, 1);
+    view1.clipsToBounds = NO;
+    return view1;
 }
 
 - (NSUInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel
@@ -188,7 +156,7 @@
 
 - (NSUInteger)numberOfVisibleItemsInCarousel:(iCarousel *)carousel
 {
-    return 30;
+    return total;
 }
 
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel
@@ -207,7 +175,13 @@
 }
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index;
 {
-    NSLog(@"%d",index);
+    MagDetaiViewController *detail=[[MagDetaiViewController alloc]initWithNibName:@"MagDetaiViewController" bundle:nil];
+    NSDictionary* dict = [arry_Mag_description objectAtIndex:(index)];
+    detail.Id=[dict objectForKey:@"category_id"];
+    detail.weeklyId=[dict objectForKey:@"id"];
+    detail.name_Mag=[dict objectForKey:@"name"];
+    [self.navigationController pushViewController:detail animated:YES];
+    
 }
 - (BOOL)carouselShouldWrap:(iCarousel *)carousel
 {

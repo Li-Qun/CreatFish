@@ -49,13 +49,13 @@
       //  _data = [[NSMutableArray alloc] init];
         
         
-   // [_data addObject:[NSString stringWithFormat:@"A %d", 0]];
+    [_data addObject:[NSString stringWithFormat:@"A %d", 0]];
  
-    [app.saveDataId insertObject:app.saveId atIndex:app.saveNum];
-    [app.saveDataImage insertObject:app.saveImage atIndex:app.saveNum];
-    [app.saveDataName insertObject:app.saveName atIndex:app.saveNum];
-    app.saveNum++;
-         //app.saveData=_data;
+//    [app.saveDataId insertObject:app.saveId atIndex:app.saveNum];
+//    [app.saveDataImage insertObject:app.saveImage atIndex:app.saveNum];
+//    [app.saveDataName insertObject:app.saveName atIndex:app.saveNum];
+//    app.saveNum++;
+         app.saveDataName;app.saveDataId=_data;
     NSLog(@"====%d",app.saveNum);
     _data2 = [[NSMutableArray alloc] init];
         

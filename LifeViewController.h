@@ -9,13 +9,13 @@
 #import "ViewController.h"
 #import "iCarousel.h"
 #import "AppDelegate.h"
+#import "FishCore.h"
 @protocol myLifeDelegate
 -(void)Life:(BOOL)flag;
 
 @end
-@interface LifeViewController : UIViewController <iCarouselDataSource,iCarouselDelegate,UIActionSheetDelegate,myLifeDelegate>
+@interface LifeViewController : UIViewController <iCarouselDataSource,iCarouselDelegate,UIActionSheetDelegate,myLifeDelegate,FishDelegate>
 {
-    BOOL  isTheLeft;
     id<myLifeDelegate>delegate;
     UIButton *left;
     UIButton *right;
@@ -29,7 +29,12 @@
     NSString *MagPid;
     NSString *MagLevel;
     NSString *MagFlag;
-
+    
+    ContentRead *contentRead;
+    int total;//杂志树目；
+    NSMutableArray *arry_Mag_category_id;
+    NSMutableArray *arry_Mag_description;
+    NSMutableArray *arry_Mag_image;
 }
 @property (nonatomic, retain)IBOutlet iCarousel *carousel;
 @property (nonatomic,assign) BOOL wrap;
@@ -41,4 +46,8 @@
 @property(nonatomic,retain) NSString *MagImage;
 @property(nonatomic,retain) NSString *MagPid;
 @property(nonatomic,retain) NSString *MagFlag;
+@property(nonatomic,retain) ContentRead *contentRead;;
+@property(nonatomic,retain)NSMutableArray *arry_Mag_category_id;
+@property(nonatomic,retain)NSMutableArray *arry_Mag_description;
+@property(nonatomic,retain)NSMutableArray *arry_Mag_image;
 @end

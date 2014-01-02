@@ -62,7 +62,6 @@
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
-    
     app.jsonString=jsonString;
     NSLog(@"name %@", [[app.array objectAtIndex  :target ]objectForKey:@"name"]);
     NewsId=[[app.array objectAtIndex  :target ]objectForKey:@"id"];
@@ -87,7 +86,6 @@
 }
 - (void)viewDidLoad
 {
-
     isFirstLoad=NO;
     newSumCount=0;
     arr=[[[NSMutableArray alloc]init]retain];///[self.arr objectAtIndex:indexPath.row];
@@ -123,8 +121,8 @@
     
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:
                                     UIBarButtonSystemItemFastForward                                                                   target:self
-                                                                                 action:@selector (pressRightSlide)];//(SettingPress)];
-
+                                    action:@selector (pressRightSlide)];//(SettingPress)];
+    
     self.navigationItem.rightBarButtonItem = rightButton;
     [rightButton release];
     isFistLevel=[flag intValue];
@@ -148,7 +146,7 @@
         //[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[[arr objectAtIndex:i] objectForKey:@"image"]];
         newSumCount+=arr.count;
         for (int i =0; i <data.count; i++) {
-            NSString *str = [NSString stringWithFormat:@"%d",i];
+           // NSString *str = [NSString stringWithFormat:@"%d",i];
             [arr insertObject:[data objectAtIndex:i] atIndex: newSumCount];
             [arrID insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]objectForKey:@"id"]]  atIndex:newSumCount];
         }
@@ -252,9 +250,8 @@
 -(void)loadMore
 {
     [contentRead setDelegate:self];
-    [contentRead fetchList:@"1" isPri:@"0" Out:@"1"];
-     NSLog(@"XXXXXX");
-
+   // [contentRead fetchList:@"1" isPri:@"0" Out:@"1"];
+    [contentRead Magazine:@"1" isPri:@"0" WeeklyId:@"14" Out:@"1"];
 }
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView;//滑动隐藏toolbar
 {
