@@ -60,6 +60,36 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //导航按钮start
+    
+    navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
+    UIButton *back = [UIButton buttonWithType:UIButtonTypeSystem];
+    back.frame=CGRectMake(3, 10, 44, 50);
+    [back addTarget:self action:@selector(backParentView) forControlEvents:UIControlEventTouchDown];
+    [back setTitle:@"返回" forState:UIControlStateNormal];
+    
+    UIButton *word = [UIButton buttonWithType:UIButtonTypeSystem];
+    word.frame=CGRectMake(100, 10, 44, 50);
+    [word addTarget:self action:@selector(PressWord:) forControlEvents:UIControlEventTouchDown];
+    [word setTitle:@"字体" forState:UIControlStateNormal];
+    
+    UIButton *share = [UIButton buttonWithType:UIButtonTypeSystem];
+    share.frame=CGRectMake(170, 10, 44, 50);
+    [share addTarget:self action:@selector(clickLeftButton) forControlEvents:UIControlEventTouchDown];
+    [share setTitle:@"分享" forState:UIControlStateNormal];
+    
+    UIButton *save = [UIButton buttonWithType:UIButtonTypeSystem];
+    save.frame=CGRectMake(240, 10, 44, 50);
+    [save addTarget:self action:@selector(SaveBook) forControlEvents:UIControlEventTouchDown];
+    [save setTitle:@"收藏" forState:UIControlStateNormal];
+    
+    [navBar addSubview:back];
+    [navBar addSubview:word];
+    [navBar addSubview:share];
+    [navBar addSubview:save];
+    
+    //导航按钮end
+
     fontSize=16.0;
     line_height=18.0;
     Data=[[NSMutableDictionary alloc]init];
@@ -70,7 +100,7 @@
     showWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 55, 320, 550)];
     showWebView.delegate=self;
     showWebView.scrollView.delegate=self;
-   
+   [self.view addSubview:navBar];
 }
 -(void)postURL:(NSString*)ID
 {
@@ -139,44 +169,25 @@
     
   
    [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-  //导航按钮start
+   //导航按钮start
     
-    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
-    UIButton *back = [UIButton buttonWithType:UIButtonTypeSystem];
-    back.frame=CGRectMake(3, 10, 44, 50);
-    [back addTarget:self action:@selector(backParentView) forControlEvents:UIControlEventTouchDown];
-    [back setTitle:@"返回" forState:UIControlStateNormal];
-    
-    UIButton *word = [UIButton buttonWithType:UIButtonTypeSystem];
-    word.frame=CGRectMake(100, 10, 44, 50);
-    [word addTarget:self action:@selector(PressWord:) forControlEvents:UIControlEventTouchDown];
-    [word setTitle:@"字体" forState:UIControlStateNormal];
-    
-    UIButton *share = [UIButton buttonWithType:UIButtonTypeSystem];
-    share.frame=CGRectMake(170, 10, 44, 50);
-    [share addTarget:self action:@selector(clickLeftButton) forControlEvents:UIControlEventTouchDown];
-    [share setTitle:@"分享" forState:UIControlStateNormal];
-    
-    UIButton *save = [UIButton buttonWithType:UIButtonTypeSystem];
-    save.frame=CGRectMake(240, 10, 44, 50);
-    [save addTarget:self action:@selector(SaveBook) forControlEvents:UIControlEventTouchDown];
-    [save setTitle:@"收藏" forState:UIControlStateNormal];
-    
-    [navBar addSubview:back];
-    [navBar addSubview:word];
-    [navBar addSubview:share];
-    [navBar addSubview:save];
     [self.view addSubview:navBar];
     //导航按钮end
 
-    [self addTapOnWebView];//调用触摸图片事件
     self.view.backgroundColor=[UIColor whiteColor];
     showWebView.delegate=self;
+    
+//    showWebView.scrollView.frame = CGRectMake(0, 0, 984, 748);
+//    showWebView.scrollView.clipsToBounds = NO;
+    
+    
     [showWebView setUserInteractionEnabled: YES ];
     [self.view addSubview:showWebView];
+    
+    
     [self addTapOnWebView];//调用触摸图片事件
     //showWebView.
-
+    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [showWebView loadHTMLString:jsString baseURL:nil];
     [showWebView stringByEvaluatingJavaScriptFromString:jsString];
@@ -184,8 +195,8 @@
     //UIWebView
     //[receiveStr release];
    
-//    arrIDList=[[NSMutableArray alloc]init];
-//    int sum=arrIDList.count ;
+    arrIDList=[[NSMutableArray alloc]init];
+    int sum=arrIDListNew.count ;
 //    for(int i=0;i<arrIDListNew.count;i++)
 //    {
 //        [arrIDList insertObject:[NSString stringWithFormat:@"%@",[arrIDListNew objectAtIndex:i]]  atIndex:sum++];
@@ -193,8 +204,8 @@
 //     page_num=[[UILabel alloc]initWithFrame:CGRectMake(130, 13, 55,27 )];
 //     [toolBar addSubview:page_num];
 //     page_num.text=[[NSString stringWithFormat:@"%d/%@",moment,[arrIDList objectAtIndex:arrIDList.count-1] ]retain];
-//    
-//    
+//
+    NSLog(@"%d",sum);
     
     
     
@@ -646,7 +657,7 @@ didFailWithError:(NSError *)error
 {
 	NSLog(@"刷新完成");
     [self testFinishedLoadData];
-	
+	[self.view addSubview:navBar];
 }
 //加载调用的方法
 -(void)getNextPageView
@@ -656,10 +667,19 @@ didFailWithError:(NSError *)error
 //	}
 	//[self reloadData];
     //[];
-    [self postURL:[self.dictForData objectForKey:@"id"]];
+    int a=[detailID intValue];
+    int b=[[arrIDListNew objectAtIndex:arrIDListNew.count-1] intValue];
+   if(a>= b)
+    {
+        NSString *string=[NSString stringWithFormat:@"%d",--a];
+        [self postURL:string];//[self.dictForData objectForKey:@"id"]
+    }
+ 
+  //  NSLog(@"%@   %@",detailID,arrIDListNew);
     [showWebView reload];
     [self removeFooterView];
     [self testFinishedLoadData];
+    [self.view addSubview:navBar];
 }
 
 #pragma mark -
@@ -670,7 +690,6 @@ didFailWithError:(NSError *)error
 	{
         [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
     }
-	
 	if (_refreshFooterView)
 	{
         [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];

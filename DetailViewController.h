@@ -50,6 +50,7 @@
     EGORefreshTableFooterView *_refreshFooterView;
     //
     BOOL _reloading;
+    UINavigationBar *navBar;
 }
 @property (nonatomic,retain) UILabel *page_num;
 @property (nonatomic,retain)NSString *pic_url;
@@ -67,7 +68,6 @@
 @property (nonatomic,retain)NSString *detailID;
 
 @property (nonatomic,retain)NSMutableString *htmlTextTotals;
-
 @property (nonatomic,retain) NSString *jsString;
 
 

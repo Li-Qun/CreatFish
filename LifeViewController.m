@@ -89,7 +89,7 @@
     [self.navigationController setNavigationBarHidden:YES];
     //[self.navigationController setToolbarHidden:YES animated:YES];//好使了
     
-    UIBarButtonItem *Left=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back.png"] style: UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *Left=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back.png"] style: UIBarButtonItemStylePlain target:self action:@selector(pressBack_Mag)];
     
     UIBarButtonItem * flexibleItem =[[UIBarButtonItem  alloc]initWithBarButtonSystemItem:                                        UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
@@ -102,7 +102,10 @@
     [flexibleItem release];
     [itemsArry release];
 }
-
+-(void)pressBack_Mag
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)viewDidUnload
 {
     [super viewDidUnload];

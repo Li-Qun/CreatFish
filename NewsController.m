@@ -79,7 +79,7 @@
         app.targetCenter=1;
     
     NSLog(@"centre  %d",app.targetCenter);
-
+    NSLog(@"NewsID   :  %@",NewsId);
     
     
     [self postJSON:flag];
@@ -88,17 +88,17 @@
 {
     isFirstLoad=NO;
     newSumCount=0;
-    arr=[[[NSMutableArray alloc]init]retain];///[self.arr objectAtIndex:indexPath.row];
+    arr=[[[NSMutableArray alloc]init]retain];
     arrPic=[[[NSMutableArray alloc]init]retain];
     arrLabel=[[[NSMutableArray alloc]init]retain];
     arrID=[[[NSMutableArray alloc]init]retain];
     
+    [self.navigationController setNavigationBarHidden:NO];
     self.navigationItem.hidesBackButton = YES;
-    [self.navigationController setNavigationBarHidden:YES ];
     self.navigationController.toolbarHidden = YES;
-    //    [self.navigationController.toolbar setTranslucent:YES];
+  
     self.navigationController.navigationBarHidden=NO;
-     tabView=[[[UITableView alloc]init]retain];
+    tabView=[[[UITableView alloc]init]retain];
     contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];//设置代理
     [contentRead fetchList:@"1" isPri:@"1" Out:@"0"];
@@ -130,8 +130,6 @@
     NSDictionary *jsonObj =[parser objectWithString:app.jsonString];
   
     tabView.frame=CGRectMake(0, 60, 320, 560);
-    tabView.delegate=self;
-    tabView.dataSource=self;//设置双重代理 很重要
     [self createHeaderView];
 	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
 	[_refreshHeaderView refreshLastUpdatedDate];
@@ -157,6 +155,9 @@
         app.jsonStringOne=app.jsonString;
         
     }
+    tabView.delegate=self;
+    tabView.dataSource=self;//设置双重代理 很重要
+
    [self.view addSubview:tabView];
    [tabView reloadData];
    //[tabView release];
@@ -176,6 +177,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"%d",total);
     return (total+1);
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -251,7 +253,9 @@
 {
     [contentRead setDelegate:self];
    // [contentRead fetchList:@"1" isPri:@"0" Out:@"1"];
-    [contentRead Magazine:@"1" isPri:@"0" WeeklyId:@"14" Out:@"1"];
+//    [contentRead Magazine:@"1" isPri:@"0" WeeklyId:@"14" Out:@"1"];
+//    NSLog(@"XXXX   :  %@",NewsId);
+
 }
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView;//滑动隐藏toolbar
 {
@@ -393,7 +397,10 @@
 -(void)getNextPageView
 {
     [contentRead setDelegate:self];
-    [contentRead fetchList:@"1" isPri:@"0" Out:@"0"];
+   [contentRead fetchList:@"1" isPri:@"0" Out:@"0"];
+     NSLog(@"XXXX   :  %@",NewsId);
+//    [contentRead Magazine:@"1" isPri:@"0" WeeklyId:@"0" Out:@"0"];
+    
     [tabView reloadData];
     [self removeFooterView];
     [self testFinishedLoadData];
