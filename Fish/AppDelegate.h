@@ -43,13 +43,15 @@ typedef enum
     NSString *jsonString;
     NSString *jsonStringOne;
  
-  //收藏name\image\id 数量、容器
+    //收藏name\image\id 数量、容器
     NSString *saveID;
     NSString *saveName;
     NSString *saveImage;
     NSMutableArray *saveDataId;
     NSMutableArray  *saveDataImage;
     NSMutableArray  *saveDataName;
+    //首页幻灯片
+    NSMutableArray *firstPageImage;
 }
 @property (nonatomic, retain)NSMutableArray  *array;
 @property (nonatomic,retain)NSMutableArray *arrayData;
@@ -80,7 +82,7 @@ typedef enum
 @property(nonatomic)int targetCenter;
 
 @property (readwrite,retain)NSString * center;
-
+//收藏杂志start
 @property(nonatomic,retain)NSString *saveId;
 @property(nonatomic,retain)NSString *saveName;
 @property(nonatomic,retain)NSString *saveImage;
@@ -88,6 +90,8 @@ typedef enum
 @property(nonatomic,retain)NSMutableArray  *saveDataImage;
 @property(nonatomic,retain)NSMutableArray  *saveDataName;
 @property(nonatomic)int saveNum;
+//收藏杂志end
+@property(nonatomic,retain)NSMutableArray *firstPageImage;
 
 
 @end

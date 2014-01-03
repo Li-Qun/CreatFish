@@ -213,8 +213,9 @@
     height_Mag = [[showWebView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
     //获取web文本高度end
 
-    [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
-    [_refreshHeaderView refreshLastUpdatedDate];
+//    [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
+//    [_refreshHeaderView refreshLastUpdatedDate];
+//    [self refreshView];
     
 }
 
@@ -612,7 +613,7 @@ didFailWithError:(NSError *)error
         // create the footerView
         _refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:
                               CGRectMake(0.0f, height,
-                                         showWebView.scrollView.frame.size.width, 50)];
+                                         showWebView.scrollView.frame.size.width, self.view.bounds.size.height)];
         _refreshFooterView.delegate = self;
         [showWebView.scrollView addSubview:_refreshFooterView];
     }

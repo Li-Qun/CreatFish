@@ -73,7 +73,7 @@
 -(void)Magazine:(NSString *)ID Out:(NSString *)Offent;
 -(void)ContentDetail:(NSString*) content_id;
 -(void)Category;
--(void)appendToDataSource:(NSString *)jsionString;
+-(void)ContentSetting;
 @end
 
 

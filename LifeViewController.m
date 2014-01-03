@@ -76,19 +76,6 @@
     [UIView beginAnimations:nil context:nil];
     carousel.type=5;
     [UIView commitAnimations];
-}
-- (void)viewDidLoad
-{//@"直线", @"圆圈", @"反向圆圈", @"圆桶", @"反向圆桶", @"封面展示", @"封面展示2", @"纸牌"
-    arry_Mag_image=[[NSMutableArray alloc]init];
-    arry_Mag_category_id=[[NSMutableArray alloc]init];
-    arry_Mag_description=[[NSMutableArray alloc]init];
-    contentRead =[[[ContentRead alloc]init]autorelease];
-    [contentRead setDelegate:self];//设置代理
-    [contentRead Magazine:@"14" Out:@"0"];
-    [super viewDidLoad];
-    [self.navigationController setNavigationBarHidden:YES];
-    //[self.navigationController setToolbarHidden:YES animated:YES];//好使了
-    
     UIBarButtonItem *Left=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back.png"] style: UIBarButtonItemStylePlain target:self action:@selector(pressBack_Mag)];
     
     UIBarButtonItem * flexibleItem =[[UIBarButtonItem  alloc]initWithBarButtonSystemItem:                                        UIBarButtonSystemItemFlexibleSpace target:self action:nil];
@@ -98,9 +85,25 @@
     
     [self.tabBarController setItems:itemsArry];
     [self.view addSubview:self.tabBarController];
+    
     [Left release];
     [flexibleItem release];
     [itemsArry release];
+
+    //[self.view addSubview:self.tabBarController];
+}
+- (void)viewDidLoad
+{//@"直线", @"圆圈", @"反向圆圈", @"圆桶", @"反向圆桶", @"封面展示", @"封面展示2", @"纸牌"
+    
+    arry_Mag_image=[[NSMutableArray alloc]init];
+    arry_Mag_category_id=[[NSMutableArray alloc]init];
+    arry_Mag_description=[[NSMutableArray alloc]init];
+    contentRead =[[[ContentRead alloc]init]autorelease];
+    [contentRead setDelegate:self];//设置代理
+    [contentRead Magazine:@"14" Out:@"0"];
+    [super viewDidLoad];
+    [self.navigationController setNavigationBarHidden:YES];
+//    [self.navigationController setToolbarHidden:YES animated:YES];//好使了
 }
 -(void)pressBack_Mag
 {

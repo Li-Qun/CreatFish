@@ -181,18 +181,17 @@
 -(void)ContentSetting
 {
     indext=3;
-    NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/setting/read_lst " ];
+    NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/setting/read_lst"];
     __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
     [request setRequestMethod:@"POST"];
     // ASIHTTPRequest 支持 iOS 4.0 的块语法，你可以把委托方法定义到块中
     [request setCompletionBlock :^{
-        // 请求响应结束，返回 responseString
-        NSString *responseString = [request responseString ]; // 对于 2 进制数据，使用 NSData 返回
-        //  NSData *responseData = [request responseData];
-        NSLog ( @"＊＊＊＊＊＊＊%@＊＊＊＊＊＊" ,responseString);
+        
+        NSString * jsonString  =  [request responseString];
+        [delegate getJsonString:jsonString isPri:@"0"];
+        
     }];
     [request setFailedBlock :^{
-        // 请求响应失败，返回错误信息
         NSError *error = [request error ];
         NSLog ( @"error:%@" ,[error userInfo ]);
     }];
@@ -206,8 +205,7 @@
     if(success)
     {
         NSString * jsonString  =  [request responseString];
-    
-       [ self appendToDataSource:jsonString];
+       //[ self appendToDataSource:jsonString];
     }
 }
 
@@ -216,43 +214,9 @@
     NSError *error = [request error ];
     NSLog ( @"%@" ,error. userInfo );
 }
--(void)appendToDataSource:(NSString *)jsionString
-{
-    AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-     NSDictionary *jsonObj =[jsionString mutableObjectFromJSONString];
-    if(indext==0)
-    {
-       
 
-    }
-    else if(indext==1)
-    {
-        app.jsonString=jsionString;
-        NSLog(@"解析结果  %@",app.jsonString);
-    }
-    else if(indext==2)
-    {
-        app.CategoryId=[jsonObj objectForKey:@"id"];
-        app.CategoryName=[jsonObj objectForKey:@"name"];
-        app.CategoryImage=[jsonObj objectForKey:@"image"];
-        app.CategoryPid=[jsonObj objectForKey:@"pid"];
-        app.CategoryLevel=[jsonObj objectForKey:@"level"];
-        app.CategoryFlag=[jsonObj objectForKey:@"flag"];
-        app.content=[jsonObj objectForKey:@"content"];
-
-    }
-    
-    
-   // NSLog(@"jsonString:  %@",jsonObj);
-}
 -(void)dealloc
 {
-//    [CategoryFlag release];
-//    [CategoryId release];
-//    [CategoryImage release];
-//    [CategoryLevel release];
-//    [CategoryName release];
-//    [CategoryPid release];
     [content release];
     [super dealloc];
 }

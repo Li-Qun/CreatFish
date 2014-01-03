@@ -7,6 +7,7 @@
 //
 
 #import "MagDetaiViewController.h"
+#import "LifeViewController.h"
 #import "FishCore.h"
 #import "InformationCell.h"
 #import "DetailViewController.h"
@@ -43,9 +44,6 @@
 	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
 	[_refreshHeaderView refreshLastUpdatedDate];
     
-    
-    
-    tableView_Mag.frame=CGRectMake(0, 60, 320, 560);
     tableView_Mag.delegate=self;
     tableView_Mag.dataSource=self;//设置双重代理 很重要
     total+=[[jsonObj objectForKey:@"total"]intValue];
@@ -87,7 +85,11 @@
 }
 -(void)backMagazine
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    //[self.navigationController popViewControllerAnimated:YES];
+    LifeViewController *newVC = [[[LifeViewController alloc] initWithNibName:@"LifeViewController" bundle:nil]autorelease];
+    newVC.target=4;
+    self.hidesBottomBarWhenPushed = NO;
+    [self.navigationController pushViewController :newVC animated:YES];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -42,6 +42,7 @@
 @synthesize saveDataImage=saveDataImage;
 @synthesize saveDataName=saveDataName;
 @synthesize saveNum=saveNum;
+@synthesize firstPageImage=firstPageImage;
 -(void)build
 {
    // AppDelegate * app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -50,6 +51,7 @@
     saveDataId=[[NSMutableArray  alloc]init];
     saveDataName=[[NSMutableArray  alloc]init];
     saveDataImage=[[NSMutableArray  alloc]init];
+    firstPageImage=[[NSMutableArray  alloc]init];
     for(int i=0;i<14;i++)
     {
        

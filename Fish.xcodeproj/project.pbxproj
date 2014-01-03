@@ -149,6 +149,8 @@
 		BBD52A93185D471D00575349 /* GMGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD52A8D185D471D00575349 /* GMGridView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc-flag"; }; };
 		BBD52A94185D471D00575349 /* GMGridViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD52A90185D471D00575349 /* GMGridViewCell.m */; settings = {COMPILER_FLAGS = "-fobjc-arc-flag"; }; };
 		BBD52A95185D471D00575349 /* GMGridViewLayoutStrategies.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD52A92185D471D00575349 /* GMGridViewLayoutStrategies.m */; };
+		BBD67E411876D6E800A6CD87 /* StoreUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD67E3F1876D6E800A6CD87 /* StoreUpViewController.m */; };
+		BBD67E421876D6E800A6CD87 /* StoreUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */; };
 		BBD7A05E186D2DED000A4675 /* selectButtonNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD7A05C186D2DED000A4675 /* selectButtonNormal.png */; };
 		BBD7A05F186D2DED000A4675 /* selectedButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD7A05D186D2DED000A4675 /* selectedButton.png */; };
 		BBD7A061186D61E5000A4675 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD7A060186D61E5000A4675 /* back.png */; };
@@ -433,6 +435,9 @@
 		BBD52A90185D471D00575349 /* GMGridViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMGridViewCell.m; sourceTree = "<group>"; };
 		BBD52A91185D471D00575349 /* GMGridViewLayoutStrategies.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMGridViewLayoutStrategies.h; sourceTree = "<group>"; };
 		BBD52A92185D471D00575349 /* GMGridViewLayoutStrategies.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMGridViewLayoutStrategies.m; sourceTree = "<group>"; };
+		BBD67E3E1876D6E800A6CD87 /* StoreUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreUpViewController.h; sourceTree = "<group>"; };
+		BBD67E3F1876D6E800A6CD87 /* StoreUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreUpViewController.m; sourceTree = "<group>"; };
+		BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreUpViewController.xib; sourceTree = "<group>"; };
 		BBD7A05C186D2DED000A4675 /* selectButtonNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectButtonNormal.png; sourceTree = "<group>"; };
 		BBD7A05D186D2DED000A4675 /* selectedButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectedButton.png; sourceTree = "<group>"; };
 		BBD7A060186D61E5000A4675 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
@@ -703,9 +708,9 @@
 				BBA0986E18751A1B008C49E2 /* MagDetaiViewController.h */,
 				BBA0986F18751A1B008C49E2 /* MagDetaiViewController.m */,
 				BBA0987018751A1B008C49E2 /* MagDetaiViewController.xib */,
-				BBA783F3185404AC002D0433 /* MagazineViewController.h */,
-				BBA783F4185404AC002D0433 /* MagazineViewController.m */,
-				BBA783F5185404AC002D0433 /* MagazineViewController.xib */,
+				BBD67E3E1876D6E800A6CD87 /* StoreUpViewController.h */,
+				BBD67E3F1876D6E800A6CD87 /* StoreUpViewController.m */,
+				BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */,
 				BB78463B1859A74600260712 /* ProtectViewController.h */,
 				BB78463C1859A74600260712 /* ProtectViewController.m */,
 				BB78463D1859A74600260712 /* ProtectViewController.xib */,
@@ -959,6 +964,9 @@
 		BBC95B3718532EC600A10431 /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				BBA783F3185404AC002D0433 /* MagazineViewController.h */,
+				BBA783F4185404AC002D0433 /* MagazineViewController.m */,
+				BBA783F5185404AC002D0433 /* MagazineViewController.xib */,
 				BBB79BD81861DCCC007DCEEA /* Pre */,
 			);
 			name = VC;
@@ -1210,6 +1218,7 @@
 				BBD81BAF186C34DA000DBEEE /* 16.jpg in Resources */,
 				BBC95B3018532E5F00A10431 /* images-3.jpeg in Resources */,
 				BB95155D185348C000BD82A7 /* bg-addbutton.png in Resources */,
+				BBD67E421876D6E800A6CD87 /* StoreUpViewController.xib in Resources */,
 				BBC95B2018532E4600A10431 /* SampleData.plist in Resources */,
 				BBC95B3618532E5F00A10431 /* images-9.jpeg in Resources */,
 				BBD81BBA186C34DA000DBEEE /* 26.jpg in Resources */,
@@ -1323,6 +1332,7 @@
 				BBDBE947184DD064009FA292 /* LeftViewController.m in Sources */,
 				BBAC8737185FFA6100A36D8A /* TViewController.m in Sources */,
 				BB95154C1853387600BD82A7 /* SampleCell.m in Sources */,
+				BBD67E411876D6E800A6CD87 /* StoreUpViewController.m in Sources */,
 				9006F344184D59250091B69F /* AppDelegate.m in Sources */,
 				BBA4789F185721A000E64289 /* UIImageView+WebCache.m in Sources */,
 				BBA11CF6185EDAAF000D39F8 /* SBJsonTokeniser.m in Sources */,

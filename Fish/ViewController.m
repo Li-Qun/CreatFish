@@ -13,19 +13,16 @@
 #import "MagazineViewController.h"
 #import "SaveViewController.h"
 
-
-
 #import "NewsController.h"
 #import "LifeViewController.h"
 
-
 #import "AppDelegate.h"
+#import "StoreUpViewController.h"
 @interface ViewController ()
 
 @end
 
 @implementation ViewController
-@synthesize momentData=momentData;
 @synthesize categoryItem=categoryItem;
 @synthesize contentRead=contentRead;
 @synthesize klpImgArr;
@@ -35,12 +32,65 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES ];//把后面的antimated=YES 去掉 就不会过渡出现问题了
 }
+-(void)BuildFirstPage
+{
+    [contentRead ContentSetting];
+}
 -(void)_init
 {
     contentRead =[[ContentRead alloc]init];
+    contentRead.delegate=self;
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [app build ];
+    [app build];
    //通过KEY找到value
+    [self BuildFirstPage];
+}
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+{
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString:jsonString];
+    NSDictionary *data = [jsonObj objectForKey:@"home_image"];
+    for (int i =0; i <data.count; i++) {
+       [app.firstPageImage insertObject:[data objectAtIndex:i] atIndex: i];
+    }
+    NSLog(@"%@",app.firstPageImage);
+    ///UIScrollerView
+    index = 0;
+	self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:app.firstPageImage.count];
+    CGSize size = self.klpScrollView1.frame.size;
+	for (int i=0; i < [app.firstPageImage count]; i++) {
+        UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height)]autorelease];
+      //  [iv setImage:[UIImage imageNamed:[app.firstPageImage objectAtIndex:i]]];
+        NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[app.firstPageImage objectAtIndex:i]];
+        [iv setImageWithURL:[NSURL URLWithString: imgURL]
+                     placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                              success:^(UIImage *image) {NSLog(@"OK");}
+                              failure:^(NSError *error) {NSLog(@"NO");}];
+        [self.klpScrollView1 addSubview:iv];
+        iv = nil;
+        
+    }
+	[self.klpScrollView1 setContentSize:CGSizeMake(size.width * app.firstPageImage.count, 0)];//只可横向滚动～
+	
+	self.klpScrollView1.pagingEnabled = YES;
+    self.klpScrollView1.showsHorizontalScrollIndicator = NO;
+	
+	for (int i=0; i<app.firstPageImage.count; i++) {
+        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(100*i + 5*i,0,100,70)];
+        [iv setImage:[UIImage imageNamed:[app.firstPageImage objectAtIndex:i]]];
+        [self.klpImgArr addObject:iv];
+        iv = nil;
+    }
+    
+	UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    [singleTap setNumberOfTapsRequired:1];
+    
+    [self.klpScrollView1 addGestureRecognizer:singleTap];
+    [klpScrollView1 release];
+	[klpImgArr release];
+    [app.firstPageImage release];
+    ///UIScrollerView
+
 }
 - (void)viewDidLoad
 {
@@ -80,61 +130,7 @@
     
     /******************toolBar************************/
     
-    ///UIScrollerView
-    index = 0;
-	klpArr = [NSArray arrayWithObjects:@"images-1.jpeg",@"images-2.jpeg",@"images-3.jpeg",@"images-4.jpeg",@"images-5.jpeg",@"images-6.jpeg",@"images-1.jpeg"
-              ,@"images-2.jpeg",@"images-3.jpeg",@"images-4.jpeg",@"images-5.jpeg",@"images-6.jpeg",nil];
-	self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:12];
-    CGSize size = self.klpScrollView1.frame.size;
-	for (int i=0; i < [klpArr count]; i++) {
-        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height)];
-        [iv setImage:[UIImage imageNamed:[klpArr objectAtIndex:i]]];
-        [self.klpScrollView1 addSubview:iv];
-        iv = nil;
-    }
-	[self.klpScrollView1 setContentSize:CGSizeMake(size.width * 12, size.height)];
-	
-	self.klpScrollView1.pagingEnabled = YES;
-    self.klpScrollView1.showsHorizontalScrollIndicator = NO;
-	
-	CGSize size2 = self.klpScrollView2.frame.size;
-	for (int i=0; i<12; i++) {
-        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(100*i + 5*i,0,100,70)];
-        [iv setImage:[UIImage imageNamed:[klpArr objectAtIndex:i]]];
-		[self.klpScrollView2 addSubview:iv];
-        [self.klpImgArr addObject:iv];
-        iv = nil;
-    }
-    [self.klpScrollView2 setContentSize:CGSizeMake(100 * 12 + 60, size2.height)];
-	
-    klp = [[klpView alloc] initWithFrame:((UIImageView*)[self.klpImgArr objectAtIndex:index]).frame];
-	[self.klpScrollView2 addSubview:klp];
-	
-	//self.klpScrollView2.pagingEnabled = YES;
-    
-    
-   self.klpScrollView2.showsHorizontalScrollIndicator = NO;
-
-	UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-    [singleTap setNumberOfTapsRequired:1];
-    
-    [self.klpScrollView1 addGestureRecognizer:singleTap];
-    
-    UITapGestureRecognizer *smallImageTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleImageTap:)];
-    [smallImageTap setNumberOfTapsRequired:1];
-    [self.klpScrollView2 addGestureRecognizer:smallImageTap];
-    ///UIScrollerView
-
 }
-//-(void)dealloc{
-//	[klpScrollView1 release];
-//	[klpScrollView2 release];
-//	
-//	[klpImgArr release];
-//    [klpScrollView1 release];
-//    [klpScrollView2 release];
-//	[super dealloc];
-//}
 #pragma mark-- UIScrollViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{\
 	//NSLog(@"scrollViewDidScroll");
@@ -162,7 +158,6 @@
 		[UIView animateWithDuration:0.2f animations:^(void){
 			[klp setAlpha:.85f];
 		}];
-		[self.klpScrollView2 setContentOffset:CGPointMake(klp.frame.origin.x, 0) animated:YES];
 	}else {
 		
 	}
@@ -174,7 +169,7 @@
     
     CGPoint loc = [gestureRecognizer locationInView:self.klpScrollView1];
     NSInteger touchIndex = floor(loc.x / pageWith) ;
-    if (touchIndex > 11) {
+    if (touchIndex > app.firstPageImage.count) {
         return;
     }
     NSLog(@"touch index %d",touchIndex);
@@ -195,12 +190,12 @@
     frame.origin.y = 0;
     [self.klpScrollView1 scrollRectToVisible:frame animated:NO];
     
-    klp.frame = ((UIImageView*)[self.klpImgArr objectAtIndex:index]).frame;
+    klp.frame = ((UIImageView*)[app.firstPageImage objectAtIndex:index]).frame;
     [klp setAlpha:0];
     [UIView animateWithDuration:0.2f animations:^(void){
         [klp setAlpha:.85f];
     }];
-	[self.klpScrollView2 setContentOffset:CGPointMake(klp.frame.origin.x, 0) animated:YES];
+ 
     NSLog(@"small image touch index %d",touchIndex);
 }
 
@@ -252,7 +247,7 @@
 }
 -(void)pressSave
 {
-    SaveViewController *newVC = [[[SaveViewController alloc] initWithNibName:@"SaveViewController" bundle:nil]autorelease];
+    StoreUpViewController *newVC = [[[StoreUpViewController alloc] initWithNibName:@"StoreUpViewController" bundle:nil]autorelease];
     self.hidesBottomBarWhenPushed = YES;//OK~
     [self.navigationController pushViewController :newVC animated:YES];
 
