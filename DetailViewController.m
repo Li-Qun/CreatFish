@@ -55,13 +55,14 @@
 {//视图即将可见时调用。默认情况下不执行任何操作
     self.navigationController.toolbarHidden = YES;
     [self.navigationController setNavigationBarHidden:YES];
+    
     [super viewWillAppear:animated];
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     //导航按钮start
-    
+    [self.navigationController setNavigationBarHidden:YES];
     navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     UIButton *back = [UIButton buttonWithType:UIButtonTypeSystem];
     back.frame=CGRectMake(3, 10, 44, 50);
@@ -168,23 +169,24 @@
                           "</html>",  fontSize ,line_height,htmlTextTotals];
     
   
+   [self.navigationController setNavigationBarHidden:YES];
    [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-   //导航按钮start
-    
-    [self.view addSubview:navBar];
-    //导航按钮end
+
 
     self.view.backgroundColor=[UIColor whiteColor];
     showWebView.delegate=self;
+    showWebView.scrollView.delegate=self;
+    //showWebView.scalesPageToFit = YES;
     
 //    showWebView.scrollView.frame = CGRectMake(0, 0, 984, 748);
 //    showWebView.scrollView.clipsToBounds = NO;
-    
-    
+   
     [showWebView setUserInteractionEnabled: YES ];
     [self.view addSubview:showWebView];
     
-    
+    //导航按钮start
+    [self.view addSubview:navBar];
+    //导航按钮end
     [self addTapOnWebView];//调用触摸图片事件
     //showWebView.
     
@@ -196,23 +198,24 @@
     //[receiveStr release];
    
     arrIDList=[[NSMutableArray alloc]init];
-    int sum=arrIDListNew.count ;
-//    for(int i=0;i<arrIDListNew.count;i++)
-//    {
-//        [arrIDList insertObject:[NSString stringWithFormat:@"%@",[arrIDListNew objectAtIndex:i]]  atIndex:sum++];
-//    }
-//     page_num=[[UILabel alloc]initWithFrame:CGRectMake(130, 13, 55,27 )];
-//     [toolBar addSubview:page_num];
-//     page_num.text=[[NSString stringWithFormat:@"%d/%@",moment,[arrIDList objectAtIndex:arrIDList.count-1] ]retain];
-//
-    NSLog(@"%d",sum);
-    
-    
-    
+    //刷新设置
     [self createHeaderView];
 	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
     [_refreshHeaderView refreshLastUpdatedDate];
-    //[jsString release];
+    //刷新设置end
+    //获取web文本高度start
+    if ([showWebView subviews]) {
+        UIScrollView* scrollView = [[showWebView subviews] objectAtIndex:0];
+        [scrollView setContentOffset:CGPointMake(0, height_Mag*2+100) animated:YES];
+        height_Mag=scrollView.contentOffset.y;
+        NSLog(@"%f",scrollView.contentOffset.y);   //scrollView.contentOffset.y
+    }
+    height_Mag = [[showWebView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+    //获取web文本高度end
+
+    [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
+    [_refreshHeaderView refreshLastUpdatedDate];
+    
 }
 
 //网络请求过程中，出现任何错误（断网，连接超时等）会进入此方法
@@ -566,13 +569,14 @@ didFailWithError:(NSError *)error
     
     [_refreshHeaderView refreshLastUpdatedDate];
 }
-
 -(void)testFinishedLoadData{
 	
     [self finishReloadingData];
     [self setFooterView];
-}
+    [self.navigationController setNavigationBarHidden:YES];
+    [self.view addSubview:navBar];
 
+}
 #pragma mark -
 #pragma mark method that should be called when the refreshing is finished
 - (void)finishReloadingData{
@@ -608,7 +612,7 @@ didFailWithError:(NSError *)error
         // create the footerView
         _refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:
                               CGRectMake(0.0f, height,
-                                         showWebView.scrollView.frame.size.width, self.view.bounds.size.height)];
+                                         showWebView.scrollView.frame.size.width, 50)];
         _refreshFooterView.delegate = self;
         [showWebView.scrollView addSubview:_refreshFooterView];
     }
@@ -672,12 +676,15 @@ didFailWithError:(NSError *)error
    if(a>= b)
     {
         NSString *string=[NSString stringWithFormat:@"%d",--a];
-        [self postURL:string];//[self.dictForData objectForKey:@"id"]
+        [self postURL:string];
+        //[self.dictForData objectForKey:@"id"]
     }
- 
+ //   [showWebView.scrollView setContentOffset:CGPointMake(0,height_Mag+100)];
+
   //  NSLog(@"%@   %@",detailID,arrIDListNew);
+    
     [showWebView reload];
-    [self removeFooterView];
+        [self removeFooterView];
     [self testFinishedLoadData];
     [self.view addSubview:navBar];
 }

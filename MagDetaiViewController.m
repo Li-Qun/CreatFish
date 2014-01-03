@@ -10,6 +10,8 @@
 #import "FishCore.h"
 #import "InformationCell.h"
 #import "DetailViewController.h"
+#import "EGORefreshTableHeaderView.h"
+#import "EGORefreshTableFooterView.h"
 @interface MagDetaiViewController ()
 
 @end
@@ -35,6 +37,14 @@
 {
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString:jsonString];
+    
+    tableView_Mag .frame=CGRectMake(0, 60, 320, 560);
+    [self createHeaderView];
+	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
+	[_refreshHeaderView refreshLastUpdatedDate];
+    
+    
+    
     tableView_Mag.frame=CGRectMake(0, 60, 320, 560);
     tableView_Mag.delegate=self;
     tableView_Mag.dataSource=self;//设置双重代理 很重要
@@ -139,5 +149,189 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+//加载瀑布流start
+//＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+//初始化刷新视图
+//＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+#pragma mark
+#pragma methods for creating and removing the header view
+
+-(void)createHeaderView{
+    if (_refreshHeaderView && [_refreshHeaderView superview]) {
+        [_refreshHeaderView removeFromSuperview];
+    }
+	_refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:
+                          CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,
+                                     self.view.frame.size.width, self.view.bounds.size.height)];
+    _refreshHeaderView.delegate = self;
+    
+	[tableView_Mag addSubview:_refreshHeaderView];
+    
+    [_refreshHeaderView refreshLastUpdatedDate];
+}
+
+-(void)testFinishedLoadData{
+	
+    [self finishReloadingData];
+    [self setFooterView];
+}
+
+#pragma mark -
+#pragma mark method that should be called when the refreshing is finished
+- (void)finishReloadingData{
+	
+	//  model should call this when its done loading
+	_reloading = NO;
+    
+	if (_refreshHeaderView) {
+        [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:tableView_Mag ];
+    }
+    
+    if (_refreshFooterView) {
+        [_refreshFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:tableView_Mag];
+        [self setFooterView];
+    }
+    
+    // overide, the actula reloading tableView operation and reseting position operation is done in the subclass
+}
+
+-(void)setFooterView{
+	//    UIEdgeInsets test = self.aoView.contentInset;
+    // if the footerView is nil, then create it, reset the position of the footer
+    CGFloat height = MAX(tableView_Mag.contentSize.height, tableView_Mag.frame.size.height);
+    if (_refreshFooterView && [_refreshFooterView superview])
+	{
+        // reset position
+        _refreshFooterView.frame = CGRectMake(0.0f,
+                                              height,
+                                              tableView_Mag.frame.size.width,
+                                              self.view.bounds.size.height);
+    }else
+	{
+        // create the footerView
+        _refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:
+                              CGRectMake(0.0f, height,
+                                         tableView_Mag.frame.size.width, self.view.bounds.size.height)];
+        _refreshFooterView.delegate = self;
+        [tableView_Mag addSubview:_refreshFooterView];
+    }
+    
+    if (_refreshFooterView)
+	{
+        [_refreshFooterView refreshLastUpdatedDate];
+    }
+}
+
+
+-(void)removeFooterView
+{
+    if (_refreshFooterView && [_refreshFooterView superview])
+	{
+        [_refreshFooterView removeFromSuperview];
+    }
+    _refreshFooterView = nil;
+}
+
+//===============
+//刷新delegate
+#pragma mark -
+#pragma mark data reloading methods that must be overide by the subclass
+
+-(void)beginToReloadData:(EGORefreshPos)aRefreshPos{
+	
+	//  should be calling your tableviews data source model to reload
+	_reloading = YES;
+    
+    if (aRefreshPos == EGORefreshHeader)
+	{
+        // pull down to refresh data
+        [self performSelector:@selector(refreshView) withObject:nil afterDelay:2.0];
+    }else if(aRefreshPos == EGORefreshFooter)
+	{
+        // pull up to load more data
+        [self performSelector:@selector(getNextPageView) withObject:nil afterDelay:2.0];
+    }
+	
+	// overide, the actual loading data operation is done in the subclass
+}
+
+//刷新调用的方法
+-(void)refreshView
+{
+	NSLog(@"刷新完成");
+    [self testFinishedLoadData];
+	
+}
+//加载调用的方法
+-(void)getNextPageView
+{
+    [contentDtail setDelegate:self];
+    [contentDtail Magazine:Id isPri:@"0" WeeklyId:weeklyId Out:@"0"];
+   // [contentRead setDelegate:self];
+    //[contentRead fetchList:@"1" isPri:@"0" Out:@"0"];
+   // NSLog(@"XXXX   :  %@",NewsId);
+    //    [contentRead Magazine:@"1" isPri:@"0" WeeklyId:@"0" Out:@"0"];
+    
+    [tableView_Mag reloadData];
+    [self removeFooterView];
+    [self testFinishedLoadData];
+}
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+	if (_refreshHeaderView)
+	{
+        [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    }
+	
+	if (_refreshFooterView)
+	{
+        [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+	if (_refreshHeaderView)
+	{
+        [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    }
+	
+	if (_refreshFooterView)
+	{
+        [_refreshFooterView egoRefreshScrollViewDidEndDragging:scrollView];
+    }
+}
+
+
+#pragma mark -
+#pragma mark EGORefreshTableDelegate Methods
+
+- (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos
+{
+	
+	[self beginToReloadData:aRefreshPos];
+	
+}
+
+- (BOOL)egoRefreshTableDataSourceIsLoading:(UIView*)view{
+	
+	return _reloading; // should return if data source model is reloading
+	
+}
+
+
+// if we don't realize this method, it won't display the refresh timestamp
+- (NSDate*)egoRefreshTableDataSourceLastUpdated:(UIView*)view
+{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
+}
+
+
+
+//加载瀑布流end
 
 @end

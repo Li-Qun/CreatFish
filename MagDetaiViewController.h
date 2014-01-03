@@ -8,7 +8,9 @@
 
 #import "ViewController.h"
 #import "FishCore.h"
-@interface MagDetaiViewController : ViewController<FishDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
+#import "EGORefreshTableHeaderView.h"
+#import "EGORefreshTableFooterView.h"
+@interface MagDetaiViewController : ViewController<FishDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,EGORefreshTableDelegate>
 {
     UINavigationBar *navBar;
     NSString *Id;
@@ -20,6 +22,13 @@
     int newCount_Mag;
     NSMutableArray *arr_Mag;
     NSMutableArray *arrID_Mag;
+    
+    //EGOHeader
+    EGORefreshTableHeaderView *_refreshHeaderView;
+    //EGOFoot
+    EGORefreshTableFooterView *_refreshFooterView;
+    //
+    BOOL _reloading;
 }
 @property(nonatomic,retain) UINavigationBar *navBar;
 @property(nonatomic,retain)NSString *Id;
