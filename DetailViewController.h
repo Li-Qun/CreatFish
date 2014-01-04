@@ -52,6 +52,7 @@
     //
     BOOL _reloading;
     UINavigationBar *navBar;
+    BOOL isStore;
 }
 @property (nonatomic,retain) UILabel *page_num;
 @property (nonatomic,retain)NSString *pic_url;
@@ -70,6 +71,7 @@
 
 @property (nonatomic,retain)NSMutableString *htmlTextTotals;
 @property (nonatomic,retain) NSString *jsString;
+@property (nonatomic)BOOL isStore;
 
 
 - (void)pressme:(id)sender;

@@ -9,6 +9,7 @@
 #import "StoreUpViewController.h"
 #import "Singleton.h"
 #import "InformationCell.h"
+#import "DetailViewController.h"
 @interface StoreUpViewController ()
 
 @end
@@ -29,7 +30,13 @@
     tableView_Store.delegate=self;
     tableView_Store.dataSource=self;//设置双重代理 很重要
     [self.view addSubview:tableView_Store];
-    
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+ // [jsonObj objectForKey:@"category_id"];
+    for(int i=0;i<app.saveNum;i++)
+    {
+        NSDictionary *jsonObj =[parser objectWithString: [[Singleton sharedInstance].single_Data objectAtIndex:i]];
+        [arrSave_ID insertObject:[jsonObj objectForKey:@"category_id"] atIndex:i];
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -62,7 +69,6 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[jsonObj objectForKey:@"image"]];
-    NSLog(@"%@",imgURL);
     [cell.imgView setImageWithURL:[NSURL URLWithString: imgURL]
                  placeholderImage:[UIImage imageNamed:@"placeholder.png"]
                           success:^(UIImage *image) {NSLog(@"OK");}
@@ -76,12 +82,16 @@
 {
     CGRect cellFrameInTableView = [tableView rectForRowAtIndexPath:indexPath];
     CGRect cellFrameInSuperview = [tableView convertRect:cellFrameInTableView toView:[tableView superview]];
-//    DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
-//    NSMutableDictionary* dict = [arr_Mag objectAtIndex:indexPath.row];
-//    detail.dictForData=dict;
-//    detail.arrIDListNew= arrID_Mag;
-//    detail.yOrigin=cellFrameInSuperview.origin.y;
-    //[self.navigationController pushViewController:detail animated:YES];
+    DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString: [[Singleton sharedInstance].single_Data objectAtIndex:indexPath.row]];
+
+     NSMutableDictionary* dict =jsonObj;
+     detail.dictForData=dict;
+     detail.yOrigin=cellFrameInSuperview.origin.y;
+     detail.arrIDListNew=arrSave_ID;
+    detail.isStore=YES;
+    [self.navigationController pushViewController:detail animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

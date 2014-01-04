@@ -11,5 +11,6 @@
 @interface StoreUpViewController : ViewController<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *tableView_Store;
+    NSMutableArray *arrSave_ID;
 }
 @end

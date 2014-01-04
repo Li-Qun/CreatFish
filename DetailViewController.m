@@ -472,6 +472,7 @@ didFailWithError:(NSError *)error
     {
         
     }
+    
 }
 #pragma mark -响应对UIWebView 文本操作start
 - (void)pressme:(id)sender
@@ -667,26 +668,24 @@ didFailWithError:(NSError *)error
 //加载调用的方法
 -(void)getNextPageView
 {
-//	for(int i = 0; i < 10; i++) {
-//		[_images addObject:[NSString stringWithFormat:@"%d.jpeg", i % 10 + 1]];
-//	}
-	//[self reloadData];
-    //[];
-    int a=[detailID intValue];
-    int b=[[arrIDListNew objectAtIndex:arrIDListNew.count-1] intValue];
-   if(a>= b)
-    {
-        NSString *string=[NSString stringWithFormat:@"%d",--a];
-        [self postURL:string];
-        //[self.dictForData objectForKey:@"id"]
-    }
- //   [showWebView.scrollView setContentOffset:CGPointMake(0,height_Mag+100)];
+    if(isStore==YES){
+        isStore=NO;  
 
-  //  NSLog(@"%@   %@",detailID,arrIDListNew);
-    
-    [showWebView reload];
+    }
+    else {
+        int a=[detailID intValue];
+        int b=[[arrIDListNew objectAtIndex:arrIDListNew.count-1] intValue];
+        if(a> b)
+        {
+            NSString *string=[NSString stringWithFormat:@"%d",--a];
+            [self postURL:string];
+            //[self.dictForData objectForKey:@"id"]
+        }
+        
+        [showWebView reload];
         [self removeFooterView];
-    [self testFinishedLoadData];
+        [self testFinishedLoadData];
+          }
     [self.view addSubview:navBar];
 }
 

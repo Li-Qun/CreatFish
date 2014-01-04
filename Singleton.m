@@ -43,10 +43,7 @@ static Singleton * sharedSingleton = nil; //第一步：静态实例，并初始
 
 - (oneway void) release
 {
-    [singgle_StoreData release];
     [single_Data release];
-    [single_Data_name release];
-    [single_Data_image release];
 }
 
 - (id) autorelease
@@ -56,11 +53,7 @@ static Singleton * sharedSingleton = nil; //第一步：静态实例，并初始
 -(id)init
 {
     @synchronized(self) {
-        singgle_StoreData=[[ NSMutableArray alloc]init];
         single_Data=[[NSMutableArray alloc]init];
-        single_Data_image=[[NSMutableArray alloc]init];
-        single_Data_name=[[NSMutableArray alloc]init];
-        [super init];//往往放一些要初始化的变量.
         return self;
     }
 }
