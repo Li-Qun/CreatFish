@@ -86,8 +86,8 @@ typedef enum
 @property(nonatomic,retain)NSString *saveId;
 @property(nonatomic,retain)NSString *saveName;
 @property(nonatomic,retain)NSString *saveImage;
-@property(nonatomic,retain)NSMutableArray *saveDataId;
-@property(nonatomic,retain)NSMutableArray  *saveDataImage;
+@property(nonatomic) NSMutableArray  *saveDataId;
+@property(nonatomic) NSMutableArray  *saveDataImage;
 @property(nonatomic,retain)NSMutableArray  *saveDataName;
 @property(nonatomic)int saveNum;
 //收藏杂志end

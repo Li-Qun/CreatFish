@@ -136,6 +136,7 @@
 		BBC95B4718532FA100A10431 /* QuadCurveMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC95B4418532FA100A10431 /* QuadCurveMenu.m */; };
 		BBC95B4818532FA100A10431 /* QuadCurveMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC95B4618532FA100A10431 /* QuadCurveMenuItem.m */; };
 		BBC95B4B1853303F00A10431 /* klpView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC95B4A1853303F00A10431 /* klpView.m */; };
+		BBD0E1CE1877D8D1000D1141 /* Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0E1CD1877D8D1000D1141 /* Singleton.m */; };
 		BBD1340A1869BF1D008657B6 /* NIDropDown.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD134091869BF1D008657B6 /* NIDropDown.m */; };
 		BBD1340E1869C928008657B6 /* UIMenuItem+CXAImageSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD1340D1869C928008657B6 /* UIMenuItem+CXAImageSupport.m */; };
 		BBD134131869CD2D008657B6 /* broom.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD1340F1869CD2D008657B6 /* broom.png */; };
@@ -413,6 +414,8 @@
 		BBC95B4618532FA100A10431 /* QuadCurveMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuadCurveMenuItem.m; sourceTree = "<group>"; };
 		BBC95B491853303F00A10431 /* klpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = klpView.h; sourceTree = "<group>"; };
 		BBC95B4A1853303F00A10431 /* klpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = klpView.m; sourceTree = "<group>"; };
+		BBD0E1CC1877D8D1000D1141 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = ../Singleton.h; sourceTree = "<group>"; };
+		BBD0E1CD1877D8D1000D1141 /* Singleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Singleton.m; path = ../Singleton.m; sourceTree = "<group>"; };
 		BBD134081869BF1D008657B6 /* NIDropDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIDropDown.h; sourceTree = "<group>"; };
 		BBD134091869BF1D008657B6 /* NIDropDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIDropDown.m; sourceTree = "<group>"; };
 		BBD1340C1869C928008657B6 /* UIMenuItem+CXAImageSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIMenuItem+CXAImageSupport.h"; sourceTree = "<group>"; };
@@ -568,8 +571,6 @@
 			isa = PBXGroup;
 			children = (
 				BBA689F418613DB1007CB68E /* FishCores */,
-				BBA3D310185ADAC4009CDC9A /* FishCore.h */,
-				BBA3D311185ADAC4009CDC9A /* FishCore.m */,
 				9006F342184D59250091B69F /* AppDelegate.h */,
 				9006F343184D59250091B69F /* AppDelegate.m */,
 				9006F34B184D59250091B69F /* ViewController.h */,
@@ -842,6 +843,10 @@
 		BBA689F418613DB1007CB68E /* FishCores */ = {
 			isa = PBXGroup;
 			children = (
+				BBA3D310185ADAC4009CDC9A /* FishCore.h */,
+				BBA3D311185ADAC4009CDC9A /* FishCore.m */,
+				BBD0E1CC1877D8D1000D1141 /* Singleton.h */,
+				BBD0E1CD1877D8D1000D1141 /* Singleton.m */,
 			);
 			name = FishCores;
 			sourceTree = "<group>";
@@ -1363,6 +1368,7 @@
 				BB9EAED3185DEFE2005E2697 /* OptionsViewController.m in Sources */,
 				BBA478811857215E00E64289 /* MBProgressHUD.m in Sources */,
 				BBA5553B185811380011F6BC /* Top_1_ViewController.m in Sources */,
+				BBD0E1CE1877D8D1000D1141 /* Singleton.m in Sources */,
 				BBA11CF3185EDAAF000D39F8 /* SBJsonStreamWriter.m in Sources */,
 				BBA47899185721A000E64289 /* SDImageCache.m in Sources */,
 			);

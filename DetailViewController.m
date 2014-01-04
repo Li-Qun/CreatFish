@@ -18,6 +18,9 @@
 #import "SDWebImageManager.h"
 #import "SDWebImageDownloader.h"
 #import "UIMenuItem+CXAImageSupport.h"
+
+
+#import "Singleton.h"
 @interface DetailViewController ()
 
 @end
@@ -143,15 +146,18 @@
 //数据传完之后调用此方法
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    [self.view addSubview:navBar];
     NSString *receiveStr = [[NSString alloc]initWithData:self.Data encoding:NSUTF8StringEncoding];
     
     SBJsonParser *parser = [[SBJsonParser alloc] init];
     NSDictionary *jsonObj =[parser objectWithString: receiveStr];
     moment=[[jsonObj objectForKey:@"id"]intValue];
+    detailTotal=[[NSString alloc]init];
     htmlText=[[NSString alloc]init];
     detailName=[[NSString alloc]init] ;
     detailImage=[[NSString alloc]init] ;
     detailID=[[NSString alloc]init];
+    detailTotal=receiveStr;
     htmlText=[jsonObj objectForKey:@"content"];
     detailName=[jsonObj objectForKey:@"name"];
     detailImage=[jsonObj objectForKey:@"image"];
@@ -460,25 +466,19 @@ didFailWithError:(NSError *)error
 {
     if(buttonIndex==0)//确定
     {
-        app.saveId=detailID;
-        app.saveName=detailName;
-        app.saveImage=detailImage;
-        [app.saveDataId insertObject:app.saveId atIndex:app.saveNum];
-        [app.saveDataImage insertObject:app.saveImage atIndex:app.saveNum];
-        [app.saveDataName insertObject:app.saveName atIndex:app.saveNum];
-
+      [[Singleton sharedInstance].single_Data insertObject:detailTotal atIndex:app.saveNum++] ;
     }
     else if(buttonIndex==1)//取消
     {
         
     }
-    
 }
 #pragma mark -响应对UIWebView 文本操作start
 - (void)pressme:(id)sender
 {
     [[UIMenuController sharedMenuController] setTargetRect:[sender frame] inView:self.view];
-    [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES];
+    [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES]
+    ;
 }
 
 - (void)cameraAction:(id)sender

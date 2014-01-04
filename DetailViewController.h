@@ -14,7 +14,6 @@
 #import "CustomURLCache.h"
 #import "MBProgressHUD.h"
 
-
 #import "SDImageCache.h"
 #import "SDWebImageManager.h"
 #import "SDWebImageDownloader.h"
@@ -36,6 +35,7 @@
     //设字体
     NSString *htmlText;
     //收藏信息
+    NSString *detailTotal;
     NSString *detailName;
     NSString *detailImage;
     NSString *detailID;

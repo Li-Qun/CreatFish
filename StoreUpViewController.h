@@ -10,8 +10,6 @@
 #import "AppDelegate.h"
 @interface StoreUpViewController : ViewController<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
-    AppDelegate *app_StoreUp;
     UITableView *tableView_Store;
 }
-
 @end

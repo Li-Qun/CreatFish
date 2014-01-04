@@ -53,7 +53,6 @@
     for (int i =0; i <data.count; i++) {
        [app.firstPageImage insertObject:[data objectAtIndex:i] atIndex: i];
     }
-    NSLog(@"%@",app.firstPageImage);
     ///UIScrollerView
     index = 0;
 	self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:app.firstPageImage.count];
