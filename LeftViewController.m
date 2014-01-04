@@ -15,7 +15,7 @@
 
 #import "MagazineViewController.h"
 #import "SaveViewController.h"
-#import "ProtectViewController.h"
+#import "SettingViewController.h"
 #import "TViewController.h"
 #import "NewsController.h"
 @interface LeftViewController ()
@@ -161,19 +161,19 @@
 }
 -(void)PressMagazine
 {
-    [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-        ProtectViewController *apiVC = [[[ProtectViewController alloc] init] autorelease];
-        apiVC.title = @"收藏杂志";
-        UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
-        self.viewDeckController.centerController = navApiVC;
-        self.view.userInteractionEnabled = YES;
-    }];
+//    [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
+//        ProtectViewController *apiVC = [[[ProtectViewController alloc] init] autorelease];
+//        apiVC.title = @"收藏杂志";
+//        UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
+//        self.viewDeckController.centerController = navApiVC;
+//        self.view.userInteractionEnabled = YES;
+//    }];
 
 }
 -(void)PressSet
 {
     [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-       ProtectViewController *apiVC = [[[ProtectViewController alloc] init] autorelease];
+       SettingViewController *apiVC = [[[SettingViewController alloc] init] autorelease];
         //  apiVC.title = @"XXXXXX";
         UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
         self.viewDeckController.centerController = navApiVC;

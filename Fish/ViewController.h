@@ -23,7 +23,6 @@ UIScrollViewDelegate >
 @property (retain, nonatomic) IBOutlet UIScrollView *klpScrollView2;
 @property (nonatomic,retain)NSMutableArray *klpImgArr;
 
-
 @property(nonatomic,retain)CategoryItem *categoryItem;
 @property(nonatomic,retain)ContentRead *contentRead;
 

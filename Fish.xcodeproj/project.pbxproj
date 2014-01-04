@@ -137,6 +137,14 @@
 		BBC95B4818532FA100A10431 /* QuadCurveMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC95B4618532FA100A10431 /* QuadCurveMenuItem.m */; };
 		BBC95B4B1853303F00A10431 /* klpView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC95B4A1853303F00A10431 /* klpView.m */; };
 		BBD0E1CE1877D8D1000D1141 /* Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0E1CD1877D8D1000D1141 /* Singleton.m */; };
+		BBD0E1D818780909000D1141 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0E1D618780909000D1141 /* SettingViewController.m */; };
+		BBD0E1D918780909000D1141 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD0E1D718780909000D1141 /* SettingViewController.xib */; };
+		BBD0E1DD18781444000D1141 /* set_Nav.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD0E1DB18781444000D1141 /* set_Nav.png */; };
+		BBD0E1DE18781444000D1141 /* set_Nav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD0E1DC18781444000D1141 /* set_Nav@2x.png */; };
+		BBD0E1E2187817D3000D1141 /* AdviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0E1E0187817D3000D1141 /* AdviceViewController.m */; };
+		BBD0E1E3187817D3000D1141 /* AdviceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD0E1E1187817D3000D1141 /* AdviceViewController.xib */; };
+		BBD0E1E718781B95000D1141 /* advice_nav_red.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD0E1E518781B95000D1141 /* advice_nav_red.png */; };
+		BBD0E1E818781B95000D1141 /* advice_nav_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD0E1E618781B95000D1141 /* advice_nav_red@2x.png */; };
 		BBD1340A1869BF1D008657B6 /* NIDropDown.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD134091869BF1D008657B6 /* NIDropDown.m */; };
 		BBD1340E1869C928008657B6 /* UIMenuItem+CXAImageSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD1340D1869C928008657B6 /* UIMenuItem+CXAImageSupport.m */; };
 		BBD134131869CD2D008657B6 /* broom.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD1340F1869CD2D008657B6 /* broom.png */; };
@@ -416,6 +424,16 @@
 		BBC95B4A1853303F00A10431 /* klpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = klpView.m; sourceTree = "<group>"; };
 		BBD0E1CC1877D8D1000D1141 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = ../Singleton.h; sourceTree = "<group>"; };
 		BBD0E1CD1877D8D1000D1141 /* Singleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Singleton.m; path = ../Singleton.m; sourceTree = "<group>"; };
+		BBD0E1D518780909000D1141 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		BBD0E1D618780909000D1141 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		BBD0E1D718780909000D1141 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
+		BBD0E1DB18781444000D1141 /* set_Nav.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_Nav.png; sourceTree = "<group>"; };
+		BBD0E1DC18781444000D1141 /* set_Nav@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "set_Nav@2x.png"; sourceTree = "<group>"; };
+		BBD0E1DF187817D3000D1141 /* AdviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdviceViewController.h; sourceTree = "<group>"; };
+		BBD0E1E0187817D3000D1141 /* AdviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdviceViewController.m; sourceTree = "<group>"; };
+		BBD0E1E1187817D3000D1141 /* AdviceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AdviceViewController.xib; sourceTree = "<group>"; };
+		BBD0E1E518781B95000D1141 /* advice_nav_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = advice_nav_red.png; sourceTree = "<group>"; };
+		BBD0E1E618781B95000D1141 /* advice_nav_red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "advice_nav_red@2x.png"; sourceTree = "<group>"; };
 		BBD134081869BF1D008657B6 /* NIDropDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NIDropDown.h; sourceTree = "<group>"; };
 		BBD134091869BF1D008657B6 /* NIDropDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NIDropDown.m; sourceTree = "<group>"; };
 		BBD1340C1869C928008657B6 /* UIMenuItem+CXAImageSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIMenuItem+CXAImageSupport.h"; sourceTree = "<group>"; };
@@ -576,6 +594,13 @@
 				9006F34B184D59250091B69F /* ViewController.h */,
 				BBEB52C21867169B00527C90 /* ViewController.m */,
 				9006F34E184D59250091B69F /* ViewController.xib */,
+				BBD0E1D518780909000D1141 /* SettingViewController.h */,
+				BBD0E1D618780909000D1141 /* SettingViewController.m */,
+				BBD0E1D718780909000D1141 /* SettingViewController.xib */,
+				BBD0E1DF187817D3000D1141 /* AdviceViewController.h */,
+				BBD0E1E0187817D3000D1141 /* AdviceViewController.m */,
+				BBD0E1E1187817D3000D1141 /* AdviceViewController.xib */,
+				BBD0E1D4187808E6000D1141 /* Beauty */,
 				9006F33A184D59250091B69F /* Supporting Files */,
 			);
 			path = Fish;
@@ -712,12 +737,6 @@
 				BBD67E3E1876D6E800A6CD87 /* StoreUpViewController.h */,
 				BBD67E3F1876D6E800A6CD87 /* StoreUpViewController.m */,
 				BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */,
-				BB78463B1859A74600260712 /* ProtectViewController.h */,
-				BB78463C1859A74600260712 /* ProtectViewController.m */,
-				BB78463D1859A74600260712 /* ProtectViewController.xib */,
-				BBAC8734185FFA6100A36D8A /* TViewController.h */,
-				BBAC8735185FFA6100A36D8A /* TViewController.m */,
-				BBAC8736185FFA6100A36D8A /* TViewController.xib */,
 			);
 			name = FormalVC;
 			sourceTree = "<group>";
@@ -969,6 +988,12 @@
 		BBC95B3718532EC600A10431 /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				BB78463B1859A74600260712 /* ProtectViewController.h */,
+				BB78463C1859A74600260712 /* ProtectViewController.m */,
+				BB78463D1859A74600260712 /* ProtectViewController.xib */,
+				BBAC8734185FFA6100A36D8A /* TViewController.h */,
+				BBAC8735185FFA6100A36D8A /* TViewController.m */,
+				BBAC8736185FFA6100A36D8A /* TViewController.xib */,
 				BBA783F3185404AC002D0433 /* MagazineViewController.h */,
 				BBA783F4185404AC002D0433 /* MagazineViewController.m */,
 				BBA783F5185404AC002D0433 /* MagazineViewController.xib */,
@@ -989,6 +1014,33 @@
 				BBC95B4618532FA100A10431 /* QuadCurveMenuItem.m */,
 			);
 			name = "Light Button";
+			sourceTree = "<group>";
+		};
+		BBD0E1D4187808E6000D1141 /* Beauty */ = {
+			isa = PBXGroup;
+			children = (
+				BBD0E1DA18781429000D1141 /* set */,
+			);
+			name = Beauty;
+			sourceTree = "<group>";
+		};
+		BBD0E1DA18781429000D1141 /* set */ = {
+			isa = PBXGroup;
+			children = (
+				BBD0E1DB18781444000D1141 /* set_Nav.png */,
+				BBD0E1DC18781444000D1141 /* set_Nav@2x.png */,
+				BBD0E1E418781B5B000D1141 /* reBack */,
+			);
+			name = set;
+			sourceTree = "<group>";
+		};
+		BBD0E1E418781B5B000D1141 /* reBack */ = {
+			isa = PBXGroup;
+			children = (
+				BBD0E1E518781B95000D1141 /* advice_nav_red.png */,
+				BBD0E1E618781B95000D1141 /* advice_nav_red@2x.png */,
+			);
+			name = reBack;
 			sourceTree = "<group>";
 		};
 		BBD1340B1869BF51008657B6 /* button List */ = {
@@ -1180,6 +1232,7 @@
 				BB95155E185348C000BD82A7 /* bg-addbutton-highlighted.png in Resources */,
 				BBD81BC3186C34DA000DBEEE /* 8.jpg in Resources */,
 				BBA783F7185404AC002D0433 /* MagazineViewController.xib in Resources */,
+				BBD0E1E3187817D3000D1141 /* AdviceViewController.xib in Resources */,
 				BBD81BC4186C34DA000DBEEE /* 9.jpg in Resources */,
 				BBD81BA9186C34DA000DBEEE /* 10.jpg in Resources */,
 				BBC95B2D18532E5F00A10431 /* images-1.jpeg in Resources */,
@@ -1208,6 +1261,7 @@
 				BBD134161869CD2D008657B6 /* camera@2x.png in Resources */,
 				BBD81BB8186C34DA000DBEEE /* 24.jpg in Resources */,
 				BBD81BC0186C34DA000DBEEE /* 5.jpg in Resources */,
+				BBD0E1E718781B95000D1141 /* advice_nav_red.png in Resources */,
 				BBDBE948184DD064009FA292 /* LeftViewController.xib in Resources */,
 				BBD81BB7186C34DA000DBEEE /* 23.jpg in Resources */,
 				BBD7A05E186D2DED000A4675 /* selectButtonNormal.png in Resources */,
@@ -1235,9 +1289,11 @@
 				BBD81BAA186C34DA000DBEEE /* 11.jpg in Resources */,
 				BB50B1E6187273FA0096A3A9 /* 1.png in Resources */,
 				BBA69896186FE9DD00DE10AB /* blackArrow.png in Resources */,
+				BBD0E1D918780909000D1141 /* SettingViewController.xib in Resources */,
 				BBD81BAC186C34DA000DBEEE /* 13.jpg in Resources */,
 				BBD81BB0186C34DA000DBEEE /* 17.jpg in Resources */,
 				BBD81BB6186C34DA000DBEEE /* 22.jpg in Resources */,
+				BBD0E1DD18781444000D1141 /* set_Nav.png in Resources */,
 				BBD81BBE186C34DA000DBEEE /* 3.jpg in Resources */,
 				BB951563185348C000BD82A7 /* bg-menuitem-highlighted.png in Resources */,
 				BBC95B3218532E5F00A10431 /* images-5.jpeg in Resources */,
@@ -1253,10 +1309,12 @@
 				BB951569185348C000BD82A7 /* icon-plus-highlighted.png in Resources */,
 				BBC95B2C18532E5F00A10431 /* face.png in Resources */,
 				9006F34A184D59250091B69F /* Default-568h@2x.png in Resources */,
+				BBD0E1DE18781444000D1141 /* set_Nav@2x.png in Resources */,
 				BBA69898186FE9DD00DE10AB /* blueArrow.png in Resources */,
 				BBC95B3518532E5F00A10431 /* images-8.jpeg in Resources */,
 				9006F350184D59250091B69F /* ViewController.xib in Resources */,
 				BBD81BC2186C34DA000DBEEE /* 7.jpg in Resources */,
+				BBD0E1E818781B95000D1141 /* advice_nav_red@2x.png in Resources */,
 				BB951567185348C000BD82A7 /* icon-plus.png in Resources */,
 				BBA6989D186FE9DD00DE10AB /* whiteArrow@2x.png in Resources */,
 				BBDBE952184DD995009FA292 /* NewViewController.xib in Resources */,
@@ -1312,6 +1370,7 @@
 				BBD52A94185D471D00575349 /* GMGridViewCell.m in Sources */,
 				BBB79BCA18614840007DCEEA /* NewsController.m in Sources */,
 				BBA11CF4185EDAAF000D39F8 /* SBJsonStreamWriterAccumulator.m in Sources */,
+				BBD0E1E2187817D3000D1141 /* AdviceViewController.m in Sources */,
 				BBA11CD1185ECABC000D39F8 /* ASINetworkQueue.m in Sources */,
 				BBA11CF0185EDAAF000D39F8 /* SBJsonStreamParserAccumulator.m in Sources */,
 				BBA0FFF7186F13B000E75116 /* skyCell.m in Sources */,
@@ -1335,6 +1394,7 @@
 				BB7846281859880600260712 /* SaveViewController.m in Sources */,
 				BB9D90B018684545000CB89C /* LifeViewController.m in Sources */,
 				BBDBE947184DD064009FA292 /* LeftViewController.m in Sources */,
+				BBD0E1D818780909000D1141 /* SettingViewController.m in Sources */,
 				BBAC8737185FFA6100A36D8A /* TViewController.m in Sources */,
 				BB95154C1853387600BD82A7 /* SampleCell.m in Sources */,
 				BBD67E411876D6E800A6CD87 /* StoreUpViewController.m in Sources */,
