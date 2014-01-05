@@ -56,7 +56,6 @@
 @synthesize categoryItem=categoryItem;
 -(void)Category
 {
-    indext=0;
     NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/category/read_lst" ];
     __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
     [request setRequestMethod:@"POST"];
@@ -79,7 +78,6 @@
 //查询 - 列表
 -(void)fetchList:( NSString  * )ID isPri:(NSString*)flag  Out:(NSString *) Offset;
 {
-    indext=1;
     NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/content/read_lst" ];
     __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
      [request setRequestMethod:@"POST"];
@@ -154,7 +152,6 @@
 //查询 - 详细 [content/read_dtl
 -(void)ContentDetail:(NSString*) content_id
 {
-    indext=2;
     NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/content/read_dtl" ];
     __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
     [request setRequestMethod:@"POST"];
@@ -174,17 +171,14 @@
         NSLog ( @"error:%@" ,[error userInfo ]);
         
     }];
-    
     [request startAsynchronous ];//异步
 }
 //setting/read_lst查询 - 列表
 -(void)ContentSetting
 {
-    indext=3;
     NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/setting/read_lst"];
     __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
     [request setRequestMethod:@"POST"];
-    // ASIHTTPRequest 支持 iOS 4.0 的块语法，你可以把委托方法定义到块中
     [request setCompletionBlock :^{
         
         NSString * jsonString  =  [request responseString];
@@ -198,13 +192,36 @@
     [request startAsynchronous ];
 
 }
+//【反馈】添加 [feedback/create]
+-(void)Submmit:(NSString *)contact typeBack:(NSString *)feedback_category content:(NSString *)feedback_content
+{
+     NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/feedback/create"];
+    __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
+    [request setRequestMethod:@"POST"];
+    [request setPostValue:contact forKey:@"contact"];
+    [request setPostValue:feedback_category forKey:@"feedback_category"];
+    [request setPostValue:feedback_content forKey:@"feedback_content"];
+    
+    NSLog(@"%d",[request responseStatusCode]);
+    [request setCompletionBlock :^{
+        NSString * string =  [request responseString];
+        [delegate reBack:string];
+    }];
+    [request setFailedBlock :^{
+        NSError *error = [request error ];
+        NSLog ( @"error:%@" ,[error userInfo ]);
+    }];
+    [request startAsynchronous ];
+
+}
+
 -(void)requestFinished:(ASIHTTPRequest *)request
 {
     BOOL success = ([request responseStatusCode] == 200);
     NSLog(@"%d",[request responseStatusCode]);
     if(success)
     {
-        NSString * jsonString  =  [request responseString];
+     //   NSString * jsonString  =  [request responseString];
        //[ self appendToDataSource:jsonString];
     }
 }

@@ -7,7 +7,7 @@
 //
 
 #import "AdviceViewController.h"
-
+#import "FishCore.h"
 @interface AdviceViewController ()
 
 @end
@@ -15,33 +15,64 @@
 @implementation AdviceViewController
 @synthesize someWords=someWords;
 @synthesize callNumber=callNumber;
-
+@synthesize textView=textView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
         self.view.backgroundColor=[UIColor grayColor];
+        textViewStyle=YES;
+        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"advice_back@2X.png"]];
+        imgView.frame = self.view.bounds;
+        imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self.view insertSubview:imgView atIndex:0];
     }
     return self;
 }
 -(void)build_Tool
 {
-    ///1
+    ///“使用反馈”
     someWordsTitle.textColor=[UIColor whiteColor];
     [someWordsTitle setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];//加粗
-    ///2
+    ///
     someWords.text=@"    感谢您使用路亚中国App,如果您在使用过程中遇到任何不便,或有意见及建议,欢迎您反馈给我们。";
     someWords.font=[UIFont systemFontOfSize:14.0f];
     someWords.textColor=[UIColor whiteColor];
-    someWords.lineBreakMode = UILineBreakModeWordWrap;
-        someWords.numberOfLines = 0;
+    //  someWords.lineBreakMode = UILineBreakModeWordWrap;
+    someWords.numberOfLines = 0;
     someWords.backgroundColor=[UIColor clearColor];
     [someWords sizeToFit];
-    //3
+    //“联系方式”
     CallTitle.textColor=[UIColor whiteColor];
     [CallTitle setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+    //“textField”
+    callNumber.delegate=self;
+    callNumber.layer.borderColor=[[UIColor blackColor] CGColor];
+    callNumber.layer.borderWidth =2.0;
+    callNumber.layer.cornerRadius =6.0;
 
+    //"反馈类型"
+    reBackType.textColor=[UIColor whiteColor];
+    [reBackType setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+    //"反馈内容"
+    content.textColor=[UIColor whiteColor];
+    [content setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];
+    //设置边框：UITextView
+    textView.layer.borderColor = [UIColor blackColor].CGColor;
+    textView.layer.borderWidth =2.0;
+    textView.layer.cornerRadius =5.0;
+    textView.textColor = [UIColor blackColor];//设置textview里面的字体颜色
+    textView.font = [UIFont fontWithName:@"Arial" size:18.0];
+    textView.backgroundColor = [UIColor whiteColor];
+    textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;//自适应高度
+    textView.delegate = self;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    textView.text=@"";
+    callNumber.text=@"";
+    [self build_Tool];
 }
 - (void)viewDidLoad
 {
@@ -57,8 +88,110 @@
     [self.view addSubview:navBar];
     [customLab release];
     [super viewDidLoad];
+    
+    submmit=[UIButton buttonWithType:UIButtonTypeCustom];
+    submmit.frame=CGRectMake(15, 518, 44, 44);
+    [submmit setImage:[UIImage imageNamed:@"face.png"] forState:UIControlStateNormal];
+    [submmit addTarget:self action:@selector(pressSubmmit) forControlEvents:UIControlEventTouchUpInside];
     [self build_Tool];
+    
+    Type=[UIButton buttonWithType:UIButtonTypeCustom];
+    Type.frame=CGRectMake(115,236,79,33);
+    [Type setImage:[UIImage imageNamed:@"TypeNormal@2X.png"] forState:UIControlStateNormal];
+    [Type setImage:[UIImage imageNamed:@"TypeSelect@2X.png"] forState: UIControlStateHighlighted];
+    [Type setImage:[UIImage imageNamed:@"TypeNormal@2X.png"] forState:UIControlStateNormal];
+    [Type addTarget:self action:@selector(pressTheType) forControlEvents:UIControlEventTouchUpInside];
+    labelType=[[UILabel alloc]initWithFrame:CGRectMake(2,2, 40, 32)];
+    labelType.backgroundColor=[UIColor clearColor];
+    labelType.text=@" 建议";
+    [Type addSubview:labelType];
+    [self.view addSubview:Type];
+    [self.view addSubview:submmit];
+    content_Read=[[ContentRead alloc]init];
+    content_Read.delegate=self;
 }
+-(void)pressSubmmit
+{
+    if([callNumber.text  isEqualToString: @""])
+    {
+        [self lockAnimationForView:callNumber];
+    }
+    if([textView.text isEqualToString: @""])
+    {
+        [self lockAnimationForView:textView];
+    }
+    if(![callNumber.text  isEqualToString: @""]&&![textView.text isEqualToString: @""])
+    {
+        //NSLog(@"%@  %@ %@",callNumber.text,labelType.text,textView.text);
+        [content_Read Submmit:callNumber.text typeBack:labelType.text content:textView.text];
+    }
+//    callNumber.text=@"15204071438";
+//    labelType.text=@"建议";
+//    textView.text=@"dnjfsdnkadsmlka";
+//    [content_Read Submmit:callNumber.text typeBack:labelType.text content:textView.text];
+ }
+-(void)reBack:(NSString *)jsonString
+{
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+    NSLog(@"%@",[jsonObj objectForKey:@"msg"]);
+    if([[jsonObj objectForKey:@"msg"] isEqualToString:@"反馈提交成功"])
+    {
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"反馈提交成功"
+                                                        message:@""
+                                                       delegate:self
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles: nil]autorelease];
+        [alert show];
+    }
+    else
+    {
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"反馈提交失败"
+                                                         message:@"请稍后再试"
+                                                        delegate:self
+                                               cancelButtonTitle:@"确定"
+                                               otherButtonTitles: nil]autorelease];
+        [alert show];
+    }
+}
+-(void)pressTheType
+{
+    NSString *string=[NSString stringWithFormat:@"反馈类型如下:" ];
+    UIActionSheet *  actionSheet = [[UIActionSheet alloc]
+                                    initWithTitle:string
+                                    delegate:self
+                                    cancelButtonTitle:@"其他"
+                                    destructiveButtonTitle:@"建议"
+                                    otherButtonTitles:@"意见",nil];
+    
+    [actionSheet showInView:self.view];
+    [actionSheet release];
+}
+#pragma mark -
+#pragma mark actionSheet delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+        {
+            labelType.text=@" 建议";
+            break;
+        }
+        case 1:
+        {
+            labelType.text=@" 意见";
+            break;
+        }
+        case 2:
+            labelType.text=@" 其他";
+            break;
+        default:
+            break;
+    }
+    [Type addSubview:labelType];
+}
+
+
 -(void)lockAnimationForView:(UIView*)view
 {
     CALayer *lbl = [view layer];
@@ -75,45 +208,49 @@
     [animation setRepeatCount:3];
     [lbl addAnimation:animation forKey:nil];
 }
-//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string//判断range.length的值来判断输入的是回格还是其它字符
-//{
-//    if (1 == range.length) {//按下回格键
-//        return YES;
-//    }
-//    if ([callNumber.text isEqualToString:@"\n"]) {//按下return键
-//        //这里隐藏键盘，不做任何处理
-//        [callNumber.text resignFirstResponder];
-//        return NO;
-//    }else {
-//        if ([callNumber.text length] < 140) {//判断字符个数
-//            return YES;
-//        }
-//    }
-//    return NO;
-//}
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField
-//{
-//     [callNumber resignFirstResponder];
-//    return YES;
-//}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+ - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [callNumber resignFirstResponder];
     return YES;
 }
+#pragma mark - UITextView Delegate Methods
 
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+
+{
+    
+    if ([text isEqualToString:@"\n"]) {
+        textView.frame=CGRectMake(15, 308, 285, 202);
+        [textView resignFirstResponder];
+        textViewStyle = YES;
+        return NO;
+    }
+    return YES;
+}
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+    if (textViewStyle)
+    {
+        textView.frame=CGRectMake(0, 62, 320, 292);
+        textView.text = @"";
+    }
+    [self.view addSubview:textView];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 - (void)dealloc {
     [someWords release];
     [someWordsTitle release];
     [CallTitle release];
     [callNumber release];
+    [reBackType release];
+    [labelType release];
+    [Type release];
+    [content release];
+    [textView release];
     [super dealloc];
 }
 @end

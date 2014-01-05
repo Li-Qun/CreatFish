@@ -46,6 +46,7 @@
 
 @protocol FishDelegate
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag;
+-(void)reBack:(NSString *)jsonString;
 @end
 @interface ContentRead:NSObject<ASIHTTPRequestDelegate,FishDelegate>
 {
@@ -55,8 +56,6 @@
     NSString * offset;
     NSString *total;
     NSString *content;
-    CategoryItem *categoryItem;
-    int indext;
     id<FishDelegate>delegate;
 }
 
@@ -74,6 +73,7 @@
 -(void)ContentDetail:(NSString*) content_id;
 -(void)Category;
 -(void)ContentSetting;
+-(void)Submmit:(NSString *)contact typeBack:(NSString *)feedback_category content:(NSString *)feedback_content;
 @end
 
 
