@@ -27,6 +27,7 @@
         imgView.frame = self.view.bounds;
         imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.view insertSubview:imgView atIndex:0];
+        [imgView release];
     }
     return self;
 }
@@ -76,9 +77,18 @@
 }
 - (void)viewDidLoad
 {
-    navBar = [[[UINavigationBar alloc] initWithFrame:CGRectMake(0, 17, 320, 44)]autorelease];
+    navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 17, 320, 44)];
     [navBar setBackgroundImage:[UIImage imageNamed:@"advice_nav_red@2x.png"] forBarMetrics:UIBarMetricsDefault];
     UINavigationItem *navigationItem = [[[UINavigationItem alloc] init ]autorelease];
+    
+    UIButton *back = [UIButton buttonWithType:UIButtonTypeSystem];
+    back.frame=CGRectMake(0, 0, 44, 50);
+    [back addTarget:self action:@selector(backSet) forControlEvents:UIControlEventTouchDown];
+    [back setTitle:@"返回" forState:UIControlStateNormal];
+    
+    [navBar addSubview:back];
+    
+    
     UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
     [customLab setTextColor:[UIColor whiteColor]];
     [customLab setText:@"意见反馈"];
@@ -109,6 +119,10 @@
     [self.view addSubview:submmit];
     content_Read=[[ContentRead alloc]init];
     content_Read.delegate=self;
+}
+-(void)backSet
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)pressSubmmit
 {
@@ -242,13 +256,13 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)dealloc {
+    [navBar release];
     [someWords release];
     [someWordsTitle release];
     [CallTitle release];
     [callNumber release];
     [reBackType release];
     [labelType release];
-    [Type release];
     [content release];
     [textView release];
     [super dealloc];
