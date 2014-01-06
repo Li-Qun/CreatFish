@@ -164,7 +164,7 @@
     detailID=[jsonObj objectForKey:@"id"];
     [htmlTextTotals appendFormat:[NSString stringWithFormat: htmlText]];
    // htmlTextTotals = [htmlTextTotals stringByAppendingString:htmlText];
-  //  NSLog(@"%@",htmlTextTotals);
+   //  NSLog(@"%@",htmlTextTotals);
     jsString = [NSString stringWithFormat:@"<html> \n"
                           "<head> \n"
                           "<style type=\"text/css\"> \n"
@@ -174,19 +174,15 @@
                           "<body>%@</body> \n"
                           "</html>",  fontSize ,line_height,htmlTextTotals];
     
-  
-   [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController setNavigationBarHidden:YES];
+    
+    
    [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-
-
-    self.view.backgroundColor=[UIColor whiteColor];
     showWebView.delegate=self;
     showWebView.scrollView.delegate=self;
-    //showWebView.scalesPageToFit = YES;
-    
-//    showWebView.scrollView.frame = CGRectMake(0, 0, 984, 748);
-//    showWebView.scrollView.clipsToBounds = NO;
-   
+
+    self.view.backgroundColor=[UIColor whiteColor];
+ 
     [showWebView setUserInteractionEnabled: YES ];
     [self.view addSubview:showWebView];
     
@@ -224,7 +220,11 @@
 //    [self refreshView];
     
 }
-
+-(void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [showWebView stringByEvaluatingJavaScriptFromString:@"imageWidth(320);"];//设置网络图片统一宽度320
+    
+}
 //网络请求过程中，出现任何错误（断网，连接超时等）会进入此方法
 -(void)connection:(NSURLConnection *)connection
 didFailWithError:(NSError *)error
