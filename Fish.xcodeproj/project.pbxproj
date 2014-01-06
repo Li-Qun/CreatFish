@@ -103,6 +103,14 @@
 		BBA478A3185721E600E64289 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA478A2185721E600E64289 /* ImageIO.framework */; };
 		BBA5553B185811380011F6BC /* Top_1_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA55538185811380011F6BC /* Top_1_ViewController.m */; };
 		BBA5553C185811380011F6BC /* TopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA5553A185811380011F6BC /* TopViewController.m */; };
+		BBA5B7D1187A875000D55899 /* labelNormal_Set.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA5B7CF187A875000D55899 /* labelNormal_Set.png */; };
+		BBA5B7D2187A875000D55899 /* labelNormal_Set@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA5B7D0187A875000D55899 /* labelNormal_Set@2X.png */; };
+		BBA5B7D5187A8EB600D55899 /* theLineSet.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA5B7D3187A8EB600D55899 /* theLineSet.png */; };
+		BBA5B7D6187A8EB600D55899 /* theLineSet@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA5B7D4187A8EB600D55899 /* theLineSet@2X.png */; };
+		BBA5B7D9187AB21F00D55899 /* xinlang.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA5B7D7187AB21F00D55899 /* xinlang.png */; };
+		BBA5B7DA187AB21F00D55899 /* xinlang@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA5B7D8187AB21F00D55899 /* xinlang@2X.png */; };
+		BBA5B7DD187AB3ED00D55899 /* weixin@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA5B7DB187AB3ED00D55899 /* weixin@2X.png */; };
+		BBA5B7DE187AB3ED00D55899 /* wixin.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA5B7DC187AB3ED00D55899 /* wixin.png */; };
 		BBA69896186FE9DD00DE10AB /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA6988E186FE9DD00DE10AB /* blackArrow.png */; };
 		BBA69897186FE9DD00DE10AB /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA6988F186FE9DD00DE10AB /* blackArrow@2x.png */; };
 		BBA69898186FE9DD00DE10AB /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA69890186FE9DD00DE10AB /* blueArrow.png */; };
@@ -381,6 +389,14 @@
 		BBA55538185811380011F6BC /* Top_1_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Top_1_ViewController.m; sourceTree = "<group>"; };
 		BBA55539185811380011F6BC /* TopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopViewController.h; sourceTree = "<group>"; };
 		BBA5553A185811380011F6BC /* TopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopViewController.m; sourceTree = "<group>"; };
+		BBA5B7CF187A875000D55899 /* labelNormal_Set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = labelNormal_Set.png; sourceTree = "<group>"; };
+		BBA5B7D0187A875000D55899 /* labelNormal_Set@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "labelNormal_Set@2X.png"; sourceTree = "<group>"; };
+		BBA5B7D3187A8EB600D55899 /* theLineSet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theLineSet.png; sourceTree = "<group>"; };
+		BBA5B7D4187A8EB600D55899 /* theLineSet@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "theLineSet@2X.png"; sourceTree = "<group>"; };
+		BBA5B7D7187AB21F00D55899 /* xinlang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xinlang.png; sourceTree = "<group>"; };
+		BBA5B7D8187AB21F00D55899 /* xinlang@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xinlang@2X.png"; sourceTree = "<group>"; };
+		BBA5B7DB187AB3ED00D55899 /* weixin@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weixin@2X.png"; sourceTree = "<group>"; };
+		BBA5B7DC187AB3ED00D55899 /* wixin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wixin.png; sourceTree = "<group>"; };
 		BBA6988E186FE9DD00DE10AB /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
 		BBA6988F186FE9DD00DE10AB /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
 		BBA69890186FE9DD00DE10AB /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
@@ -1039,8 +1055,16 @@
 		BBD0E1DA18781429000D1141 /* set */ = {
 			isa = PBXGroup;
 			children = (
+				BBA5B7DB187AB3ED00D55899 /* weixin@2X.png */,
+				BBA5B7DC187AB3ED00D55899 /* wixin.png */,
+				BBA5B7D7187AB21F00D55899 /* xinlang.png */,
+				BBA5B7D8187AB21F00D55899 /* xinlang@2X.png */,
 				BBD0E1DB18781444000D1141 /* set_Nav.png */,
 				BBD0E1DC18781444000D1141 /* set_Nav@2X.png */,
+				BBA5B7CF187A875000D55899 /* labelNormal_Set.png */,
+				BBA5B7D0187A875000D55899 /* labelNormal_Set@2X.png */,
+				BBA5B7D3187A8EB600D55899 /* theLineSet.png */,
+				BBA5B7D4187A8EB600D55899 /* theLineSet@2X.png */,
 				BBD0E1E418781B5B000D1141 /* reBack */,
 			);
 			name = set;
@@ -1236,6 +1260,7 @@
 			files = (
 				BBD81BC1186C34DA000DBEEE /* 6.jpg in Resources */,
 				BBD81BB5186C34DA000DBEEE /* 21.jpg in Resources */,
+				BBA5B7DD187AB3ED00D55899 /* weixin@2X.png in Resources */,
 				BB9D90B118684545000CB89C /* LifeViewController.xib in Resources */,
 				BBA352AF1879568800A8239C /* advice_back@2X.png in Resources */,
 				BBA6989C186FE9DD00DE10AB /* whiteArrow.png in Resources */,
@@ -1262,11 +1287,13 @@
 				BBB79BD718618C85007DCEEA /* InformationCell.xib in Resources */,
 				BBA352A918792A2900A8239C /* TypeNormal@2X.png in Resources */,
 				BBA6989A186FE9DD00DE10AB /* grayArrow.png in Resources */,
+				BBA5B7D1187A875000D55899 /* labelNormal_Set.png in Resources */,
 				9006F33E184D59250091B69F /* InfoPlist.strings in Resources */,
 				BBD81BAD186C34DA000DBEEE /* 14.jpg in Resources */,
 				BBD7A061186D61E5000A4675 /* back.png in Resources */,
 				BBC95B2E18532E5F00A10431 /* images-10.jpeg in Resources */,
 				BBA69897186FE9DD00DE10AB /* blackArrow@2x.png in Resources */,
+				BBA5B7DE187AB3ED00D55899 /* wixin.png in Resources */,
 				BB951560185348C000BD82A7 /* bg-addbutton@2x.png in Resources */,
 				BB95156A185348C000BD82A7 /* icon-plus-highlighted@2x.png in Resources */,
 				BBD134151869CD2D008657B6 /* camera.png in Resources */,
@@ -1279,6 +1306,7 @@
 				BB951564185348C000BD82A7 /* bg-menuitem.png in Resources */,
 				BBC95B3118532E5F00A10431 /* images-4.jpeg in Resources */,
 				BBD134161869CD2D008657B6 /* camera@2x.png in Resources */,
+				BBA5B7DA187AB21F00D55899 /* xinlang@2X.png in Resources */,
 				BBD81BB8186C34DA000DBEEE /* 24.jpg in Resources */,
 				BBD81BC0186C34DA000DBEEE /* 5.jpg in Resources */,
 				BBD0E1E718781B95000D1141 /* advice_nav_red.png in Resources */,
@@ -1288,6 +1316,7 @@
 				BBD81BB3186C34DA000DBEEE /* 2.jpg in Resources */,
 				BB951561185348C000BD82A7 /* icon-star.png in Resources */,
 				BBD7A05F186D2DED000A4675 /* selectedButton.png in Resources */,
+				BBA5B7D2187A875000D55899 /* labelNormal_Set@2X.png in Resources */,
 				BBD529E4185D399600575349 /* Default.png in Resources */,
 				BBD81BBD186C34DA000DBEEE /* 29.jpg in Resources */,
 				BBA18E791864277100EEEFC8 /* DetailViewController.xib in Resources */,
@@ -1295,6 +1324,7 @@
 				BBA0987218751A1B008C49E2 /* MagDetaiViewController.xib in Resources */,
 				BBD81BAB186C34DA000DBEEE /* 12.jpg in Resources */,
 				BBD81BAF186C34DA000DBEEE /* 16.jpg in Resources */,
+				BBA5B7D5187A8EB600D55899 /* theLineSet.png in Resources */,
 				BBC95B3018532E5F00A10431 /* images-3.jpeg in Resources */,
 				BB95155D185348C000BD82A7 /* bg-addbutton.png in Resources */,
 				BBD67E421876D6E800A6CD87 /* StoreUpViewController.xib in Resources */,
@@ -1314,6 +1344,7 @@
 				BBD81BAC186C34DA000DBEEE /* 13.jpg in Resources */,
 				BBD81BB0186C34DA000DBEEE /* 17.jpg in Resources */,
 				BBD81BB6186C34DA000DBEEE /* 22.jpg in Resources */,
+				BBA5B7D6187A8EB600D55899 /* theLineSet@2X.png in Resources */,
 				BBD0E1DD18781444000D1141 /* set_Nav.png in Resources */,
 				BBD81BBE186C34DA000DBEEE /* 3.jpg in Resources */,
 				BB951563185348C000BD82A7 /* bg-menuitem-highlighted.png in Resources */,
@@ -1334,6 +1365,7 @@
 				BBA352AE1879568800A8239C /* advice_back.png in Resources */,
 				BBD0E1DE18781444000D1141 /* set_Nav@2X.png in Resources */,
 				BBA352A818792A2900A8239C /* TypeNormal.png in Resources */,
+				BBA5B7D9187AB21F00D55899 /* xinlang.png in Resources */,
 				BBA69898186FE9DD00DE10AB /* blueArrow.png in Resources */,
 				BBC95B3518532E5F00A10431 /* images-8.jpeg in Resources */,
 				9006F350184D59250091B69F /* ViewController.xib in Resources */,

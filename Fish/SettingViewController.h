@@ -8,9 +8,13 @@
 
 #import "ViewController.h"
 
-@interface SettingViewController : ViewController
+@interface SettingViewController : ViewController<UIScrollViewDelegate,UIScrollViewAccessibilityDelegate
+>
 {
     UINavigationBar *navBar;
+    IBOutlet UIScrollView *scrollView;
+    UIView *myView;
 }
+@property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end

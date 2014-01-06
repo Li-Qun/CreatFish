@@ -77,12 +77,12 @@
 }
 - (void)viewDidLoad
 {
-    navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 17, 320, 44)];
+    navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 55)];//0 17 320 44
     [navBar setBackgroundImage:[UIImage imageNamed:@"advice_nav_red@2x.png"] forBarMetrics:UIBarMetricsDefault];
     UINavigationItem *navigationItem = [[[UINavigationItem alloc] init ]autorelease];
     
     UIButton *back = [UIButton buttonWithType:UIButtonTypeSystem];
-    back.frame=CGRectMake(0, 0, 44, 50);
+    back.frame=CGRectMake(0, 0, 44, 60);
     [back addTarget:self action:@selector(backSet) forControlEvents:UIControlEventTouchDown];
     [back setTitle:@"返回" forState:UIControlStateNormal];
     

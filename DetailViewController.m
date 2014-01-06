@@ -220,10 +220,24 @@
 //    [self refreshView];
     
 }
+#pragma mark - webview
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading...";//加载提示语言
+}
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
+   
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+
     [showWebView stringByEvaluatingJavaScriptFromString:@"imageWidth(320);"];//设置网络图片统一宽度320
-    
+    [showWebView stringByEvaluatingJavaScriptFromString:@"init();"];
+    //:a=document.body.getElementsByTagName("img");var b="";for(i=0;i<a.length;i++){b+="<img border=0 src="+a[i].src+"><br>"+a[i].src+"<br>"};document.write(b);
 }
 //网络请求过程中，出现任何错误（断网，连接超时等）会进入此方法
 -(void)connection:(NSURLConnection *)connection

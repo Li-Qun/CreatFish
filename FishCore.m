@@ -18,21 +18,6 @@
 @synthesize tileArray=tileArray;
 @end
 
-/*
- 
- 
- public static final String BASE_URL = "http://42.96.192.186/ifish/server/index.php/app/mgz/";
- public static final String BASE_UPLOAD = "http://42.96.192.186/ifish/server/upload/";
- public static final String BASE_IMAGE = "http://42.96.192.186/ifish/server/image/ ";
- 
- 
- public static final String SEARCH_CATEGORY = BASE_URL+"category/read_lst";//查询分类
- public static final String FEED_BACK =BASE_URL+"";
- 
- 
- */
-
-
 @implementation CategoryItem
 @synthesize CategoryId=CategoryId;
 @synthesize CategoryPid=CategoryPid;
