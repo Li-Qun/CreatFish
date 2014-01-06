@@ -18,7 +18,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-       
+        [self.navigationController setToolbarHidden:YES];
     }
     return self;
 }
@@ -50,6 +50,7 @@
 }
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
     
     [self.navigationController setToolbarHidden:YES];

@@ -48,8 +48,7 @@
     [request setCompletionBlock :^{
         // 请求响应结束，返回 responseString
         NSString *responseString = [request responseString ]; // 对于 2 进制数据，使用 NSData 返回
-        //  NSData *responseData = [request responseData];
-        //  NSLog ( @"＊＊＊＊＊＊＊%@＊＊＊＊＊＊" ,responseString);
+        [delegate reBack:responseString];
     }];
     [request setFailedBlock :^{
         // 请求响应失败，返回错误信息
@@ -57,7 +56,6 @@
         NSLog ( @"error:%@" ,[error userInfo ]);
     }];
     [request startAsynchronous ];
-    
 }
 //content/read_lst
 //查询 - 列表
@@ -69,10 +67,9 @@
      [request setPostValue:ID forKey:@"filter_category_id"];
      [request setPostValue:flag forKey:@"filter_is_sticky"];
      [request setPostValue:Offset forKey:@"offset"];
-   //    [request setDelegate:self];
+ 
      NSLog(@"%d",[request responseStatusCode]);
     [request setCompletionBlock :^{
-        // 请求响应结束，返回 responseString
         NSString * jsonString  =  [request responseString];
         [delegate getJsonString :jsonString isPri:flag ];
         //        NSDictionary *jsondictionary=[jsonString JSONValue];

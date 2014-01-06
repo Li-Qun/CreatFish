@@ -35,6 +35,7 @@
 -(void)BuildFirstPage
 {
     [contentRead ContentSetting];
+    [contentRead Category];
 }
 -(void)_init
 {
@@ -44,6 +45,50 @@
     [app build];
    //通过KEY找到value
     [self BuildFirstPage];
+}
+-(void)reBack:(NSString *)jsonString
+{
+    //NSLog(@"%@",jsonString);
+//    /******************toolBar************************/
+//    UIToolbar *toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 460-44, 320, 44) ];
+//    
+//    UIBarButtonItem *New=[[UIBarButtonItem alloc]initWithTitle:@"资讯" style:UIBarButtonItemStyleBordered target:self action:@selector(pressNew)];
+//    
+//    UIBarButtonItem * Life = [[UIBarButtonItem  alloc]initWithTitle:@"生活" style: UIBarButtonItemStyleBordered target:self action:@selector(pressLife)];
+//    UIBarButtonItem *Style=[[UIBarButtonItem alloc]initWithTitle:@"潮流" style:UIBarButtonItemStyleBordered target:self action:@selector(pressStyle)];
+//    UIBarButtonItem *Paper=[[UIBarButtonItem alloc]initWithTitle:@"周刊" style:UIBarButtonItemStyleBordered target:self action:@selector(pressPaper)];
+//    UIBarButtonItem *Save=[[UIBarButtonItem alloc]initWithTitle:@"收藏" style:UIBarButtonItemStyleBordered target:self action:@selector(pressSave)];
+//    
+//    UIBarButtonItem * flexibleItem =[[UIBarButtonItem  alloc]initWithBarButtonSystemItem:                                        UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+//    
+//    self.view.backgroundColor=[UIColor whiteColor];
+//    NSArray *itemsArry=[NSArray arrayWithObjects:New,flexibleItem, Life,flexibleItem,Style ,flexibleItem,Paper,flexibleItem,Save,nil];
+//    [self setToolbarItems:itemsArry animated:YES ];
+//    [toolBar setItems:itemsArry];
+//    toolBar.barStyle =[UIColor blackColor];
+//    [self.navigationController  setToolbarHidden:NO ];//animated:YES
+//    //   [self.view addSubview:toolBar];
+//    
+//    [New release];
+//    [flexibleItem release];
+//    [Life release];
+//    [Style release];
+//    [Paper release];
+//    [Save release];
+//    [toolBar release];
+//    
+//    
+//    /******************toolBar************************/
+
+    UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 524, 320, 44)]autorelease];
+    imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
+    [self.view addSubview:imgToolView];
+    
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+    NSLog(@"%@",jsonObj);
+   
+    
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
@@ -98,36 +143,6 @@
      [self.navigationController setNavigationBarHidden:YES ];
     self.navigationController.navigationBarHidden=YES;
     [self _init];
-    /******************toolBar************************/
-    UIToolbar *toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 460-44, 320, 44) ];
-   
-    UIBarButtonItem *New=[[UIBarButtonItem alloc]initWithTitle:@"资讯" style:UIBarButtonItemStyleBordered target:self action:@selector(pressNew)];
-    
-    UIBarButtonItem * Life = [[UIBarButtonItem  alloc]initWithTitle:@"生活" style: UIBarButtonItemStyleBordered target:self action:@selector(pressLife)];
-    UIBarButtonItem *Style=[[UIBarButtonItem alloc]initWithTitle:@"潮流" style:UIBarButtonItemStyleBordered target:self action:@selector(pressStyle)];
-    UIBarButtonItem *Paper=[[UIBarButtonItem alloc]initWithTitle:@"周刊" style:UIBarButtonItemStyleBordered target:self action:@selector(pressPaper)];
-    UIBarButtonItem *Save=[[UIBarButtonItem alloc]initWithTitle:@"收藏" style:UIBarButtonItemStyleBordered target:self action:@selector(pressSave)];
-    
-    UIBarButtonItem * flexibleItem =[[UIBarButtonItem  alloc]initWithBarButtonSystemItem:                                        UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    
-    self.view.backgroundColor=[UIColor whiteColor];
-    NSArray *itemsArry=[NSArray arrayWithObjects:New,flexibleItem, Life,flexibleItem,Style ,flexibleItem,Paper,flexibleItem,Save,nil];
-    [self setToolbarItems:itemsArry animated:YES ];
-    [toolBar setItems:itemsArry];
-    toolBar.barStyle =[UIColor blackColor];
-    [self.navigationController  setToolbarHidden:NO ];//animated:YES
-    //   [self.view addSubview:toolBar];
-    
-    [New release];
-    [flexibleItem release];
-    [Life release];
-    [Style release];
-    [Paper release];
-    [Save release];
-    [toolBar release];
-    
-    
-    /******************toolBar************************/
     
 }
 #pragma mark-- UIScrollViewDelegate
