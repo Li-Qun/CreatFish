@@ -80,61 +80,144 @@
 //    
 //    /******************toolBar************************/
 
-    UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 524, 320, 44)]autorelease];
-    imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
-    [self.view addSubview:imgToolView];
-    
-    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-    NSDictionary *jsonObj =[parser objectWithString: jsonString];
-    NSLog(@"%@",jsonObj);
-   
+//    UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 524, 320, 44)]autorelease];
+//    imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
+//    [self.view addSubview:imgToolView];
+//    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+//    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+//   // NSLog(@"%@",[jsonObj  objectAtIndex:0] );
+// //  [dict objectForKey:@"category_id"];
+//    
+//    for(int i=0;i<5;i++)
+//    {
+//        NSString *name=[[[NSString alloc]init]autorelease];
+//        UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
+//        if(i<4)
+//        {
+//            name= [NSString stringWithFormat: [[jsonObj  objectAtIndex:i] objectForKey:@"name"]];
+//            button.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
+//        }
+//        else {
+//            name= [NSString stringWithFormat:@"收藏"];
+//            button.tag=100;
+//        }
+//      
+//       
+//        button.frame=CGRectMake(10+i*60, 5+524, 30, 40);
+//        button.showsTouchWhenHighlighted = YES;
+//        [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
+//        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
+//        label.text=name;
+//        label.font  = [UIFont fontWithName:@"Arial" size:15.0];
+//        UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
+//        labelNum.text=[NSString stringWithFormat: [[jsonObj  objectAtIndex:i] objectForKey:@"id"]];
+//        labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
+//        labelNum.textColor=[UIColor whiteColor];
+//        UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
+//        imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
+//        [imgViewRed addSubview:labelNum];
+//        [button addSubview:imgViewRed];
+//        [button addSubview:label];
+//      //  [imgToolView addSubview:button];
+//        [self.view addSubview:button];
+//        [label release];
+//    }
     
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-    NSDictionary *jsonObj =[parser objectWithString:jsonString];
-    NSDictionary *data = [jsonObj objectForKey:@"home_image"];
-    for (int i =0; i <data.count; i++) {
-       [app.firstPageImage insertObject:[data objectAtIndex:i] atIndex: i];
-    }
-    ///UIScrollerView
-    index = 0;
-	self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:app.firstPageImage.count];
-    CGSize size = self.klpScrollView1.frame.size;
-	for (int i=0; i < [app.firstPageImage count]; i++) {
-        UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height)]autorelease];
-      //  [iv setImage:[UIImage imageNamed:[app.firstPageImage objectAtIndex:i]]];
-        NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[app.firstPageImage objectAtIndex:i]];
-        [iv setImageWithURL:[NSURL URLWithString: imgURL]
-                     placeholderImage:[UIImage imageNamed:@"placeholder.png"]
-                              success:^(UIImage *image) {NSLog(@"OK");}
-                              failure:^(NSError *error) {NSLog(@"NO");}];
-        [self.klpScrollView1 addSubview:iv];
-        iv = nil;
+    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+    if([flag integerValue]==0)
+    {
+        NSDictionary *data = [jsonObj objectForKey:@"home_image"];
+        for (int i =0; i <data.count; i++) {
+            [app.firstPageImage insertObject:[data objectAtIndex:i] atIndex: i];
+        }
+        ///UIScrollerView
+        index = 0;
+        self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:app.firstPageImage.count];
+        CGSize size = self.klpScrollView1.frame.size;
+        for (int i=0; i < [app.firstPageImage count]; i++) {
+            UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height)]autorelease];
+            //  [iv setImage:[UIImage imageNamed:[app.firstPageImage objectAtIndex:i]]];
+            NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[app.firstPageImage objectAtIndex:i]];
+            [iv setImageWithURL:[NSURL URLWithString: imgURL]
+               placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                        success:^(UIImage *image) {NSLog(@"OK");}
+                        failure:^(NSError *error) {NSLog(@"NO");}];
+            [self.klpScrollView1 addSubview:iv];
+            iv = nil;
+            
+        }
+        [self.klpScrollView1 setContentSize:CGSizeMake(size.width * app.firstPageImage.count, 0)];//只可横向滚动～
         
-    }
-	[self.klpScrollView1 setContentSize:CGSizeMake(size.width * app.firstPageImage.count, 0)];//只可横向滚动～
-	
-	self.klpScrollView1.pagingEnabled = YES;
-    self.klpScrollView1.showsHorizontalScrollIndicator = NO;
-	
-	for (int i=0; i<app.firstPageImage.count; i++) {
-        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(100*i + 5*i,0,100,70)];
-        [iv setImage:[UIImage imageNamed:[app.firstPageImage objectAtIndex:i]]];
-        [self.klpImgArr addObject:iv];
-        iv = nil;
-    }
-    
-	UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-    [singleTap setNumberOfTapsRequired:1];
-    
-    [self.klpScrollView1 addGestureRecognizer:singleTap];
-    [klpScrollView1 release];
-	[klpImgArr release];
-    [app.firstPageImage release];
-    ///UIScrollerView
+        self.klpScrollView1.pagingEnabled = YES;
+        self.klpScrollView1.showsHorizontalScrollIndicator = NO;
+        
+        for (int i=0; i<app.firstPageImage.count; i++) {
+            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(100*i + 5*i,0,100,70)];
+            [iv setImage:[UIImage imageNamed:[app.firstPageImage objectAtIndex:i]]];
+            [self.klpImgArr addObject:iv];
+            iv = nil;
+        }
+        
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+        [singleTap setNumberOfTapsRequired:1];
+        
+        [self.klpScrollView1 addGestureRecognizer:singleTap];
+        [klpScrollView1 release];
+        [klpImgArr release];
+        [app.firstPageImage release];
+        ///UIScrollerView
 
+    }
+    else
+    {
+        UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 524, 320, 44)]autorelease];
+        imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
+        imgToolView.tag=22;
+        [self.view addSubview:imgToolView];
+        // NSLog(@"%@",[jsonObj  objectAtIndex:0] );
+        //  [dict objectForKey:@"category_id"];
+        
+        for(int i=0;i<5;i++)
+        {
+            NSString *name=[[[NSString alloc]init]autorelease];
+            UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
+            if(i<4)
+            {
+                name= [NSString stringWithFormat: [[jsonObj  objectAtIndex:i] objectForKey:@"name"]];
+                button.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
+            }
+            else {
+                name= [NSString stringWithFormat:@"收藏"];
+                button.tag=100;
+            }
+            
+            
+            button.frame=CGRectMake(10+i*60, 5+524, 30, 40);
+            button.showsTouchWhenHighlighted = YES;
+            [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
+            UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
+            label.text=name;
+            label.font  = [UIFont fontWithName:@"Arial" size:15.0];
+            UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
+            labelNum.text=[NSString stringWithFormat: [[jsonObj  objectAtIndex:i] objectForKey:@"id"]];
+            labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
+            labelNum.textColor=[UIColor whiteColor];
+            UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
+            imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
+            [imgViewRed addSubview:labelNum];
+            [button addSubview:imgViewRed];
+            [button addSubview:label];
+            //  [imgToolView addSubview:button];
+            [self.view addSubview:button];
+            [label release];
+        }
+
+    }
+   
 }
 - (void)viewDidLoad
 {
@@ -228,7 +311,30 @@
 {
      [self.viewDeckController toggleRightViewAnimated:YES];
 }
-
+-(void)Press_Tag:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    //NSLog(@"%d", btn.tag);
+       NSLog(@"%d",btn.tag);
+//    for (UIView *subviews in [self.view subviews]) {
+//     //   if (subviews.tag==22)
+//        {
+//            [subviews removeFromSuperview];
+//        }
+//    }//必须从self.view中移除，不能从gpsClickView中移除
+    if(btn.tag!=100)
+    {
+        NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
+        newVC.hidesBottomBarWhenPushed = YES;
+        newVC.target=btn.tag;
+        [self.navigationController pushViewController :newVC animated:YES];
+    }
+    else{
+        StoreUpViewController *newVC = [[[StoreUpViewController alloc] initWithNibName:@"StoreUpViewController" bundle:nil]autorelease];
+        self.hidesBottomBarWhenPushed = YES;//OK~
+        [self.navigationController pushViewController :newVC animated:YES];
+    }
+}
 -(void)pressNew
 {
     NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];

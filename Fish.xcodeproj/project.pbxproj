@@ -130,6 +130,8 @@
 		BBAC873E18602E8B00A36D8A /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BBAC873D18602E8B00A36D8A /* JSONKit.m */; };
 		BBACDE7818713C20002F1BF5 /* LoadMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BBACDE7718713C20002F1BF5 /* LoadMoreCell.m */; };
 		BBACDE7A18713C41002F1BF5 /* LoadMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBACDE7918713C41002F1BF5 /* LoadMoreCell.xib */; };
+		BBB2CF0D187BA7D500C8F210 /* redBack.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF0B187BA7D500C8F210 /* redBack.png */; };
+		BBB2CF0E187BA7D500C8F210 /* redBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF0C187BA7D500C8F210 /* redBack@2X.png */; };
 		BBB79BCA18614840007DCEEA /* NewsController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB79BC818614840007DCEEA /* NewsController.m */; };
 		BBB79BCB18614840007DCEEA /* NewsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBB79BC918614840007DCEEA /* NewsController.xib */; };
 		BBB79BD518618C5A007DCEEA /* InformationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB79BD418618C5A007DCEEA /* InformationCell.m */; };
@@ -423,6 +425,8 @@
 		BBACDE7618713C20002F1BF5 /* LoadMoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadMoreCell.h; sourceTree = "<group>"; };
 		BBACDE7718713C20002F1BF5 /* LoadMoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadMoreCell.m; sourceTree = "<group>"; };
 		BBACDE7918713C41002F1BF5 /* LoadMoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadMoreCell.xib; sourceTree = "<group>"; };
+		BBB2CF0B187BA7D500C8F210 /* redBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBack.png; sourceTree = "<group>"; };
+		BBB2CF0C187BA7D500C8F210 /* redBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redBack@2X.png"; sourceTree = "<group>"; };
 		BBB79BC718614840007DCEEA /* NewsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsController.h; sourceTree = "<group>"; };
 		BBB79BC818614840007DCEEA /* NewsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsController.m; sourceTree = "<group>"; };
 		BBB79BC918614840007DCEEA /* NewsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsController.xib; sourceTree = "<group>"; };
@@ -894,6 +898,8 @@
 		BBA5B7DF187ABF2C00D55899 /* firstView */ = {
 			isa = PBXGroup;
 			children = (
+				BBB2CF0B187BA7D500C8F210 /* redBack.png */,
+				BBB2CF0C187BA7D500C8F210 /* redBack@2X.png */,
 				BBA5B7E0187ABF4A00D55899 /* toolBar.png */,
 				BBA5B7E1187ABF4A00D55899 /* toolBar@2X.png */,
 			);
@@ -1342,6 +1348,7 @@
 				BBC95B3018532E5F00A10431 /* images-3.jpeg in Resources */,
 				BB95155D185348C000BD82A7 /* bg-addbutton.png in Resources */,
 				BBD67E421876D6E800A6CD87 /* StoreUpViewController.xib in Resources */,
+				BBB2CF0D187BA7D500C8F210 /* redBack.png in Resources */,
 				BBC95B2018532E4600A10431 /* SampleData.plist in Resources */,
 				BBC95B3618532E5F00A10431 /* images-9.jpeg in Resources */,
 				BBD81BBA186C34DA000DBEEE /* 26.jpg in Resources */,
@@ -1366,6 +1373,7 @@
 				BBC95B3218532E5F00A10431 /* images-5.jpeg in Resources */,
 				BBD529E6185D39AB00575349 /* Background.png in Resources */,
 				BBD81BB9186C34DA000DBEEE /* 25.jpg in Resources */,
+				BBB2CF0E187BA7D500C8F210 /* redBack@2X.png in Resources */,
 				BBA69899186FE9DD00DE10AB /* blueArrow@2x.png in Resources */,
 				BBB79BCB18614840007DCEEA /* NewsController.xib in Resources */,
 				BBD81BBF186C34DA000DBEEE /* 4.jpg in Resources */,

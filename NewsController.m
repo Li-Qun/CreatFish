@@ -63,6 +63,7 @@
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
     app.jsonString=jsonString;
+    NSLog(@"%d",app.array.count);
     NSLog(@"name %@", [[app.array objectAtIndex  :target ]objectForKey:@"name"]);
     NewsId=[[app.array objectAtIndex  :target ]objectForKey:@"id"];
     NewsName=[[app.array objectAtIndex  :target ]objectForKey:@"name"];

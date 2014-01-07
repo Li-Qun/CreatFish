@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface SettingViewController : ViewController<UIScrollViewDelegate,UIScrollViewAccessibilityDelegate
+@interface SettingViewController : ViewController<UIScrollViewDelegate,UIScrollViewAccessibilityDelegate,FishDelegate
 >
 {
     UINavigationBar *navBar;

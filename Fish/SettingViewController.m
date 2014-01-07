@@ -8,6 +8,7 @@
 
 #import "SettingViewController.h"
 #import "AdviceViewController.h"
+#import "ViewController.h"
 @interface SettingViewController ()
 
 @end
@@ -24,17 +25,9 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    
-
-
-    
-//    UIButton *fash=[UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    fash.frame=CGRectMake(20, 226, 101, 34);
-//    fash.hidden=NO;
-//    //[bigPicButton setImage:[UIImage imageNamed:@"face"]forState:UIControlStateNormal ];
-//    [fash setTitle:@"潮流" forState:UIControlStateNormal];
-//    [fash addTarget:self action:@selector(Press_set) forControlEvents:UIControlEventTouchDown];
-//    [self.view addSubview:fash];
+    contentRead =[[ContentRead alloc]init];
+    contentRead.delegate=self;
+    [contentRead Category];
 }
 -(void)Press_allRead
 {
@@ -48,10 +41,16 @@
     [self.navigationController pushViewController :newVC animated:YES];
 
 }
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+{
+    
+}
 - (void)viewDidLoad
 {
     
     [super viewDidLoad];
+    
+    
     
     [self.navigationController setToolbarHidden:YES];
     self.view.backgroundColor=[UIColor whiteColor];

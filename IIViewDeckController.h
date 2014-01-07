@@ -284,6 +284,7 @@ typedef void (^IIViewDeckControllerBounceBlock) (IIViewDeckController *controlle
 - (void)viewDeckController:(IIViewDeckController *)viewDeckController didPreviewBounceViewSide:(IIViewDeckSide)viewDeckSide animated:(BOOL)animated;
 
 - (CGFloat)viewDeckController:(IIViewDeckController*)viewDeckController changesLedge:(CGFloat)ledge forSide:(IIViewDeckSide)viewDeckSide;
+-(void)viewDeckController:(IIViewDeckController*)viewDeckController;
 
 @end
 
