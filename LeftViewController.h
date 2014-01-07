@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-@interface LeftViewController : UIViewController
+@interface LeftViewController : UIViewController<FishDelegate,UIScrollViewDelegate,UIScrollViewAccessibilityDelegate>
 {
     AppDelegate *app;
+     ContentRead *contentRead;
 }
 @end

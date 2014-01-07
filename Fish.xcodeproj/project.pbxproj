@@ -132,6 +132,14 @@
 		BBACDE7A18713C41002F1BF5 /* LoadMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBACDE7918713C41002F1BF5 /* LoadMoreCell.xib */; };
 		BBB2CF0D187BA7D500C8F210 /* redBack.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF0B187BA7D500C8F210 /* redBack.png */; };
 		BBB2CF0E187BA7D500C8F210 /* redBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF0C187BA7D500C8F210 /* redBack@2X.png */; };
+		BBB2CF17187BF01C00C8F210 /* LeftTitle.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF15187BF01C00C8F210 /* LeftTitle.png */; };
+		BBB2CF18187BF01C00C8F210 /* LeftTitle@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF16187BF01C00C8F210 /* LeftTitle@2X.png */; };
+		BBB2CF1B187BF80C00C8F210 /* selectOne.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF19187BF80C00C8F210 /* selectOne.png */; };
+		BBB2CF1C187BF80C00C8F210 /* selectOne@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF1A187BF80C00C8F210 /* selectOne@2X.png */; };
+		BBB2CF1F187BFAA600C8F210 /* firstPage.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF1D187BFAA600C8F210 /* firstPage.png */; };
+		BBB2CF20187BFAA600C8F210 /* firstPage@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF1E187BFAA600C8F210 /* firstPage@2X.png */; };
+		BBB2CF23187C00E800C8F210 /* News.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF21187C00E800C8F210 /* News.png */; };
+		BBB2CF24187C00E800C8F210 /* News@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF22187C00E800C8F210 /* News@2X.png */; };
 		BBB79BCA18614840007DCEEA /* NewsController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB79BC818614840007DCEEA /* NewsController.m */; };
 		BBB79BCB18614840007DCEEA /* NewsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBB79BC918614840007DCEEA /* NewsController.xib */; };
 		BBB79BD518618C5A007DCEEA /* InformationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB79BD418618C5A007DCEEA /* InformationCell.m */; };
@@ -427,6 +435,14 @@
 		BBACDE7918713C41002F1BF5 /* LoadMoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadMoreCell.xib; sourceTree = "<group>"; };
 		BBB2CF0B187BA7D500C8F210 /* redBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBack.png; sourceTree = "<group>"; };
 		BBB2CF0C187BA7D500C8F210 /* redBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redBack@2X.png"; sourceTree = "<group>"; };
+		BBB2CF15187BF01C00C8F210 /* LeftTitle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LeftTitle.png; sourceTree = "<group>"; };
+		BBB2CF16187BF01C00C8F210 /* LeftTitle@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LeftTitle@2X.png"; sourceTree = "<group>"; };
+		BBB2CF19187BF80C00C8F210 /* selectOne.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selectOne.png; sourceTree = "<group>"; };
+		BBB2CF1A187BF80C00C8F210 /* selectOne@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selectOne@2X.png"; sourceTree = "<group>"; };
+		BBB2CF1D187BFAA600C8F210 /* firstPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = firstPage.png; sourceTree = "<group>"; };
+		BBB2CF1E187BFAA600C8F210 /* firstPage@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "firstPage@2X.png"; sourceTree = "<group>"; };
+		BBB2CF21187C00E800C8F210 /* News.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = News.png; sourceTree = "<group>"; };
+		BBB2CF22187C00E800C8F210 /* News@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "News@2X.png"; sourceTree = "<group>"; };
 		BBB79BC718614840007DCEEA /* NewsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsController.h; sourceTree = "<group>"; };
 		BBB79BC818614840007DCEEA /* NewsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsController.m; sourceTree = "<group>"; };
 		BBB79BC918614840007DCEEA /* NewsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsController.xib; sourceTree = "<group>"; };
@@ -535,9 +551,9 @@
 		BBDBE93F184DCF71009FA292 /* IIViewDeckController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIViewDeckController.m; sourceTree = "<group>"; };
 		BBDBE940184DCF71009FA292 /* IIWrapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIWrapController.h; sourceTree = "<group>"; };
 		BBDBE941184DCF71009FA292 /* IIWrapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIWrapController.m; sourceTree = "<group>"; };
-		BBDBE944184DD064009FA292 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftViewController.h; sourceTree = "<group>"; };
-		BBDBE945184DD064009FA292 /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftViewController.m; sourceTree = "<group>"; };
-		BBDBE946184DD064009FA292 /* LeftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftViewController.xib; sourceTree = "<group>"; };
+		BBDBE944184DD064009FA292 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeftViewController.h; path = ../LeftViewController.h; sourceTree = "<group>"; };
+		BBDBE945184DD064009FA292 /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeftViewController.m; path = ../LeftViewController.m; sourceTree = "<group>"; };
+		BBDBE946184DD064009FA292 /* LeftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeftViewController.xib; path = ../LeftViewController.xib; sourceTree = "<group>"; };
 		BBDBE949184DD6CB009FA292 /* RightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightViewController.h; sourceTree = "<group>"; };
 		BBDBE94A184DD6CB009FA292 /* RightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightViewController.m; sourceTree = "<group>"; };
 		BBDBE94B184DD6CB009FA292 /* RightViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RightViewController.xib; sourceTree = "<group>"; };
@@ -624,19 +640,22 @@
 		9006F339184D59250091B69F /* Fish */ = {
 			isa = PBXGroup;
 			children = (
+				BBD0E1D4187808E6000D1141 /* Beauty */,
 				BBA689F418613DB1007CB68E /* FishCores */,
 				9006F342184D59250091B69F /* AppDelegate.h */,
 				9006F343184D59250091B69F /* AppDelegate.m */,
 				9006F34B184D59250091B69F /* ViewController.h */,
 				BBEB52C21867169B00527C90 /* ViewController.m */,
 				9006F34E184D59250091B69F /* ViewController.xib */,
+				BBDBE944184DD064009FA292 /* LeftViewController.h */,
+				BBDBE945184DD064009FA292 /* LeftViewController.m */,
+				BBDBE946184DD064009FA292 /* LeftViewController.xib */,
 				BBD0E1D518780909000D1141 /* SettingViewController.h */,
 				BBD0E1D618780909000D1141 /* SettingViewController.m */,
 				BBD0E1D718780909000D1141 /* SettingViewController.xib */,
 				BBD0E1DF187817D3000D1141 /* AdviceViewController.h */,
 				BBD0E1E0187817D3000D1141 /* AdviceViewController.m */,
 				BBD0E1E1187817D3000D1141 /* AdviceViewController.xib */,
-				BBD0E1D4187808E6000D1141 /* Beauty */,
 				9006F33A184D59250091B69F /* Supporting Files */,
 			);
 			path = Fish;
@@ -953,6 +972,21 @@
 			path = EGO;
 			sourceTree = "<group>";
 		};
+		BBB2CF14187BF00D00C8F210 /* slideLeft */ = {
+			isa = PBXGroup;
+			children = (
+				BBB2CF15187BF01C00C8F210 /* LeftTitle.png */,
+				BBB2CF16187BF01C00C8F210 /* LeftTitle@2X.png */,
+				BBB2CF19187BF80C00C8F210 /* selectOne.png */,
+				BBB2CF1A187BF80C00C8F210 /* selectOne@2X.png */,
+				BBB2CF1D187BFAA600C8F210 /* firstPage.png */,
+				BBB2CF1E187BFAA600C8F210 /* firstPage@2X.png */,
+				BBB2CF21187C00E800C8F210 /* News.png */,
+				BBB2CF22187C00E800C8F210 /* News@2X.png */,
+			);
+			name = slideLeft;
+			sourceTree = "<group>";
+		};
 		BBB79BD81861DCCC007DCEEA /* Pre */ = {
 			isa = PBXGroup;
 			children = (
@@ -1066,6 +1100,7 @@
 		BBD0E1D4187808E6000D1141 /* Beauty */ = {
 			isa = PBXGroup;
 			children = (
+				BBB2CF14187BF00D00C8F210 /* slideLeft */,
 				BBA5B7DF187ABF2C00D55899 /* firstView */,
 				BBD0E1DA18781429000D1141 /* set */,
 			);
@@ -1193,9 +1228,6 @@
 				BBDBE93F184DCF71009FA292 /* IIViewDeckController.m */,
 				BBDBE940184DCF71009FA292 /* IIWrapController.h */,
 				BBDBE941184DCF71009FA292 /* IIWrapController.m */,
-				BBDBE944184DD064009FA292 /* LeftViewController.h */,
-				BBDBE945184DD064009FA292 /* LeftViewController.m */,
-				BBDBE946184DD064009FA292 /* LeftViewController.xib */,
 				BBDBE949184DD6CB009FA292 /* RightViewController.h */,
 				BBDBE94A184DD6CB009FA292 /* RightViewController.m */,
 				BBDBE94B184DD6CB009FA292 /* RightViewController.xib */,
@@ -1289,6 +1321,7 @@
 				BBD81BA8186C34DA000DBEEE /* 1.jpg in Resources */,
 				BB95155F185348C000BD82A7 /* bg-addbutton-highlighted@2x.png in Resources */,
 				BBD81BB1186C34DA000DBEEE /* 18.jpg in Resources */,
+				BBB2CF1F187BFAA600C8F210 /* firstPage.png in Resources */,
 				BB31A48D186ED80D00F23782 /* OneCell.xib in Resources */,
 				BBAC8738185FFA6100A36D8A /* TViewController.xib in Resources */,
 				BBD81BA7186C34DA000DBEEE /* 0.jpg in Resources */,
@@ -1329,6 +1362,7 @@
 				BBA5B7DA187AB21F00D55899 /* xinlang@2X.png in Resources */,
 				BBD81BB8186C34DA000DBEEE /* 24.jpg in Resources */,
 				BBD81BC0186C34DA000DBEEE /* 5.jpg in Resources */,
+				BBB2CF1C187BF80C00C8F210 /* selectOne@2X.png in Resources */,
 				BBD0E1E718781B95000D1141 /* advice_nav_red.png in Resources */,
 				BBDBE948184DD064009FA292 /* LeftViewController.xib in Resources */,
 				BBD81BB7186C34DA000DBEEE /* 23.jpg in Resources */,
@@ -1360,12 +1394,15 @@
 				BB78463F1859A74600260712 /* ProtectViewController.xib in Resources */,
 				BBD81BAA186C34DA000DBEEE /* 11.jpg in Resources */,
 				BB50B1E6187273FA0096A3A9 /* 1.png in Resources */,
+				BBB2CF18187BF01C00C8F210 /* LeftTitle@2X.png in Resources */,
 				BBA69896186FE9DD00DE10AB /* blackArrow.png in Resources */,
 				BBD0E1D918780909000D1141 /* SettingViewController.xib in Resources */,
 				BBD81BAC186C34DA000DBEEE /* 13.jpg in Resources */,
+				BBB2CF17187BF01C00C8F210 /* LeftTitle.png in Resources */,
 				BBA5B7E3187ABF4A00D55899 /* toolBar@2X.png in Resources */,
 				BBD81BB0186C34DA000DBEEE /* 17.jpg in Resources */,
 				BBD81BB6186C34DA000DBEEE /* 22.jpg in Resources */,
+				BBB2CF20187BFAA600C8F210 /* firstPage@2X.png in Resources */,
 				BBA5B7D6187A8EB600D55899 /* theLineSet@2X.png in Resources */,
 				BBD0E1DD18781444000D1141 /* set_Nav.png in Resources */,
 				BBD81BBE186C34DA000DBEEE /* 3.jpg in Resources */,
@@ -1374,12 +1411,14 @@
 				BBD529E6185D39AB00575349 /* Background.png in Resources */,
 				BBD81BB9186C34DA000DBEEE /* 25.jpg in Resources */,
 				BBB2CF0E187BA7D500C8F210 /* redBack@2X.png in Resources */,
+				BBB2CF24187C00E800C8F210 /* News@2X.png in Resources */,
 				BBA69899186FE9DD00DE10AB /* blueArrow@2x.png in Resources */,
 				BBB79BCB18614840007DCEEA /* NewsController.xib in Resources */,
 				BBD81BBF186C34DA000DBEEE /* 4.jpg in Resources */,
 				9006F348184D59250091B69F /* Default@2x.png in Resources */,
 				BBC95B2F18532E5F00A10431 /* images-2.jpeg in Resources */,
 				BBD81BBC186C34DA000DBEEE /* 28.jpg in Resources */,
+				BBB2CF23187C00E800C8F210 /* News.png in Resources */,
 				BB951568185348C000BD82A7 /* icon-plus@2x.png in Resources */,
 				BB951569185348C000BD82A7 /* icon-plus-highlighted.png in Resources */,
 				BBA5B7E2187ABF4A00D55899 /* toolBar.png in Resources */,
@@ -1393,6 +1432,7 @@
 				BBA69898186FE9DD00DE10AB /* blueArrow.png in Resources */,
 				BBC95B3518532E5F00A10431 /* images-8.jpeg in Resources */,
 				9006F350184D59250091B69F /* ViewController.xib in Resources */,
+				BBB2CF1B187BF80C00C8F210 /* selectOne.png in Resources */,
 				BBD81BC2186C34DA000DBEEE /* 7.jpg in Resources */,
 				BBD0E1E818781B95000D1141 /* advice_nav_red@2X.png in Resources */,
 				BB951567185348C000BD82A7 /* icon-plus.png in Resources */,

@@ -116,7 +116,7 @@
     
     self.navigationItem.leftBarButtonItem = leftButton;
     self.navigationItem.hidesBackButton =YES;
-    
+    self.navigationItem.title=NewsName;
     
     [leftButton release];
     

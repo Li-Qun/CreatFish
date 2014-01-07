@@ -25,7 +25,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    contentRead =[[ContentRead alloc]init];
+    contentRead =[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
     [contentRead Category];
 }

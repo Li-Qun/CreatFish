@@ -317,60 +317,68 @@
     //NSLog(@"%d", btn.tag);
        NSLog(@"%d",btn.tag);
 //    for (UIView *subviews in [self.view subviews]) {
-//     //   if (subviews.tag==22)
-//        {
+//        if (subviews.tag==22) {
 //            [subviews removeFromSuperview];
 //        }
 //    }//必须从self.view中移除，不能从gpsClickView中移除
-    if(btn.tag!=100)
+    if(btn.tag<5&&btn.tag!=4)
     {
         NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
         newVC.hidesBottomBarWhenPushed = YES;
-        newVC.target=btn.tag;
+        newVC.target=btn.tag-1;
         [self.navigationController pushViewController :newVC animated:YES];
     }
-    else{
+    else if(btn.tag==4)
+    {
+        LifeViewController *newVC = [[[LifeViewController alloc] initWithNibName:@"LifeViewController" bundle:nil]autorelease];
+        newVC.target=3;
+        //self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController :newVC animated:YES];
+
+    }
+    else if(btn.tag==100)
+    {
         StoreUpViewController *newVC = [[[StoreUpViewController alloc] initWithNibName:@"StoreUpViewController" bundle:nil]autorelease];
         self.hidesBottomBarWhenPushed = YES;//OK~
         [self.navigationController pushViewController :newVC animated:YES];
     }
 }
--(void)pressNew
-{
-    NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
-    //newVC.hidesBottomBarWhenPushed = YES;
-    newVC.target=1;
-    [self.navigationController pushViewController :newVC animated:YES];
-    //[self.navigationController setToolbarHidden:YES animated:YES];
-}
--(void)pressLife
-{
-    NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
-    //newVC.hidesBottomBarWhenPushed = YES;
-    newVC.target=2;
-    [self.navigationController pushViewController :newVC animated:YES];
- 
-}
--(void)pressStyle
-{
-    NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
-    //newVC.hidesBottomBarWhenPushed = YES;
-    newVC.target=3;
-    [self.navigationController pushViewController :newVC animated:YES];
-}
--(void)pressPaper
-{
-    LifeViewController *newVC = [[[LifeViewController alloc] initWithNibName:@"LifeViewController" bundle:nil]autorelease];
-     newVC.target=4;
-    //self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController :newVC animated:YES];
-}
--(void)pressSave
-{
-    StoreUpViewController *newVC = [[[StoreUpViewController alloc] initWithNibName:@"StoreUpViewController" bundle:nil]autorelease];
-    self.hidesBottomBarWhenPushed = YES;//OK~
-    [self.navigationController pushViewController :newVC animated:YES];
-
-}
-/******Button Press*******/
+//-(void)pressNew
+//{
+//    NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
+//    //newVC.hidesBottomBarWhenPushed = YES;
+//    newVC.target=1;
+//    [self.navigationController pushViewController :newVC animated:YES];
+//    //[self.navigationController setToolbarHidden:YES animated:YES];
+//}
+//-(void)pressLife
+//{
+//    NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
+//    //newVC.hidesBottomBarWhenPushed = YES;
+//    newVC.target=2;
+//    [self.navigationController pushViewController :newVC animated:YES];
+// 
+//}
+//-(void)pressStyle
+//{
+//    NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
+//    //newVC.hidesBottomBarWhenPushed = YES;
+//    newVC.target=3;
+//    [self.navigationController pushViewController :newVC animated:YES];
+//}
+//-(void)pressPaper
+//{
+//    LifeViewController *newVC = [[[LifeViewController alloc] initWithNibName:@"LifeViewController" bundle:nil]autorelease];
+//     newVC.target=4;
+//    //self.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController :newVC animated:YES];
+//}
+//-(void)pressSave
+//{
+//    StoreUpViewController *newVC = [[[StoreUpViewController alloc] initWithNibName:@"StoreUpViewController" bundle:nil]autorelease];
+//    self.hidesBottomBarWhenPushed = YES;//OK~
+//    [self.navigationController pushViewController :newVC animated:YES];
+//
+//}
+///******Button Press*******/
 @end
