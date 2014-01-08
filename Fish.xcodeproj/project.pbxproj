@@ -107,6 +107,18 @@
 		BBA492FA187CEE8E0089D35E /* Set@2X.PNG in Resources */ = {isa = PBXBuildFile; fileRef = BBA492F6187CEE8E0089D35E /* Set@2X.PNG */; };
 		BBA492FD187CF0BE0089D35E /* slideLeft_Back.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA492FB187CF0BE0089D35E /* slideLeft_Back.png */; };
 		BBA492FE187CF0BE0089D35E /* slideLeft_Back@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA492FC187CF0BE0089D35E /* slideLeft_Back@2X.png */; };
+		BBA49303187D2F090089D35E /* TitleRedBack.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA492FF187D2F090089D35E /* TitleRedBack.png */; };
+		BBA49304187D2F090089D35E /* TitleRedBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA49300187D2F090089D35E /* TitleRedBack@2X.png */; };
+		BBA49305187D2F090089D35E /* TitleWhiteBack.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA49301187D2F090089D35E /* TitleWhiteBack.png */; };
+		BBA49306187D2F090089D35E /* TitleWhiteBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA49302187D2F090089D35E /* TitleWhiteBack@2X.png */; };
+		BBA4930F187D48BE0089D35E /* LeftBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA49309187D48BE0089D35E /* LeftBtn.png */; };
+		BBA49310187D48BE0089D35E /* LeftBtn@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4930A187D48BE0089D35E /* LeftBtn@2X.png */; };
+		BBA49311187D48BE0089D35E /* RightBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4930B187D48BE0089D35E /* RightBtn.png */; };
+		BBA49312187D48BE0089D35E /* RightBtn@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4930C187D48BE0089D35E /* RightBtn@2X.png */; };
+		BBA49313187D48BE0089D35E /* topBarRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4930D187D48BE0089D35E /* topBarRed.png */; };
+		BBA49314187D48BE0089D35E /* topBarRed@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4930E187D48BE0089D35E /* topBarRed@2X.png */; };
+		BBA49317187D54230089D35E /* word.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA49315187D54230089D35E /* word.png */; };
+		BBA49318187D54230089D35E /* word@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA49316187D54230089D35E /* word@2X.png */; };
 		BBA5553B185811380011F6BC /* Top_1_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA55538185811380011F6BC /* Top_1_ViewController.m */; };
 		BBA5553C185811380011F6BC /* TopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA5553A185811380011F6BC /* TopViewController.m */; };
 		BBA5B7D1187A875000D55899 /* labelNormal_Set.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA5B7CF187A875000D55899 /* labelNormal_Set.png */; };
@@ -409,6 +421,18 @@
 		BBA492F6187CEE8E0089D35E /* Set@2X.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Set@2X.PNG"; sourceTree = "<group>"; };
 		BBA492FB187CF0BE0089D35E /* slideLeft_Back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slideLeft_Back.png; sourceTree = "<group>"; };
 		BBA492FC187CF0BE0089D35E /* slideLeft_Back@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slideLeft_Back@2X.png"; sourceTree = "<group>"; };
+		BBA492FF187D2F090089D35E /* TitleRedBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TitleRedBack.png; sourceTree = "<group>"; };
+		BBA49300187D2F090089D35E /* TitleRedBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TitleRedBack@2X.png"; sourceTree = "<group>"; };
+		BBA49301187D2F090089D35E /* TitleWhiteBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TitleWhiteBack.png; sourceTree = "<group>"; };
+		BBA49302187D2F090089D35E /* TitleWhiteBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TitleWhiteBack@2X.png"; sourceTree = "<group>"; };
+		BBA49309187D48BE0089D35E /* LeftBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LeftBtn.png; sourceTree = "<group>"; };
+		BBA4930A187D48BE0089D35E /* LeftBtn@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LeftBtn@2X.png"; sourceTree = "<group>"; };
+		BBA4930B187D48BE0089D35E /* RightBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RightBtn.png; sourceTree = "<group>"; };
+		BBA4930C187D48BE0089D35E /* RightBtn@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RightBtn@2X.png"; sourceTree = "<group>"; };
+		BBA4930D187D48BE0089D35E /* topBarRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topBarRed.png; sourceTree = "<group>"; };
+		BBA4930E187D48BE0089D35E /* topBarRed@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topBarRed@2X.png"; sourceTree = "<group>"; };
+		BBA49315187D54230089D35E /* word.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = word.png; sourceTree = "<group>"; };
+		BBA49316187D54230089D35E /* word@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "word@2X.png"; sourceTree = "<group>"; };
 		BBA55537185811380011F6BC /* Top_1_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Top_1_ViewController.h; sourceTree = "<group>"; };
 		BBA55538185811380011F6BC /* Top_1_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Top_1_ViewController.m; sourceTree = "<group>"; };
 		BBA55539185811380011F6BC /* TopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopViewController.h; sourceTree = "<group>"; };
@@ -654,23 +678,7 @@
 			children = (
 				BBD0E1D4187808E6000D1141 /* Beauty */,
 				BBA689F418613DB1007CB68E /* FishCores */,
-				9006F342184D59250091B69F /* AppDelegate.h */,
-				9006F343184D59250091B69F /* AppDelegate.m */,
-				9006F34B184D59250091B69F /* ViewController.h */,
-				BBEB52C21867169B00527C90 /* ViewController.m */,
-				9006F34E184D59250091B69F /* ViewController.xib */,
-				BBDBE944184DD064009FA292 /* LeftViewController.h */,
-				BBDBE945184DD064009FA292 /* LeftViewController.m */,
-				BBDBE946184DD064009FA292 /* LeftViewController.xib */,
-				BBDBE949184DD6CB009FA292 /* RightViewController.h */,
-				BBDBE94A184DD6CB009FA292 /* RightViewController.m */,
-				BBDBE94B184DD6CB009FA292 /* RightViewController.xib */,
-				BBD0E1D518780909000D1141 /* SettingViewController.h */,
-				BBD0E1D618780909000D1141 /* SettingViewController.m */,
-				BBD0E1D718780909000D1141 /* SettingViewController.xib */,
-				BBD0E1DF187817D3000D1141 /* AdviceViewController.h */,
-				BBD0E1E0187817D3000D1141 /* AdviceViewController.m */,
-				BBD0E1E1187817D3000D1141 /* AdviceViewController.xib */,
+				BBA49307187D48590089D35E /* Mostly */,
 				9006F33A184D59250091B69F /* Supporting Files */,
 			);
 			path = Fish;
@@ -929,9 +937,52 @@
 			name = SDWebimage;
 			sourceTree = "<group>";
 		};
+		BBA49307187D48590089D35E /* Mostly */ = {
+			isa = PBXGroup;
+			children = (
+				9006F342184D59250091B69F /* AppDelegate.h */,
+				9006F343184D59250091B69F /* AppDelegate.m */,
+				9006F34B184D59250091B69F /* ViewController.h */,
+				BBEB52C21867169B00527C90 /* ViewController.m */,
+				9006F34E184D59250091B69F /* ViewController.xib */,
+				BBDBE944184DD064009FA292 /* LeftViewController.h */,
+				BBDBE945184DD064009FA292 /* LeftViewController.m */,
+				BBDBE946184DD064009FA292 /* LeftViewController.xib */,
+				BBDBE949184DD6CB009FA292 /* RightViewController.h */,
+				BBDBE94A184DD6CB009FA292 /* RightViewController.m */,
+				BBDBE94B184DD6CB009FA292 /* RightViewController.xib */,
+				BBD0E1D518780909000D1141 /* SettingViewController.h */,
+				BBD0E1D618780909000D1141 /* SettingViewController.m */,
+				BBD0E1D718780909000D1141 /* SettingViewController.xib */,
+				BBD0E1DF187817D3000D1141 /* AdviceViewController.h */,
+				BBD0E1E0187817D3000D1141 /* AdviceViewController.m */,
+				BBD0E1E1187817D3000D1141 /* AdviceViewController.xib */,
+			);
+			name = Mostly;
+			sourceTree = "<group>";
+		};
+		BBA49308187D48A70089D35E /* NewsImg */ = {
+			isa = PBXGroup;
+			children = (
+				BBA49315187D54230089D35E /* word.png */,
+				BBA49316187D54230089D35E /* word@2X.png */,
+				BBA49309187D48BE0089D35E /* LeftBtn.png */,
+				BBA4930A187D48BE0089D35E /* LeftBtn@2X.png */,
+				BBA4930B187D48BE0089D35E /* RightBtn.png */,
+				BBA4930C187D48BE0089D35E /* RightBtn@2X.png */,
+				BBA4930D187D48BE0089D35E /* topBarRed.png */,
+				BBA4930E187D48BE0089D35E /* topBarRed@2X.png */,
+			);
+			name = NewsImg;
+			sourceTree = "<group>";
+		};
 		BBA5B7DF187ABF2C00D55899 /* firstView */ = {
 			isa = PBXGroup;
 			children = (
+				BBA492FF187D2F090089D35E /* TitleRedBack.png */,
+				BBA49300187D2F090089D35E /* TitleRedBack@2X.png */,
+				BBA49301187D2F090089D35E /* TitleWhiteBack.png */,
+				BBA49302187D2F090089D35E /* TitleWhiteBack@2X.png */,
 				BBB2CF0B187BA7D500C8F210 /* redBack.png */,
 				BBB2CF0C187BA7D500C8F210 /* redBack@2X.png */,
 				BBA5B7E0187ABF4A00D55899 /* toolBar.png */,
@@ -1115,6 +1166,7 @@
 		BBD0E1D4187808E6000D1141 /* Beauty */ = {
 			isa = PBXGroup;
 			children = (
+				BBA49308187D48A70089D35E /* NewsImg */,
 				BBB2CF14187BF00D00C8F210 /* slideLeft */,
 				BBA5B7DF187ABF2C00D55899 /* firstView */,
 				BBD0E1DA18781429000D1141 /* set */,
@@ -1359,12 +1411,14 @@
 				BBA352A918792A2900A8239C /* TypeNormal@2X.png in Resources */,
 				BBA6989A186FE9DD00DE10AB /* grayArrow.png in Resources */,
 				BBA5B7D1187A875000D55899 /* labelNormal_Set.png in Resources */,
+				BBA49317187D54230089D35E /* word.png in Resources */,
 				9006F33E184D59250091B69F /* InfoPlist.strings in Resources */,
 				BBD81BAD186C34DA000DBEEE /* 14.jpg in Resources */,
 				BBA492F7187CEE8E0089D35E /* Save.png in Resources */,
 				BBD7A061186D61E5000A4675 /* back.png in Resources */,
 				BBC95B2E18532E5F00A10431 /* images-10.jpeg in Resources */,
 				BBA69897186FE9DD00DE10AB /* blackArrow@2x.png in Resources */,
+				BBA49318187D54230089D35E /* word@2X.png in Resources */,
 				BBA5B7DE187AB3ED00D55899 /* wixin.png in Resources */,
 				BB951560185348C000BD82A7 /* bg-addbutton@2x.png in Resources */,
 				BB95156A185348C000BD82A7 /* icon-plus-highlighted@2x.png in Resources */,
@@ -1374,6 +1428,7 @@
 				BB951566185348C000BD82A7 /* bg-menuitem@2x.png in Resources */,
 				BBA492F9187CEE8E0089D35E /* Set.png in Resources */,
 				BBD81BBB186C34DA000DBEEE /* 27.jpg in Resources */,
+				BBA49310187D48BE0089D35E /* LeftBtn@2X.png in Resources */,
 				BB95154D1853387600BD82A7 /* SampleCell.xib in Resources */,
 				BBA492FD187CF0BE0089D35E /* slideLeft_Back.png in Resources */,
 				BBDBE94D184DD6CB009FA292 /* RightViewController.xib in Resources */,
@@ -1389,6 +1444,7 @@
 				BBD81BB7186C34DA000DBEEE /* 23.jpg in Resources */,
 				BBD7A05E186D2DED000A4675 /* selectButtonNormal.png in Resources */,
 				BBD81BB3186C34DA000DBEEE /* 2.jpg in Resources */,
+				BBA49303187D2F090089D35E /* TitleRedBack.png in Resources */,
 				BB951561185348C000BD82A7 /* icon-star.png in Resources */,
 				BBD7A05F186D2DED000A4675 /* selectedButton.png in Resources */,
 				BBA5B7D2187A875000D55899 /* labelNormal_Set@2X.png in Resources */,
@@ -1409,6 +1465,7 @@
 				BBC95B3618532E5F00A10431 /* images-9.jpeg in Resources */,
 				BBD81BBA186C34DA000DBEEE /* 26.jpg in Resources */,
 				BBD134131869CD2D008657B6 /* broom.png in Resources */,
+				BBA49306187D2F090089D35E /* TitleWhiteBack@2X.png in Resources */,
 				BB951562185348C000BD82A7 /* icon-star@2x.png in Resources */,
 				BBA352AB18792A2900A8239C /* TypeSelect@2X.png in Resources */,
 				BBC95B3318532E5F00A10431 /* images-6.jpeg in Resources */,
@@ -1422,6 +1479,7 @@
 				BBD81BAC186C34DA000DBEEE /* 13.jpg in Resources */,
 				BBB2CF17187BF01C00C8F210 /* LeftTitle.png in Resources */,
 				BBA5B7E3187ABF4A00D55899 /* toolBar@2X.png in Resources */,
+				BBA49305187D2F090089D35E /* TitleWhiteBack.png in Resources */,
 				BBD81BB0186C34DA000DBEEE /* 17.jpg in Resources */,
 				BBD81BB6186C34DA000DBEEE /* 22.jpg in Resources */,
 				BBB2CF20187BFAA600C8F210 /* firstPage@2X.png in Resources */,
@@ -1433,14 +1491,18 @@
 				BBD529E6185D39AB00575349 /* Background.png in Resources */,
 				BBD81BB9186C34DA000DBEEE /* 25.jpg in Resources */,
 				BBB2CF0E187BA7D500C8F210 /* redBack@2X.png in Resources */,
+				BBA49313187D48BE0089D35E /* topBarRed.png in Resources */,
 				BBB2CF24187C00E800C8F210 /* News@2X.png in Resources */,
 				BBA69899186FE9DD00DE10AB /* blueArrow@2x.png in Resources */,
+				BBA4930F187D48BE0089D35E /* LeftBtn.png in Resources */,
 				BBB79BCB18614840007DCEEA /* NewsController.xib in Resources */,
 				BBD81BBF186C34DA000DBEEE /* 4.jpg in Resources */,
+				BBA49304187D2F090089D35E /* TitleRedBack@2X.png in Resources */,
 				9006F348184D59250091B69F /* Default@2x.png in Resources */,
 				BBC95B2F18532E5F00A10431 /* images-2.jpeg in Resources */,
 				BBD81BBC186C34DA000DBEEE /* 28.jpg in Resources */,
 				BBB2CF23187C00E800C8F210 /* News.png in Resources */,
+				BBA49311187D48BE0089D35E /* RightBtn.png in Resources */,
 				BB951568185348C000BD82A7 /* icon-plus@2x.png in Resources */,
 				BBA492F8187CEE8E0089D35E /* Save@2X.png in Resources */,
 				BB951569185348C000BD82A7 /* icon-plus-highlighted.png in Resources */,
@@ -1448,6 +1510,7 @@
 				BBC95B2C18532E5F00A10431 /* face.png in Resources */,
 				BBA352AA18792A2900A8239C /* TypeSelect.png in Resources */,
 				9006F34A184D59250091B69F /* Default-568h@2x.png in Resources */,
+				BBA49314187D48BE0089D35E /* topBarRed@2X.png in Resources */,
 				BBA352AE1879568800A8239C /* advice_back.png in Resources */,
 				BBA492FA187CEE8E0089D35E /* Set@2X.PNG in Resources */,
 				BBD0E1DE18781444000D1141 /* set_Nav@2X.png in Resources */,
@@ -1457,6 +1520,7 @@
 				BBC95B3518532E5F00A10431 /* images-8.jpeg in Resources */,
 				9006F350184D59250091B69F /* ViewController.xib in Resources */,
 				BBB2CF1B187BF80C00C8F210 /* selectOne.png in Resources */,
+				BBA49312187D48BE0089D35E /* RightBtn@2X.png in Resources */,
 				BBD81BC2186C34DA000DBEEE /* 7.jpg in Resources */,
 				BBD0E1E818781B95000D1141 /* advice_nav_red@2X.png in Resources */,
 				BB951567185348C000BD82A7 /* icon-plus.png in Resources */,

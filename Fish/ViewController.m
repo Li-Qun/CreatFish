@@ -126,6 +126,7 @@
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
+    [self theTopBar];
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString: jsonString];
     if([flag integerValue]==0)
@@ -166,9 +167,9 @@
         [singleTap setNumberOfTapsRequired:1];
         
         [self.klpScrollView1 addGestureRecognizer:singleTap];
-        [klpScrollView1 release];
-        [klpImgArr release];
-        [app.firstPageImage release];
+        //[klpScrollView1 release];
+       // [klpImgArr release];
+      //  [app.firstPageImage release];
         ///UIScrollerView
 
     }
@@ -215,9 +216,28 @@
             [self.view addSubview:button];
             [label release];
         }
-
     }
-   
+}
+-(void)theTopBar
+{
+    UIImageView *topBarWhite=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)]autorelease];
+    topBarWhite.image=[UIImage imageNamed:@"TitleWhiteBack"];
+    [self.view addSubview:topBarWhite];
+    UIImageView *topBarRed=[[[UIImageView alloc]initWithFrame:CGRectMake(108, 0, 110, 55)]autorelease];
+    topBarRed.image=[UIImage imageNamed:@"TitleRedBack"];
+    [topBarWhite addSubview:topBarRed];
+    UILabel *titleBigName=[[[UILabel alloc]initWithFrame:CGRectMake(10, 5, 100, 50)]autorelease];
+    titleBigName.text=@"路亚中国";
+    titleBigName.textColor=[UIColor whiteColor];
+    titleBigName.font =[UIFont boldSystemFontOfSize:22];
+    //titleBigName.font = [UIFont fontWithName:@"Courier" size:20];
+    titleBigName.shadowColor = [UIColor grayColor];
+    titleBigName.shadowOffset = CGSizeMake(0.0,0.5);
+    [topBarRed addSubview:titleBigName];
+    UILabel *smallTitle=[[[UILabel alloc]initWithFrame:CGRectMake(138, 43,110,55)]autorelease];
+    smallTitle.textColor=[UIColor lightGrayColor];
+    smallTitle.text=@"首页";//AppleGothic
+    [self.view addSubview:smallTitle];
 }
 - (void)viewDidLoad
 {
@@ -235,6 +255,7 @@
 		CGFloat pageWidth = scrollView.frame.size.width;
 		int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
 		index = page;
+       
 	}else {
 		
 	}
@@ -242,7 +263,7 @@
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     //	NSLog(@"scrollViewWillBeginDragging");
 	if (scrollView == self.klpScrollView1) {
-		
+        
 	}else {
 		
 	}
@@ -271,30 +292,30 @@
     }
     NSLog(@"touch index %d",touchIndex);
 }
-- (void) handleImageTap:(UITapGestureRecognizer *) gestureRecognizer{
-	CGFloat rowHeight = 70;
-    CGFloat columeWith = 100;
-    CGFloat gap = 5;
-    
-    CGPoint loc = [gestureRecognizer locationInView:self.klpScrollView2];
-    NSInteger touchIndex = floor(loc.x / (columeWith + gap)) + 3 * floor(loc.y / (rowHeight + gap)) ;
-    if (touchIndex > 11) {
-        return;
-    }
-    index = touchIndex;
-    CGRect frame = self.klpScrollView1.frame;
-    frame.origin.x = frame.size.width * touchIndex;
-    frame.origin.y = 0;
-    [self.klpScrollView1 scrollRectToVisible:frame animated:NO];
-    
-    klp.frame = ((UIImageView*)[app.firstPageImage objectAtIndex:index]).frame;
-    [klp setAlpha:0];
-    [UIView animateWithDuration:0.2f animations:^(void){
-        [klp setAlpha:.85f];
-    }];
- 
-    NSLog(@"small image touch index %d",touchIndex);
-}
+//- (void) handleImageTap:(UITapGestureRecognizer *) gestureRecognizer{
+//	CGFloat rowHeight = 70;
+//    CGFloat columeWith = 100;
+//    CGFloat gap = 5;
+//    
+//    CGPoint loc = [gestureRecognizer locationInView:self.klpScrollView2];
+//    NSInteger touchIndex = floor(loc.x / (columeWith + gap)) + 3 * floor(loc.y / (rowHeight + gap)) ;
+//    if (touchIndex > 11) {
+//        return;
+//    }
+//    index = touchIndex;
+//    CGRect frame = self.klpScrollView1.frame;
+//    frame.origin.x = frame.size.width * touchIndex;
+//    frame.origin.y = 0;
+//    [self.klpScrollView1 scrollRectToVisible:frame animated:NO];
+//    
+//    klp.frame = ((UIImageView*)[app.firstPageImage objectAtIndex:index]).frame;
+//    [klp setAlpha:0];
+//    [UIView animateWithDuration:0.2f animations:^(void){
+//        [klp setAlpha:.85f];
+//    }];
+// 
+//    NSLog(@"small image touch index %d",touchIndex);
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -343,42 +364,4 @@
         [self.navigationController pushViewController :newVC animated:YES];
     }
 }
-//-(void)pressNew
-//{
-//    NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
-//    //newVC.hidesBottomBarWhenPushed = YES;
-//    newVC.target=1;
-//    [self.navigationController pushViewController :newVC animated:YES];
-//    //[self.navigationController setToolbarHidden:YES animated:YES];
-//}
-//-(void)pressLife
-//{
-//    NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
-//    //newVC.hidesBottomBarWhenPushed = YES;
-//    newVC.target=2;
-//    [self.navigationController pushViewController :newVC animated:YES];
-// 
-//}
-//-(void)pressStyle
-//{
-//    NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
-//    //newVC.hidesBottomBarWhenPushed = YES;
-//    newVC.target=3;
-//    [self.navigationController pushViewController :newVC animated:YES];
-//}
-//-(void)pressPaper
-//{
-//    LifeViewController *newVC = [[[LifeViewController alloc] initWithNibName:@"LifeViewController" bundle:nil]autorelease];
-//     newVC.target=4;
-//    //self.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController :newVC animated:YES];
-//}
-//-(void)pressSave
-//{
-//    StoreUpViewController *newVC = [[[StoreUpViewController alloc] initWithNibName:@"StoreUpViewController" bundle:nil]autorelease];
-//    self.hidesBottomBarWhenPushed = YES;//OK~
-//    [self.navigationController pushViewController :newVC animated:YES];
-//
-//}
-///******Button Press*******/
 @end

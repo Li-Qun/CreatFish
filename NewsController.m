@@ -55,10 +55,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self.navigationController setNavigationBarHidden:NO  ];
-    [self.navigationController setToolbarHidden:YES animated:YES];
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO  ];
+ 
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
@@ -94,11 +92,11 @@
     arrLabel=[[[NSMutableArray alloc]init]retain];
     arrID=[[[NSMutableArray alloc]init]retain];
     
-    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController setNavigationBarHidden:YES];
     self.navigationItem.hidesBackButton = YES;
     self.navigationController.toolbarHidden = YES;
   
-    self.navigationController.navigationBarHidden=NO;
+    self.navigationController.navigationBarHidden=YES;
     tabView=[[[UITableView alloc]init]retain];
     contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];//设置代理
@@ -109,23 +107,62 @@
 }
 -(void)postJSON:(NSString *)flag
 {
-    [self.navigationController setNavigationBarHidden:NO];
-    self.navigationItem.hidesBackButton = YES;
-    UIBarButtonItem *leftButton=[[UIBarButtonItem alloc]  initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self   action:@selector(pressLeftSlide)];
+//    [self.navigationController setNavigationBarHidden:NO];
+//    self.navigationItem.hidesBackButton = YES;
+//    UIBarButtonItem *leftButton=[[UIBarButtonItem alloc]  initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self   action:@selector(pressLeftSlide)];
+//    
+//    
+//    self.navigationItem.leftBarButtonItem = leftButton;
+//    self.navigationItem.hidesBackButton =YES;
+//    self.navigationItem.title=NewsName;
+//    
+//    [leftButton release];
+//    
+//    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:
+//                                    UIBarButtonSystemItemFastForward                                                                   target:self
+//                                    action:@selector (pressRightSlide)];//(SettingPress)];
+//    
+//    self.navigationItem.rightBarButtonItem = rightButton;
+//    [rightButton release];
+    
+    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)]autorelease];
+    topBarView.image=[UIImage imageNamed:@"topBarRed"];
+    [self.view addSubview:topBarView];
+    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(105, 15, 95, 25)]autorelease];
+    wordView.image=[UIImage imageNamed:@"word"];
+    [topBarView addSubview:wordView];
+    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105, 18,95, 60)]autorelease];
+    name.textColor=[UIColor whiteColor];
+    name.text=NewsName;
+    name.textAlignment = UITextAlignmentCenter;
+    name.font =[UIFont boldSystemFontOfSize:15];
+    name.shadowColor = [UIColor grayColor];
+    name.shadowOffset = CGSizeMake(0.0,0.5);
+    [topBarView addSubview:name];
+    
+    UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    leftBtn.frame=CGRectMake(10, 20, 37, 30);
+    leftBtn.tag=10;
+    [leftBtn setImage:[UIImage imageNamed:@"LeftBtn@2X"] forState:UIControlStateNormal];
+    [self.view addSubview:leftBtn];
+    [leftBtn addTarget:self action:@selector(PessSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *rightBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    rightBtn.frame=CGRectMake(270, 20, 37, 30);
+    [rightBtn setImage:[UIImage imageNamed:@"RightBtn@2X"] forState:UIControlStateNormal];
+    [self.view addSubview:rightBtn];
+    [rightBtn addTarget:self action:@selector(PessSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
+    rightBtn.tag=20;
     
     
-    self.navigationItem.leftBarButtonItem = leftButton;
-    self.navigationItem.hidesBackButton =YES;
-    self.navigationItem.title=NewsName;
     
-    [leftButton release];
     
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:
-                                    UIBarButtonSystemItemFastForward                                                                   target:self
-                                    action:@selector (pressRightSlide)];//(SettingPress)];
     
-    self.navigationItem.rightBarButtonItem = rightButton;
-    [rightButton release];
+    
+    
+    
+    
+    
     isFistLevel=[flag intValue];
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString:app.jsonString];
@@ -163,6 +200,16 @@
    [tabView reloadData];
    //[tabView release];
 }
+-(void)PessSwitch_BtnTag:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    if(btn.tag==10)
+    [self.viewDeckController toggleLeftViewAnimated:YES];
+    else [self.viewDeckController toggleRightViewAnimated:YES];
+
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

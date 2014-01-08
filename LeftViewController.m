@@ -69,7 +69,6 @@
     firstPageName.textColor=[UIColor whiteColor];
     firstPageName.text=@"首页";
     [firstBtn  addSubview:firstPageName];
-    [firstBtn addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     UIImageView *pictureFistPage=[[[UIImageView alloc]initWithFrame:CGRectMake(10, 10,25 , 25)] autorelease];
     pictureFistPage.image=[UIImage imageNamed:@"firstPage@2X.png"];
     [firstBtn  addSubview:pictureFistPage];

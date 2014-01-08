@@ -17,6 +17,7 @@ UIScrollViewDelegate >
     CategoryItem *categoryItem;
     ContentRead *contentRead;
     AppDelegate *app;
+    UINavigationBar *NavBar;
 }
 
 @property (retain, nonatomic) IBOutlet UIScrollView *klpScrollView1;
