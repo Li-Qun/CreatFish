@@ -22,6 +22,16 @@
     }
     return self;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    contentRead=[[[ContentRead alloc]init]autorelease];
+    contentRead.delegate=self;
+    [contentRead Category];
+}
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+{
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

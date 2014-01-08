@@ -566,9 +566,9 @@
 		BBDBE944184DD064009FA292 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeftViewController.h; path = ../LeftViewController.h; sourceTree = "<group>"; };
 		BBDBE945184DD064009FA292 /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeftViewController.m; path = ../LeftViewController.m; sourceTree = "<group>"; };
 		BBDBE946184DD064009FA292 /* LeftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeftViewController.xib; path = ../LeftViewController.xib; sourceTree = "<group>"; };
-		BBDBE949184DD6CB009FA292 /* RightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightViewController.h; sourceTree = "<group>"; };
-		BBDBE94A184DD6CB009FA292 /* RightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightViewController.m; sourceTree = "<group>"; };
-		BBDBE94B184DD6CB009FA292 /* RightViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RightViewController.xib; sourceTree = "<group>"; };
+		BBDBE949184DD6CB009FA292 /* RightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RightViewController.h; path = ../RightViewController.h; sourceTree = "<group>"; };
+		BBDBE94A184DD6CB009FA292 /* RightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RightViewController.m; path = ../RightViewController.m; sourceTree = "<group>"; };
+		BBDBE94B184DD6CB009FA292 /* RightViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RightViewController.xib; path = ../RightViewController.xib; sourceTree = "<group>"; };
 		BBDBE94E184DD995009FA292 /* NewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewViewController.h; path = Fish/NewViewController.h; sourceTree = "<group>"; };
 		BBDBE94F184DD995009FA292 /* NewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewViewController.m; path = Fish/NewViewController.m; sourceTree = "<group>"; };
 		BBDBE950184DD995009FA292 /* NewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewViewController.xib; path = Fish/NewViewController.xib; sourceTree = "<group>"; };
@@ -662,6 +662,9 @@
 				BBDBE944184DD064009FA292 /* LeftViewController.h */,
 				BBDBE945184DD064009FA292 /* LeftViewController.m */,
 				BBDBE946184DD064009FA292 /* LeftViewController.xib */,
+				BBDBE949184DD6CB009FA292 /* RightViewController.h */,
+				BBDBE94A184DD6CB009FA292 /* RightViewController.m */,
+				BBDBE94B184DD6CB009FA292 /* RightViewController.xib */,
 				BBD0E1D518780909000D1141 /* SettingViewController.h */,
 				BBD0E1D618780909000D1141 /* SettingViewController.m */,
 				BBD0E1D718780909000D1141 /* SettingViewController.xib */,
@@ -1246,9 +1249,6 @@
 				BBDBE93F184DCF71009FA292 /* IIViewDeckController.m */,
 				BBDBE940184DCF71009FA292 /* IIWrapController.h */,
 				BBDBE941184DCF71009FA292 /* IIWrapController.m */,
-				BBDBE949184DD6CB009FA292 /* RightViewController.h */,
-				BBDBE94A184DD6CB009FA292 /* RightViewController.m */,
-				BBDBE94B184DD6CB009FA292 /* RightViewController.xib */,
 				BBA55537185811380011F6BC /* Top_1_ViewController.h */,
 				BBA55538185811380011F6BC /* Top_1_ViewController.m */,
 				BBA55539185811380011F6BC /* TopViewController.h */,

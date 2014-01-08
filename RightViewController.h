@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-@interface RightViewController : UIViewController
+@interface RightViewController : UIViewController<FishDelegate>
 {
     AppDelegate *app;
 }

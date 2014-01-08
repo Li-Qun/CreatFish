@@ -172,7 +172,7 @@
         ///UIScrollerView
 
     }
-    else
+    else //==2
     {
         UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 524, 320, 44)]autorelease];
         imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
@@ -314,7 +314,8 @@
 -(void)Press_Tag:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    NSLog(@"%d",btn.tag);
+   
+       NSLog(@"%d",btn.tag);
 //    for (UIView *subviews in [self.view subviews]) {
 //        if (subviews.tag==22) {
 //            [subviews removeFromSuperview];

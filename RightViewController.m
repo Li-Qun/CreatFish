@@ -19,41 +19,76 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slideLeft_Back@2X.png"]];
+        imgView.frame = self.view.bounds;
+        imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self.view insertSubview:imgView atIndex:0];
+        [imgView release];
     }
     return self;
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+   ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
+    contentRead.delegate=self;
+    [contentRead Category];
+}
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+{
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+    
+    UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
+    scrollView.backgroundColor=[UIColor clearColor];
+    scrollView.delegate=self;
+    UIView *myView=[[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 700)]autorelease];
+    myView.backgroundColor=[UIColor clearColor];
+    UIImageView *imageViewTitle=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)];
+    imageViewTitle.image=[UIImage imageNamed:@"LeftTitle@2X"];
+    [myView addSubview:imageViewTitle];
+    UILabel *mainTitle=[[[UILabel alloc]initWithFrame:CGRectMake(145, 0, 320, 70)]autorelease];
+    mainTitle.text=@"最新";
+    mainTitle.font = [UIFont boldSystemFontOfSize:17];
+    mainTitle.textColor=[UIColor whiteColor];
+    [imageViewTitle addSubview:mainTitle];
+    UIImageView *pictureName=[[[UIImageView alloc]initWithFrame:CGRectMake(90, 25,20 , 20)] autorelease];
+    pictureName.image=[UIImage imageNamed:@"Set.png"];
+    [imageViewTitle addSubview:pictureName];
+    //三个 二级按钮
+    for(int i=0;i<3;i++)
+    {
+        UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
+        OneButton.frame=CGRectMake(0, 60+i*45, 320, 44);
+        [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
+        [myView addSubview:OneButton ];
+        UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(145, 0, 320, 44)]autorelease];
+        OneName.textColor=[UIColor whiteColor];
+        OneName.text=[NSString stringWithFormat: [[jsonObj  objectAtIndex:i+4] objectForKey:@"name"]];
+        [OneButton addSubview:OneName];
+        [OneButton addTarget:self action:@selector(PessSwitchRight_Tag:) forControlEvents:UIControlEventTouchUpInside];
+        UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(90, 10,25 , 25)] autorelease];
+        pictureOneName.image=[UIImage imageNamed:@"News@2X.png"];
+        [OneButton  addSubview:pictureOneName];
+        OneButton.tag=[[NSString stringWithFormat: [[jsonObj  objectAtIndex:i+4] objectForKey:@"id"]]integerValue];
+//        UIImageView *theRedNum=[[[UIImageView alloc]initWithFrame:CGRectMake(270, 10, 28, 22)]autorelease];
+//        theRedNum.image=[UIImage imageNamed:@"redBack.png"];
+//        [OneButton addSubview:theRedNum];
+//        UILabel *labelNum=[[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 22)]autorelease];
+//        labelNum.text=[[jsonObj  objectAtIndex:i] objectForKey:@"id"];
+//        labelNum.textColor=[UIColor whiteColor];
+//        labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
+//        [theRedNum addSubview:labelNum];
+    }
+    
+    
+    [scrollView addSubview:myView];
+    scrollView.contentSize = myView.frame.size;
+    [self.view addSubview:scrollView];
 
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    UIButton *newBtnOne=[UIButton buttonWithType:UIButtonTypeRoundedRect];
-    newBtnOne.frame=CGRectMake(138, 81, 125, 34);
-    newBtnOne.hidden=NO;
-    //[bigPicButton setImage:[UIImage imageNamed:@"face"]forState:UIControlStateNormal ];
-    [newBtnOne setTitle:@"业内动态" forState:UIControlStateNormal];
-    [newBtnOne addTarget:self action:@selector(PressOne) forControlEvents:UIControlEventTouchDown];
-    [self.view addSubview:newBtnOne];
-    
-    
-    UIButton *newBtnTwo=[UIButton buttonWithType:UIButtonTypeRoundedRect];
-    newBtnTwo.frame=CGRectMake(138, 159, 125, 34);
-    newBtnTwo.hidden=NO;
-    //[bigPicButton setImage:[UIImage imageNamed:@"face"]forState:UIControlStateNormal ];
-    [newBtnTwo setTitle:@"赛事报道" forState:UIControlStateNormal];
-    [newBtnTwo addTarget:self action:@selector(PressTwo) forControlEvents:UIControlEventTouchDown];
-    [self.view addSubview:newBtnTwo];
-    
-    UIButton *newBtnThree=[UIButton buttonWithType:UIButtonTypeRoundedRect];
-    newBtnThree.frame=CGRectMake(138, 233, 125, 34);
-    newBtnThree.hidden=NO;
-    //[bigPicButton setImage:[UIImage imageNamed:@"face"]forState:UIControlStateNormal ];
-    [newBtnThree setTitle:@"大鱼新闻" forState:UIControlStateNormal];
-    [newBtnThree addTarget:self action:@selector(PressThree) forControlEvents:UIControlEventTouchDown];
-    [self.view addSubview:newBtnThree];
-    
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,61 +96,25 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)PressOne
+-(void)PessSwitchRight_Tag:(id)sender
 {
+    UIButton *btn = (UIButton *)sender;
+    NSLog(@"%d",btn.tag);
     [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
-        
         NewsController *apiVC = [[[NewsController alloc] init] autorelease];
-        if(app.targetCenter==1)
-            apiVC.target=5;
-        else if(app.targetCenter==2)
-            apiVC.target=8;
-        else if(app.targetCenter==3)
-            apiVC.target=11;
-        else apiVC=apiVC;
-               UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
+        apiVC.target=btn.tag;
+        UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
         self.viewDeckController.centerController = navApiVC;
         self.view.userInteractionEnabled = YES;
-       [self.navigationController setNavigationBarHidden:YES ];
     }];
     
 
-}
--(void)PressTwo
-{
-    [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
+    
+    
+    
         
-        NewsController *apiVC = [[[NewsController alloc] init] autorelease];
-        if(app.targetCenter==1)
-            apiVC.target=6;
-        else if(app.targetCenter==2)
-            apiVC.target=9;
-        else if(app.targetCenter==3)
-            apiVC.target=12;
-        else apiVC=apiVC;
-        UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
-        self.viewDeckController.centerController = navApiVC;
-        self.view.userInteractionEnabled = YES;
-        [self.navigationController setNavigationBarHidden:YES ];
-    }];
-}
--(void)PressThree
-{
-    [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
         
-        NewsController *apiVC = [[[NewsController alloc] init] autorelease];
-        if(app.targetCenter==1)
-            apiVC.target=7;
-        else if(app.targetCenter==2)
-            apiVC.target=10;
-        else if(app.targetCenter==3)
-            apiVC.target=13;
-        else apiVC=apiVC;
-        UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
-        self.viewDeckController.centerController = navApiVC;
-        self.view.userInteractionEnabled = YES;
-        [self.navigationController setNavigationBarHidden:YES ];
-    }];
-}
-
+        
+ }
+ 
 @end

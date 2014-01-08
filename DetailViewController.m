@@ -61,8 +61,15 @@
     
     [super viewWillAppear:animated];
 }
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+{
+    
+}
 - (void)viewDidLoad
 {
+    contentRead=[[[ContentRead alloc]init]autorelease];
+    contentRead.delegate=self;
+    [contentRead Category];
     [super viewDidLoad];
     //导航按钮start
     [self.navigationController setNavigationBarHidden:YES];

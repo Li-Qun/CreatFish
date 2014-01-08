@@ -73,6 +73,7 @@
 -(void)ContentDetail:(NSString*) content_id;
 -(void)Category;
 -(void)ContentSetting;
+-(void)reLoad;
 -(void)Submmit:(NSString *)contact typeBack:(NSString *)feedback_category content:(NSString *)feedback_content;
 @end
 

@@ -33,8 +33,6 @@
         imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.view insertSubview:imgView atIndex:0];
         [imgView release];
-
-        
     }
     return self;
 }

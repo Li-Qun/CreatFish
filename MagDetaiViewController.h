@@ -16,7 +16,6 @@
     NSString *Id;
     NSString *weeklyId;
     NSString *name_Mag;
-    ContentRead *contentDtail;
     UITableView *tableView_Mag;
     int total;
     int newCount_Mag;

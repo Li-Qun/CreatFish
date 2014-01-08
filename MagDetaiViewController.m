@@ -34,11 +34,12 @@
     }
     return self;
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+
+-(void)reBack:(NSString *)jsonString
 {
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString:jsonString];
-    
+ 
     tableView_Mag .frame=CGRectMake(0, 60, 320, 560);
     [self createHeaderView];
 	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
@@ -48,13 +49,13 @@
     tableView_Mag.dataSource=self;//设置双重代理 很重要
     total+=[[jsonObj objectForKey:@"total"]intValue];
      NSDictionary *data = [jsonObj objectForKey:@"data"];
+ 
     newCount_Mag+=arr_Mag.count;
     for(int i=0;i<data.count;i++)
     {
          [arr_Mag insertObject:[data objectAtIndex:i] atIndex:newCount_Mag];
-        [arrID_Mag insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]objectForKey:@"id"]]  atIndex:newCount_Mag];
+       // [arrID_Mag insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]objectForKey:@"id"]]  atIndex:newCount_Mag];
     }
-    
     [self.view addSubview:tableView_Mag];
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -74,13 +75,18 @@
     
     [self.view addSubview:navBar];
 }
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+{
+    
+}
 - (void)viewDidLoad
 {
     tableView_Mag=[[[UITableView alloc]init]retain];
     arr_Mag=[[[NSMutableArray alloc]init]retain];
-    contentDtail =[[[ContentRead alloc]init]autorelease];
-    [contentDtail setDelegate:self];//设置代理
-    [contentDtail Magazine:Id isPri:@"0" WeeklyId:weeklyId Out:@"0"];
+    ContentRead *contentRead1 =[[[ContentRead alloc]init]autorelease];
+    contentRead1.delegate=self;
+    [contentRead1 Magazine:Id isPri:@"0" WeeklyId:weeklyId Out:@"0"];
+    [contentRead1 Category];
     [super viewDidLoad];
 }
 -(void)backMagazine
@@ -140,7 +146,7 @@
     DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
     NSMutableDictionary* dict = [arr_Mag objectAtIndex:indexPath.row];
     detail.dictForData=dict;
-    detail.arrIDListNew= arrID_Mag;
+   // detail.arrIDListNew= arrID_Mag;
     detail.yOrigin=cellFrameInSuperview.origin.y;
     [self.navigationController pushViewController:detail animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
