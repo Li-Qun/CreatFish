@@ -63,13 +63,24 @@
            placeholderImage:[UIImage imageNamed:@"placeholder.png"]
                     success:^(UIImage *image) {NSLog(@"OK!!");}
                     failure:^(NSError *error) {NSLog(@"NO");}];
-        cellOne.label.backgroundColor=[UIColor whiteColor];
+        
+        UIImageView *clearBack=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 143, 340, 31)]autorelease];
+        clearBack.image=[UIImage imageNamed:@"clearBack@2X"];
+        [cellOne.imageView addSubview:clearBack];
+        [clearBack addSubview:cellOne.label];
+        UIImageView *theArrow=[[[UIImageView alloc]initWithFrame:CGRectMake(300, 8,8,12)]autorelease];
+        theArrow.image=[UIImage imageNamed:@"theArrow"];
+        [clearBack addSubview:theArrow];
+        
+        
+        
+        cellOne.label.backgroundColor=[UIColor clearColor];
+        
         cellOne.label.text=[NSString stringWithFormat:[dataLabel objectAtIndex:indexPath.row]];
  
- 
         cellOne.transform=CGAffineTransformMakeRotation(M_PI/2);
-        cellOne.label.backgroundColor=[UIColor whiteColor];
-        
+        cellOne.label.textColor=[UIColor whiteColor];
+       
     }
     return cellOne;
 }
