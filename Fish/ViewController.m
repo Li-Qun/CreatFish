@@ -314,8 +314,7 @@
 -(void)Press_Tag:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    //NSLog(@"%d", btn.tag);
-       NSLog(@"%d",btn.tag);
+    NSLog(@"%d",btn.tag);
 //    for (UIView *subviews in [self.view subviews]) {
 //        if (subviews.tag==22) {
 //            [subviews removeFromSuperview];

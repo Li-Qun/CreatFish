@@ -101,6 +101,12 @@
 		BBA4789F185721A000E64289 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA47897185721A000E64289 /* UIImageView+WebCache.m */; };
 		BBA478A1185721D900E64289 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA478A0185721D900E64289 /* MapKit.framework */; };
 		BBA478A3185721E600E64289 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA478A2185721E600E64289 /* ImageIO.framework */; };
+		BBA492F7187CEE8E0089D35E /* Save.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA492F3187CEE8E0089D35E /* Save.png */; };
+		BBA492F8187CEE8E0089D35E /* Save@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA492F4187CEE8E0089D35E /* Save@2X.png */; };
+		BBA492F9187CEE8E0089D35E /* Set.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA492F5187CEE8E0089D35E /* Set.png */; };
+		BBA492FA187CEE8E0089D35E /* Set@2X.PNG in Resources */ = {isa = PBXBuildFile; fileRef = BBA492F6187CEE8E0089D35E /* Set@2X.PNG */; };
+		BBA492FD187CF0BE0089D35E /* slideLeft_Back.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA492FB187CF0BE0089D35E /* slideLeft_Back.png */; };
+		BBA492FE187CF0BE0089D35E /* slideLeft_Back@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA492FC187CF0BE0089D35E /* slideLeft_Back@2X.png */; };
 		BBA5553B185811380011F6BC /* Top_1_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA55538185811380011F6BC /* Top_1_ViewController.m */; };
 		BBA5553C185811380011F6BC /* TopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA5553A185811380011F6BC /* TopViewController.m */; };
 		BBA5B7D1187A875000D55899 /* labelNormal_Set.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA5B7CF187A875000D55899 /* labelNormal_Set.png */; };
@@ -397,6 +403,12 @@
 		BBA47897185721A000E64289 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		BBA478A0185721D900E64289 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		BBA478A2185721E600E64289 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		BBA492F3187CEE8E0089D35E /* Save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Save.png; sourceTree = "<group>"; };
+		BBA492F4187CEE8E0089D35E /* Save@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Save@2X.png"; sourceTree = "<group>"; };
+		BBA492F5187CEE8E0089D35E /* Set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Set.png; sourceTree = "<group>"; };
+		BBA492F6187CEE8E0089D35E /* Set@2X.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Set@2X.PNG"; sourceTree = "<group>"; };
+		BBA492FB187CF0BE0089D35E /* slideLeft_Back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slideLeft_Back.png; sourceTree = "<group>"; };
+		BBA492FC187CF0BE0089D35E /* slideLeft_Back@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slideLeft_Back@2X.png"; sourceTree = "<group>"; };
 		BBA55537185811380011F6BC /* Top_1_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Top_1_ViewController.h; sourceTree = "<group>"; };
 		BBA55538185811380011F6BC /* Top_1_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Top_1_ViewController.m; sourceTree = "<group>"; };
 		BBA55539185811380011F6BC /* TopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopViewController.h; sourceTree = "<group>"; };
@@ -1110,6 +1122,12 @@
 		BBD0E1DA18781429000D1141 /* set */ = {
 			isa = PBXGroup;
 			children = (
+				BBA492FB187CF0BE0089D35E /* slideLeft_Back.png */,
+				BBA492FC187CF0BE0089D35E /* slideLeft_Back@2X.png */,
+				BBA492F3187CEE8E0089D35E /* Save.png */,
+				BBA492F4187CEE8E0089D35E /* Save@2X.png */,
+				BBA492F5187CEE8E0089D35E /* Set.png */,
+				BBA492F6187CEE8E0089D35E /* Set@2X.PNG */,
 				BBA5B7DB187AB3ED00D55899 /* weixin@2X.png */,
 				BBA5B7DC187AB3ED00D55899 /* wixin.png */,
 				BBA5B7D7187AB21F00D55899 /* xinlang.png */,
@@ -1343,6 +1361,7 @@
 				BBA5B7D1187A875000D55899 /* labelNormal_Set.png in Resources */,
 				9006F33E184D59250091B69F /* InfoPlist.strings in Resources */,
 				BBD81BAD186C34DA000DBEEE /* 14.jpg in Resources */,
+				BBA492F7187CEE8E0089D35E /* Save.png in Resources */,
 				BBD7A061186D61E5000A4675 /* back.png in Resources */,
 				BBC95B2E18532E5F00A10431 /* images-10.jpeg in Resources */,
 				BBA69897186FE9DD00DE10AB /* blackArrow@2x.png in Resources */,
@@ -1353,8 +1372,10 @@
 				BBACDE7A18713C41002F1BF5 /* LoadMoreCell.xib in Resources */,
 				BBD81BB4186C34DA000DBEEE /* 20.jpg in Resources */,
 				BB951566185348C000BD82A7 /* bg-menuitem@2x.png in Resources */,
+				BBA492F9187CEE8E0089D35E /* Set.png in Resources */,
 				BBD81BBB186C34DA000DBEEE /* 27.jpg in Resources */,
 				BB95154D1853387600BD82A7 /* SampleCell.xib in Resources */,
+				BBA492FD187CF0BE0089D35E /* slideLeft_Back.png in Resources */,
 				BBDBE94D184DD6CB009FA292 /* RightViewController.xib in Resources */,
 				BB951564185348C000BD82A7 /* bg-menuitem.png in Resources */,
 				BBC95B3118532E5F00A10431 /* images-4.jpeg in Resources */,
@@ -1373,6 +1394,7 @@
 				BBA5B7D2187A875000D55899 /* labelNormal_Set@2X.png in Resources */,
 				BBD529E4185D399600575349 /* Default.png in Resources */,
 				BBD81BBD186C34DA000DBEEE /* 29.jpg in Resources */,
+				BBA492FE187CF0BE0089D35E /* slideLeft_Back@2X.png in Resources */,
 				BBA18E791864277100EEEFC8 /* DetailViewController.xib in Resources */,
 				BBD134141869CD2D008657B6 /* broom@2x.png in Resources */,
 				BBA0987218751A1B008C49E2 /* MagDetaiViewController.xib in Resources */,
@@ -1420,12 +1442,14 @@
 				BBD81BBC186C34DA000DBEEE /* 28.jpg in Resources */,
 				BBB2CF23187C00E800C8F210 /* News.png in Resources */,
 				BB951568185348C000BD82A7 /* icon-plus@2x.png in Resources */,
+				BBA492F8187CEE8E0089D35E /* Save@2X.png in Resources */,
 				BB951569185348C000BD82A7 /* icon-plus-highlighted.png in Resources */,
 				BBA5B7E2187ABF4A00D55899 /* toolBar.png in Resources */,
 				BBC95B2C18532E5F00A10431 /* face.png in Resources */,
 				BBA352AA18792A2900A8239C /* TypeSelect.png in Resources */,
 				9006F34A184D59250091B69F /* Default-568h@2x.png in Resources */,
 				BBA352AE1879568800A8239C /* advice_back.png in Resources */,
+				BBA492FA187CEE8E0089D35E /* Set@2X.PNG in Resources */,
 				BBD0E1DE18781444000D1141 /* set_Nav@2X.png in Resources */,
 				BBA352A818792A2900A8239C /* TypeNormal.png in Resources */,
 				BBA5B7D9187AB21F00D55899 /* xinlang.png in Resources */,

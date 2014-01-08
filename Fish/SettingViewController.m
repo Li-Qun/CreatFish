@@ -59,7 +59,7 @@
     scrollView.delegate=self;
     myView=[[UIView alloc]init];
     myView.backgroundColor=[UIColor blackColor];
-
+    
     navBar = [[[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 55)]autorelease];//(0, 17, 320, 44)
     [navBar setBackgroundImage:[UIImage imageNamed:@"set_Nav@2x.png"] forBarMetrics:UIBarMetricsDefault];
     UINavigationItem *navigationItem = [[[UINavigationItem alloc] init ]autorelease];
