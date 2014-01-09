@@ -24,6 +24,38 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [self.navigationController setNavigationBarHidden:YES];
+ 
+    self.navigationController.toolbarHidden = YES;
+    
+    self.navigationController.navigationBarHidden=YES;
+    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)]autorelease];
+    topBarView.image=[UIImage imageNamed:@"topBarRed"];
+    [self.view addSubview:topBarView];
+
+    UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    leftBtn.frame=CGRectMake(10, 20, 37, 30);
+    leftBtn.tag=10;
+    [leftBtn setImage:[UIImage imageNamed:@"LeftBtn@2X"] forState:UIControlStateNormal];
+    [self.view addSubview:leftBtn];
+    [leftBtn addTarget:self action:@selector(PessTheStoreBack) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105, 15, 95, 25)]autorelease];
+    name.textColor=[UIColor whiteColor];
+    name.text=@"收藏";
+    name.textAlignment = UITextAlignmentCenter;
+    name.font =[UIFont boldSystemFontOfSize:22];
+    name.shadowColor = [UIColor grayColor];
+    name.shadowOffset = CGSizeMake(0.0,0.5);
+    [topBarView addSubview:name];
+
+    
+    
+    
+    
+    
+    
+    
     contentRead=[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
     [contentRead Category];
@@ -32,11 +64,19 @@
 {
     
 }
+-(void)PessTheStoreBack
+{
+    [self.viewDeckController toggleLeftViewAnimated:YES];
+//    ViewController *newVC = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil]autorelease];
+//    self.hidesBottomBarWhenPushed = YES;//OK~
+//    [self.navigationController pushViewController :newVC animated:YES];
+
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     tableView_Store=[[UITableView alloc]init];
-    tableView_Store.frame=CGRectMake(0, 0, 320, 560);
+    tableView_Store.frame=CGRectMake(0, 60, 320, 560);
     tableView_Store.delegate=self;
     tableView_Store.dataSource=self;//设置双重代理 很重要
     [self.view addSubview:tableView_Store];

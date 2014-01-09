@@ -28,11 +28,20 @@
 @synthesize arry_Mag_category_id=arry_Mag_category_id;
 @synthesize arry_Mag_description=arry_Mag_description;
 @synthesize arry_Mag_image=arry_Mag_image;
+@synthesize leftSwipeGestureRecognizer,rightSwipeGestureRecognizer;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
        wrap = YES;
+        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SwimFish@2X.png"]];
+        imgView.frame = self.view.bounds;
+        imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self.view insertSubview:imgView atIndex:0];
+        [imgView release];
+        
+        self.navigationController.toolbarHidden = YES;
+        self.navigationController.navigationBarHidden=YES;
     }
     return self;
 }
@@ -43,6 +52,8 @@
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
+    self.navigationController.navigationBarHidden=YES;
+
     //设置索引标识
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     
@@ -76,21 +87,24 @@
     [UIView beginAnimations:nil context:nil];
     carousel.type=5;
     [UIView commitAnimations];
-    UIBarButtonItem *Left=[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back.png"] style: UIBarButtonItemStylePlain target:self action:@selector(pressBack_Mag)];
-    
-    UIBarButtonItem * flexibleItem =[[UIBarButtonItem  alloc]initWithBarButtonSystemItem:                                        UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    
-    NSArray *itemsArry=[[NSArray arrayWithObjects: Left,flexibleItem,nil]retain];//此处如果不retain
-    [self setToolbarItems:itemsArry animated:YES ];
-    
-    [self.tabBarController setItems:itemsArry];
-    [self.view addSubview:self.tabBarController];
-    
-    [Left release];
-    [flexibleItem release];
-    [itemsArry release];
+    self.leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+    self.rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+    self.leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    self.rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:self.leftSwipeGestureRecognizer];
+    [self.view addGestureRecognizer:self.rightSwipeGestureRecognizer];
+}
+- (void)handleSwipes:(UISwipeGestureRecognizer *)sender
+{
+    if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {
+        [self.viewDeckController toggleRightViewAnimated:YES];
 
-    //[self.view addSubview:self.tabBarController];
+            }
+    
+    if (sender.direction == UISwipeGestureRecognizerDirectionRight) {
+        [self.viewDeckController toggleLeftViewAnimated:YES];
+
+           }
 }
 - (void)viewDidLoad
 {//@"直线", @"圆圈", @"反向圆圈", @"圆桶", @"反向圆桶", @"封面展示", @"封面展示2", @"纸牌"
@@ -103,12 +117,40 @@
     [contentRead Magazine:@"14" Out:@"0"];
     [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:YES];
-//    [self.navigationController setToolbarHidden:YES animated:YES];//好使了
+    
+    
+    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)]autorelease];
+    topBarView.image=[UIImage imageNamed:@"topBarRed"];
+    [self.view addSubview:topBarView];
+    
+    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(135, 22, 40, 20)]autorelease];
+    wordView.image=[UIImage imageNamed:@"swimWordLabel"];
+    [topBarView addSubview:wordView];
+
+    UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    leftBtn.frame=CGRectMake(10, 20, 37, 30);
+    leftBtn.tag=10;
+    [leftBtn setImage:[UIImage imageNamed:@"LeftBtn@2X"] forState:UIControlStateNormal];
+    [self.view addSubview:leftBtn];
+    [leftBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *rightBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    rightBtn.frame=CGRectMake(270, 20, 37, 30);
+    [rightBtn setImage:[UIImage imageNamed:@"RightBtn@2X"] forState:UIControlStateNormal];
+    [self.view addSubview:rightBtn];
+    [rightBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
+    rightBtn.tag=20;
+
 }
--(void)pressBack_Mag
+-(void)SwimSwitch_BtnTag:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    UIButton *btn = (UIButton *)sender;
+    if(btn.tag==10)
+        [self.viewDeckController toggleLeftViewAnimated:YES];
+    else [self.viewDeckController toggleRightViewAnimated:YES];
+
 }
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -128,25 +170,30 @@
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index
 {
-    NSDictionary* dict = [arry_Mag_description objectAtIndex:(index)];
     view1 = [[[UIImageView alloc] init ] autorelease];
-    NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
-    [view1 setImageWithURL:[NSURL URLWithString: imgURL]
-                 placeholderImage:[UIImage imageNamed:@"placeholder.png"]
-                          success:^(UIImage *image) {NSLog(@"OK");}
-                          failure:^(NSError *error) {NSLog(@"NO");}];
-    UILabel *label=[[[UILabel alloc]initWithFrame:CGRectMake(0, 300, 280, 55)]autorelease];
-    label.text=[dict objectForKey:@"description"];
-    label.textColor=[UIColor blueColor];
-    label.backgroundColor=[UIColor whiteColor];
-    label.layer.shadowColor = [UIColor blackColor].CGColor;
-    label.layer.shadowOpacity = 1.0;
-    label.layer.shadowRadius = 5.0;
-    label.layer.shadowOffset = CGSizeMake(1, 1);
-    label.clipsToBounds = NO;
 
+    NSDictionary* dict = [arry_Mag_description objectAtIndex:(index)];
+     NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
+    UIImageView *ImageView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 280, 350)]autorelease];
+    [ImageView  setImageWithURL:[NSURL URLWithString: imgURL]
+               placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                        success:^(UIImage *image) {NSLog(@"OK");}
+                        failure:^(NSError *error) {NSLog(@"NO");}];
+
+    
+    [view1 addSubview:ImageView];
+    UILabel *label=[[[UILabel alloc]initWithFrame:CGRectMake(0, 350, 280, 150)]autorelease];
+    label.text=[dict objectForKey:@"description"];
+    label.textColor=[UIColor whiteColor];
+ //   label.backgroundColor=[UIColor whiteColor];
+    label.layer.shadowColor = [UIColor whiteColor].CGColor;
+//    label.layer.shadowOpacity = 1.0;
+//    label.layer.shadowRadius = 5.0;
+//    label.layer.shadowOffset = CGSizeMake(1, 1);
+//    label.clipsToBounds = NO;
+//    
     [view1 addSubview:label];
-    view1.frame = CGRectMake(70, 80, 280, 346);
+    view1.frame = CGRectMake(0, 0, 280, 400);
     view1.layer.shadowColor = [UIColor blackColor].CGColor;
     view1.layer.shadowOpacity = 1.0;
     view1.layer.shadowRadius = 5.0;

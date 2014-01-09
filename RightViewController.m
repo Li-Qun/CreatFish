@@ -41,7 +41,7 @@
     UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
     scrollView.backgroundColor=[UIColor clearColor];
     scrollView.delegate=self;
-    UIView *myView=[[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 700)]autorelease];
+    UIView *myView=[[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
     myView.backgroundColor=[UIColor clearColor];
     UIImageView *imageViewTitle=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)];
     imageViewTitle.image=[UIImage imageNamed:@"LeftTitle@2X"];

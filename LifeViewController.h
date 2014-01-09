@@ -50,4 +50,12 @@
 @property(nonatomic,retain)NSMutableArray *arry_Mag_category_id;
 @property(nonatomic,retain)NSMutableArray *arry_Mag_description;
 @property(nonatomic,retain)NSMutableArray *arry_Mag_image;
+
+
+
+@property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
+
+@property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
+
+
 @end

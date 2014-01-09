@@ -212,11 +212,10 @@
     [array release];
     [super dealloc];
 }
-
+//先生成 再替换
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-      
     
     UIViewController  *centerView = [[[ViewController alloc] init] autorelease];
     
@@ -232,11 +231,36 @@
     vc.rightSize = 320.0-244.0;
     vc.topSize = 460+44;
     self.viewDeckController = vc;
+    //先生成 再替换
     self.window.rootViewController = self.viewDeckController;
     self.window.backgroundColor=[UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    UIImageView *splashScreen = [[[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 360, 568)]autorelease];
+    splashScreen.image = [UIImage imageNamed:@"welcome@2X"];
+    [self.window addSubview:splashScreen];
+    
+    UIImageView *splashScreen2 = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 400, 280, 80)]autorelease];
+    splashScreen2.image = [UIImage imageNamed:@"clearbar@2X"];
+    [self.window addSubview:splashScreen2];
+    
+    UIImageView *splashScreen3 = [[[UIImageView alloc] initWithFrame:CGRectMake(270, 400,40 , 80)]autorelease];
+    splashScreen3.image = [UIImage imageNamed:@"clearArrow@2X"];
+    [self.window addSubview:splashScreen3];
+    
+    [UIView animateWithDuration:4.0 animations:^{
+        CATransform3D transform = CATransform3DMakeTranslation(30, 0, 0);
+        splashScreen.layer.transform = transform;
+        splashScreen.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [splashScreen removeFromSuperview];
+        [splashScreen2 removeFromSuperview];
+        [splashScreen3 removeFromSuperview];
+    }];
+    
     return YES;
 }
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

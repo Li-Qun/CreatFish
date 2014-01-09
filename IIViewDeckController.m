@@ -842,7 +842,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
             [self hideAppropriateSideViews];
         });
         
-        [self addPanners];
+//******//        [self addPanners];
         
         if ([self isSideClosed:IIViewDeckLeftSide] && [self isSideClosed:IIViewDeckRightSide] && [self isSideClosed:IIViewDeckTopSide] && [self isSideClosed:IIViewDeckBottomSide])
             [self centerViewVisible];
@@ -2027,19 +2027,19 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 #pragma mark - center view hidden stuff
 
 - (void)centerViewVisible {
-    [self removePanners];
+//******//     [self removePanners];
     if (self.centerTapper) {
         [self.centerTapper removeTarget:self action:@selector(centerTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.centerTapper removeFromSuperview];
     }
     self.centerTapper = nil;
-    [self addPanners];
+//******//     [self addPanners];
     [self applyShadowToSlidingViewAnimated:YES];
 }
 
 - (void)centerViewHidden {
     if (!IIViewDeckCenterHiddenIsInteractive(self.centerhiddenInteractivity)) {
-        [self removePanners];
+ //******//        [self removePanners];
         if (!self.centerTapper) {
             self.centerTapper = [UIButton buttonWithType:UIButtonTypeCustom];
             [self.centerTapper setBackgroundImage:nil forState:UIControlStateNormal];
@@ -2053,7 +2053,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
         [self.centerView addSubview:self.centerTapper];
         self.centerTapper.frame = [self.centerView bounds];
         
-        [self addPanners];
+//******//         [self addPanners];
     }
     
     [self applyShadowToSlidingViewAnimated:YES];
@@ -2089,317 +2089,317 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
     }
 }
 
-#pragma mark - Panning
-
-- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)panner {
-    if (self.panningMode == IIViewDeckNavigationBarOrOpenCenterPanning && panner.view == self.slidingControllerView && [self isAnySideOpen])
-        return NO;
-    
-    if (self.panningGestureDelegate && [self.panningGestureDelegate respondsToSelector:@selector(gestureRecognizerShouldBegin:)]) {
-        BOOL result = [self.panningGestureDelegate gestureRecognizerShouldBegin:panner];
-        if (!result) return result;
-    }
-    
-    IIViewDeckOffsetOrientation orientation;
-    CGPoint velocity = [panner velocityInView:self.referenceView];
-    if (ABS(velocity.x) >= ABS(velocity.y))
-        orientation = IIViewDeckHorizontalOrientation;
-    else
-        orientation = IIViewDeckVerticalOrientation;
-
-    CGFloat pv;
-    IIViewDeckSide minSide, maxSide;
-    if (orientation == IIViewDeckHorizontalOrientation) {
-        minSide = IIViewDeckLeftSide;
-        maxSide = IIViewDeckRightSide;
-        pv = self.slidingControllerView.frame.origin.x;
-    }
-    else {
-        minSide = IIViewDeckTopSide;
-        maxSide = IIViewDeckBottomSide;
-        pv = self.slidingControllerView.frame.origin.y;
-    }
-    
-    if (self.panningMode == IIViewDeckDelegatePanning && [self.delegate respondsToSelector:@selector(viewDeckController:shouldPan:)]) {
-        if (![self.delegate viewDeckController:self shouldPan:panner])
-            return NO;
-    }
-    
-    if (pv != 0) return YES;
-        
-    CGFloat v = [self locationOfPanner:panner orientation:orientation];
-    BOOL ok = YES;
-
-    if (v > 0) {
-        ok = [self checkCanOpenSide:minSide];
-        if (!ok)
-            [self closeSideView:minSide animated:NO completion:nil];
-    }
-    else if (v < 0) {
-        ok = [self checkCanOpenSide:maxSide];
-        if (!ok)
-            [self closeSideView:maxSide animated:NO completion:nil];
-    }
-    
-    return ok;
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    if (self.panningGestureDelegate && [self.panningGestureDelegate respondsToSelector:@selector(gestureRecognizer:shouldReceiveTouch:)]) {
-        BOOL result = [self.panningGestureDelegate gestureRecognizer:gestureRecognizer
-                                                  shouldReceiveTouch:touch];
-        if (!result) return result;
-    }
-
-    if ([[touch view] isKindOfClass:[UISlider class]])
-        return NO;
-
-    _panOrigin = self.slidingControllerView.frame.origin;
-    return YES;
-}
-
--(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if (self.panningGestureDelegate && [self.panningGestureDelegate respondsToSelector:@selector(gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:)]) {
-        return [self.panningGestureDelegate gestureRecognizer:gestureRecognizer
-           shouldRecognizeSimultaneouslyWithGestureRecognizer:otherGestureRecognizer];
-    }
-    
-    return NO;
-}
-
-- (CGFloat)locationOfPanner:(UIPanGestureRecognizer*)panner orientation:(IIViewDeckOffsetOrientation)orientation {
-    CGPoint pan = [panner translationInView:self.referenceView];
-    CGFloat ofs = orientation == IIViewDeckHorizontalOrientation ? (pan.x+_panOrigin.x) : (pan.y + _panOrigin.y);
-    
-    IIViewDeckSide minSide, maxSide;
-    CGFloat max;
-    if (orientation == IIViewDeckHorizontalOrientation) {
-        minSide = IIViewDeckLeftSide;
-        maxSide = IIViewDeckRightSide;
-        max = self.referenceBounds.size.width;
-    }
-    else {
-        minSide = IIViewDeckTopSide;
-        maxSide = IIViewDeckBottomSide;
-        max = self.referenceBounds.size.height;
-    }
-    if (!_controllers[minSide]) ofs = MIN(0, ofs);
-    if (!_controllers[maxSide]) ofs = MAX(0, ofs);
-    
-    CGFloat lofs = MAX(MIN(ofs, max-_ledge[minSide]), -max+_ledge[maxSide]);
-    
-    if (self.elastic) {
-        CGFloat dofs = ABS(ofs) - ABS(lofs);
-        if (dofs > 0) {
-            dofs = dofs / logf(dofs + 1) * 2;
-            ofs = lofs + (ofs < 0 ? -dofs : dofs);
-        }
-    }
-    else {
-        ofs = lofs;
-    }
-    
-    return [self limitOffset:ofs forOrientation:orientation]; 
-}
-
-
-- (void)panned:(UIPanGestureRecognizer*)panner {
-    if (!_enabled) return;
-    
-    if (_offset == 0 && panner.state == UIGestureRecognizerStateBegan) {
-        CGPoint velocity = [panner velocityInView:self.referenceView];
-        if (ABS(velocity.x) >= ABS(velocity.y))
-            [self panned:panner orientation:IIViewDeckHorizontalOrientation];
-        else
-            [self panned:panner orientation:IIViewDeckVerticalOrientation];
-    }
-    else {
-        [self panned:panner orientation:_offsetOrientation];
-    }
-}
-///************
-- (void)panned:(UIPanGestureRecognizer*)panner orientation:(IIViewDeckOffsetOrientation)orientation {
-     CGFloat pv, m;
-    IIViewDeckSide minSide, maxSide;
-    if (orientation == IIViewDeckHorizontalOrientation) {
-        pv = self.slidingControllerView.frame.origin.x;
-        m = self.referenceBounds.size.width;
-        minSide = IIViewDeckLeftSide;
-        maxSide = IIViewDeckRightSide;
-    }
-    else {
-        pv = self.slidingControllerView.frame.origin.y;
-        m = self.referenceBounds.size.height;
-        minSide = IIViewDeckTopSide;
-        maxSide = IIViewDeckBottomSide;
-    }
-    CGFloat v = [self locationOfPanner:panner orientation:orientation];
-
-    IIViewDeckSide closeSide = IIViewDeckNoSide;
-    IIViewDeckSide openSide = IIViewDeckNoSide;
-    
-    // if we move over a boundary while dragging, ... 
-    if (pv <= 0 && v >= 0 && pv != v) {
-        // ... then we need to check if the other side can open.
-        if (pv < 0) {
-            if (![self checkCanCloseSide:maxSide])
-                return;
-            [self notifyWillCloseSide:maxSide animated:NO];
-            closeSide = maxSide;
-        }
-
-        if (v > 0) {
-            if (![self checkCanOpenSide:minSide]) {
-                [self closeSideView:maxSide animated:NO completion:nil];
-                return;
-            }
-            [self notifyWillOpenSide:minSide animated:NO];
-            openSide = minSide;
-        }
-    }
-    else if (pv >= 0 && v <= 0 && pv != v) {
-        if (pv > 0) {
-            if (![self checkCanCloseSide:minSide])
-                return;
-            [self notifyWillCloseSide:minSide animated:NO];
-            closeSide = minSide;
-        }
-
-        if (v < 0) {
-            if (![self checkCanOpenSide:maxSide]) {
-                [self closeSideView:minSide animated:NO completion:nil];
-                return;
-            }
-            [self notifyWillOpenSide:maxSide animated:NO];
-            openSide = maxSide;
-        }
-    }
-    
-    [self panToSlidingFrameForOffset:v forOrientation:orientation];
-    
-    if (panner.state == UIGestureRecognizerStateEnded ||
-        panner.state == UIGestureRecognizerStateCancelled ||
-        panner.state == UIGestureRecognizerStateFailed) {
-        CGFloat sv = orientation == IIViewDeckHorizontalOrientation ? self.slidingControllerView.frame.origin.x : self.slidingControllerView.frame.origin.y;
-        if (II_FLOAT_EQUAL(sv, 0.0f))
-            [self centerViewVisible];
-        else
-            [self centerViewHidden];
-        
-        CGFloat lm3 = (m-_ledge[minSide]) / 3.0;
-        CGFloat rm3 = (m-_ledge[maxSide]) / 3.0;
-        CGPoint velocity = [panner velocityInView:self.referenceView];
-        CGFloat orientationVelocity = orientation == IIViewDeckHorizontalOrientation ? velocity.x : velocity.y;
-        if (ABS(orientationVelocity) < 500) {
-            // small velocity, no movement
-            if (v >= m - _ledge[minSide] - lm3) {
-                [self openSideView:minSide animated:YES completion:nil];
-            }
-            else if (v <= _ledge[maxSide] + rm3 - m) {
-                [self openSideView:maxSide animated:YES completion:nil];
-            }
-            else
-                [self closeOpenView];
-        }
-        else if (orientationVelocity != 0.0f) {
-            if (orientationVelocity < 0) {
-                // swipe to the left
-                if (v < 0) {
-                    [self openSideView:maxSide animated:YES completion:nil];
-                }
-                else
-                {
-                    // Animation duration based on velocity
-                    CGFloat pointsToAnimate = self.slidingControllerView.frame.origin.x;
-                    NSTimeInterval animationDuration = durationToAnimate(pointsToAnimate, orientationVelocity);
-                    
-                    [self closeOpenViewAnimated:YES duration:animationDuration completion:nil];
-                }
-            }
-            else if (orientationVelocity > 0) {
-                // swipe to the right
-                
-                // Animation duration based on velocity
-                CGFloat pointsToAnimate = fabsf(m - self.leftSize - self.slidingControllerView.frame.origin.x);
-                NSTimeInterval animationDuration = durationToAnimate(pointsToAnimate, orientationVelocity);
-                
-                if (v > 0) {
-                    [self openSideView:minSide animated:YES duration:animationDuration completion:nil];
-                }
-                else 
-                    [self closeOpenViewAnimated:YES duration:animationDuration completion:nil];
-            }
-        }
-    }
-    else
-        [self hideAppropriateSideViews];
-
-    [self notifyDidCloseSide:closeSide animated:NO];
-    [self notifyDidOpenSide:openSide animated:NO];
-  ////////*/
-}
-
-
-- (void)addPanner:(UIView*)view {
-    if (!view) return;
-    
-    UIPanGestureRecognizer* panner = II_AUTORELEASE([[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panned:)]);
-    panner.cancelsTouchesInView = YES;
-    panner.delegate = self;
-    [view addGestureRecognizer:panner];
-    [self.panners addObject:panner];
-}
-
-
-- (void)addPanners {
-    [self removePanners];
-    
-    switch (_panningMode) {
-        case IIViewDeckNoPanning: 
-            break;
-            
-        case IIViewDeckFullViewPanning:
-        case IIViewDeckDelegatePanning:
-        case IIViewDeckNavigationBarOrOpenCenterPanning:
-            [self addPanner:self.slidingControllerView];
-            // also add to disabled center
-            if (self.centerTapper)
-                [self addPanner:self.centerTapper];
-            // also add to navigationbar if present
-            if (self.navigationController && !self.navigationController.navigationBarHidden) 
-                [self addPanner:self.navigationController.navigationBar];
-            break;
-
-        case IIViewDeckNavigationBarPanning:
-            if (self.navigationController && !self.navigationController.navigationBarHidden) {
-                [self addPanner:self.navigationController.navigationBar];
-            }
-            
-            if (self.centerController.navigationController && !self.centerController.navigationController.navigationBarHidden) {
-                [self addPanner:self.centerController.navigationController.navigationBar];
-            }
-            
-            if ([self.centerController isKindOfClass:[UINavigationController class]] && !((UINavigationController*)self.centerController).navigationBarHidden) {
-                [self addPanner:((UINavigationController*)self.centerController).navigationBar];
-            }
-            break;
-            
-        case IIViewDeckPanningViewPanning:
-            if (_panningView) {
-                [self addPanner:self.panningView];
-            }
-            break;
-    }
-}
-
-
-- (void)removePanners {
-    for (UIGestureRecognizer* panner in self.panners) {
-        [panner.view removeGestureRecognizer:panner];
-    }
-    [self.panners removeAllObjects];
-}
-
+//#pragma mark - Panning
+//
+//- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)panner {
+//    if (self.panningMode == IIViewDeckNavigationBarOrOpenCenterPanning && panner.view == self.slidingControllerView && [self isAnySideOpen])
+//        return NO;
+//    
+//    if (self.panningGestureDelegate && [self.panningGestureDelegate respondsToSelector:@selector(gestureRecognizerShouldBegin:)]) {
+//        BOOL result = [self.panningGestureDelegate gestureRecognizerShouldBegin:panner];
+//        if (!result) return result;
+//    }
+//    
+//    IIViewDeckOffsetOrientation orientation;
+//    CGPoint velocity = [panner velocityInView:self.referenceView];
+//    if (ABS(velocity.x) >= ABS(velocity.y))
+//        orientation = IIViewDeckHorizontalOrientation;
+//    else
+//        orientation = IIViewDeckVerticalOrientation;
+//
+//    CGFloat pv;
+//    IIViewDeckSide minSide, maxSide;
+//    if (orientation == IIViewDeckHorizontalOrientation) {
+//        minSide = IIViewDeckLeftSide;
+//        maxSide = IIViewDeckRightSide;
+//        pv = self.slidingControllerView.frame.origin.x;
+//    }
+//    else {
+//        minSide = IIViewDeckTopSide;
+//        maxSide = IIViewDeckBottomSide;
+//        pv = self.slidingControllerView.frame.origin.y;
+//    }
+//    
+//    if (self.panningMode == IIViewDeckDelegatePanning && [self.delegate respondsToSelector:@selector(viewDeckController:shouldPan:)]) {
+//        if (![self.delegate viewDeckController:self shouldPan:panner])
+//            return NO;
+//    }
+//    
+//    if (pv != 0) return YES;
+//        
+//    CGFloat v = [self locationOfPanner:panner orientation:orientation];
+//    BOOL ok = YES;
+//
+//    if (v > 0) {
+//        ok = [self checkCanOpenSide:minSide];
+//        if (!ok)
+//            [self closeSideView:minSide animated:NO completion:nil];
+//    }
+//    else if (v < 0) {
+//        ok = [self checkCanOpenSide:maxSide];
+//        if (!ok)
+//            [self closeSideView:maxSide animated:NO completion:nil];
+//    }
+//    
+//    return ok;
+//}
+//
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+//    if (self.panningGestureDelegate && [self.panningGestureDelegate respondsToSelector:@selector(gestureRecognizer:shouldReceiveTouch:)]) {
+//        BOOL result = [self.panningGestureDelegate gestureRecognizer:gestureRecognizer
+//                                                  shouldReceiveTouch:touch];
+//        if (!result) return result;
+//    }
+//
+//    if ([[touch view] isKindOfClass:[UISlider class]])
+//        return NO;
+//
+//    _panOrigin = self.slidingControllerView.frame.origin;
+//    return YES;
+//}
+//
+//-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+//    if (self.panningGestureDelegate && [self.panningGestureDelegate respondsToSelector:@selector(gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:)]) {
+//        return [self.panningGestureDelegate gestureRecognizer:gestureRecognizer
+//           shouldRecognizeSimultaneouslyWithGestureRecognizer:otherGestureRecognizer];
+//    }
+//    
+//    return NO;
+//}
+//
+//- (CGFloat)locationOfPanner:(UIPanGestureRecognizer*)panner orientation:(IIViewDeckOffsetOrientation)orientation {
+//    CGPoint pan = [panner translationInView:self.referenceView];
+//    CGFloat ofs = orientation == IIViewDeckHorizontalOrientation ? (pan.x+_panOrigin.x) : (pan.y + _panOrigin.y);
+//    
+//    IIViewDeckSide minSide, maxSide;
+//    CGFloat max;
+//    if (orientation == IIViewDeckHorizontalOrientation) {
+//        minSide = IIViewDeckLeftSide;
+//        maxSide = IIViewDeckRightSide;
+//        max = self.referenceBounds.size.width;
+//    }
+//    else {
+//        minSide = IIViewDeckTopSide;
+//        maxSide = IIViewDeckBottomSide;
+//        max = self.referenceBounds.size.height;
+//    }
+//    if (!_controllers[minSide]) ofs = MIN(0, ofs);
+//    if (!_controllers[maxSide]) ofs = MAX(0, ofs);
+//    
+//    CGFloat lofs = MAX(MIN(ofs, max-_ledge[minSide]), -max+_ledge[maxSide]);
+//    
+//    if (self.elastic) {
+//        CGFloat dofs = ABS(ofs) - ABS(lofs);
+//        if (dofs > 0) {
+//            dofs = dofs / logf(dofs + 1) * 2;
+//            ofs = lofs + (ofs < 0 ? -dofs : dofs);
+//        }
+//    }
+//    else {
+//        ofs = lofs;
+//    }
+//    
+//    return [self limitOffset:ofs forOrientation:orientation]; 
+//}
+//
+//
+//- (void)panned:(UIPanGestureRecognizer*)panner {
+//    if (!_enabled) return;
+//    
+//    if (_offset == 0 && panner.state == UIGestureRecognizerStateBegan) {
+//        CGPoint velocity = [panner velocityInView:self.referenceView];
+//        if (ABS(velocity.x) >= ABS(velocity.y))
+//            [self panned:panner orientation:IIViewDeckHorizontalOrientation];
+//        else
+//            [self panned:panner orientation:IIViewDeckVerticalOrientation];
+//    }
+//    else {
+//        [self panned:panner orientation:_offsetOrientation];
+//    }
+//}
+/////************
+//- (void)panned:(UIPanGestureRecognizer*)panner orientation:(IIViewDeckOffsetOrientation)orientation {
+////     CGFloat pv, m;
+////    IIViewDeckSide minSide, maxSide;
+////    if (orientation == IIViewDeckHorizontalOrientation) {
+////        pv = self.slidingControllerView.frame.origin.x;
+////        m = self.referenceBounds.size.width;
+////        minSide = IIViewDeckLeftSide;
+////        maxSide = IIViewDeckRightSide;
+////    }
+////    else {
+////        pv = self.slidingControllerView.frame.origin.y;
+////        m = self.referenceBounds.size.height;
+////        minSide = IIViewDeckTopSide;
+////        maxSide = IIViewDeckBottomSide;
+////    }
+////    CGFloat v = [self locationOfPanner:panner orientation:orientation];
+////
+////    IIViewDeckSide closeSide = IIViewDeckNoSide;
+////    IIViewDeckSide openSide = IIViewDeckNoSide;
+////    
+////    // if we move over a boundary while dragging, ... 
+////    if (pv <= 0 && v >= 0 && pv != v) {
+////        // ... then we need to check if the other side can open.
+////        if (pv < 0) {
+////            if (![self checkCanCloseSide:maxSide])
+////                return;
+////            [self notifyWillCloseSide:maxSide animated:NO];
+////            closeSide = maxSide;
+////        }
+////
+////        if (v > 0) {
+////            if (![self checkCanOpenSide:minSide]) {
+////                [self closeSideView:maxSide animated:NO completion:nil];
+////                return;
+////            }
+////            [self notifyWillOpenSide:minSide animated:NO];
+////            openSide = minSide;
+////        }
+////    }
+////    else if (pv >= 0 && v <= 0 && pv != v) {
+////        if (pv > 0) {
+////            if (![self checkCanCloseSide:minSide])
+////                return;
+////            [self notifyWillCloseSide:minSide animated:NO];
+////            closeSide = minSide;
+////        }
+////
+////        if (v < 0) {
+////            if (![self checkCanOpenSide:maxSide]) {
+////                [self closeSideView:minSide animated:NO completion:nil];
+////                return;
+////            }
+////            [self notifyWillOpenSide:maxSide animated:NO];
+////            openSide = maxSide;
+////        }
+////    }
+////    
+////    [self panToSlidingFrameForOffset:v forOrientation:orientation];
+////    
+////    if (panner.state == UIGestureRecognizerStateEnded ||
+////        panner.state == UIGestureRecognizerStateCancelled ||
+////        panner.state == UIGestureRecognizerStateFailed) {
+////        CGFloat sv = orientation == IIViewDeckHorizontalOrientation ? self.slidingControllerView.frame.origin.x : self.slidingControllerView.frame.origin.y;
+////        if (II_FLOAT_EQUAL(sv, 0.0f))
+////            [self centerViewVisible];
+////        else
+////            [self centerViewHidden];
+////        
+////        CGFloat lm3 = (m-_ledge[minSide]) / 3.0;
+////        CGFloat rm3 = (m-_ledge[maxSide]) / 3.0;
+////        CGPoint velocity = [panner velocityInView:self.referenceView];
+////        CGFloat orientationVelocity = orientation == IIViewDeckHorizontalOrientation ? velocity.x : velocity.y;
+////        if (ABS(orientationVelocity) < 500) {
+////            // small velocity, no movement
+////            if (v >= m - _ledge[minSide] - lm3) {
+////                [self openSideView:minSide animated:YES completion:nil];
+////            }
+////            else if (v <= _ledge[maxSide] + rm3 - m) {
+////                [self openSideView:maxSide animated:YES completion:nil];
+////            }
+////            else
+////                [self closeOpenView];
+////        }
+////        else if (orientationVelocity != 0.0f) {
+////            if (orientationVelocity < 0) {
+////                // swipe to the left
+////                if (v < 0) {
+////                    [self openSideView:maxSide animated:YES completion:nil];
+////                }
+////                else
+////                {
+////                    // Animation duration based on velocity
+////                    CGFloat pointsToAnimate = self.slidingControllerView.frame.origin.x;
+////                    NSTimeInterval animationDuration = durationToAnimate(pointsToAnimate, orientationVelocity);
+////                    
+////                    [self closeOpenViewAnimated:YES duration:animationDuration completion:nil];
+////                }
+////            }
+////            else if (orientationVelocity > 0) {
+////                // swipe to the right
+////                
+////                // Animation duration based on velocity
+////                CGFloat pointsToAnimate = fabsf(m - self.leftSize - self.slidingControllerView.frame.origin.x);
+////                NSTimeInterval animationDuration = durationToAnimate(pointsToAnimate, orientationVelocity);
+////                
+////                if (v > 0) {
+////                    [self openSideView:minSide animated:YES duration:animationDuration completion:nil];
+////                }
+////                else 
+////                    [self closeOpenViewAnimated:YES duration:animationDuration completion:nil];
+////            }
+////        }
+////    }
+////    else
+////        [self hideAppropriateSideViews];
+////
+////    [self notifyDidCloseSide:closeSide animated:NO];
+////    [self notifyDidOpenSide:openSide animated:NO];
+//  ////////*/
+//}
+//
+//
+//- (void)addPanner:(UIView*)view {
+//    if (!view) return;
+//    
+//    UIPanGestureRecognizer* panner = II_AUTORELEASE([[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panned:)]);
+//    panner.cancelsTouchesInView = YES;
+//    panner.delegate = self;
+//    [view addGestureRecognizer:panner];
+//    [self.panners addObject:panner];
+//}
+//
+//
+//- (void)addPanners {
+//    [self removePanners];
+//    
+//    switch (_panningMode) {
+//        case IIViewDeckNoPanning: 
+//            break;
+//            
+//        case IIViewDeckFullViewPanning:
+//        case IIViewDeckDelegatePanning:
+//        case IIViewDeckNavigationBarOrOpenCenterPanning:
+//            [self addPanner:self.slidingControllerView];
+//            // also add to disabled center
+//            if (self.centerTapper)
+//                [self addPanner:self.centerTapper];
+//            // also add to navigationbar if present
+//            if (self.navigationController && !self.navigationController.navigationBarHidden) 
+//                [self addPanner:self.navigationController.navigationBar];
+//            break;
+//
+//        case IIViewDeckNavigationBarPanning:
+//            if (self.navigationController && !self.navigationController.navigationBarHidden) {
+//                [self addPanner:self.navigationController.navigationBar];
+//            }
+//            
+//            if (self.centerController.navigationController && !self.centerController.navigationController.navigationBarHidden) {
+//                [self addPanner:self.centerController.navigationController.navigationBar];
+//            }
+//            
+//            if ([self.centerController isKindOfClass:[UINavigationController class]] && !((UINavigationController*)self.centerController).navigationBarHidden) {
+//                [self addPanner:((UINavigationController*)self.centerController).navigationBar];
+//            }
+//            break;
+//            
+//        case IIViewDeckPanningViewPanning:
+//            if (_panningView) {
+//                [self addPanner:self.panningView];
+//            }
+//            break;
+//    }
+//}
+//
+//
+//- (void)removePanners {
+//    for (UIGestureRecognizer* panner in self.panners) {
+//        [panner.view removeGestureRecognizer:panner];
+//    }
+//    [self.panners removeAllObjects];
+//}
+//
 #pragma mark - Delegate convenience methods
 
 - (BOOL)checkDelegate:(SEL)selector side:(IIViewDeckSide)viewDeckSide {
@@ -2537,9 +2537,9 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
 
 - (void)setPanningMode:(IIViewDeckPanningMode)panningMode {
     if (_viewFirstAppeared) {
-        [self removePanners];
+//******//         [self removePanners];
         _panningMode = panningMode;
-        [self addPanners];
+//******//         [self addPanners];
     }
     else
         _panningMode = panningMode;
@@ -2552,7 +2552,10 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
         II_RETAIN(_panningView);
         
         if (_viewFirstAppeared && _panningMode == IIViewDeckPanningViewPanning)
-            [self addPanners];
+        {
+            
+        }
+ //******//            [self addPanners];
     }
 }
 
@@ -2672,7 +2675,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
         beforeBlock = ^(UIViewController* controller) {
             [controller viewWillDisappear:NO];
             [self restoreShadowToSlidingView];
-            [self removePanners];
+//******//             [self removePanners];
             [controller.view removeFromSuperview];
             [controller viewDidDisappear:NO];
             [self.centerView removeFromSuperview];
@@ -2698,7 +2701,7 @@ static NSTimeInterval durationToAnimate(CGFloat pointsToAnimate, CGFloat velocit
             if (barHidden) 
                 navController.navigationBarHidden = NO;
             
-            [self addPanners];
+//******//             [self addPanners];
             [self applyShadowToSlidingViewAnimated:NO];
             [controller viewDidAppear:NO];
         };

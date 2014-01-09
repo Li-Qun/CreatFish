@@ -51,6 +51,9 @@
                                                                         cacheTime:0];
         [CustomURLCache setSharedURLCache:urlCache];
         [urlCache release];
+        
+        
+
     }
     return self;
 }
@@ -71,36 +74,50 @@
     contentRead.delegate=self;
     [contentRead Category];
     [super viewDidLoad];
-    //导航按钮start
-    [self.navigationController setNavigationBarHidden:YES];
-    navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
-    UIButton *back = [UIButton buttonWithType:UIButtonTypeSystem];
-    back.frame=CGRectMake(3, 10, 44, 50);
-    [back addTarget:self action:@selector(backParentView) forControlEvents:UIControlEventTouchDown];
-    [back setTitle:@"返回" forState:UIControlStateNormal];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"readBack@2X.png"]];
+    imgView.frame = self.view.bounds;
+    imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.view insertSubview:imgView atIndex:0];
+    [imgView release];
+    //创建导航按钮start
+    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)]autorelease];
+    topBarView.image=[UIImage imageNamed:@"topViewBarWhite"];
+    [self.view addSubview:topBarView];
     
-    UIButton *word = [UIButton buttonWithType:UIButtonTypeSystem];
-    word.frame=CGRectMake(100, 10, 44, 50);
-    [word addTarget:self action:@selector(PressWord:) forControlEvents:UIControlEventTouchDown];
-    [word setTitle:@"字体" forState:UIControlStateNormal];
+    UIButton *backBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame=CGRectMake(10, 20, 26, 25);
+    [backBtn setImage:[UIImage imageNamed:@"BackImg@2X"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backParentView) forControlEvents:UIControlEventTouchUpInside];
+    [self.view  addSubview:backBtn];
     
-    UIButton *share = [UIButton buttonWithType:UIButtonTypeSystem];
-    share.frame=CGRectMake(170, 10, 44, 50);
-    [share addTarget:self action:@selector(clickLeftButton) forControlEvents:UIControlEventTouchDown];
-    [share setTitle:@"分享" forState:UIControlStateNormal];
+    UIButton *wordBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    wordBtn.frame=CGRectMake(175, 23, 28, 20);
+    [wordBtn setImage:[UIImage imageNamed:@"AaImg@2X"] forState:UIControlStateNormal];
+    [wordBtn addTarget:self action:@selector(PressWord:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view  addSubview:wordBtn];
     
-    UIButton *save = [UIButton buttonWithType:UIButtonTypeSystem];
-    save.frame=CGRectMake(240, 10, 44, 50);
-    [save addTarget:self action:@selector(SaveBook) forControlEvents:UIControlEventTouchDown];
-    [save setTitle:@"收藏" forState:UIControlStateNormal];
+    UIButton *shareBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    shareBtn.frame=CGRectMake(280, 20, 26, 25);
+    [shareBtn setImage:[UIImage imageNamed:@"shareImg@2X"] forState:UIControlStateNormal];
+    [shareBtn addTarget:self action:@selector(backParentView) forControlEvents:UIControlEventTouchUpInside];
+    [self.view  addSubview:shareBtn];
     
-    [navBar addSubview:back];
-    [navBar addSubview:word];
-    [navBar addSubview:share];
-    [navBar addSubview:save];
+    UIButton *saveBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    saveBtn.frame=CGRectMake(230, 20, 26, 25);
+    [saveBtn setImage:[UIImage imageNamed:@"saveImgNormal@2X"] forState:UIControlStateNormal];
+    [saveBtn addTarget:self action:@selector(SaveBook:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view  addSubview:saveBtn];
+    [saveBtn setImage:[UIImage imageNamed:@"saveImgHighted@2X"] forState:UIControlStateHighlighted];
     
-    //导航按钮end
-
+    
+    //创建导航按钮end
+    
+    
+    
+    
+    
+    
+    
     fontSize=16.0;
     line_height=18.0;
     Data=[[NSMutableDictionary alloc]init];
@@ -108,10 +125,12 @@
     htmlTextTotals=[[NSMutableString alloc]init];
     
     [self postURL:[self.dictForData objectForKey:@"id"]];
-    showWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 55, 320, 550)];
+    showWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, 320, 550)];
     showWebView.delegate=self;
     showWebView.scrollView.delegate=self;
-   [self.view addSubview:navBar];
+    showWebView.backgroundColor=[UIColor clearColor];
+    showWebView.opaque = NO;
+  
 }
 -(void)postURL:(NSString*)ID
 {
@@ -170,12 +189,13 @@
     detailImage=[jsonObj objectForKey:@"image"];
     detailID=[jsonObj objectForKey:@"id"];
     [htmlTextTotals appendFormat:[NSString stringWithFormat: htmlText]];
+    //<body style="background-color: transparent">//设置网页背景透明
    // htmlTextTotals = [htmlTextTotals stringByAppendingString:htmlText];
    //  NSLog(@"%@",htmlTextTotals);
     jsString = [NSString stringWithFormat:@"<html> \n"
                           "<head> \n"
                           "<style type=\"text/css\"> \n"
-                          "body {font-size:%fpx; line-height:%fpx;}\n"
+                          "body {font-size:%fpx; line-height:%fpx;background-color: transparent;}\n"
                           "</style> \n"
                           "</head> \n"
                           "<body>%@</body> \n"
@@ -188,14 +208,11 @@
     showWebView.delegate=self;
     showWebView.scrollView.delegate=self;
 
-    self.view.backgroundColor=[UIColor whiteColor];
+    self.view.backgroundColor=[UIColor clearColor];
  
     [showWebView setUserInteractionEnabled: YES ];
     [self.view addSubview:showWebView];
     
-    //导航按钮start
-    [self.view addSubview:navBar];
-    //导航按钮end
     [self addTapOnWebView];//调用触摸图片事件
     //showWebView.
     
@@ -474,8 +491,10 @@ didFailWithError:(NSError *)error
     
 }
 ///收藏提示对话框
--(void)SaveBook
+-(void)SaveBook :(id)sender
 {
+    UIButton *saveBtn = (UIButton *)sender;
+    [saveBtn setImage:[UIImage imageNamed:@"saveImgHighted@2X"] forState:UIControlStateNormal];
     UIAlertView *alert =[[[UIAlertView alloc] initWithTitle:@"hello"
                                                    message:@"收藏当前阅读内容"
                                                   delegate:self
@@ -568,7 +587,7 @@ didFailWithError:(NSError *)error
     UIMenuItem *lineBig = [[[UIMenuItem alloc] initWithTitle: @"间距宽" action:@selector(lineBigAction:)]autorelease];
     [UIMenuController sharedMenuController].menuItems = @[wordBig,wordSmall,lineSmall,lineBig ];
     //菜单按钮选项
-    [[UIMenuController sharedMenuController] setTargetRect:CGRectMake(100, 10, 44, 50) inView:self.view];
+    [[UIMenuController sharedMenuController] setTargetRect:CGRectMake(175, 23, 28, 20) inView:self.view];
     [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES];
 
 }

@@ -107,24 +107,7 @@
 }
 -(void)postJSON:(NSString *)flag
 {
-//    [self.navigationController setNavigationBarHidden:NO];
-//    self.navigationItem.hidesBackButton = YES;
-//    UIBarButtonItem *leftButton=[[UIBarButtonItem alloc]  initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self   action:@selector(pressLeftSlide)];
-//    
-//    
-//    self.navigationItem.leftBarButtonItem = leftButton;
-//    self.navigationItem.hidesBackButton =YES;
-//    self.navigationItem.title=NewsName;
-//    
-//    [leftButton release];
-//    
-//    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:
-//                                    UIBarButtonSystemItemFastForward                                                                   target:self
-//                                    action:@selector (pressRightSlide)];//(SettingPress)];
-//    
-//    self.navigationItem.rightBarButtonItem = rightButton;
-//    [rightButton release];
-    
+ 
     UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
