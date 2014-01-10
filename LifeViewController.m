@@ -42,6 +42,8 @@
         
         self.navigationController.toolbarHidden = YES;
         self.navigationController.navigationBarHidden=YES;
+        
+       
     }
     return self;
 }
@@ -49,6 +51,36 @@
 {
     [carousel release];
     [super dealloc];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    CGSize size = rect.size;
+    CGFloat height = size.height;
+    
+    if(height==480)heightMagzine=20;
+    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 65-heightMagzine)]autorelease];
+    topBarView.image=[UIImage imageNamed:@"topBarRed"];
+    [self.view addSubview:topBarView];
+    
+    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(135, 22-heightMagzine/2, 40, 20)]autorelease];
+    wordView.image=[UIImage imageNamed:@"swimWordLabel"];
+    [topBarView addSubview:wordView];
+    
+    UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    leftBtn.frame=CGRectMake(10, 20-heightMagzine/2, 37, 30);
+    leftBtn.tag=10;
+    [leftBtn setImage:[UIImage imageNamed:@"LeftBtn@2X"] forState:UIControlStateNormal];
+    [self.view addSubview:leftBtn];
+    [leftBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *rightBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    rightBtn.frame=CGRectMake(270, 20-heightMagzine/2, 37, 30);
+    [rightBtn setImage:[UIImage imageNamed:@"RightBtn@2X"] forState:UIControlStateNormal];
+    [self.view addSubview:rightBtn];
+    [rightBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
+    rightBtn.tag=20;
+
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
@@ -119,28 +151,7 @@
     [self.navigationController setNavigationBarHidden:YES];
     
     
-    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)]autorelease];
-    topBarView.image=[UIImage imageNamed:@"topBarRed"];
-    [self.view addSubview:topBarView];
-    
-    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(135, 22, 40, 20)]autorelease];
-    wordView.image=[UIImage imageNamed:@"swimWordLabel"];
-    [topBarView addSubview:wordView];
-
-    UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.frame=CGRectMake(10, 20, 37, 30);
-    leftBtn.tag=10;
-    [leftBtn setImage:[UIImage imageNamed:@"LeftBtn@2X"] forState:UIControlStateNormal];
-    [self.view addSubview:leftBtn];
-    [leftBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIButton *rightBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame=CGRectMake(270, 20, 37, 30);
-    [rightBtn setImage:[UIImage imageNamed:@"RightBtn@2X"] forState:UIControlStateNormal];
-    [self.view addSubview:rightBtn];
-    [rightBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
-    rightBtn.tag=20;
-
+  
 }
 -(void)SwimSwitch_BtnTag:(id)sender
 {
@@ -174,7 +185,7 @@
 
     NSDictionary* dict = [arry_Mag_description objectAtIndex:(index)];
      NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
-    UIImageView *ImageView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 280, 350)]autorelease];
+    UIImageView *ImageView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, -heightMagzine*4, 280, 350-heightMagzine*4)]autorelease];
     [ImageView  setImageWithURL:[NSURL URLWithString: imgURL]
                placeholderImage:[UIImage imageNamed:@"placeholder.png"]
                         success:^(UIImage *image) {NSLog(@"OK");}
@@ -182,10 +193,11 @@
 
     
     [view1 addSubview:ImageView];
-    UILabel *label=[[[UILabel alloc]initWithFrame:CGRectMake(0, 350, 280, 150)]autorelease];
+    UILabel *label=[[[UILabel alloc]initWithFrame:CGRectMake(0, 350-heightMagzine*8, 280, 150)]autorelease];
     label.text=[dict objectForKey:@"description"];
     label.textColor=[UIColor whiteColor];
- //   label.backgroundColor=[UIColor whiteColor];
+    label.backgroundColor=[UIColor clearColor];
+
     label.layer.shadowColor = [UIColor whiteColor].CGColor;
 //    label.layer.shadowOpacity = 1.0;
 //    label.layer.shadowRadius = 5.0;
@@ -193,7 +205,7 @@
 //    label.clipsToBounds = NO;
 //    
     [view1 addSubview:label];
-    view1.frame = CGRectMake(0, 0, 280, 400);
+    view1.frame = CGRectMake(0, -heightMagzine*6, 280, 400-heightMagzine*6);
     view1.layer.shadowColor = [UIColor blackColor].CGColor;
     view1.layer.shadowOpacity = 1.0;
     view1.layer.shadowRadius = 5.0;

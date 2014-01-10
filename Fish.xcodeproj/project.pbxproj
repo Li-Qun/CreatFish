@@ -80,6 +80,10 @@
 		BBA11CF7185EDAAF000D39F8 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA11CEA185EDAAF000D39F8 /* SBJsonUTF8Stream.m */; };
 		BBA11CF8185EDAAF000D39F8 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA11CEC185EDAAF000D39F8 /* SBJsonWriter.m */; };
 		BBA18E791864277100EEEFC8 /* DetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBA18E781864277100EEEFC8 /* DetailViewController.xib */; };
+		BBA1C9FD187FDDEA0028E5BC /* submmit.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA1C9FB187FDDE90028E5BC /* submmit.png */; };
+		BBA1C9FE187FDDEA0028E5BC /* submmit@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA1C9FC187FDDEA0028E5BC /* submmit@2X.png */; };
+		BBA1CA01187FED790028E5BC /* adviceTheBigTitle.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA1C9FF187FED790028E5BC /* adviceTheBigTitle.png */; };
+		BBA1CA02187FED790028E5BC /* adviceTheBigTitle@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA1CA00187FED790028E5BC /* adviceTheBigTitle@2X.png */; };
 		BBA352A818792A2900A8239C /* TypeNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA352A418792A2900A8239C /* TypeNormal.png */; };
 		BBA352A918792A2900A8239C /* TypeNormal@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA352A518792A2900A8239C /* TypeNormal@2X.png */; };
 		BBA352AA18792A2900A8239C /* TypeSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA352A618792A2900A8239C /* TypeSelect.png */; };
@@ -221,7 +225,6 @@
 		BBD134141869CD2D008657B6 /* broom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD134101869CD2D008657B6 /* broom@2x.png */; };
 		BBD134151869CD2D008657B6 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD134111869CD2D008657B6 /* camera.png */; };
 		BBD134161869CD2D008657B6 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD134121869CD2D008657B6 /* camera@2x.png */; };
-		BBD529E6185D39AB00575349 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD529E5185D39AB00575349 /* Background.png */; };
 		BBD52A89185D470500575349 /* UIGestureRecognizer+GMGridViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD52A86185D470500575349 /* UIGestureRecognizer+GMGridViewAdditions.m */; };
 		BBD52A8A185D470500575349 /* UIView+GMGridViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD52A88185D470500575349 /* UIView+GMGridViewAdditions.m */; };
 		BBD52A93185D471D00575349 /* GMGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD52A8D185D471D00575349 /* GMGridView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc-flag"; }; };
@@ -403,6 +406,10 @@
 		BBA11CEB185EDAAF000D39F8 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		BBA11CEC185EDAAF000D39F8 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		BBA18E781864277100EEEFC8 /* DetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailViewController.xib; sourceTree = "<group>"; };
+		BBA1C9FB187FDDE90028E5BC /* submmit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = submmit.png; sourceTree = "<group>"; };
+		BBA1C9FC187FDDEA0028E5BC /* submmit@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "submmit@2X.png"; sourceTree = "<group>"; };
+		BBA1C9FF187FED790028E5BC /* adviceTheBigTitle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = adviceTheBigTitle.png; sourceTree = "<group>"; };
+		BBA1CA00187FED790028E5BC /* adviceTheBigTitle@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "adviceTheBigTitle@2X.png"; sourceTree = "<group>"; };
 		BBA352A418792A2900A8239C /* TypeNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TypeNormal.png; sourceTree = "<group>"; };
 		BBA352A518792A2900A8239C /* TypeNormal@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TypeNormal@2X.png"; sourceTree = "<group>"; };
 		BBA352A618792A2900A8239C /* TypeSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TypeSelect.png; sourceTree = "<group>"; };
@@ -581,7 +588,6 @@
 		BBD134101869CD2D008657B6 /* broom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "broom@2x.png"; sourceTree = "<group>"; };
 		BBD134111869CD2D008657B6 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		BBD134121869CD2D008657B6 /* camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera@2x.png"; sourceTree = "<group>"; };
-		BBD529E5185D39AB00575349 /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
 		BBD52A85185D470500575349 /* UIGestureRecognizer+GMGridViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIGestureRecognizer+GMGridViewAdditions.h"; sourceTree = "<group>"; };
 		BBD52A86185D470500575349 /* UIGestureRecognizer+GMGridViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIGestureRecognizer+GMGridViewAdditions.m"; sourceTree = "<group>"; };
 		BBD52A87185D470500575349 /* UIView+GMGridViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GMGridViewAdditions.h"; sourceTree = "<group>"; };
@@ -741,7 +747,6 @@
 				9006F33C184D59250091B69F /* InfoPlist.strings */,
 				9006F33F184D59250091B69F /* main.m */,
 				9006F341184D59250091B69F /* Fish-Prefix.pch */,
-				BBD529E5185D39AB00575349 /* Background.png */,
 				9006F349184D59250091B69F /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
@@ -1292,6 +1297,10 @@
 		BBD0E1E418781B5B000D1141 /* reBack */ = {
 			isa = PBXGroup;
 			children = (
+				BBA1C9FF187FED790028E5BC /* adviceTheBigTitle.png */,
+				BBA1CA00187FED790028E5BC /* adviceTheBigTitle@2X.png */,
+				BBA1C9FB187FDDE90028E5BC /* submmit.png */,
+				BBA1C9FC187FDDEA0028E5BC /* submmit@2X.png */,
 				BBA352AC1879568800A8239C /* advice_back.png */,
 				BBA352AD1879568800A8239C /* advice_back@2X.png */,
 				BBD0E1E518781B95000D1141 /* advice_nav_red.png */,
@@ -1503,6 +1512,7 @@
 				BB7846291859880600260712 /* SaveViewController.xib in Resources */,
 				BBC95B3418532E5F00A10431 /* images-7.jpeg in Resources */,
 				BB95154B1853387600BD82A7 /* DetailItemViewController.xib in Resources */,
+				BBA1C9FE187FDDEA0028E5BC /* submmit@2X.png in Resources */,
 				BBD81BAE186C34DA000DBEEE /* 15.jpg in Resources */,
 				BBB79BD718618C85007DCEEA /* InformationCell.xib in Resources */,
 				BBA352A918792A2900A8239C /* TypeNormal@2X.png in Resources */,
@@ -1544,6 +1554,7 @@
 				BBB2CF1C187BF80C00C8F210 /* selectOne@2X.png in Resources */,
 				BBD0E1E718781B95000D1141 /* advice_nav_red.png in Resources */,
 				BBDBE948184DD064009FA292 /* LeftViewController.xib in Resources */,
+				BBA1CA02187FED790028E5BC /* adviceTheBigTitle@2X.png in Resources */,
 				BBD81BB7186C34DA000DBEEE /* 23.jpg in Resources */,
 				BBD7A05E186D2DED000A4675 /* selectButtonNormal.png in Resources */,
 				BBD81BB3186C34DA000DBEEE /* 2.jpg in Resources */,
@@ -1596,7 +1607,6 @@
 				BBD81BBE186C34DA000DBEEE /* 3.jpg in Resources */,
 				BB951563185348C000BD82A7 /* bg-menuitem-highlighted.png in Resources */,
 				BBC95B3218532E5F00A10431 /* images-5.jpeg in Resources */,
-				BBD529E6185D39AB00575349 /* Background.png in Resources */,
 				BBD81BB9186C34DA000DBEEE /* 25.jpg in Resources */,
 				BBB2CF0E187BA7D500C8F210 /* redBack@2X.png in Resources */,
 				BBA49313187D48BE0089D35E /* topBarRed.png in Resources */,
@@ -1604,6 +1614,7 @@
 				BBB2CF24187C00E800C8F210 /* News@2X.png in Resources */,
 				BBA69899186FE9DD00DE10AB /* blueArrow@2x.png in Resources */,
 				BBA4930F187D48BE0089D35E /* LeftBtn.png in Resources */,
+				BBA1C9FD187FDDEA0028E5BC /* submmit.png in Resources */,
 				BBB79BCB18614840007DCEEA /* NewsController.xib in Resources */,
 				BBD81BBF186C34DA000DBEEE /* 4.jpg in Resources */,
 				BBA49304187D2F090089D35E /* TitleRedBack@2X.png in Resources */,
@@ -1628,6 +1639,7 @@
 				BBA492FA187CEE8E0089D35E /* Set@2X.PNG in Resources */,
 				BBD0E1DE18781444000D1141 /* set_Nav@2X.png in Resources */,
 				BBA352A818792A2900A8239C /* TypeNormal.png in Resources */,
+				BBA1CA01187FED790028E5BC /* adviceTheBigTitle.png in Resources */,
 				BBA5B7D9187AB21F00D55899 /* xinlang.png in Resources */,
 				BBAF28E1187E8606005A3FCB /* swimWordLabel.png in Resources */,
 				BBAF28E2187E8606005A3FCB /* swimWordLabel@2X.png in Resources */,

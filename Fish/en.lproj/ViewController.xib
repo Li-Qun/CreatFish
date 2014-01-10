@@ -39,7 +39,7 @@
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">274</int>
 						<array class="NSMutableArray" key="NSSubviews"/>
-						<string key="NSFrame">{{0, 76}, {320, 245}}</string>
+						<string key="NSFrame">{{0, 83}, {320, 245}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -71,6 +71,10 @@
 					<string key="IBUIDisplayName">Retina 4-inch Full Screen</string>
 					<int key="IBUIType">2</int>
 				</object>
+				<double key="IBUIInsetFor6xAndEarlier.top">20</double>
+				<double key="IBUIInsetFor6xAndEarlier.bottom">0.0</double>
+				<double key="IBUIInsetFor6xAndEarlier.left">0.0</double>
+				<double key="IBUIInsetFor6xAndEarlier.right">0.0</double>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 		</array>

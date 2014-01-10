@@ -60,6 +60,7 @@
     [navBar setBackgroundImage:[UIImage imageNamed:@"set_Nav@2x.png"] forBarMetrics:UIBarMetricsDefault];
     UINavigationItem *navigationItem = [[[UINavigationItem alloc] init ]autorelease];
     UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    customLab.backgroundColor=[UIColor clearColor];
     [customLab setTextColor:[UIColor whiteColor]];
     [customLab setText:@"路亚中国"];
     customLab.font = [UIFont boldSystemFontOfSize:20];
@@ -78,6 +79,7 @@
     [myView addSubview:imageView];
     
     UILabel *labelNormal_Set=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 34)];
+    labelNormal_Set.backgroundColor=[UIColor clearColor];
     labelNormal_Set.text=@"  通用设置";
     labelNormal_Set.textColor=[UIColor whiteColor];
     [imageView addSubview:labelNormal_Set];
@@ -85,10 +87,12 @@
     [imageView release];
     //全部标记为已读
     UIButton *readed=[UIButton buttonWithType:UIButtonTypeCustom];
+    readed.backgroundColor=[UIColor clearColor];
     readed.frame=CGRectMake(0, 91, 320, 70);
     readed.showsTouchWhenHighlighted = YES;
     [myView addSubview:readed];
     UILabel *allRead=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 70)];
+    allRead.backgroundColor=[UIColor clearColor];
     allRead.text=@"  全部标记为已读";
     allRead.textColor=[UIColor whiteColor];
     [readed addSubview:allRead];
@@ -101,10 +105,12 @@
     [imgLineTwo release];
     //清除所有缓存
     UIButton *clear=[UIButton buttonWithType:UIButtonTypeCustom];
+    clear.backgroundColor=[UIColor clearColor];
     clear.showsTouchWhenHighlighted = YES;
     clear.frame=CGRectMake(0, 163, 320, 70);
     UILabel *clearAll=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 70)]autorelease];
     clearAll.textColor=[UIColor whiteColor];
+    clearAll.backgroundColor=[UIColor clearColor];
     clearAll.text=@"  清除所有缓存";
     [clear addSubview:clearAll];
     [clear addTarget:self action:nil forControlEvents:UIControlEventTouchDown];
@@ -119,15 +125,18 @@
     about.image=[UIImage imageNamed:@"labelNormal_Set"];
     [myView addSubview:about];
     UILabel *aboutLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 34)]autorelease];
+    aboutLabel.backgroundColor=[UIColor clearColor];
     aboutLabel.text=@"  关于";
     aboutLabel.textColor=[UIColor whiteColor];
     [about  addSubview:aboutLabel];
     //意见反馈
     UIButton *advice=[UIButton buttonWithType:UIButtonTypeCustom];
+    advice.backgroundColor=[UIColor clearColor];
     advice.showsTouchWhenHighlighted = YES;
     advice.frame=CGRectMake(0, 269, 320, 70);
     UILabel *adviceLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 70)]autorelease];
     adviceLabel.textColor=[UIColor whiteColor];
+    adviceLabel.backgroundColor=[UIColor clearColor];
     adviceLabel.text=@"  意见反馈";
     [advice addTarget:self action:@selector(Press_set) forControlEvents:UIControlEventTouchDown];
     [advice addSubview:adviceLabel];
@@ -139,10 +148,12 @@
     [imgLineFour release];
     //向朋友推荐本应用
     UIButton *share=[UIButton buttonWithType:UIButtonTypeCustom];
+    share.backgroundColor=[UIColor clearColor];
     share.frame=CGRectMake(0, 341, 320, 70);
     [share addTarget:self action:nil forControlEvents:UIControlEventTouchDown];
     share.showsTouchWhenHighlighted = YES;
     UILabel *shareLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 70)]autorelease];
+    shareLabel.backgroundColor=[UIColor clearColor];
     shareLabel.text=@"  向朋友推荐本应用";
     shareLabel.textColor=[UIColor whiteColor];
     [share addSubview:shareLabel];
@@ -155,6 +166,7 @@
     //程序版本
     UILabel *Kind=[[[UILabel alloc]initWithFrame:CGRectMake(0, 413, 320, 70)]autorelease];
     Kind.textColor=[UIColor whiteColor];
+    Kind.backgroundColor=[UIColor clearColor];
     Kind.text=@"  程序版本    1.1";
     [myView addSubview:Kind];
     //分割线
@@ -167,17 +179,20 @@
     honored.image=[UIImage imageNamed:@"labelNormal_Set"];
     [myView addSubview:honored];
     UILabel *honoredLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 34)]autorelease];
+    honoredLabel.backgroundColor=[UIColor clearColor];
     honoredLabel.text=@"  特别推荐";
     honoredLabel.textColor=[UIColor whiteColor];
     [honored  addSubview:honoredLabel];
     // 几个应用
     UIButton *btn1=[UIButton buttonWithType:UIButtonTypeCustom];
+    btn1.backgroundColor=[UIColor clearColor];
     btn1.frame=CGRectMake(10, 530, 42, 42);
     [btn1 setImage:[UIImage imageNamed:@"xinlang.png"] forState:UIControlStateNormal];
     [btn1 addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     [myView addSubview:btn1];
 
     UIButton *btn2=[UIButton buttonWithType:UIButtonTypeCustom];
+    btn2.backgroundColor=[UIColor clearColor];
     btn2.frame=CGRectMake(62, 530, 42, 42);
     [btn2 setImage:[UIImage imageNamed:@"weixin.png"] forState:UIControlStateNormal];
     [btn2 addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];

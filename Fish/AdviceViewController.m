@@ -84,32 +84,38 @@
 }
 - (void)viewDidLoad
 {
-    navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 55)];//0 17 320 44
-    [navBar setBackgroundImage:[UIImage imageNamed:@"advice_nav_red@2x.png"] forBarMetrics:UIBarMetricsDefault];
-    UINavigationItem *navigationItem = [[[UINavigationItem alloc] init ]autorelease];
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    CGSize size = rect.size;
+    CGFloat height_A = size.height;
+ 
+    if(height_A==480)Height=20;
+    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 65-Height)]autorelease];
+    topBarView.image=[UIImage imageNamed:@"topBarRed"];
+    [self.view addSubview:topBarView];
     
-    UIButton *back = [UIButton buttonWithType:UIButtonTypeSystem];
-    back.frame=CGRectMake(0, 0, 44, 60);
-    [back addTarget:self action:@selector(backSet) forControlEvents:UIControlEventTouchDown];
-    [back setTitle:@"返回" forState:UIControlStateNormal];
+    UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    leftBtn.frame=CGRectMake(10, 20-Height/2, 37, 30);
+    leftBtn.tag=10;
+    [leftBtn setImage:[UIImage imageNamed:@"LeftBtn@2X"] forState:UIControlStateNormal];
+    [self.view addSubview:leftBtn];
+    [leftBtn addTarget:self action:@selector(backSet) forControlEvents:UIControlEventTouchUpInside];
     
-    [navBar addSubview:back];
+    UIImageView *nameAdvice=[[[UIImageView alloc]initWithFrame:CGRectMake(105, 20-Height/2, 92, 23)]autorelease];
+    nameAdvice.image=[UIImage imageNamed:@"adviceTheBigTitle"];
+    [topBarView addSubview:nameAdvice];
     
-    
-    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    [customLab setTextColor:[UIColor whiteColor]];
-    [customLab setText:@"意见反馈"];
-    customLab.font = [UIFont boldSystemFontOfSize:20];
-    navigationItem.titleView = customLab;
-    [navBar pushNavigationItem:navigationItem animated:YES];
-    [self.view addSubview:navBar];
-    [customLab release];
+    textView.frame=CGRectMake(15, 300, 285, 200-Height);
     [super viewDidLoad];
     
     submmit=[UIButton buttonWithType:UIButtonTypeCustom];
-    submmit.frame=CGRectMake(15, 518, 44, 44);
-    [submmit setImage:[UIImage imageNamed:@"face.png"] forState:UIControlStateNormal];
+    submmit.frame=CGRectMake(15, 510-Height*5, 75, 25);
+    [submmit setImage:[UIImage imageNamed:@"submmit.png"] forState:UIControlStateNormal];
     [submmit addTarget:self action:@selector(pressSubmmit) forControlEvents:UIControlEventTouchUpInside];
+    UILabel *submmitName=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 72, 25)]autorelease];
+    submmitName.backgroundColor=[UIColor clearColor];
+    submmitName.text=@"    提交";
+    submmitName.textColor=[UIColor whiteColor];
+    [submmit addSubview:submmitName];
     [self build_Tool];
     
     Type=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -241,8 +247,9 @@
 {
     
     if ([text isEqualToString:@"\n"]) {
-        textView.frame=CGRectMake(15, 308, 285, 202);
         [textView resignFirstResponder];
+        textView.frame=CGRectMake(15, 300, 285, 200-Height);
+        [self.view addSubview:textView];
         textViewStyle = YES;
         return NO;
     }
@@ -252,7 +259,7 @@
 {
     if (textViewStyle)
     {
-        textView.frame=CGRectMake(0, 62, 320, 292);
+        textView.frame=CGRectMake(0, 62-Height, 320, 292);
         textView.text = @"";
     }
     [self.view addSubview:textView];

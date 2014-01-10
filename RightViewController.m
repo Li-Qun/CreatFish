@@ -54,6 +54,7 @@
     UIImageView *pictureName=[[[UIImageView alloc]initWithFrame:CGRectMake(90, 25,20 , 20)] autorelease];
     pictureName.image=[UIImage imageNamed:@"Set.png"];
     [imageViewTitle addSubview:pictureName];
+    mainTitle.backgroundColor=[UIColor clearColor];
     //三个 二级按钮
     for(int i=0;i<3;i++)
     {
@@ -70,6 +71,8 @@
         pictureOneName.image=[UIImage imageNamed:@"News@2X.png"];
         [OneButton  addSubview:pictureOneName];
         OneButton.tag=[[NSString stringWithFormat: [[jsonObj  objectAtIndex:i+4] objectForKey:@"id"]]integerValue];
+        OneName.backgroundColor=[UIColor clearColor];
+        OneButton.backgroundColor=[UIColor clearColor];
 //        UIImageView *theRedNum=[[[UIImageView alloc]initWithFrame:CGRectMake(270, 10, 28, 22)]autorelease];
 //        theRedNum.image=[UIImage imageNamed:@"redBack.png"];
 //        [OneButton addSubview:theRedNum];

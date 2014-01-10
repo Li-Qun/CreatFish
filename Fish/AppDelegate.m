@@ -224,27 +224,45 @@
     
     LeftViewController *leftView = [[[LeftViewController alloc] init] autorelease];
     RightViewController *rightView=[[[RightViewController alloc]init]autorelease];
-    TopViewController *topView = [[[TopViewController alloc] init] autorelease];
+  //  TopViewController *topView = [[[TopViewController alloc] init] autorelease];
 
     IIViewDeckController *vc =[[IIViewDeckController alloc]initWithCenterViewController:centerNav leftViewController:leftView rightViewController:rightView  ];
     vc.leftSize =  (320 - 244.0);  // 这里的size可以根据你的需求去设置,我这里是为了测试,设置比较大 这里也可以不设置size
     vc.rightSize = 320.0-244.0;
     vc.topSize = 460+44;
     self.viewDeckController = vc;
+    
+    
+//       [application setStatusBarStyle:UIStatusBarStyleLightContent];
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+//     
+//       // self.window.clipsToBounds =YES;
+//        self.window.frame =  CGRectMake(0,20,self.window.frame.size.width,self.window.frame.size.height-20);
+//        
+//        //Added on 19th Sep 2013
+//        self.window.bounds = CGRectMake(0, 20, self.window.frame.size.width, self.window.frame.size.height);
+//    }
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    CGSize size = rect.size;
+    CGFloat width = size.width;
+    CGFloat height = size.height;
+    if(height==480)height_First=100;
+    
+    
     //先生成 再替换
     self.window.rootViewController = self.viewDeckController;
     self.window.backgroundColor=[UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    UIImageView *splashScreen = [[[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 360, 568)]autorelease];
+    UIImageView *splashScreen = [[[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 360, height)]autorelease];
     splashScreen.image = [UIImage imageNamed:@"welcome@2X"];
     [self.window addSubview:splashScreen];
     
-    UIImageView *splashScreen2 = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 400, 280, 80)]autorelease];
+    UIImageView *splashScreen2 = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 400-height_First, 270, 80)]autorelease];
     splashScreen2.image = [UIImage imageNamed:@"clearbar@2X"];
     [self.window addSubview:splashScreen2];
     
-    UIImageView *splashScreen3 = [[[UIImageView alloc] initWithFrame:CGRectMake(270, 400,40 , 80)]autorelease];
+    UIImageView *splashScreen3 = [[[UIImageView alloc] initWithFrame:CGRectMake(280, 400-height_First,40, 80)]autorelease];
     splashScreen3.image = [UIImage imageNamed:@"clearArrow@2X"];
     [self.window addSubview:splashScreen3];
     

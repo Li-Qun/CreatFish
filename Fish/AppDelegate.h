@@ -52,6 +52,7 @@ typedef enum
     NSMutableArray  *saveDataName;
     //首页幻灯片
     NSMutableArray *firstPageImage;
+    int height_First;
 }
 @property (nonatomic, retain)NSMutableArray  *array;
 @property (nonatomic,retain)NSMutableArray *arrayData;

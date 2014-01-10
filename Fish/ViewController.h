@@ -18,6 +18,8 @@ UIScrollViewDelegate >
     ContentRead *contentRead;
     AppDelegate *app;
     UINavigationBar *NavBar;
+    CGFloat height_Momente;
+    int height;
 }
 
 @property (retain, nonatomic) IBOutlet UIScrollView *klpScrollView1;

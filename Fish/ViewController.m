@@ -29,8 +29,15 @@
 @synthesize klpScrollView1,klpScrollView2;
 - (void)viewWillAppear:(BOOL)animated
 {//视图即将可见时调用。默认情况下不执行任何操作
+    
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES ];//把后面的antimated=YES 去掉 就不会过渡出现问题了
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    CGSize size = rect.size;
+    CGFloat width = size.width;
+    height_Momente = size.height;
+ 
+    if(height_Momente==480)height=20;
 }
 -(void)BuildFirstPage
 {
@@ -129,8 +136,11 @@
     [self theTopBar];
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString: jsonString];
+   
+
     if([flag integerValue]==0)
     {
+        
         NSDictionary *data = [jsonObj objectForKey:@"home_image"];
         for (int i =0; i <data.count; i++) {
             [app.firstPageImage insertObject:[data objectAtIndex:i] atIndex: i];
@@ -139,8 +149,9 @@
         index = 0;
         self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:app.firstPageImage.count];
         CGSize size = self.klpScrollView1.frame.size;
+        if(height_Momente==480)  height=20;
         for (int i=0; i < [app.firstPageImage count]; i++) {
-            UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height)]autorelease];
+            UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height+height)]autorelease];
             //  [iv setImage:[UIImage imageNamed:[app.firstPageImage objectAtIndex:i]]];
             NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[app.firstPageImage objectAtIndex:i]];
             [iv setImageWithURL:[NSURL URLWithString: imgURL]
@@ -156,12 +167,12 @@
         self.klpScrollView1.pagingEnabled = YES;
         self.klpScrollView1.showsHorizontalScrollIndicator = NO;
         
-        for (int i=0; i<app.firstPageImage.count; i++) {
-            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(100*i + 5*i,0,100,70)];
-            [iv setImage:[UIImage imageNamed:[app.firstPageImage objectAtIndex:i]]];
-            [self.klpImgArr addObject:iv];
-            iv = nil;
-        }
+//        for (int i=0; i<app.firstPageImage.count; i++) {
+//            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(100*i + 5*i,0,100,70)];
+//            [iv setImage:[UIImage imageNamed:[app.firstPageImage objectAtIndex:i]]];
+//            [self.klpImgArr addObject:iv];
+//            iv = nil;
+//        }
         
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
         [singleTap setNumberOfTapsRequired:1];
@@ -175,7 +186,8 @@
     }
     else //==2
     {
-        UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 524, 320, 44)]autorelease];
+        
+        UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,height_Momente-height-44, 320, 44)]autorelease];
         imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
         imgToolView.tag=22;
         [self.view addSubview:imgToolView];
@@ -196,23 +208,25 @@
                 button.tag=100;
             }
             
-            
-            button.frame=CGRectMake(10+i*60, 5+524, 30, 40);
+          
+            button.frame=CGRectMake(10+i*60, 5+height_Momente-44-height, 30, 40);
             button.showsTouchWhenHighlighted = YES;
             [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
             UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
             label.text=name;
             label.font  = [UIFont fontWithName:@"Arial" size:15.0];
+            label.backgroundColor=[UIColor clearColor];
             UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
             labelNum.text=[NSString stringWithFormat: [[jsonObj  objectAtIndex:i] objectForKey:@"id"]];
             labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
             labelNum.textColor=[UIColor whiteColor];
+            labelNum.backgroundColor=[UIColor clearColor];
             UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
             imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
             [imgViewRed addSubview:labelNum];
             [button addSubview:imgViewRed];
             [button addSubview:label];
-            //  [imgToolView addSubview:button];
+            button.backgroundColor=[UIColor clearColor];
             [self.view addSubview:button];
             [label release];
         }
@@ -229,6 +243,7 @@
     UILabel *titleBigName=[[[UILabel alloc]initWithFrame:CGRectMake(10, 5, 100, 50)]autorelease];
     titleBigName.text=@"路亚中国";
     titleBigName.textColor=[UIColor whiteColor];
+    titleBigName.backgroundColor=[UIColor clearColor];
     titleBigName.font =[UIFont boldSystemFontOfSize:22];
     //titleBigName.font = [UIFont fontWithName:@"Courier" size:20];
     titleBigName.shadowColor = [UIColor grayColor];
@@ -237,6 +252,7 @@
     UILabel *smallTitle=[[[UILabel alloc]initWithFrame:CGRectMake(138, 43,110,55)]autorelease];
     smallTitle.textColor=[UIColor lightGrayColor];
     smallTitle.text=@"首页";//AppleGothic
+    smallTitle.backgroundColor=[UIColor clearColor];
     [self.view addSubview:smallTitle];
 }
 - (void)viewDidLoad
@@ -246,7 +262,6 @@
      [self.navigationController setNavigationBarHidden:YES ];
     self.navigationController.navigationBarHidden=YES;
     [self _init];
-    
 }
 #pragma mark-- UIScrollViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{\

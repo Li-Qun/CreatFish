@@ -23,6 +23,7 @@
     IBOutlet UITextView *textView;
     UIButton *submmit;
     ContentRead *content_Read;
+    int Height;
 }
 
 @property (retain, nonatomic) IBOutlet UILabel *someWords;

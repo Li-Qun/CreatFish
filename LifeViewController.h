@@ -35,6 +35,7 @@
     NSMutableArray *arry_Mag_category_id;
     NSMutableArray *arry_Mag_description;
     NSMutableArray *arry_Mag_image;
+    int heightMagzine;
 }
 @property (nonatomic, retain)IBOutlet iCarousel *carousel;
 @property (nonatomic,assign) BOOL wrap;

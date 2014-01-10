@@ -56,7 +56,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
- 
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    CGSize size = rect.size;
+    CGFloat width = size.width;
+    height_Momente = size.height;
+  
+    if(height_Momente==480)height=20;
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
@@ -108,49 +113,42 @@
 -(void)postJSON:(NSString *)flag
 {
  
-    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)]autorelease];
+    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 65-height)]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
-    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(105, 15, 95, 25)]autorelease];
+    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(105, 20-height, 95, 25)]autorelease];
     wordView.image=[UIImage imageNamed:@"word"];
     [topBarView addSubview:wordView];
-    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105, 18,95, 60)]autorelease];
+    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105,20- height/2,95, 60-height)]autorelease];
     name.textColor=[UIColor whiteColor];
     name.text=NewsName;
     name.textAlignment = UITextAlignmentCenter;
     name.font =[UIFont boldSystemFontOfSize:15];
     name.shadowColor = [UIColor grayColor];
     name.shadowOffset = CGSizeMake(0.0,0.5);
+    name.backgroundColor=[UIColor clearColor];
     [topBarView addSubview:name];
     
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.frame=CGRectMake(10, 20, 37, 30);
+    leftBtn.frame=CGRectMake(10, 20-height/2, 37, 30);
     leftBtn.tag=10;
     [leftBtn setImage:[UIImage imageNamed:@"LeftBtn@2X"] forState:UIControlStateNormal];
     [self.view addSubview:leftBtn];
     [leftBtn addTarget:self action:@selector(PessSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *rightBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame=CGRectMake(270, 20, 37, 30);
+    rightBtn.frame=CGRectMake(270, 20-height/2, 37, 30);
     [rightBtn setImage:[UIImage imageNamed:@"RightBtn@2X"] forState:UIControlStateNormal];
     [self.view addSubview:rightBtn];
     [rightBtn addTarget:self action:@selector(PessSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
     rightBtn.tag=20;
     
     
-    
-    
-    
-    
-    
-    
-    
-    
     isFistLevel=[flag intValue];
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString:app.jsonString];
   
-    tabView.frame=CGRectMake(0, 60, 320, 560);
+    tabView.frame=CGRectMake(0, 65-height, 320, height_Momente);
     [self createHeaderView];
 	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
 	[_refreshHeaderView refreshLastUpdatedDate];

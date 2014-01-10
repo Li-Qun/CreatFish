@@ -57,6 +57,7 @@
     [myView addSubview:imageViewTitle];
     UILabel *mainTitle=[[[UILabel alloc]initWithFrame:CGRectMake(100, 0, 320, 60)]autorelease];
     mainTitle.text=@"环球垂钓";
+    mainTitle.backgroundColor=[UIColor clearColor];
     mainTitle.font = [UIFont boldSystemFontOfSize:20];
     mainTitle.textColor=[UIColor whiteColor];
     [imageViewTitle addSubview:mainTitle];
@@ -74,7 +75,7 @@
     [firstBtn  addSubview:pictureFistPage];
     firstBtn.tag=103;
     [firstBtn addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
-    
+    firstPageName.backgroundColor=[UIColor clearColor];
     for (int i=0; i<4;i++)
     {
         UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -98,6 +99,10 @@
         labelNum.textColor=[UIColor whiteColor];
         labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
         [theRedNum addSubview:labelNum];
+        labelNum.backgroundColor=[UIColor clearColor];
+        OneButton.backgroundColor=[UIColor clearColor];
+        OneName.backgroundColor=[UIColor clearColor];
+        
     }
    //收藏&设置
     for(int i=0;i<2;i++)
@@ -105,6 +110,7 @@
         UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
         OneButton.frame=CGRectMake(0, 320+i*45, 320, 44);
         [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
+        OneButton.backgroundColor=[UIColor clearColor];
         [myView addSubview:OneButton ];
         UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(60, 0, 320, 44)]autorelease];
         OneName.textColor=[UIColor whiteColor];
@@ -125,11 +131,14 @@
         }
         [OneButton  addSubview:pictureOneName];
           [OneButton addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
+        OneName.backgroundColor=[UIColor clearColor];
     }
+    
     
     [scrollView addSubview:myView];
      scrollView.contentSize = myView.frame.size;
     [self.view addSubview:scrollView];
+    
 
 }
 -(void)PessSwitch_Tag:(id)sender

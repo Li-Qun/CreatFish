@@ -12,5 +12,7 @@
 {
     UITableView *tableView_Store;
     NSMutableArray *arrSave_ID;
+    CGFloat heightStore;
+    int height_store;
 }
 @end
