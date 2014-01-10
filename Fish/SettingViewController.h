@@ -14,6 +14,7 @@
     UINavigationBar *navBar;
     IBOutlet UIScrollView *scrollView;
     UIView *myView;
+    int Height;
 }
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
 

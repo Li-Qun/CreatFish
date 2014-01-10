@@ -38,9 +38,17 @@
     [self.navigationController pushViewController :newVC animated:YES];
 
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+-(void)Press_allRead
 {
     
+}
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+{
+//页面重置作用
+}
+-(void)Back
+{
+        [self.viewDeckController toggleLeftViewAnimated:YES];
 }
 - (void)viewDidLoad
 {
@@ -56,18 +64,29 @@
     scrollView.delegate=self;
     myView=[[UIView alloc]init];
     myView.backgroundColor=[UIColor blackColor];
-    navBar = [[[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 55)]autorelease];//(0, 17, 320, 44)
-    [navBar setBackgroundImage:[UIImage imageNamed:@"set_Nav@2x.png"] forBarMetrics:UIBarMetricsDefault];
-    UINavigationItem *navigationItem = [[[UINavigationItem alloc] init ]autorelease];
-    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+
+    
+    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 55)]autorelease];
+    topBarView.image=[UIImage imageNamed:@"set_Nav@2x.png"];
+    [myView addSubview:topBarView];
+    
+    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(120, 15, 100, 30)];
     customLab.backgroundColor=[UIColor clearColor];
     [customLab setTextColor:[UIColor whiteColor]];
     [customLab setText:@"路亚中国"];
     customLab.font = [UIFont boldSystemFontOfSize:20];
-    navigationItem.titleView = customLab;
-    [navBar pushNavigationItem:navigationItem animated:YES];
-    [myView addSubview:navBar];
-    [customLab release];
+    [topBarView addSubview:customLab];
+    
+    
+    UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    leftBtn.frame=CGRectMake(10,15, 25, 27);
+    leftBtn.tag=10;
+    [leftBtn setImage:[UIImage imageNamed:@"theGoBack"] forState:UIControlStateNormal];
+    [myView addSubview:leftBtn];
+    [leftBtn addTarget:self action:@selector(Back) forControlEvents:UIControlEventTouchUpInside];
+ 
+
+    
     //分割线
     UIImageView *imgLineOne=[[UIImageView alloc]initWithFrame:CGRectMake(0, 55, 320, 2)];
     imgLineOne.image=[UIImage imageNamed:@"theLineSet.png"];
@@ -87,11 +106,11 @@
     [imageView release];
     //全部标记为已读
     UIButton *readed=[UIButton buttonWithType:UIButtonTypeCustom];
+    [readed setImage:[UIImage imageNamed:@"selectedNow"] forState:UIControlStateHighlighted];
     readed.backgroundColor=[UIColor clearColor];
-    readed.frame=CGRectMake(0, 91, 320, 70);
-    readed.showsTouchWhenHighlighted = YES;
+    readed.frame=CGRectMake(0, 91, 320, 50);
     [myView addSubview:readed];
-    UILabel *allRead=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 70)];
+    UILabel *allRead=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
     allRead.backgroundColor=[UIColor clearColor];
     allRead.text=@"  全部标记为已读";
     allRead.textColor=[UIColor whiteColor];
@@ -99,16 +118,16 @@
     [readed addTarget:self action:@selector(Press_allRead) forControlEvents:UIControlEventTouchDown];
     [allRead release];
     //分割线
-    UIImageView *imgLineTwo=[[UIImageView alloc]initWithFrame:CGRectMake(0, 161, 320, 2)];
+    UIImageView *imgLineTwo=[[UIImageView alloc]initWithFrame:CGRectMake(0, 141, 320, 2)];
     imgLineTwo.image=[UIImage imageNamed:@"theLineSet.png"];
     [myView addSubview:imgLineTwo];
     [imgLineTwo release];
     //清除所有缓存
     UIButton *clear=[UIButton buttonWithType:UIButtonTypeCustom];
+    [clear  setImage:[UIImage imageNamed:@"selectedNow"] forState:UIControlStateHighlighted];
     clear.backgroundColor=[UIColor clearColor];
-    clear.showsTouchWhenHighlighted = YES;
-    clear.frame=CGRectMake(0, 163, 320, 70);
-    UILabel *clearAll=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 70)]autorelease];
+    clear.frame=CGRectMake(0, 143, 320, 50);
+    UILabel *clearAll=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 50)]autorelease];
     clearAll.textColor=[UIColor whiteColor];
     clearAll.backgroundColor=[UIColor clearColor];
     clearAll.text=@"  清除所有缓存";
@@ -116,12 +135,12 @@
     [clear addTarget:self action:nil forControlEvents:UIControlEventTouchDown];
     [myView addSubview:clear];
     //分割线
-    UIImageView *imgLineThree=[[UIImageView alloc]initWithFrame:CGRectMake(0, 233, 320, 2)];
+    UIImageView *imgLineThree=[[UIImageView alloc]initWithFrame:CGRectMake(0, 193, 320, 2)];
     imgLineThree.image=[UIImage imageNamed:@"theLineSet.png"];
     [myView addSubview:imgLineThree];
     [imgLineThree release];
     //关于
-    UIImageView *about=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 235, 320, 34)]autorelease];
+    UIImageView *about=[[[UIImageView alloc]initWithFrame:CGRectMake(0,195, 320, 34)]autorelease];
     about.image=[UIImage imageNamed:@"labelNormal_Set"];
     [myView addSubview:about];
     UILabel *aboutLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 34)]autorelease];
@@ -131,10 +150,10 @@
     [about  addSubview:aboutLabel];
     //意见反馈
     UIButton *advice=[UIButton buttonWithType:UIButtonTypeCustom];
+    [advice setImage:[UIImage imageNamed:@"selectedNow"] forState:UIControlStateSelected];
     advice.backgroundColor=[UIColor clearColor];
-    advice.showsTouchWhenHighlighted = YES;
-    advice.frame=CGRectMake(0, 269, 320, 70);
-    UILabel *adviceLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 70)]autorelease];
+    advice.frame=CGRectMake(0, 230, 320, 50);
+    UILabel *adviceLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 50)]autorelease];
     adviceLabel.textColor=[UIColor whiteColor];
     adviceLabel.backgroundColor=[UIColor clearColor];
     adviceLabel.text=@"  意见反馈";
@@ -142,40 +161,40 @@
     [advice addSubview:adviceLabel];
     [myView addSubview:advice];
     //分割线
-    UIImageView *imgLineFour=[[UIImageView alloc]initWithFrame:CGRectMake(0, 339, 320, 2)];
+    UIImageView *imgLineFour=[[UIImageView alloc]initWithFrame:CGRectMake(0, 280, 320, 2)];
     imgLineFour.image=[UIImage imageNamed:@"theLineSet.png"];
     [myView addSubview:imgLineFour];
     [imgLineFour release];
     //向朋友推荐本应用
     UIButton *share=[UIButton buttonWithType:UIButtonTypeCustom];
+    [share setImage:[UIImage imageNamed:@"selectedNow"] forState:UIControlStateHighlighted];
     share.backgroundColor=[UIColor clearColor];
-    share.frame=CGRectMake(0, 341, 320, 70);
+    share.frame=CGRectMake(0, 282, 320, 50);
     [share addTarget:self action:nil forControlEvents:UIControlEventTouchDown];
-    share.showsTouchWhenHighlighted = YES;
-    UILabel *shareLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 70)]autorelease];
+    UILabel *shareLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 50)]autorelease];
     shareLabel.backgroundColor=[UIColor clearColor];
     shareLabel.text=@"  向朋友推荐本应用";
     shareLabel.textColor=[UIColor whiteColor];
     [share addSubview:shareLabel];
     [myView addSubview:share];
     //分割线
-    UIImageView *imgLineFive=[[UIImageView alloc]initWithFrame:CGRectMake(0, 411, 320, 2)];
+    UIImageView *imgLineFive=[[UIImageView alloc]initWithFrame:CGRectMake(0,332, 320, 2)];
     imgLineFive.image=[UIImage imageNamed:@"theLineSet.png"];
     [myView addSubview:imgLineFive];
     [imgLineFive release];
     //程序版本
-    UILabel *Kind=[[[UILabel alloc]initWithFrame:CGRectMake(0, 413, 320, 70)]autorelease];
+    UILabel *Kind=[[[UILabel alloc]initWithFrame:CGRectMake(0, 334, 320, 50)]autorelease];
     Kind.textColor=[UIColor whiteColor];
     Kind.backgroundColor=[UIColor clearColor];
     Kind.text=@"  程序版本    1.1";
     [myView addSubview:Kind];
     //分割线
-    UIImageView *imgLineSix=[[UIImageView alloc]initWithFrame:CGRectMake(0, 483, 320, 2)];
+    UIImageView *imgLineSix=[[UIImageView alloc]initWithFrame:CGRectMake(0, 384, 320, 2)];
     imgLineSix.image=[UIImage imageNamed:@"theLineSet.png"];
     [myView addSubview:imgLineSix];
     [imgLineSix release];
     //特别推荐
-    UIImageView *honored=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 485, 320, 34)]autorelease];
+    UIImageView *honored=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 386, 320, 34)]autorelease];
     honored.image=[UIImage imageNamed:@"labelNormal_Set"];
     [myView addSubview:honored];
     UILabel *honoredLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 34)]autorelease];
@@ -186,25 +205,25 @@
     // 几个应用
     UIButton *btn1=[UIButton buttonWithType:UIButtonTypeCustom];
     btn1.backgroundColor=[UIColor clearColor];
-    btn1.frame=CGRectMake(10, 530, 42, 42);
+    btn1.frame=CGRectMake(10, 425, 42, 42);
     [btn1 setImage:[UIImage imageNamed:@"xinlang.png"] forState:UIControlStateNormal];
     [btn1 addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     [myView addSubview:btn1];
 
     UIButton *btn2=[UIButton buttonWithType:UIButtonTypeCustom];
     btn2.backgroundColor=[UIColor clearColor];
-    btn2.frame=CGRectMake(62, 530, 42, 42);
+    btn2.frame=CGRectMake(62, 425, 42, 42);
     [btn2 setImage:[UIImage imageNamed:@"weixin.png"] forState:UIControlStateNormal];
     [btn2 addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     [myView addSubview:btn2];
     
     //分割线
-    UIImageView *imgLineSeven=[[UIImageView alloc]initWithFrame:CGRectMake(0, 589, 320, 2)];
+    UIImageView *imgLineSeven=[[UIImageView alloc]initWithFrame:CGRectMake(0, 470, 320, 2)];
     imgLineSeven.image=[UIImage imageNamed:@"theLineSet.png"];
     [myView addSubview:imgLineSeven];
     [imgLineSeven release];
     //分割线
-    UIImageView *imgLineEight=[[UIImageView alloc]initWithFrame:CGRectMake(0, 697, 320, 2)];
+    UIImageView *imgLineEight=[[UIImageView alloc]initWithFrame:CGRectMake(0, 520, 320, 2)];
     imgLineEight.image=[UIImage imageNamed:@"theLineSet.png"];
     [myView addSubview:imgLineEight];
     [imgLineEight release];
