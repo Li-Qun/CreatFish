@@ -36,8 +36,20 @@
     CGSize size = rect.size;
     CGFloat width = size.width;
     height_Momente = size.height;
+    if(height_Momente==480){
+        height=20;
+        height5_flag=NO;
+    }else  height5_flag=YES;
+    // 判断设备的iOS 版本号
+  float  version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    NSLog(@"%f",version);
+    if(version==7.0)
+    {
  
-    if(height_Momente==480)height=20;
+        Kind7=YES;
+    }
+    else Kind7=NO;
+    
 }
 -(void)BuildFirstPage
 {
@@ -166,13 +178,13 @@
         
         self.klpScrollView1.pagingEnabled = YES;
         self.klpScrollView1.showsHorizontalScrollIndicator = NO;
-        
-//        for (int i=0; i<app.firstPageImage.count; i++) {
-//            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(100*i + 5*i,0,100,70)];
-//            [iv setImage:[UIImage imageNamed:[app.firstPageImage objectAtIndex:i]]];
-//            [self.klpImgArr addObject:iv];
-//            iv = nil;
-//        }
+        //往数组里添加成员
+        for (int i=0; i<app.firstPageImage.count; i++) {
+            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(100*i + 5*i,0,100,70)];
+            [iv setImage:[UIImage imageNamed:[app.firstPageImage objectAtIndex:i]]];
+            [self.klpImgArr addObject:iv];
+            iv = nil;
+        }
         
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
         [singleTap setNumberOfTapsRequired:1];
@@ -187,7 +199,27 @@
     else //==2
     {
         
-        UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,height_Momente-height-44, 320, 44)]autorelease];
+        float heightTooBar;
+        float buttonHeight;
+        if(height5_flag&&Kind7)
+        {
+            heightTooBar=height_Momente-height-44;
+            buttonHeight=5+height_Momente-44-height;
+        }else if(height5_flag&&!Kind7)
+        {
+            heightTooBar=height_Momente-44;
+            buttonHeight=5+height_Momente-44-20;
+        }
+        else if (!height5_flag&&Kind7)
+        {
+            heightTooBar=height_Momente-44;
+            buttonHeight=5+height_Momente-44 ;
+        }
+        else {
+            heightTooBar=height_Momente-height-44 ;
+            buttonHeight=5+height_Momente-44-height;
+        }
+        UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];
         imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
         imgToolView.tag=22;
         [self.view addSubview:imgToolView];
@@ -209,7 +241,7 @@
             }
             
           
-            button.frame=CGRectMake(10+i*60, 5+height_Momente-44-height, 30, 40);
+            button.frame=CGRectMake(10+i*60, buttonHeight, 30, 40);
             button.showsTouchWhenHighlighted = YES;
             [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
             UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];

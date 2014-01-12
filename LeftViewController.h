@@ -11,6 +11,7 @@
 @interface LeftViewController : UIViewController<FishDelegate,UIScrollViewDelegate,UIScrollViewAccessibilityDelegate>
 {
     AppDelegate *app;
-     ContentRead *contentRead;
+    ContentRead *contentRead;
+    BOOL isSeven;
 }
 @end

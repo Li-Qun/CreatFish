@@ -14,5 +14,9 @@
     NSMutableArray *arrSave_ID;
     CGFloat heightStore;
     int height_store;
+    BOOL isSeven;
+    BOOL isFive;
+    float heightTopbar;
+    float littleHeinght;
 }
 @end

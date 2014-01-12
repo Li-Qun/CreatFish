@@ -29,26 +29,49 @@
     CGSize size = rect.size;
     CGFloat width = size.width;
      heightStore = size.height;
-    
-    if(heightStore==480)height_store=20;
-    
+    if( heightStore==480)
+    {
+        isFive=NO;
+    }else isFive=YES;
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (version <7.0)
+        isSeven=NO;
+    else isSeven=YES;
+    if(isSeven&&isFive)
+    {
+        heightTopbar=65;
+        littleHeinght=20;
+    }
+    else if(isSeven&&!isFive)
+    {
+        heightTopbar=58;
+        littleHeinght=20;
+    }else if(!isSeven&&isFive)//
+    {
+        heightTopbar=45;
+        littleHeinght=10;
+    }else {
+        heightTopbar=45;
+        littleHeinght=10;
+    }
+
     [self.navigationController setNavigationBarHidden:YES];
  
     self.navigationController.toolbarHidden = YES;
     
     self.navigationController.navigationBarHidden=YES;
-    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 65-height_store)]autorelease];
+    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar )]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
 
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.frame=CGRectMake(10, 20-height_store/2, 37, 30);
+    leftBtn.frame=CGRectMake(10, littleHeinght, 37, 30);
     leftBtn.tag=10;
     [leftBtn setImage:[UIImage imageNamed:@"LeftBtn@2X"] forState:UIControlStateNormal];
     [self.view addSubview:leftBtn];
     [leftBtn addTarget:self action:@selector(PessTheStoreBack) forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105, 20-height_store/2, 95, 25)]autorelease];
+    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105, littleHeinght, 100, 25)]autorelease];
     name.textColor=[UIColor whiteColor];
     name.text=@"收藏";
     name.textAlignment = UITextAlignmentCenter;

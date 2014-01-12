@@ -53,6 +53,9 @@
     BOOL _reloading;
     UINavigationBar *navBar;
     BOOL isStore;
+    float totalHeight;
+    BOOL isSeven;
+    BOOL isFive;
 }
 @property (nonatomic,retain) UILabel *page_num;
 @property (nonatomic,retain)NSString *pic_url;

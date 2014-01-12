@@ -61,7 +61,14 @@
     CGFloat width = size.width;
     height_Momente = size.height;
   
-    if(height_Momente==480)height=20;
+    if(height_Momente==480)
+    {
+        isFive=NO;
+    }else isFive=YES;
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (version <7.0)
+        isSeven=NO;
+    else isSeven=YES;
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
@@ -113,13 +120,33 @@
 -(void)postJSON:(NSString *)flag
 {
  
-    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 65-height)]autorelease];
+    float heightTopbar;
+    float littleHeinght;
+    if(isSeven&&isFive)
+    {
+        heightTopbar=65;
+        littleHeinght=20+5;
+    }
+    else if(isSeven&&!isFive)
+    {
+        heightTopbar=65;
+        littleHeinght=20+5;
+    }else if(!isSeven&&isFive)//
+    {
+        heightTopbar=45;
+        littleHeinght=10;
+    }else {
+        heightTopbar=45;
+        littleHeinght=10;
+    }
+
+    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
-    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(105, 20-height, 95, 25)]autorelease];
+    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(105, littleHeinght/2, 90, 23)]autorelease];
     wordView.image=[UIImage imageNamed:@"word"];
     [topBarView addSubview:wordView];
-    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105,20- height/2,95, 60-height)]autorelease];
+    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105,littleHeinght,95,65-littleHeinght)]autorelease];
     name.textColor=[UIColor whiteColor];
     name.text=NewsName;
     name.textAlignment = UITextAlignmentCenter;
@@ -130,14 +157,14 @@
     [topBarView addSubview:name];
     
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.frame=CGRectMake(10, 20-height/2, 37, 30);
+    leftBtn.frame=CGRectMake(10,littleHeinght, 37, 30);
     leftBtn.tag=10;
     [leftBtn setImage:[UIImage imageNamed:@"LeftBtn@2X"] forState:UIControlStateNormal];
     [self.view addSubview:leftBtn];
     [leftBtn addTarget:self action:@selector(PessSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *rightBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame=CGRectMake(270, 20-height/2, 37, 30);
+    rightBtn.frame=CGRectMake(270,littleHeinght, 37, 30);
     [rightBtn setImage:[UIImage imageNamed:@"RightBtn@2X"] forState:UIControlStateNormal];
     [self.view addSubview:rightBtn];
     [rightBtn addTarget:self action:@selector(PessSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
@@ -148,7 +175,7 @@
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString:app.jsonString];
   
-    tabView.frame=CGRectMake(0, 65-height, 320, height_Momente);
+    tabView.frame=CGRectMake(0, heightTopbar, 320, height_Momente);
     [self createHeaderView];
 	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
 	[_refreshHeaderView refreshLastUpdatedDate];

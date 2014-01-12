@@ -20,6 +20,9 @@ UIScrollViewDelegate >
     UINavigationBar *NavBar;
     CGFloat height_Momente;
     int height;
+ 
+    BOOL Kind7;
+    BOOL height5_flag;
 }
 
 @property (retain, nonatomic) IBOutlet UIScrollView *klpScrollView1;

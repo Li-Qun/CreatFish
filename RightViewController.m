@@ -29,12 +29,13 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-   ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
+    ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
     [contentRead Category];
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
+ 
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString: jsonString];
     
@@ -43,15 +44,15 @@
     scrollView.delegate=self;
     UIView *myView=[[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
     myView.backgroundColor=[UIColor clearColor];
-    UIImageView *imageViewTitle=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)];
+    UIImageView *imageViewTitle=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 45)];
     imageViewTitle.image=[UIImage imageNamed:@"LeftTitle@2X"];
     [myView addSubview:imageViewTitle];
-    UILabel *mainTitle=[[[UILabel alloc]initWithFrame:CGRectMake(145, 0, 320, 70)]autorelease];
+    UILabel *mainTitle=[[[UILabel alloc]initWithFrame:CGRectMake(145, 0, 320, 45)]autorelease];
     mainTitle.text=@"最新";
     mainTitle.font = [UIFont boldSystemFontOfSize:17];
     mainTitle.textColor=[UIColor whiteColor];
     [imageViewTitle addSubview:mainTitle];
-    UIImageView *pictureName=[[[UIImageView alloc]initWithFrame:CGRectMake(90, 25,20 , 20)] autorelease];
+    UIImageView *pictureName=[[[UIImageView alloc]initWithFrame:CGRectMake(90, 45/3,20 , 20)] autorelease];
     pictureName.image=[UIImage imageNamed:@"Set.png"];
     [imageViewTitle addSubview:pictureName];
     mainTitle.backgroundColor=[UIColor clearColor];
@@ -59,7 +60,7 @@
     for(int i=0;i<3;i++)
     {
         UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
-        OneButton.frame=CGRectMake(0, 60+i*45, 320, 44);
+        OneButton.frame=CGRectMake(0, 45+i*45, 320, 44);
         [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
         [myView addSubview:OneButton ];
         UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(145, 0, 320, 44)]autorelease];

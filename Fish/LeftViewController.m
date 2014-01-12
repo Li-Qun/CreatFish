@@ -38,6 +38,10 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (version <7.0)
+        isSeven=NO;
+    else isSeven=YES;
     contentRead =[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
     [contentRead Category];
@@ -46,24 +50,27 @@
 {
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString: jsonString];
+    int height;
+    if(isSeven) height=60;
+    else height=45;
     
     UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
     scrollView.backgroundColor=[UIColor clearColor];
     scrollView.delegate=self;
     UIView *myView=[[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
     myView.backgroundColor=[UIColor clearColor];
-    UIImageView *imageViewTitle=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)];
+    UIImageView *imageViewTitle=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
     imageViewTitle.image=[UIImage imageNamed:@"LeftTitle@2X"];
     [myView addSubview:imageViewTitle];
-    UILabel *mainTitle=[[[UILabel alloc]initWithFrame:CGRectMake(100, 0, 320, 60)]autorelease];
-    mainTitle.text=@"环球垂钓";
+    UILabel *mainTitle=[[[UILabel alloc]initWithFrame:CGRectMake(105, 0, 320, height)]autorelease];
+    mainTitle.text=@"阅钓";
     mainTitle.backgroundColor=[UIColor clearColor];
     mainTitle.font = [UIFont boldSystemFontOfSize:20];
     mainTitle.textColor=[UIColor whiteColor];
     [imageViewTitle addSubview:mainTitle];
      //首页
     UIButton *firstBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    firstBtn.frame=CGRectMake(0, 62, 320, 44);
+    firstBtn.frame=CGRectMake(0, height+2, 320, 44);
     [firstBtn setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
     [myView addSubview:firstBtn ];
     UILabel *firstPageName=[[[UILabel alloc]initWithFrame:CGRectMake(60, 0, 320, 44)]autorelease];
@@ -79,7 +86,7 @@
     for (int i=0; i<4;i++)
     {
         UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
-        OneButton.frame=CGRectMake(0, 115+i*45, 320, 44);
+        OneButton.frame=CGRectMake(0, height+44+5+i*45, 320, 44);
         [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
         [myView addSubview:OneButton ];
         UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(60, 0, 320, 44)]autorelease];
@@ -108,7 +115,7 @@
     for(int i=0;i<2;i++)
     {
         UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
-        OneButton.frame=CGRectMake(0, 320+i*45, 320, 44);
+        OneButton.frame=CGRectMake(0,280+height/2+i*45, 320, 44);
         [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
         OneButton.backgroundColor=[UIColor clearColor];
         [myView addSubview:OneButton ];

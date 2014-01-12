@@ -52,8 +52,19 @@
         [CustomURLCache setSharedURLCache:urlCache];
         [urlCache release];
         
-        
+        CGRect rect = [[UIScreen mainScreen] bounds];
+        CGSize size = rect.size;
+        CGFloat width = size.width;
+        totalHeight = size.height;
 
+        if(totalHeight==480)
+        {
+            isFive=NO;
+        }else isFive=YES;
+        float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+        if (version <7.0)
+            isSeven=NO;
+        else isSeven=YES;
     }
     return self;
 }
@@ -70,6 +81,26 @@
 }
 - (void)viewDidLoad
 {
+    float heightTopbar;
+    float littleHeinght;
+    if(isSeven&&isFive)
+    {
+        heightTopbar=60;
+        littleHeinght=23;
+    }
+    else if(isSeven&&!isFive)
+    {
+        heightTopbar=60;
+        littleHeinght=23;
+    }else if(!isSeven&&isFive)//
+    {
+        heightTopbar=60;
+        littleHeinght=20;
+    }else {
+        heightTopbar=45;
+        littleHeinght=10;
+    }
+
     contentRead=[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
     [contentRead Category];
@@ -80,30 +111,30 @@
     [self.view insertSubview:imgView atIndex:0];
     [imgView release];
     //创建导航按钮start
-    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)]autorelease];
+    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
     topBarView.image=[UIImage imageNamed:@"topViewBarWhite"];
     [self.view addSubview:topBarView];
     
     UIButton *backBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame=CGRectMake(10, 20, 26, 25);
+    backBtn.frame=CGRectMake(10, littleHeinght, 26, 25);
     [backBtn setImage:[UIImage imageNamed:@"BackImg@2X"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backParentView) forControlEvents:UIControlEventTouchUpInside];
     [self.view  addSubview:backBtn];
     
     UIButton *wordBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    wordBtn.frame=CGRectMake(175, 23, 28, 20);
+    wordBtn.frame=CGRectMake(175, littleHeinght+3, 28, 20);
     [wordBtn setImage:[UIImage imageNamed:@"AaImg@2X"] forState:UIControlStateNormal];
     [wordBtn addTarget:self action:@selector(PressWord:) forControlEvents:UIControlEventTouchUpInside];
     [self.view  addSubview:wordBtn];
     
     UIButton *shareBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    shareBtn.frame=CGRectMake(280, 20, 26, 25);
+    shareBtn.frame=CGRectMake(280, littleHeinght, 26, 25);
     [shareBtn setImage:[UIImage imageNamed:@"shareImg@2X"] forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(backParentView) forControlEvents:UIControlEventTouchUpInside];
     [self.view  addSubview:shareBtn];
     
     UIButton *saveBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    saveBtn.frame=CGRectMake(230, 20, 26, 25);
+    saveBtn.frame=CGRectMake(230, littleHeinght, 26, 25);
     [saveBtn setImage:[UIImage imageNamed:@"saveImgNormal@2X"] forState:UIControlStateNormal];
     [saveBtn addTarget:self action:@selector(SaveBook:) forControlEvents:UIControlEventTouchUpInside];
     [self.view  addSubview:saveBtn];
@@ -111,12 +142,7 @@
     
     
     //创建导航按钮end
-    
-    
-    
-    
-    
-    
+ 
     
     fontSize=16.0;
     line_height=18.0;
@@ -125,7 +151,7 @@
     htmlTextTotals=[[NSMutableString alloc]init];
     
     [self postURL:[self.dictForData objectForKey:@"id"]];
-    showWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, 320, 550)];
+    showWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, 320, totalHeight)];
     showWebView.delegate=self;
     showWebView.scrollView.delegate=self;
     showWebView.backgroundColor=[UIColor clearColor];

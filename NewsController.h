@@ -47,6 +47,9 @@
     BOOL isFirstLoad;
     //
     int newSumCount;
+    
+    BOOL isSeven;
+    BOOL isFive;
 }
 @property(nonatomic,retain)NSMutableArray *arr;
 @property(nonatomic,retain)NSMutableArray *arrPic;
