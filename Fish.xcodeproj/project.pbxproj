@@ -131,6 +131,10 @@
 		BBA4931C187D6C390089D35E /* clearBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4931A187D6C390089D35E /* clearBack@2X.png */; };
 		BBA4931F187D6DF30089D35E /* theArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4931D187D6DF30089D35E /* theArrow.png */; };
 		BBA49320187D6DF30089D35E /* theArrow@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4931E187D6DF30089D35E /* theArrow@2X.png */; };
+		BBA4BE7818838B4B0008643E /* ReadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA4BE7618838B4B0008643E /* ReadingViewController.m */; };
+		BBA4BE7918838B4B0008643E /* ReadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBA4BE7718838B4B0008643E /* ReadingViewController.xib */; };
+		BBA4BE7C1883E7D80008643E /* whiteBack.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4BE7A1883E7D80008643E /* whiteBack.png */; };
+		BBA4BE7D1883E7D80008643E /* whiteBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4BE7B1883E7D80008643E /* whiteBack@2X.png */; };
 		BBA5553B185811380011F6BC /* Top_1_ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA55538185811380011F6BC /* Top_1_ViewController.m */; };
 		BBA5553C185811380011F6BC /* TopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA5553A185811380011F6BC /* TopViewController.m */; };
 		BBA5B7D1187A875000D55899 /* labelNormal_Set.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA5B7CF187A875000D55899 /* labelNormal_Set.png */; };
@@ -477,6 +481,11 @@
 		BBA4931A187D6C390089D35E /* clearBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clearBack@2X.png"; sourceTree = "<group>"; };
 		BBA4931D187D6DF30089D35E /* theArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theArrow.png; sourceTree = "<group>"; };
 		BBA4931E187D6DF30089D35E /* theArrow@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "theArrow@2X.png"; sourceTree = "<group>"; };
+		BBA4BE7518838B4B0008643E /* ReadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadingViewController.h; sourceTree = "<group>"; };
+		BBA4BE7618838B4B0008643E /* ReadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadingViewController.m; sourceTree = "<group>"; };
+		BBA4BE7718838B4B0008643E /* ReadingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReadingViewController.xib; sourceTree = "<group>"; };
+		BBA4BE7A1883E7D80008643E /* whiteBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteBack.png; sourceTree = "<group>"; };
+		BBA4BE7B1883E7D80008643E /* whiteBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteBack@2X.png"; sourceTree = "<group>"; };
 		BBA55537185811380011F6BC /* Top_1_ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Top_1_ViewController.h; sourceTree = "<group>"; };
 		BBA55538185811380011F6BC /* Top_1_ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Top_1_ViewController.m; sourceTree = "<group>"; };
 		BBA55539185811380011F6BC /* TopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopViewController.h; sourceTree = "<group>"; };
@@ -1050,6 +1059,8 @@
 				BBA49302187D2F090089D35E /* TitleWhiteBack@2X.png */,
 				BBB2CF0B187BA7D500C8F210 /* redBack.png */,
 				BBB2CF0C187BA7D500C8F210 /* redBack@2X.png */,
+				BBA4BE7A1883E7D80008643E /* whiteBack.png */,
+				BBA4BE7B1883E7D80008643E /* whiteBack@2X.png */,
 				BBA5B7E0187ABF4A00D55899 /* toolBar.png */,
 				BBA5B7E1187ABF4A00D55899 /* toolBar@2X.png */,
 			);
@@ -1240,6 +1251,9 @@
 		BBC95B3718532EC600A10431 /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				BBA4BE7518838B4B0008643E /* ReadingViewController.h */,
+				BBA4BE7618838B4B0008643E /* ReadingViewController.m */,
+				BBA4BE7718838B4B0008643E /* ReadingViewController.xib */,
 				BBB79BD81861DCCC007DCEEA /* Pre */,
 			);
 			name = VC;
@@ -1558,6 +1572,7 @@
 				BBDBE94D184DD6CB009FA292 /* RightViewController.xib in Resources */,
 				BBA4931C187D6C390089D35E /* clearBack@2X.png in Resources */,
 				BB951564185348C000BD82A7 /* bg-menuitem.png in Resources */,
+				BBA4BE7C1883E7D80008643E /* whiteBack.png in Resources */,
 				BBC95B3118532E5F00A10431 /* images-4.jpeg in Resources */,
 				BBD134161869CD2D008657B6 /* camera@2x.png in Resources */,
 				BBA5B7DA187AB21F00D55899 /* xinlang@2X.png in Resources */,
@@ -1612,6 +1627,7 @@
 				BBA5B7E3187ABF4A00D55899 /* toolBar@2X.png in Resources */,
 				BBA49305187D2F090089D35E /* TitleWhiteBack.png in Resources */,
 				BBD81BB0186C34DA000DBEEE /* 17.jpg in Resources */,
+				BBA4BE7D1883E7D80008643E /* whiteBack@2X.png in Resources */,
 				BBD81BB6186C34DA000DBEEE /* 22.jpg in Resources */,
 				BBAF28CE187E451E005A3FCB /* saveImgNormal.png in Resources */,
 				BBB2CF20187BFAA600C8F210 /* firstPage@2X.png in Resources */,
@@ -1667,6 +1683,7 @@
 				BBD81BC2186C34DA000DBEEE /* 7.jpg in Resources */,
 				BBD0E1E818781B95000D1141 /* advice_nav_red@2X.png in Resources */,
 				BB951567185348C000BD82A7 /* icon-plus.png in Resources */,
+				BBA4BE7918838B4B0008643E /* ReadingViewController.xib in Resources */,
 				BBA6989D186FE9DD00DE10AB /* whiteArrow@2x.png in Resources */,
 				BBA49320187D6DF30089D35E /* theArrow@2X.png in Resources */,
 				BBDBE952184DD995009FA292 /* NewViewController.xib in Resources */,
@@ -1747,6 +1764,7 @@
 				BB9D90B018684545000CB89C /* LifeViewController.m in Sources */,
 				BBD0E1D818780909000D1141 /* SettingViewController.m in Sources */,
 				BBAC8737185FFA6100A36D8A /* TViewController.m in Sources */,
+				BBA4BE7818838B4B0008643E /* ReadingViewController.m in Sources */,
 				BB95154C1853387600BD82A7 /* SampleCell.m in Sources */,
 				BBD67E411876D6E800A6CD87 /* StoreUpViewController.m in Sources */,
 				9006F344184D59250091B69F /* AppDelegate.m in Sources */,

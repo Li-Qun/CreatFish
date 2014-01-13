@@ -145,9 +145,7 @@
     [request setCompletionBlock :^{
         // 请求响应结束，返回 responseString
            NSString * jsonString  =  [request responseString];
-        
-           //NSLog(@"++++%@+++++++",jsonString);
-        
+            [delegate reBack :jsonString];
     }];
     [request setFailedBlock :^{
         // 请求响应失败，返回错误信息

@@ -145,7 +145,7 @@
     CGRect cellFrameInSuperview = [tableView convertRect:cellFrameInTableView toView:[tableView superview]];
     DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
     NSMutableDictionary* dict = [arr_Mag objectAtIndex:indexPath.row];
-    detail.dictForData=dict;
+    detail.momentID=[dict objectForKey:@"id"];
    // detail.arrIDListNew= arrID_Mag;
     detail.yOrigin=cellFrameInSuperview.origin.y;
     [self.navigationController pushViewController:detail animated:YES];

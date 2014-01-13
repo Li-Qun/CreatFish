@@ -36,9 +36,9 @@
     NSString *htmlText;
     //收藏信息
     NSString *detailTotal;
-    NSString *detailName;
-    NSString *detailImage;
-    NSString *detailID;
+//    NSString *detailName;
+//    NSString *detailImage;
+//    NSString *detailID;
     //
     NSMutableString *htmlTextTotals;
     float fontSize;
@@ -51,7 +51,6 @@
     EGORefreshTableFooterView *_refreshFooterView;
     //
     BOOL _reloading;
-    UINavigationBar *navBar;
     BOOL isStore;
     float totalHeight;
     BOOL isSeven;
@@ -63,14 +62,15 @@
 @property (retain, nonatomic) IBOutlet UIView *tableView;
 @property (retain,nonatomic)UIWebView *showWebView;
 @property (readwrite, nonatomic) int yOrigin;
-@property (retain, nonatomic) NSMutableDictionary *dictForData;
+//@property (retain, nonatomic) NSMutableDictionary *dictForData;
 @property (retain, nonatomic) NSMutableDictionary *Data;
 @property (retain, nonatomic) NSMutableArray *arrIDList;
 @property (retain, nonatomic)NSMutableArray *arrIDListNew;
 @property (nonatomic,retain)NSString *htmlText;
-@property (nonatomic,retain)NSString *detailName;
-@property (nonatomic,retain)NSString *detailImage;
-@property (nonatomic,retain)NSString *detailID;
+@property (retain, nonatomic)NSString *momentID;
+//@property (nonatomic,retain)NSString *detailName;
+//@property (nonatomic,retain)NSString *detailImage;
+//@property (nonatomic,retain)NSString *detailID;
 
 @property (nonatomic,retain)NSMutableString *htmlTextTotals;
 @property (nonatomic,retain) NSString *jsString;

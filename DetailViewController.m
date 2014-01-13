@@ -28,7 +28,7 @@
 @implementation DetailViewController
 @synthesize pic_url=pic_url;
 @synthesize showWebView=showWebView;
-@synthesize dictForData=dictForData;
+//@synthesize dictForData=dictForData;
 @synthesize Data=Data;
 @synthesize tableView=tableView;
 @synthesize jsString=jsString;
@@ -38,9 +38,10 @@
 @synthesize page_num=page_num;
 @synthesize page_label=page_label;
 @synthesize htmlTextTotals=htmlTextTotals;
-@synthesize detailImage=detailImage;
-@synthesize detailName=detailName;
-@synthesize detailID=detailID;
+@synthesize momentID=momentID;
+//@synthesize detailImage=detailImage;
+//@synthesize detailName=detailName;
+//@synthesize detailID=detailID;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -70,7 +71,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {//视图即将可见时调用。默认情况下不执行任何操作
-    self.navigationController.toolbarHidden = YES;
+     self.navigationController.toolbarHidden = YES;
     [self.navigationController setNavigationBarHidden:YES];
     
     [super viewWillAppear:animated];
@@ -100,8 +101,8 @@
         heightTopbar=45;
         littleHeinght=10;
     }
-
-    contentRead=[[[ContentRead alloc]init]autorelease];
+    
+   ContentRead* contentRead=[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
     [contentRead Category];
     [super viewDidLoad];
@@ -150,7 +151,7 @@
     jsString=[[[NSString alloc]init]retain] ;
     htmlTextTotals=[[NSMutableString alloc]init];
     
-    [self postURL:[self.dictForData objectForKey:@"id"]];
+    [self postURL:momentID];
     showWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, 320, totalHeight)];
     showWebView.delegate=self;
     showWebView.scrollView.delegate=self;
@@ -167,13 +168,10 @@
     //第二步，创建请求
    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-    //[request setPostValue:@"1" forKey:@"content_id"];
 
     [request setHTTPMethod:@"POST"];
    
     NSString *str=[[NSString stringWithFormat:@"content_id=%@",ID]retain];
-    //  NSString *str = @"content_id=1";//[request setPostValue:@"1" forKey:@"content_id"]
-    //NSURLRequest post
     
     NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -186,8 +184,6 @@
 }
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-   // NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
-    //NSLog(@"%@",[res allHeaderFields]);
     self.Data = [NSMutableData data];
 }
 //接收到服务器传输数据的时候调用，此方法根据数据大小执行若干次
@@ -198,7 +194,6 @@
 //数据传完之后调用此方法
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    [self.view addSubview:navBar];
     NSString *receiveStr = [[NSString alloc]initWithData:self.Data encoding:NSUTF8StringEncoding];
     
     SBJsonParser *parser = [[SBJsonParser alloc] init];
@@ -206,14 +201,14 @@
     moment=[[jsonObj objectForKey:@"id"]intValue];
     detailTotal=[[NSString alloc]init];
     htmlText=[[NSString alloc]init];
-    detailName=[[NSString alloc]init] ;
-    detailImage=[[NSString alloc]init] ;
-    detailID=[[NSString alloc]init];
+//    detailName=[[NSString alloc]init] ;
+//    detailImage=[[NSString alloc]init] ;
+//    detailID=[[NSString alloc]init];
     detailTotal=receiveStr;
     htmlText=[jsonObj objectForKey:@"content"];
-    detailName=[jsonObj objectForKey:@"name"];
-    detailImage=[jsonObj objectForKey:@"image"];
-    detailID=[jsonObj objectForKey:@"id"];
+//    detailName=[jsonObj objectForKey:@"name"];
+//    detailImage=[jsonObj objectForKey:@"image"];
+//    detailID=[jsonObj objectForKey:@"id"];
     [htmlTextTotals appendFormat:[NSString stringWithFormat: htmlText]];
     //<body style="background-color: transparent">//设置网页背景透明
    // htmlTextTotals = [htmlTextTotals stringByAppendingString:htmlText];
@@ -250,12 +245,7 @@
     //[receiveStr release];
    
     arrIDList=[[NSMutableArray alloc]init];
-    //刷新设置
-    [self createHeaderView];
-	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
-    [_refreshHeaderView refreshLastUpdatedDate];
-    //刷新设置end
-    //获取web文本高度start
+       //获取web文本高度start
     if ([showWebView subviews]) {
         UIScrollView* scrollView = [[showWebView subviews] objectAtIndex:0];
         [scrollView setContentOffset:CGPointMake(0, height_Mag*2+100) animated:YES];
@@ -264,11 +254,6 @@
     }
     height_Mag = [[showWebView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
     //获取web文本高度end
-
-//    [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
-//    [_refreshHeaderView refreshLastUpdatedDate];
-//    [self refreshView];
-    
 }
 #pragma mark - webview
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
@@ -287,7 +272,12 @@
 
     [showWebView stringByEvaluatingJavaScriptFromString:@"imageWidth(320);"];//设置网络图片统一宽度320
     [showWebView stringByEvaluatingJavaScriptFromString:@"init();"];
-    //:a=document.body.getElementsByTagName("img");var b="";for(i=0;i<a.length;i++){b+="<img border=0 src="+a[i].src+"><br>"+a[i].src+"<br>"};document.write(b);
+    //刷新设置
+    [self createHeaderView];
+	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
+    [_refreshHeaderView refreshLastUpdatedDate];
+    //刷新设置end
+ 
 }
 //网络请求过程中，出现任何错误（断网，连接超时等）会进入此方法
 -(void)connection:(NSURLConnection *)connection
@@ -435,8 +425,6 @@ didFailWithError:(NSError *)error
     
     
     [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-    
-   // [self.view addSubview:showWebView];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
     [showWebView loadHTMLString:jsString baseURL:nil];
@@ -512,10 +500,6 @@ didFailWithError:(NSError *)error
     [showWebView stringByEvaluatingJavaScriptFromString:jsString];
 
 }
--(void)cameraSaveAction:(id)sender
-{
-    
-}
 ///收藏提示对话框
 -(void)SaveBook :(id)sender
 {
@@ -530,6 +514,8 @@ didFailWithError:(NSError *)error
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    AppDelegate * app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+
     if(buttonIndex==0)//确定
     {
       [[Singleton sharedInstance].single_Data insertObject:detailTotal atIndex:app.saveNum++] ;
@@ -641,9 +627,6 @@ didFailWithError:(NSError *)error
 	
     [self finishReloadingData];
     [self setFooterView];
-    [self.navigationController setNavigationBarHidden:YES];
-    [self.view addSubview:navBar];
-
 }
 #pragma mark -
 #pragma mark method that should be called when the refreshing is finished
@@ -660,13 +643,10 @@ didFailWithError:(NSError *)error
         [_refreshFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:showWebView.scrollView];
         [self setFooterView];
     }
-    
-    // overide, the actula reloading tableView operation and reseting position operation is done in the subclass
 }
 
 -(void)setFooterView{
-	//    UIEdgeInsets test = self.aoView.contentInset;
-    // if the footerView is nil, then create it, reset the position of the footer
+
     CGFloat height = MAX(showWebView.scrollView.contentSize.height, showWebView.scrollView.frame.size.height);
     if (_refreshFooterView && [_refreshFooterView superview])
 	{
@@ -729,30 +709,54 @@ didFailWithError:(NSError *)error
 {
 	NSLog(@"刷新完成");
     [self testFinishedLoadData];
-	[self.view addSubview:navBar];
 }
 //加载调用的方法
 -(void)getNextPageView
 {
+//    if(isStore==YES){
+//        isStore=NO;  
+//
+//    }
+//    else {
+//        int a=[detailID intValue];
+//        int b=[[arrIDListNew objectAtIndex:arrIDListNew.count-1] intValue];
+//        if(a> b)
+//        {
+//            NSString *string=[NSString stringWithFormat:@"%d",--a];
+//            [self postURL:string];
+//            //[self.dictForData objectForKey:@"id"]
+//        }
+//        
+    
     if(isStore==YES){
-        isStore=NO;  
-
-    }
-    else {
-        int a=[detailID intValue];
-        int b=[[arrIDListNew objectAtIndex:arrIDListNew.count-1] intValue];
-        if(a> b)
+                 isStore=NO;
+            }
+    ContentRead *read=[[[ContentRead alloc]init]autorelease];
+    read.delegate=self;
+    BOOL Ok;
+    Ok=NO;
+    for(int i=0;i< arrIDListNew.count;i++)
+    {
+        if([momentID isEqualToString:[arrIDListNew objectAtIndex:i]]&&i+1<arrIDListNew.count)
         {
-            NSString *string=[NSString stringWithFormat:@"%d",--a];
-            [self postURL:string];
-            //[self.dictForData objectForKey:@"id"]
+            [self postURL:[arrIDListNew objectAtIndex:i+1]];
+            [showWebView reload];
+            [self removeFooterView];
+            [self testFinishedLoadData];
+            Ok=YES;
+                momentID=[arrIDListNew objectAtIndex:i+1];
+            break;
         }
+    }
+    if(!Ok)
+    {
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"没有更多了，去返回查看其它精彩游钓资讯吧!", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"确定", nil) otherButtonTitles:nil] show];
         
-        [showWebView reload];
-        [self removeFooterView];
-        [self testFinishedLoadData];
-          }
-    [self.view addSubview:navBar];
+    }
+
+
+        
+    
 }
 
 #pragma mark -

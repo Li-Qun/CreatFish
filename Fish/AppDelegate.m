@@ -232,17 +232,8 @@
     vc.rightSize = 320.0-244.0;
     vc.topSize = 460+44;
     self.viewDeckController = vc;
+
     
-    
-//       [application setStatusBarStyle:UIStatusBarStyleLightContent];
-//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
-//     
-//       // self.window.clipsToBounds =YES;
-//        self.window.frame =  CGRectMake(0,20,self.window.frame.size.width,self.window.frame.size.height-20);
-//        
-//        //Added on 19th Sep 2013
-//        self.window.bounds = CGRectMake(0, 20, self.window.frame.size.width, self.window.frame.size.height);
-//    }
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
     CGFloat width = size.width;

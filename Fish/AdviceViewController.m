@@ -74,13 +74,7 @@
     textView.text=@"";
     callNumber.text=@"";
     [self build_Tool];
-    contentRead =[[ContentRead alloc]init];
-    contentRead.delegate=self;
-    [contentRead Category];
-}
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
-{
-    
+ 
 }
 - (void)viewDidLoad
 {

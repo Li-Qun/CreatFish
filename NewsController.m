@@ -20,6 +20,7 @@
 #import "skyCell.h"
 #import "UIImageView+WebCache.h"
 #import "DetailViewController.h"
+#import "ReadingViewController.h"
 
 #import "IIViewDeckController.h"
 
@@ -186,24 +187,19 @@
         total += [[jsonObj objectForKey:@"total"] intValue];
         NSLog(@"total : %d",total);
         NSDictionary *data = [jsonObj objectForKey:@"data"];
-        
-        //[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[[arr objectAtIndex:i] objectForKey:@"image"]];
         newSumCount+=arr.count;
         for (int i =0; i <data.count; i++) {
-           // NSString *str = [NSString stringWithFormat:@"%d",i];
+           
             [arr insertObject:[data objectAtIndex:i] atIndex: newSumCount];
             [arrID insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]objectForKey:@"id"]]  atIndex:newSumCount];
         }
-        // NSLog(@"%@",arrID);
     }
     else if (isFistLevel==1)
     {
         app.jsonStringOne=app.jsonString;
-        
     }
     tabView.delegate=self;
     tabView.dataSource=self;//设置双重代理 很重要
-
    [self.view addSubview:tabView];
    [tabView reloadData];
    //[tabView release];
@@ -285,7 +281,6 @@
                               success:^(UIImage *image) {NSLog(@"OK");}
                               failure:^(NSError *error) {NSLog(@"NO");}];
         //#import "UIImageView+WebCache.h" 加载网络图片方法end
-        // NSLog(@"%@",imgURL);
       return cell;
     }  
 }
@@ -296,23 +291,17 @@
         CGRect cellFrameInTableView = [tableView rectForRowAtIndexPath:indexPath];
         CGRect cellFrameInSuperview = [tableView convertRect:cellFrameInTableView toView:[tableView superview]];
         DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
-        NSMutableDictionary* dict = [self.arr objectAtIndex:indexPath.row];
-        detail.dictForData=dict;
+        //ReadingViewController *detail=[[[ReadingViewController alloc]initWithNibName:@"ReadingViewController" bundle:nil]autorelease];
+        NSMutableDictionary* dict = [self.arr objectAtIndex:indexPath.row-1];
+      //  detail.dictForData=dict;
         detail.arrIDListNew=arrID;
         detail.yOrigin=cellFrameInSuperview.origin.y;
+        detail.momentID=[dict objectForKey:@"id"];
         [self.navigationController pushViewController:detail animated:YES];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
     }
 }
--(void)loadMore
-{
-    [contentRead setDelegate:self];
-   // [contentRead fetchList:@"1" isPri:@"0" Out:@"1"];
-//    [contentRead Magazine:@"1" isPri:@"0" WeeklyId:@"14" Out:@"1"];
-//    NSLog(@"XXXX   :  %@",NewsId);
 
-}
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView;//滑动隐藏toolbar
 {
     
@@ -453,10 +442,8 @@
 -(void)getNextPageView
 {
     [contentRead setDelegate:self];
-   [contentRead fetchList:@"1" isPri:@"0" Out:@"0"];
-     NSLog(@"XXXX   :  %@",NewsId);
-//    [contentRead Magazine:@"1" isPri:@"0" WeeklyId:@"0" Out:@"0"];
-    
+    [contentRead fetchList:@"1" isPri:@"0" Out:@"0"];
+    //    [contentRead Magazine:@"1" isPri:@"0" WeeklyId:@"0" Out:@"0"];
     [tabView reloadData];
     [self removeFooterView];
     [self testFinishedLoadData];

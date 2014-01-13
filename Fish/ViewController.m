@@ -41,9 +41,8 @@
         height5_flag=NO;
     }else  height5_flag=YES;
     // 判断设备的iOS 版本号
-  float  version = [[[UIDevice currentDevice] systemVersion] floatValue];
-    NSLog(@"%f",version);
-    if(version==7.0)
+   float  version = [[[UIDevice currentDevice] systemVersion] floatValue];
+       if(version==7.0)
     {
  
         Kind7=YES;
@@ -222,9 +221,7 @@
         UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];
         imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
         imgToolView.tag=22;
-        [self.view addSubview:imgToolView];
-        // NSLog(@"%@",[jsonObj  objectAtIndex:0] );
-        //  [dict objectForKey:@"category_id"];
+        UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)]autorelease];
         
         for(int i=0;i<5;i++)
         {
@@ -239,9 +236,7 @@
                 name= [NSString stringWithFormat:@"收藏"];
                 button.tag=100;
             }
-            
-          
-            button.frame=CGRectMake(10+i*60, buttonHeight, 30, 40);
+            button.frame=CGRectMake(10+i*60, 0, 30, 40);
             button.showsTouchWhenHighlighted = YES;
             [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
             UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
@@ -254,14 +249,22 @@
             labelNum.textColor=[UIColor whiteColor];
             labelNum.backgroundColor=[UIColor clearColor];
             UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
+            if([labelNum.text isEqual:@"0"])
+            imgViewRed.image=[UIImage imageNamed:@"whiteBack.png"];
+            else
             imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
             [imgViewRed addSubview:labelNum];
             [button addSubview:imgViewRed];
             [button addSubview:label];
             button.backgroundColor=[UIColor clearColor];
-            [self.view addSubview:button];
+            [scrollView addSubview:button];
             [label release];
         }
+        scrollView.contentSize = CGSizeMake(640, 44);
+        [scrollView setShowsHorizontalScrollIndicator:NO];//隐藏横向滚动条
+        [imgToolView addSubview:scrollView];
+        imgToolView . userInteractionEnabled = YES;
+        [self.view addSubview:imgToolView];
     }
 }
 -(void)theTopBar

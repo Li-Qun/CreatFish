@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "FishCore.h"
-@interface AdviceViewController : ViewController<UITextViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,FishDelegate>{
+@interface AdviceViewController : UIViewController<UITextViewDelegate,UITextFieldDelegate,UIActionSheetDelegate,FishDelegate>{
     UINavigationBar *navBar;
     IBOutlet UILabel *someWordsTitle;
     IBOutlet UILabel *someWords;

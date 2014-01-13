@@ -25,10 +25,29 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     
+ 
+    contentRead=[[[ContentRead alloc]init]autorelease];
+    contentRead.delegate=self;
+    [contentRead Category];
+}
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+{
+    
+}
+-(void)PessTheStoreBack
+{
+    [self.viewDeckController toggleLeftViewAnimated:YES];
+//    ViewController *newVC = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil]autorelease];
+//    self.hidesBottomBarWhenPushed = YES;//OK~
+//    [self.navigationController pushViewController :newVC animated:YES];
+
+}
+- (void)viewDidLoad
+{
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
     CGFloat width = size.width;
-     heightStore = size.height;
+    heightStore = size.height;
     if( heightStore==480)
     {
         isFive=NO;
@@ -54,16 +73,16 @@
         heightTopbar=45;
         littleHeinght=10;
     }
-
+    
     [self.navigationController setNavigationBarHidden:YES];
- 
+    
     self.navigationController.toolbarHidden = YES;
     
     self.navigationController.navigationBarHidden=YES;
     UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar )]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
-
+    
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     leftBtn.frame=CGRectMake(10, littleHeinght, 37, 30);
     leftBtn.tag=10;
@@ -80,44 +99,20 @@
     name.shadowOffset = CGSizeMake(0.0,0.5);
     [topBarView addSubview:name];
     name.backgroundColor=[UIColor clearColor];
-    
-    
-    
-    
-    
-    
-    
-    contentRead=[[[ContentRead alloc]init]autorelease];
-    contentRead.delegate=self;
-    [contentRead Category];
-}
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
-{
-    
-}
--(void)PessTheStoreBack
-{
-    [self.viewDeckController toggleLeftViewAnimated:YES];
-//    ViewController *newVC = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil]autorelease];
-//    self.hidesBottomBarWhenPushed = YES;//OK~
-//    [self.navigationController pushViewController :newVC animated:YES];
-
-}
-- (void)viewDidLoad
-{
     [super viewDidLoad];
     tableView_Store=[[UITableView alloc]init];
-    tableView_Store.frame=CGRectMake(0, 65, 320, heightStore);
+    tableView_Store.frame=CGRectMake(0, heightTopbar, 320, heightStore);
     tableView_Store.delegate=self;
     tableView_Store.dataSource=self;//设置双重代理 很重要
-    [self.view addSubview:tableView_Store];
+    
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
- // [jsonObj objectForKey:@"category_id"];
+ 
     for(int i=0;i<app.saveNum;i++)
     {
         NSDictionary *jsonObj =[parser objectWithString: [[Singleton sharedInstance].single_Data objectAtIndex:i]];
         [arrSave_ID insertObject:[jsonObj objectForKey:@"category_id"] atIndex:i];
-    }
+    }[
+      self.view addSubview:tableView_Store];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -168,7 +163,7 @@
     NSDictionary *jsonObj =[parser objectWithString: [[Singleton sharedInstance].single_Data objectAtIndex:indexPath.row]];
 
      NSMutableDictionary* dict =jsonObj;
-     detail.dictForData=dict;
+    detail.momentID=[dict objectForKey:@"id"];
      detail.yOrigin=cellFrameInSuperview.origin.y;
      detail.arrIDListNew=arrSave_ID;
     detail.isStore=YES;

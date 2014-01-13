@@ -28,11 +28,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slideLeft_Back@2X.png"]];
-        imgView.frame = self.view.bounds;
-        imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [self.view insertSubview:imgView atIndex:0];
-        [imgView release];
+         self.view.backgroundColor=[UIColor blackColor];
     }
     return self;
 }
@@ -99,13 +95,17 @@
         [OneButton  addSubview:pictureOneName];
         OneButton.tag=[[NSString stringWithFormat: [[jsonObj  objectAtIndex:i] objectForKey:@"id"]]integerValue];
         UIImageView *theRedNum=[[[UIImageView alloc]initWithFrame:CGRectMake(200, 10, 28, 22)]autorelease];
-        theRedNum.image=[UIImage imageNamed:@"redBack.png"];
-        [OneButton addSubview:theRedNum];
+            [OneButton addSubview:theRedNum];
         UILabel *labelNum=[[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 22)]autorelease];
         labelNum.text=[[jsonObj  objectAtIndex:i] objectForKey:@"id"];
         labelNum.textColor=[UIColor whiteColor];
         labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
         [theRedNum addSubview:labelNum];
+        if([labelNum.text isEqualToString:@"0"])
+            theRedNum.image=[UIImage imageNamed:@"whiteBack.png"];
+        else  theRedNum.image=[UIImage imageNamed:@"redBack.png"];
+
+
         labelNum.backgroundColor=[UIColor clearColor];
         OneButton.backgroundColor=[UIColor clearColor];
         OneName.backgroundColor=[UIColor clearColor];
@@ -140,6 +140,11 @@
           [OneButton addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
         OneName.backgroundColor=[UIColor clearColor];
     }
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slideLeft_Back@2X.png"]];
+    imgView.frame = CGRectMake(0, 280+height/2, 320,568 );
+    imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.view insertSubview:imgView atIndex:0];
+    [imgView release];
     
     
     [scrollView addSubview:myView];
