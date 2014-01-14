@@ -21,6 +21,13 @@
 
 
 #import "Singleton.h"
+
+
+
+#import <ShareSDK/ShareSDK.h>
+#import "WeiboApi.h"
+#import <ShareSDKCoreService/ShareSDKCoreService.h>
+
 @interface DetailViewController ()
 
 @end
@@ -131,7 +138,7 @@
     UIButton *shareBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     shareBtn.frame=CGRectMake(280, littleHeinght, 26, 25);
     [shareBtn setImage:[UIImage imageNamed:@"shareImg@2X"] forState:UIControlStateNormal];
-    [shareBtn addTarget:self action:@selector(backParentView) forControlEvents:UIControlEventTouchUpInside];
+    [shareBtn addTarget:self action:@selector(shareBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view  addSubview:shareBtn];
     
     UIButton *saveBtn=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -234,8 +241,7 @@
     [showWebView setUserInteractionEnabled: YES ];
     [self.view addSubview:showWebView];
     
-    [self addTapOnWebView];//调用触摸图片事件
-    //showWebView.
+       //showWebView.
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [showWebView loadHTMLString:jsString baseURL:nil];
@@ -277,6 +283,8 @@
 	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
     [_refreshHeaderView refreshLastUpdatedDate];
     //刷新设置end
+    [self addTapOnWebView];//调用触摸图片事件
+    
  
 }
 //网络请求过程中，出现任何错误（断网，连接超时等）会进入此方法
@@ -344,7 +352,7 @@ didFailWithError:(NSError *)error
             [obj removeFromSuperview];
         }
     }
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
 }
 //////查看web图片  end
 
@@ -499,6 +507,37 @@ didFailWithError:(NSError *)error
     [showWebView loadHTMLString:jsString baseURL:nil];
     [showWebView stringByEvaluatingJavaScriptFromString:jsString];
 
+}
+-(void)shareBtn
+{
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
+    
+    //构造分享内容
+    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
+                                       defaultContent:@"默认分享内容，没内容时显示"
+                                                image:[ShareSDK imageWithPath:imagePath]
+                                                title:@"ShareSDK"
+                                                  url:@"http://www.huiztech.com"
+                                          description:@"这是一条测试信息"
+                                            mediaType:SSPublishContentMediaTypeNews];
+
+    [ShareSDK showShareActionSheet:nil
+                         shareList:nil
+                           content:publishContent
+                     statusBarTips:YES
+                       authOptions:nil
+                      shareOptions: nil
+                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                if (state == SSResponseStateSuccess)
+                                {
+                                    NSLog(@"分享成功");
+                                }
+                                else if (state == SSResponseStateFail)
+                                {
+                                    NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode], [error errorDescription]);
+                                }
+                            }];
+    
 }
 ///收藏提示对话框
 -(void)SaveBook :(id)sender
