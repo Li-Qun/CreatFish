@@ -44,7 +44,7 @@
     float fontSize;
     NSString *jsString;
     float line_height;
-    
+    UIButton *saveBtn;
     //EGOHeader
     EGORefreshTableHeaderView *_refreshHeaderView;
     //EGOFoot

@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface InformationCell : UITableViewCell
+{
+    
+    IBOutlet UIImageView *ImageViewBack;
+}
 
 @property (retain, nonatomic) IBOutlet UILabel *labelForID;
 @property (retain, nonatomic) IBOutlet UILabel *labelForCategory_id;

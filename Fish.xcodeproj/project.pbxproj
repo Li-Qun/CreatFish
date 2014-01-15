@@ -215,6 +215,8 @@
 		BBAF984518852EB3002DDA7A /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAF983518852EB2002DDA7A /* TencentOpenAPI.framework */; };
 		BBAF984618852EB3002DDA7A /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BBAF983618852EB2002DDA7A /* TencentOpenApi_IOS_Bundle.bundle */; };
 		BBAF984718852EB3002DDA7A /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAF983818852EB2002DDA7A /* libWeiboSDK.a */; };
+		BBAF984A188547BA002DDA7A /* tableCell.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF9848188547BA002DDA7A /* tableCell.png */; };
+		BBAF984B188547BA002DDA7A /* tableCell@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF9849188547BA002DDA7A /* tableCell@2X.png */; };
 		BBB2CF0D187BA7D500C8F210 /* redBack.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF0B187BA7D500C8F210 /* redBack.png */; };
 		BBB2CF0E187BA7D500C8F210 /* redBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF0C187BA7D500C8F210 /* redBack@2X.png */; };
 		BBB2CF17187BF01C00C8F210 /* LeftTitle.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF15187BF01C00C8F210 /* LeftTitle.png */; };
@@ -608,6 +610,8 @@
 		BBAF983818852EB2002DDA7A /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
 		BBAF983918852EB2002DDA7A /* WBApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBApi.h; sourceTree = "<group>"; };
 		BBAF983A18852EB2002DDA7A /* WBApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBApiObject.h; sourceTree = "<group>"; };
+		BBAF9848188547BA002DDA7A /* tableCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableCell.png; sourceTree = "<group>"; };
+		BBAF9849188547BA002DDA7A /* tableCell@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tableCell@2X.png"; sourceTree = "<group>"; };
 		BBB2CF0B187BA7D500C8F210 /* redBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redBack.png; sourceTree = "<group>"; };
 		BBB2CF0C187BA7D500C8F210 /* redBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redBack@2X.png"; sourceTree = "<group>"; };
 		BBB2CF15187BF01C00C8F210 /* LeftTitle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LeftTitle.png; sourceTree = "<group>"; };
@@ -1123,6 +1127,8 @@
 		BBA49308187D48A70089D35E /* NewsImg */ = {
 			isa = PBXGroup;
 			children = (
+				BBAF9848188547BA002DDA7A /* tableCell.png */,
+				BBAF9849188547BA002DDA7A /* tableCell@2X.png */,
 				BBA4931D187D6DF30089D35E /* theArrow.png */,
 				BBA4931E187D6DF30089D35E /* theArrow@2X.png */,
 				BBA49319187D6C390089D35E /* clearBack.png */,
@@ -1836,6 +1842,7 @@
 				BB95155D185348C000BD82A7 /* bg-addbutton.png in Resources */,
 				BBAF28CD187E451E005A3FCB /* saveImgHighted@2X.png in Resources */,
 				BBD67E421876D6E800A6CD87 /* StoreUpViewController.xib in Resources */,
+				BBAF984A188547BA002DDA7A /* tableCell.png in Resources */,
 				BBB2CF0D187BA7D500C8F210 /* redBack.png in Resources */,
 				BBC95B2018532E4600A10431 /* SampleData.plist in Resources */,
 				BBC95B3618532E5F00A10431 /* images-9.jpeg in Resources */,
@@ -1920,6 +1927,7 @@
 				BBD81BC2186C34DA000DBEEE /* 7.jpg in Resources */,
 				BBD0E1E818781B95000D1141 /* advice_nav_red@2X.png in Resources */,
 				BB951567185348C000BD82A7 /* icon-plus.png in Resources */,
+				BBAF984B188547BA002DDA7A /* tableCell@2X.png in Resources */,
 				BBA4BE7918838B4B0008643E /* ReadingViewController.xib in Resources */,
 				BBA6989D186FE9DD00DE10AB /* whiteArrow@2x.png in Resources */,
 				BBAF984618852EB3002DDA7A /* TencentOpenApi_IOS_Bundle.bundle in Resources */,

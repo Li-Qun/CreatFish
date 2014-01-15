@@ -84,7 +84,7 @@
     NewsFlag=[[app.array objectAtIndex  :target ]objectForKey:@"flag"];
     
     
-     NSLog(@"target:======%d",target);
+    NSLog(@"target:======%d",target);
     if(target<=4)
         app.targetCenter=target;
     if(target<1)
@@ -187,11 +187,13 @@
         total += [[jsonObj objectForKey:@"total"] intValue];
         NSLog(@"total : %d",total);
         NSDictionary *data = [jsonObj objectForKey:@"data"];
-        newSumCount+=arr.count;
+        newSumCount=arr.count;
         for (int i =0; i <data.count; i++) {
            
             [arr insertObject:[data objectAtIndex:i] atIndex: newSumCount];
-            [arrID insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]objectForKey:@"id"]]  atIndex:newSumCount];
+            [arrID insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]
+                                                                  objectForKey:@"id"]]  atIndex:newSumCount];
+            newSumCount++;
         }
     }
     else if (isFistLevel==1)
@@ -200,8 +202,10 @@
     }
     tabView.delegate=self;
     tabView.dataSource=self;//设置双重代理 很重要
-   [self.view addSubview:tabView];
-   [tabView reloadData];
+    [tabView setBackgroundColor:[UIColor clearColor]];
+    [tabView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [self.view addSubview:tabView];
+    [tabView reloadData];
    //[tabView release];
 }
 -(void)PessSwitch_BtnTag:(id)sender
@@ -224,7 +228,7 @@
     if(indexPath.row==0)
         return  170;
     else
-        return 80;
+        return 50;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -234,7 +238,6 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    
     return 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -263,7 +266,6 @@
             cell = (InformationCell *)[nib objectAtIndex:0];
             cell.contentView.backgroundColor = [UIColor whiteColor];
         }
-        
         NSDictionary* dict = [arr objectAtIndex:(indexPath.row-1)];
         
         cell.labelForCategory_id.text=[dict objectForKey:@"category_id"];

@@ -104,7 +104,7 @@
     tableView_Store.frame=CGRectMake(0, heightTopbar, 320, heightStore);
     tableView_Store.delegate=self;
     tableView_Store.dataSource=self;//设置双重代理 很重要
-    
+    tableView_Store.separatorStyle = NO;
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
  
     for(int i=0;i<app.saveNum;i++)
@@ -116,7 +116,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return 50;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

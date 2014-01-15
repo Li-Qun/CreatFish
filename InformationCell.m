@@ -15,6 +15,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+ 
     }
     return self;
 }
@@ -26,10 +27,12 @@
     // Configure the view for the selected state
 }
 
+    
 - (void)dealloc {
     [_labelForCategory_id release];
     [_labelForName release];
     [_imgView release];
+    [ImageViewBack release];
     [super dealloc];
 }
 @end

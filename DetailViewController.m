@@ -82,6 +82,7 @@
     [self.navigationController setNavigationBarHidden:YES];
     
     [super viewWillAppear:animated];
+    self.view.backgroundColor=[UIColor whiteColor];
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
@@ -141,7 +142,7 @@
     [shareBtn addTarget:self action:@selector(shareBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view  addSubview:shareBtn];
     
-    UIButton *saveBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    saveBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     saveBtn.frame=CGRectMake(230, littleHeinght, 26, 25);
     [saveBtn setImage:[UIImage imageNamed:@"saveImgNormal@2X"] forState:UIControlStateNormal];
     [saveBtn addTarget:self action:@selector(SaveBook:) forControlEvents:UIControlEventTouchUpInside];
@@ -284,7 +285,7 @@
     [_refreshHeaderView refreshLastUpdatedDate];
     //刷新设置end
     [self addTapOnWebView];//调用触摸图片事件
-    
+
  
 }
 //网络请求过程中，出现任何错误（断网，连接超时等）会进入此方法
@@ -332,7 +333,7 @@ didFailWithError:(NSError *)error
         newPoint.y += 20;
         showView.center = newPoint;
     }];
-    showView.backgroundColor = [UIColor blackColor];
+    showView.backgroundColor = [UIColor clearColor];
     showView.alpha = 0.9;
     showView.userInteractionEnabled = YES;
     [self.view addSubview:showView];
@@ -352,7 +353,11 @@ didFailWithError:(NSError *)error
             [obj removeFromSuperview];
         }
     }
-    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"readBack@2X.png"]];
+    imgView.frame = self.view.bounds;
+    imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.view insertSubview:imgView atIndex:0];
+    [imgView release];
 }
 //////查看web图片  end
 
@@ -542,8 +547,6 @@ didFailWithError:(NSError *)error
 ///收藏提示对话框
 -(void)SaveBook :(id)sender
 {
-    UIButton *saveBtn = (UIButton *)sender;
-    [saveBtn setImage:[UIImage imageNamed:@"saveImgHighted@2X"] forState:UIControlStateNormal];
     UIAlertView *alert =[[[UIAlertView alloc] initWithTitle:@"hello"
                                                    message:@"收藏当前阅读内容"
                                                   delegate:self
@@ -557,13 +560,14 @@ didFailWithError:(NSError *)error
 
     if(buttonIndex==0)//确定
     {
+    [saveBtn setImage:[UIImage imageNamed:@"saveImgHighted@2X"] forState:UIControlStateNormal];
+
       [[Singleton sharedInstance].single_Data insertObject:detailTotal atIndex:app.saveNum++] ;
     }
     else if(buttonIndex==1)//取消
     {
-        
+        [saveBtn setImage:[UIImage imageNamed:@"saveImgNormal@2X"] forState:UIControlStateNormal];
     }
-    
 }
 #pragma mark -响应对UIWebView 文本操作start
 - (void)pressme:(id)sender

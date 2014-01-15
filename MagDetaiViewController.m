@@ -56,6 +56,8 @@
          [arr_Mag insertObject:[data objectAtIndex:i] atIndex:newCount_Mag];
        // [arrID_Mag insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]objectForKey:@"id"]]  atIndex:newCount_Mag];
     }
+    [tableView_Mag setBackgroundColor:[UIColor clearColor]];
+    [tableView_Mag setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:tableView_Mag];
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -82,6 +84,7 @@
 - (void)viewDidLoad
 {
     tableView_Mag=[[[UITableView alloc]init]retain];
+    tableView_Mag.separatorStyle = NO;
     arr_Mag=[[[NSMutableArray alloc]init]retain];
     ContentRead *contentRead1 =[[[ContentRead alloc]init]autorelease];
     contentRead1.delegate=self;
@@ -99,7 +102,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return 50;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
