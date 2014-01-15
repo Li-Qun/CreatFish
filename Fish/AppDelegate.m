@@ -223,22 +223,15 @@
                                appSecret:@"dd5a1fd45ed30443a8d6a805771e15dd"
                              redirectUri:@"http://www.huiztech.com"];   //回调URL
     
-//    //添加腾讯微博应用
-//      [ShareSDK connectTencentWeiboWithAppKey:@"801469963"
-//                                  appSecret:@"8b79af676cbe690225523a29ab5b37bb"
-//                                redirectUri:@"http://www.huiztech.com"
-//                                   wbApiCls:[WeiboApi class]];
-    
     //添加腾讯微博应用
-    [ShareSDK connectTencentWeiboWithAppKey:@"801307650"
-                                  appSecret:@"ae36f4ee3946e1cbb98d6965b0b2ff5c"
-                                redirectUri:@"http://www.sharesdk.cn"
+      [ShareSDK connectTencentWeiboWithAppKey:@"801470547"
+                                  appSecret:@"a381d8a35096c2212c68bb4e51936eb6"
+                                redirectUri:@"http://www.huiztech.com"
                                    wbApiCls:[WeiboApi class]];
     //添加微信应用
     [ShareSDK importWeChatClass:[WXApi class]];
     [ShareSDK connectWeChatWithAppId:@"wx3a4f2774b2a663a9" wechatCls:[WXApi class]]; //此参数为申请的微信AppID
-
-    
+            
 }
 //先生成 再替换
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

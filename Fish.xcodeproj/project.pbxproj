@@ -96,6 +96,9 @@
 		BBA352AE1879568800A8239C /* advice_back.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA352AC1879568800A8239C /* advice_back.png */; };
 		BBA352AF1879568800A8239C /* advice_back@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA352AD1879568800A8239C /* advice_back@2X.png */; };
 		BBA3D312185ADAC4009CDC9A /* FishCore.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA3D311185ADAC4009CDC9A /* FishCore.m */; };
+		BBA43765188647C9004D1576 /* QZoneConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA43764188647C9004D1576 /* QZoneConnection.framework */; };
+		BBA43767188647D2004D1576 /* RenRenConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA43766188647D2004D1576 /* RenRenConnection.framework */; };
+		BBA4376918864952004D1576 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA4376818864952004D1576 /* libsqlite3.dylib */; };
 		BBA478811857215E00E64289 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA4787C1857215E00E64289 /* MBProgressHUD.m */; };
 		BBA478821857215E00E64289 /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA4787E1857215E00E64289 /* Util.m */; };
 		BBA478831857215E00E64289 /* CustomURLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA478801857215E00E64289 /* CustomURLCache.m */; };
@@ -461,6 +464,9 @@
 		BBA352AD1879568800A8239C /* advice_back@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "advice_back@2X.png"; sourceTree = "<group>"; };
 		BBA3D310185ADAC4009CDC9A /* FishCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FishCore.h; sourceTree = SOURCE_ROOT; };
 		BBA3D311185ADAC4009CDC9A /* FishCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FishCore.m; sourceTree = SOURCE_ROOT; };
+		BBA43764188647C9004D1576 /* QZoneConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QZoneConnection.framework; sourceTree = "<group>"; };
+		BBA43766188647D2004D1576 /* RenRenConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RenRenConnection.framework; sourceTree = "<group>"; };
+		BBA4376818864952004D1576 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		BBA4787B1857215D00E64289 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		BBA4787C1857215E00E64289 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		BBA4787D1857215E00E64289 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
@@ -744,6 +750,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBA4376918864952004D1576 /* libsqlite3.dylib in Frameworks */,
 				BBA4BEA21884032B0008643E /* CoreTelephony.framework in Frameworks */,
 				BBA4BEA0188402EE0008643E /* libz.1.2.5.dylib in Frameworks */,
 				BBA4BE9C188401A00008643E /* libicucore.dylib in Frameworks */,
@@ -757,11 +764,13 @@
 				BBA11CAD185ECA2B000D39F8 /* MobileCoreServices.framework in Frameworks */,
 				BBAF984018852EB3002DDA7A /* Pinterest.framework in Frameworks */,
 				BBA4BE83188400090008643E /* TencentWeiboConnection.framework in Frameworks */,
+				BBA43767188647D2004D1576 /* RenRenConnection.framework in Frameworks */,
 				BBA4BE93188400A60008643E /* ShareSDK.framework in Frameworks */,
 				BBA4BE911884007C0008643E /* libTCWeiboSDK.a in Frameworks */,
 				BBA11CAB185ECA1D000D39F8 /* CFNetwork.framework in Frameworks */,
 				BBA478A3185721E600E64289 /* ImageIO.framework in Frameworks */,
 				BBA4BE98188400BE0008643E /* ShareSDKiPhoneDefaultShareViewUI.framework in Frameworks */,
+				BBA43765188647C9004D1576 /* QZoneConnection.framework in Frameworks */,
 				BBA478A1185721D900E64289 /* MapKit.framework in Frameworks */,
 				BBDBE93C184DCF39009FA292 /* QuartzCore.framework in Frameworks */,
 				BBAF982018852DF0002DDA7A /* WeChatConnection.framework in Frameworks */,
@@ -818,6 +827,7 @@
 		9006F332184D59250091B69F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BBA4376818864952004D1576 /* libsqlite3.dylib */,
 				BBA4BEA11884032B0008643E /* CoreTelephony.framework */,
 				BBA4BE9F188402EE0008643E /* libz.1.2.5.dylib */,
 				BBA4BE9D188401EA0008643E /* XCTest.framework */,
@@ -1161,6 +1171,8 @@
 		BBA4BE7F1883FFE70008643E /* Connection */ = {
 			isa = PBXGroup;
 			children = (
+				BBA43766188647D2004D1576 /* RenRenConnection.framework */,
+				BBA43764188647C9004D1576 /* QZoneConnection.framework */,
 				BBAF981F18852DF0002DDA7A /* WeChatConnection.framework */,
 				BBA4BE80188400090008643E /* SinaWeiboConnection.framework */,
 				BBA4BE81188400090008643E /* TencentWeiboConnection.framework */,
