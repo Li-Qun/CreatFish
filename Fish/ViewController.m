@@ -18,6 +18,9 @@
 
 #import "AppDelegate.h"
 #import "StoreUpViewController.h"
+
+#import <Foundation/Foundation.h>
+#import <sqlite3.h>
 @interface ViewController ()
 
 @end
@@ -66,81 +69,7 @@
 }
 -(void)reBack:(NSString *)jsonString
 {
-    //NSLog(@"%@",jsonString);
-//    /******************toolBar************************/
-//    UIToolbar *toolBar=[[UIToolbar alloc]initWithFrame:CGRectMake(0, 460-44, 320, 44) ];
-//    
-//    UIBarButtonItem *New=[[UIBarButtonItem alloc]initWithTitle:@"资讯" style:UIBarButtonItemStyleBordered target:self action:@selector(pressNew)];
-//    
-//    UIBarButtonItem * Life = [[UIBarButtonItem  alloc]initWithTitle:@"生活" style: UIBarButtonItemStyleBordered target:self action:@selector(pressLife)];
-//    UIBarButtonItem *Style=[[UIBarButtonItem alloc]initWithTitle:@"潮流" style:UIBarButtonItemStyleBordered target:self action:@selector(pressStyle)];
-//    UIBarButtonItem *Paper=[[UIBarButtonItem alloc]initWithTitle:@"周刊" style:UIBarButtonItemStyleBordered target:self action:@selector(pressPaper)];
-//    UIBarButtonItem *Save=[[UIBarButtonItem alloc]initWithTitle:@"收藏" style:UIBarButtonItemStyleBordered target:self action:@selector(pressSave)];
-//    
-//    UIBarButtonItem * flexibleItem =[[UIBarButtonItem  alloc]initWithBarButtonSystemItem:                                        UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-//    
-//    self.view.backgroundColor=[UIColor whiteColor];
-//    NSArray *itemsArry=[NSArray arrayWithObjects:New,flexibleItem, Life,flexibleItem,Style ,flexibleItem,Paper,flexibleItem,Save,nil];
-//    [self setToolbarItems:itemsArry animated:YES ];
-//    [toolBar setItems:itemsArry];
-//    toolBar.barStyle =[UIColor blackColor];
-//    [self.navigationController  setToolbarHidden:NO ];//animated:YES
-//    //   [self.view addSubview:toolBar];
-//    
-//    [New release];
-//    [flexibleItem release];
-//    [Life release];
-//    [Style release];
-//    [Paper release];
-//    [Save release];
-//    [toolBar release];
-//    
-//    
-//    /******************toolBar************************/
 
-//    UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 524, 320, 44)]autorelease];
-//    imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
-//    [self.view addSubview:imgToolView];
-//    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-//    NSDictionary *jsonObj =[parser objectWithString: jsonString];
-//   // NSLog(@"%@",[jsonObj  objectAtIndex:0] );
-// //  [dict objectForKey:@"category_id"];
-//    
-//    for(int i=0;i<5;i++)
-//    {
-//        NSString *name=[[[NSString alloc]init]autorelease];
-//        UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
-//        if(i<4)
-//        {
-//            name= [NSString stringWithFormat: [[jsonObj  objectAtIndex:i] objectForKey:@"name"]];
-//            button.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
-//        }
-//        else {
-//            name= [NSString stringWithFormat:@"收藏"];
-//            button.tag=100;
-//        }
-//      
-//       
-//        button.frame=CGRectMake(10+i*60, 5+524, 30, 40);
-//        button.showsTouchWhenHighlighted = YES;
-//        [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
-//        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
-//        label.text=name;
-//        label.font  = [UIFont fontWithName:@"Arial" size:15.0];
-//        UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
-//        labelNum.text=[NSString stringWithFormat: [[jsonObj  objectAtIndex:i] objectForKey:@"id"]];
-//        labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
-//        labelNum.textColor=[UIColor whiteColor];
-//        UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
-//        imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
-//        [imgViewRed addSubview:labelNum];
-//        [button addSubview:imgViewRed];
-//        [button addSubview:label];
-//      //  [imgToolView addSubview:button];
-//        [self.view addSubview:button];
-//        [label release];
-//    }
-    
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
@@ -223,48 +152,119 @@
         imgToolView.tag=22;
         UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)]autorelease];
         
-        for(int i=0;i<5;i++)
+        
+        //创建数据库start
+        // 首先是数据库要保存的路径
+        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths=[array objectAtIndex:0];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB"];
+        //  然后建立数据库，新建数据库这个苹果做的非常好，非常方便
+        sqlite3 *database;
+        //新建数据库，存在则打开，不存在则创建
+      if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
         {
-            NSString *name=[[[NSString alloc]init]autorelease];
-            UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
-            if(i<4)
-            {
-                name= [NSString stringWithFormat: [[jsonObj  objectAtIndex:i] objectForKey:@"name"]];
-                button.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        // 对数据库建表操作：如果在些程序的过程中，发现表的字段要更改，一定要删除之前的表，如何做，就是删除程序或者换个表名，主键是自增的
+           char *errorMsg;
+        NSString *sql=@"CREATE TABLE IF NOT EXISTS buttonList (ID INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,num TEXT)";
+        //创建表
+        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+        {
+            NSLog(@"create success");
+        }else{
+            NSLog(@"create error:%s",errorMsg);
+            sqlite3_free(errorMsg);
+        }
+         //插入数据
+        for(int i=0;i<4;i++)
+        {
+            NSString *insertSQLStr = [NSString stringWithFormat:
+                                      @"INSERT INTO 'buttonList' ('name','num') VALUES ('%@', '%@')", [[jsonObj  objectAtIndex:i] objectForKey:@"name"],[[jsonObj  objectAtIndex:i] objectForKey:@"id"]];
+            const char *insertSQL=[insertSQLStr UTF8String];
+           
+            if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
+                NSLog(@"insert operation is ok.");
             }
-            else {
-                name= [NSString stringWithFormat:@"收藏"];
-                button.tag=100;
+            else{
+                NSLog(@"insert error:%s",errorMsg);
+                sqlite3_free(errorMsg);
             }
-            button.frame=CGRectMake(10+i*60, 0, 30, 40);
-            button.showsTouchWhenHighlighted = YES;
-            [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
-            UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
-            label.text=name;
-            label.font  = [UIFont fontWithName:@"Arial" size:15.0];
-            label.backgroundColor=[UIColor clearColor];
-            UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
-            labelNum.text=[NSString stringWithFormat: [[jsonObj  objectAtIndex:i] objectForKey:@"id"]];
-            labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
-            labelNum.textColor=[UIColor whiteColor];
-            labelNum.backgroundColor=[UIColor clearColor];
-            UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
-            if([labelNum.text isEqual:@"0"])
-            imgViewRed.image=[UIImage imageNamed:@"whiteBack.png"];
-            else
-            imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
-            [imgViewRed addSubview:labelNum];
-            [button addSubview:imgViewRed];
-            [button addSubview:label];
-            button.backgroundColor=[UIColor clearColor];
-            [scrollView addSubview:button];
-            [label release];
+        }
+        
+        
+        // 查找数据
+        sql = @"select * from buttonList";
+        sqlite3_stmt *stmt;
+        //查找数据
+        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+        {
+            while (sqlite3_step(stmt)==SQLITE_ROW) {
+                
+                int i=sqlite3_column_int(stmt, 0)-1;
+                const unsigned char *theName= sqlite3_column_text(stmt, 2);
+                
+                NSString *name_Database= [NSString stringWithUTF8String: theName];
+                const unsigned char *num= sqlite3_column_text(stmt, 1);
+                
+                NSString *Num_Database= [NSString stringWithUTF8String: num];
+                NSString *name=[[[NSString alloc]init]autorelease];
+                
+                
+                
+                UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
+                if(i<4)
+                {
+                    name= [NSString stringWithFormat: name_Database];
+                    button.tag=[Num_Database integerValue];
+                }
+                else {
+                    name= [NSString stringWithFormat:@"收藏"];
+                    button.tag=100;
+                }
+                button.frame=CGRectMake(10+i*60, 0, 30, 40);
+                button.showsTouchWhenHighlighted = YES;
+                [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
+                UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
+                label.text=name;
+                label.font  = [UIFont fontWithName:@"Arial" size:15.0];
+                label.backgroundColor=[UIColor clearColor];
+                UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
+                labelNum.text=[NSString stringWithFormat: Num_Database];
+                labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
+                labelNum.textColor=[UIColor whiteColor];
+                labelNum.backgroundColor=[UIColor clearColor];
+                UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
+                if([labelNum.text isEqual:@"0"])
+                    imgViewRed.image=[UIImage imageNamed:@"whiteBack.png"];
+                else
+                    imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
+                [imgViewRed addSubview:labelNum];
+                [button addSubview:imgViewRed];
+                [button addSubview:label];
+                button.backgroundColor=[UIColor clearColor];
+                [scrollView addSubview:button];
+                [label release];
+
+                
+            }
         }
         scrollView.contentSize = CGSizeMake(640, 44);
         [scrollView setShowsHorizontalScrollIndicator:NO];//隐藏横向滚动条
         [imgToolView addSubview:scrollView];
         imgToolView . userInteractionEnabled = YES;
         [self.view addSubview:imgToolView];
+
+        sqlite3_finalize(stmt);
+        
+        //  最后，关闭数据库：
+        sqlite3_close(database);
+        
+        //创建数据库end
+
     }
 }
 -(void)theTopBar
@@ -294,8 +294,17 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
-     [self.navigationController setNavigationBarHidden:YES ];
-    self.navigationController.navigationBarHidden=YES;
+//    [self.navigationController setNavigationBarHidden:YES ];
+//    self.navigationController.navigationBarHidden=YES;
+    
+    
+    
+    
+    
+    
+    
+    
+    
     [self _init];
 }
 #pragma mark-- UIScrollViewDelegate
@@ -342,31 +351,6 @@
     }
     NSLog(@"touch index %d",touchIndex);
 }
-//- (void) handleImageTap:(UITapGestureRecognizer *) gestureRecognizer{
-//	CGFloat rowHeight = 70;
-//    CGFloat columeWith = 100;
-//    CGFloat gap = 5;
-//    
-//    CGPoint loc = [gestureRecognizer locationInView:self.klpScrollView2];
-//    NSInteger touchIndex = floor(loc.x / (columeWith + gap)) + 3 * floor(loc.y / (rowHeight + gap)) ;
-//    if (touchIndex > 11) {
-//        return;
-//    }
-//    index = touchIndex;
-//    CGRect frame = self.klpScrollView1.frame;
-//    frame.origin.x = frame.size.width * touchIndex;
-//    frame.origin.y = 0;
-//    [self.klpScrollView1 scrollRectToVisible:frame animated:NO];
-//    
-//    klp.frame = ((UIImageView*)[app.firstPageImage objectAtIndex:index]).frame;
-//    [klp setAlpha:0];
-//    [UIView animateWithDuration:0.2f animations:^(void){
-//        [klp setAlpha:.85f];
-//    }];
-// 
-//    NSLog(@"small image touch index %d",touchIndex);
-//}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

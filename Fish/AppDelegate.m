@@ -16,6 +16,9 @@
 #import "WeiboApi.h"
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import "WXApi.h"
+#import <TencentOpenAPI/QQApiInterface.h>
+ 
+#import <TencentOpenAPI/TencentOAuth.h>
 @implementation AppDelegate
 @synthesize viewDeckController;
 
@@ -227,11 +230,20 @@
       [ShareSDK connectTencentWeiboWithAppKey:@"801470547"
                                   appSecret:@"a381d8a35096c2212c68bb4e51936eb6"
                                 redirectUri:@"http://www.huiztech.com"
-                                   wbApiCls:[WeiboApi class]];
+                            wbApiCls:[WeiboApi class]];
+    //添加QQ
+//[ShareSDK connectQZoneWithAppKey:@"101007721"
+//                           appSecret:@"50d186e81867f8f88fac3cd9269352bc"
+//                   qqApiInterfaceCls:nil//[QQApiInterface class]
+//                     tencentOAuthCls:nil];//[TencentOAuth class]];
+
     //添加微信应用
     [ShareSDK importWeChatClass:[WXApi class]];
     [ShareSDK connectWeChatWithAppId:@"wx3a4f2774b2a663a9" wechatCls:[WXApi class]]; //此参数为申请的微信AppID
-            
+//    NSString *appId = @"wx3a4f2774b2a663a9";
+//    [ShareSDK connectWeChatSessionWithAppId: appId wechatCls:[WXApi class]];
+//    [ShareSDK connectWeChatTimelineWithAppId:appId wechatCls:[WXApi class]];
+    
 }
 //先生成 再替换
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -294,6 +306,22 @@
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)application  handleOpenURL:(NSURL *)url
+{
+    //TODO: 3. 实现handleOpenUrl相关的两个方法，用来处理微信的回调信息
+    return [ShareSDK handleOpenURL:url wxDelegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    return [ShareSDK handleOpenURL:url
+                 sourceApplication:sourceApplication
+                        annotation:annotation
+                        wxDelegate:self];
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
