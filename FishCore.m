@@ -54,6 +54,7 @@
     [request setFailedBlock :^{
         // 请求响应失败，返回错误信息
         NSError *error = [request error ];
+        [delegate reBack:@"1"];
         NSLog ( @"error:%@" ,[error userInfo ]);
     }];
     [request startAsynchronous ];
@@ -168,6 +169,7 @@
         
     }];
     [request setFailedBlock :^{
+        [delegate reBack:@"0"];
         NSError *error = [request error ];
         NSLog ( @"error:%@" ,[error userInfo ]);
     }];
