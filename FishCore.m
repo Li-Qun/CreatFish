@@ -49,12 +49,12 @@
         // 请求响应结束，返回 responseString
         NSString *responseString = [request responseString ]; // 对于 2 进制数据，使用 NSData 返回
         //[delegate reBack:responseString];
-        [delegate getJsonString:responseString isPri:@"2"];
+        [delegate getJsonString:responseString isPri:@"6"];
     }];
     [request setFailedBlock :^{
         // 请求响应失败，返回错误信息
         NSError *error = [request error ];
-        [delegate reBack:@"1"];
+        [delegate reBack:@"6"];
         NSLog ( @"error:%@" ,[error userInfo ]);
     }];
     [request startAsynchronous ];
@@ -80,6 +80,7 @@
     }];
     [request setFailedBlock :^{
         // 请求响应失败，返回错误信息
+        [delegate reBack:flag];
         NSError *error = [request error ];
         NSLog ( @"error:%@" ,[error userInfo ]);
     }];
@@ -165,11 +166,11 @@
     [request setCompletionBlock :^{
         
         NSString * jsonString  =  [request responseString];
-        [delegate getJsonString:jsonString isPri:@"0"];
+        [delegate getJsonString:jsonString isPri:@"5"];
         
     }];
     [request setFailedBlock :^{
-        [delegate reBack:@"0"];
+        [delegate reBack:@"5"];
         NSError *error = [request error ];
         NSLog ( @"error:%@" ,[error userInfo ]);
     }];

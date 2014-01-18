@@ -13,5 +13,6 @@
     AppDelegate *app;
     ContentRead *contentRead;
     BOOL isSeven;
+    NSMutableArray *arrName;
 }
 @end

@@ -15,6 +15,7 @@
 
 #import "NewsController.h"
 #import "LifeViewController.h"
+#import "TopicViewController.h"
 
 #import "AppDelegate.h"
 #import "StoreUpViewController.h"
@@ -51,7 +52,7 @@
         Kind7=YES;
     }
     else Kind7=NO;
-
+    [self theTopBar];
 }
 -(void)BuildFirstPage
 {
@@ -60,6 +61,7 @@
 }
 -(void)_init
 {
+    arrName=[[[NSMutableArray alloc]init]retain];
     contentRead =[[ContentRead alloc]init];
     contentRead.delegate=self;
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -69,6 +71,7 @@
 }
 -(void)reBack:(NSString *)jsonString
 {
+     
     float heightTooBar;
     float buttonHeight;
     
@@ -94,13 +97,13 @@
     imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
     imgToolView.tag=22;
     
-    if([jsonString isEqualToString:@"1"])
+    if([jsonString isEqualToString:@"5"])
     {
         //创建数据库start
         // 首先是数据库要保存的路径
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar"];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar1"];
         //  然后建立数据库，新建数据库这个苹果做的非常好，非常方便
         sqlite3 *database;
         //新建数据库，存在则打开，不存在则创建
@@ -120,10 +123,10 @@
                 
                 int i=sqlite3_column_int(stmt, 0)-1;
                 if(i==5)break;
-                const unsigned char *theName= sqlite3_column_text(stmt, 2);
+                const unsigned char *theName= sqlite3_column_text(stmt, 1);
                 
                 NSString *name_Database= [NSString stringWithUTF8String: theName];
-                const unsigned char *num= sqlite3_column_text(stmt, 1);
+                const unsigned char *num= sqlite3_column_text(stmt, 2);
                 
                 NSString *Num_Database= [NSString stringWithUTF8String: num];
                 NSString *name=[[[NSString alloc]init]autorelease];
@@ -131,15 +134,16 @@
                 
                 
                 UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
-                if(i<4)
+                if(i<5)
                 {
                     name= [NSString stringWithFormat: name_Database];
+                
                     button.tag=[Num_Database integerValue];
                 }
-                else {
-                    name= [NSString stringWithFormat:@"收藏"];
-                    button.tag=100;
-                }
+//                else {
+//                    name= [NSString stringWithFormat:@"收藏"];
+//                    button.tag=100;
+//                }
                 button.frame=CGRectMake(10+i*60, 0, 30, 40);
                 button.showsTouchWhenHighlighted = YES;
                 [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
@@ -206,6 +210,7 @@
                 const unsigned char *num= sqlite3_column_text(stmt, 1);
                 
                 NSString *Num= [NSString stringWithUTF8String: num];
+                 [arrName insertObject:name atIndex:i];
                 
                 [firstPageImage insertObject:name atIndex:i];
             }
@@ -225,6 +230,7 @@
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
+    
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString: jsonString];
     float heightTooBar;
@@ -249,7 +255,7 @@
     }
     
     
-    if([flag integerValue]==0)
+    if([flag integerValue]==5)
     {
         NSDictionary *data = [jsonObj objectForKey:@"home_image"];
         NSMutableArray *firstPageImage= [[[NSMutableArray alloc] initWithCapacity:data.count]autorelease];
@@ -305,7 +311,7 @@
                 const unsigned char *num= sqlite3_column_text(stmt, 1);
                 
                 NSString *Num= [NSString stringWithUTF8String: num];
-       
+           
               //  NSLog(@"num:%@,password:%@",Num,name);
                 [firstPageImage  insertObject:name atIndex:i];
             }
@@ -334,7 +340,7 @@
         // 首先是数据库要保存的路径
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar"];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar1"];
         //  然后建立数据库，新建数据库这个苹果做的非常好，非常方便
         sqlite3 *database;
         //新建数据库，存在则打开，不存在则创建
@@ -357,7 +363,7 @@
             sqlite3_free(errorMsg);
         }
         //插入数据
-        for(int i=0;i<4;i++)
+        for(int i=0;i<5;i++)
         {
             NSString *insertSQLStr = [NSString stringWithFormat:
                                       @"INSERT INTO 'buttonList' ('name','num') VALUES ('%@', '%@')", [[jsonObj  objectAtIndex:i] objectForKey:@"name"],[[jsonObj  objectAtIndex:i] objectForKey:@"id"]];
@@ -393,15 +399,16 @@
                 
                 
                 UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
-                if(i<4)
+                if(i<5)
                 {
                     name= [NSString stringWithFormat: name_Database];
                     button.tag=[Num_Database integerValue];
+                    [arrName insertObject:name atIndex:i];
                 }
-                else if(i==4){
-                    name= [NSString stringWithFormat:@"收藏"];
-                    button.tag=100;
-                }
+//                else if(i==4){
+//                    name= [NSString stringWithFormat:@"收藏"];
+//                    button.tag=100;
+//                }
                 button.frame=CGRectMake(10+i*60, 0, 30, 40);
                 button.showsTouchWhenHighlighted = YES;
                 [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
@@ -513,7 +520,6 @@
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
     scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-    [self theTopBar];
     [self _init];
 }
 #pragma mark-- UIScrollViewDelegate
@@ -585,17 +591,26 @@
 //            [subviews removeFromSuperview];
 //        }
 //    }//必须从self.view中移除，不能从gpsClickView中移除
-    if(btn.tag<5&&btn.tag!=4)
+    if(btn.tag<5&&btn.tag!=2&&btn.tag!=3)
     {
         NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
         newVC.hidesBottomBarWhenPushed = YES;
         newVC.target=btn.tag-1;
+        newVC.NewsName=[arrName objectAtIndex:btn.tag-1];
         [self.navigationController pushViewController :newVC animated:YES];
     }
-    else if(btn.tag==4)
+    else if(btn.tag==3)
     {
         LifeViewController *newVC = [[[LifeViewController alloc] initWithNibName:@"LifeViewController" bundle:nil]autorelease];
-        newVC.target=3;
+        newVC.target=2;
+        //self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController :newVC animated:YES];
+
+    }
+    else if(btn.tag==2)
+    {
+        TopicViewController *newVC = [[[ TopicViewController alloc] initWithNibName:@"TopicViewController" bundle:nil]autorelease];
+      //  newVC.target=2;
         //self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController :newVC animated:YES];
 

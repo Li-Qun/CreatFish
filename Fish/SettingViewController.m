@@ -14,7 +14,7 @@
 @end
 
 @implementation SettingViewController
-@synthesize scrollView=scrollView;
+@synthesize ScrollView=ScrollView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -25,9 +25,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
-    contentRead.delegate=self;
-    [contentRead Category];
+    
 }
 
 -(void)Press_set
@@ -42,10 +40,7 @@
 {
     
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
-{
-//页面重置作用
-}
+
 -(void)Back
 {
         [self.viewDeckController toggleLeftViewAnimated:YES];
@@ -55,13 +50,12 @@
     
     [super viewDidLoad];
     
-    
-    
-    [self.navigationController setToolbarHidden:YES];
+ 
+    [self.navigationController setNavigationBarHidden:YES];
     self.view.backgroundColor=[UIColor whiteColor];
-    scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320,568)];
-    scrollView.backgroundColor=[UIColor blackColor];
-    scrollView.delegate=self;
+    ScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320,568)];
+    ScrollView.backgroundColor=[UIColor blackColor];
+    ScrollView.delegate=self;
     myView=[[UIView alloc]init];
     myView.backgroundColor=[UIColor blackColor];
 
@@ -230,9 +224,9 @@
     
     myView.frame=CGRectMake(0, 0, 320,1000);
     myView.backgroundColor=[UIColor blackColor];
-    scrollView.contentSize = myView.frame.size;
-    [scrollView addSubview:myView];
-    [self.view addSubview:scrollView];
+    ScrollView.contentSize = myView.frame.size;
+    [ScrollView addSubview:myView];
+    [self.view addSubview:ScrollView];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -240,7 +234,7 @@
 }
 
 - (void)dealloc {
-    [scrollView release];
+    [ScrollView release];
     [super dealloc];
 }
 @end

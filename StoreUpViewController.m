@@ -25,8 +25,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     
- 
-    contentRead=[[[ContentRead alloc]init]autorelease];
+    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    ContentRead *contentRead=[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
     [contentRead Category];
 }

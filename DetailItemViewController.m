@@ -29,7 +29,7 @@
 
 - (void)viewDidLoad
 {
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     [super viewDidLoad];
      ////点击图片全屏
     UIButton *photo=[UIButton buttonWithType:UIButtonTypeCustom];

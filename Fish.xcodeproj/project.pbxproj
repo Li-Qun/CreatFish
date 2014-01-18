@@ -307,6 +307,8 @@
 		BBD81BC2186C34DA000DBEEE /* 7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BBD81BA4186C34DA000DBEEE /* 7.jpg */; };
 		BBD81BC3186C34DA000DBEEE /* 8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BBD81BA5186C34DA000DBEEE /* 8.jpg */; };
 		BBD81BC4186C34DA000DBEEE /* 9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BBD81BA6186C34DA000DBEEE /* 9.jpg */; };
+		BBDA38D9188A6FAD006A90F9 /* TopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDA38D7188A6FAD006A90F9 /* TopicViewController.m */; };
+		BBDA38DA188A6FAD006A90F9 /* TopicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBDA38D8188A6FAD006A90F9 /* TopicViewController.xib */; };
 		BBDBE93C184DCF39009FA292 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDBE93B184DCF39009FA292 /* QuartzCore.framework */; };
 		BBDBE942184DCF71009FA292 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDBE93F184DCF71009FA292 /* IIViewDeckController.m */; };
 		BBDBE943184DCF71009FA292 /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDBE941184DCF71009FA292 /* IIWrapController.m */; };
@@ -730,6 +732,9 @@
 		BBD81BA4186C34DA000DBEEE /* 7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 7.jpg; sourceTree = "<group>"; };
 		BBD81BA5186C34DA000DBEEE /* 8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8.jpg; sourceTree = "<group>"; };
 		BBD81BA6186C34DA000DBEEE /* 9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9.jpg; sourceTree = "<group>"; };
+		BBDA38D6188A6FAD006A90F9 /* TopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicViewController.h; sourceTree = "<group>"; };
+		BBDA38D7188A6FAD006A90F9 /* TopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicViewController.m; sourceTree = "<group>"; };
+		BBDA38D8188A6FAD006A90F9 /* TopicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicViewController.xib; sourceTree = "<group>"; };
 		BBDBE93B184DCF39009FA292 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BBDBE93E184DCF71009FA292 /* IIViewDeckController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIViewDeckController.h; sourceTree = "<group>"; };
 		BBDBE93F184DCF71009FA292 /* IIViewDeckController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIViewDeckController.m; sourceTree = "<group>"; };
@@ -807,6 +812,7 @@
 				BBD7A05A186D2C2F000A4675 /* My Part */,
 				BB78463A1859A71000260712 /* Resourse */,
 				9006F339184D59250091B69F /* Fish */,
+				BBDA38D5188A6F69006A90F9 /* TopicVC */,
 				BB9D90AC186833B1000CB89C /* FormalVC */,
 				BBC95B3718532EC600A10431 /* VC */,
 				9006F35D184D59260091B69F /* FishTests */,
@@ -1670,6 +1676,17 @@
 			path = photo;
 			sourceTree = "<group>";
 		};
+		BBDA38D5188A6F69006A90F9 /* TopicVC */ = {
+			isa = PBXGroup;
+			children = (
+				BBDA38D6188A6FAD006A90F9 /* TopicViewController.h */,
+				BBDA38D7188A6FAD006A90F9 /* TopicViewController.m */,
+				BBDA38D8188A6FAD006A90F9 /* TopicViewController.xib */,
+			);
+			name = TopicVC;
+			path = Fish;
+			sourceTree = "<group>";
+		};
 		BBDBE93D184DCF52009FA292 /* Slide */ = {
 			isa = PBXGroup;
 			children = (
@@ -1890,6 +1907,7 @@
 				BBAF28EB187E99CF005A3FCB /* welcome@2X.png in Resources */,
 				BBA5B7D6187A8EB600D55899 /* theLineSet@2X.png in Resources */,
 				BBA1CA0F187FF6F60028E5BC /* selectedNow.png in Resources */,
+				BBDA38DA188A6FAD006A90F9 /* TopicViewController.xib in Resources */,
 				BBD0E1DD18781444000D1141 /* set_Nav.png in Resources */,
 				BBD81BBE186C34DA000DBEEE /* 3.jpg in Resources */,
 				BB951563185348C000BD82A7 /* bg-menuitem-highlighted.png in Resources */,
@@ -2013,6 +2031,7 @@
 				BBD1340A1869BF1D008657B6 /* NIDropDown.m in Sources */,
 				BBD81B87186C2EFF000DBEEE /* iCarousel.m in Sources */,
 				BBDBE942184DCF71009FA292 /* IIViewDeckController.m in Sources */,
+				BBDA38D9188A6FAD006A90F9 /* TopicViewController.m in Sources */,
 				BBA11CF7185EDAAF000D39F8 /* SBJsonUTF8Stream.m in Sources */,
 				BBA4789A185721A000E64289 /* SDWebImageDecoder.m in Sources */,
 				BBD52A8A185D470500575349 /* UIView+GMGridViewAdditions.m in Sources */,

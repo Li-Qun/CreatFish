@@ -47,6 +47,7 @@
 @protocol FishDelegate
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag;
 -(void)reBack:(NSString *)jsonString;
+
 @end
 @interface ContentRead:NSObject<ASIHTTPRequestDelegate,FishDelegate>
 {

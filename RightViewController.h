@@ -11,5 +11,7 @@
 @interface RightViewController : UIViewController<FishDelegate>
 {
     AppDelegate *app;
+    int target_centerView;
 }
+@property(nonatomic)int target_centerView;
 @end

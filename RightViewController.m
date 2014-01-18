@@ -14,7 +14,7 @@
 @end
 
 @implementation RightViewController
-
+@synthesize target_centerView=target_centerView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -29,6 +29,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
     [contentRead Category];
@@ -44,51 +45,78 @@
     scrollView.delegate=self;
     UIView *myView=[[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
     myView.backgroundColor=[UIColor clearColor];
-    UIImageView *imageViewTitle=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 45)];
-    imageViewTitle.image=[UIImage imageNamed:@"LeftTitle@2X"];
-    [myView addSubview:imageViewTitle];
-    UILabel *mainTitle=[[[UILabel alloc]initWithFrame:CGRectMake(145, 0, 320, 45)]autorelease];
-    mainTitle.text=@"最新";
-    mainTitle.font = [UIFont boldSystemFontOfSize:17];
-    mainTitle.textColor=[UIColor whiteColor];
-    [imageViewTitle addSubview:mainTitle];
-    UIImageView *pictureName=[[[UIImageView alloc]initWithFrame:CGRectMake(90, 45/3,20 , 20)] autorelease];
-    pictureName.image=[UIImage imageNamed:@"Set.png"];
-    [imageViewTitle addSubview:pictureName];
-    mainTitle.backgroundColor=[UIColor clearColor];
+//    UIImageView *imageViewTitle=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 45)];
+//    imageViewTitle.image=[UIImage imageNamed:@"LeftTitle@2X"];
+//    [myView addSubview:imageViewTitle];
+//    UILabel *mainTitle=[[[UILabel alloc]initWithFrame:CGRectMake(145, 0, 320, 45)]autorelease];
+//    mainTitle.text=@"最新";
+//    mainTitle.font = [UIFont boldSystemFontOfSize:17];
+//    mainTitle.textColor=[UIColor whiteColor];
+//    [imageViewTitle addSubview:mainTitle];
+//    UIImageView *pictureName=[[[UIImageView alloc]initWithFrame:CGRectMake(90, 45/3,20 , 20)] autorelease];
+//    pictureName.image=[UIImage imageNamed:@"Set.png"];
+//    [imageViewTitle addSubview:pictureName];
+//    mainTitle.backgroundColor=[UIColor clearColor];
     //三个 二级按钮
-    for(int i=0;i<3;i++)
+    
+    
+ 
+    
+    NSLog(@"==%d",app.targetCenter);
+    NSLog(@"centre:%d",target_centerView );
+    
+    target_centerView=app.targetCenter;
+    int total,start;
+    if(target_centerView==0)
+    {
+        total=3;
+        start=5;
+    }
+    else if(target_centerView==1)
+    {
+        total=2;
+        start=8;
+    }
+    else if(target_centerView==2)
+    {
+        total=3;
+        start=10;
+    }
+    else if(target_centerView==3)
+    {
+        total=3;
+        start=12;
+    }
+    else {
+        total=3;
+        start=15;
+    }
+    
+    
+    
+    for(int i=0;i<total;i++)
     {
         UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
-        OneButton.frame=CGRectMake(0, 45+i*45, 320, 44);
+        OneButton.frame=CGRectMake(0, 20+i*45, 320, 44);
         [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
         [myView addSubview:OneButton ];
         UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(145, 0, 320, 44)]autorelease];
         OneName.textColor=[UIColor whiteColor];
-        OneName.text=[NSString stringWithFormat: [[jsonObj  objectAtIndex:i+4] objectForKey:@"name"]];
+        OneName.text=[NSString stringWithFormat: [[jsonObj  objectAtIndex: start+i] objectForKey:@"name"]];
         [OneButton addSubview:OneName];
         [OneButton addTarget:self action:@selector(PessSwitchRight_Tag:) forControlEvents:UIControlEventTouchUpInside];
         UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(90, 10,25 , 25)] autorelease];
         pictureOneName.image=[UIImage imageNamed:@"News@2X.png"];
         [OneButton  addSubview:pictureOneName];
-        OneButton.tag=[[NSString stringWithFormat: [[jsonObj  objectAtIndex:i+4] objectForKey:@"id"]]integerValue];
+        OneButton.tag=[[NSString stringWithFormat: [[jsonObj  objectAtIndex:start+i] objectForKey:@"id"]]integerValue];
         OneName.backgroundColor=[UIColor clearColor];
         OneButton.backgroundColor=[UIColor clearColor];
-//        UIImageView *theRedNum=[[[UIImageView alloc]initWithFrame:CGRectMake(270, 10, 28, 22)]autorelease];
-//        theRedNum.image=[UIImage imageNamed:@"redBack.png"];
-//        [OneButton addSubview:theRedNum];
-//        UILabel *labelNum=[[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 22)]autorelease];
-//        labelNum.text=[[jsonObj  objectAtIndex:i] objectForKey:@"id"];
-//        labelNum.textColor=[UIColor whiteColor];
-//        labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
-//        [theRedNum addSubview:labelNum];
     }
     
     
     [scrollView addSubview:myView];
     scrollView.contentSize = myView.frame.size;
     [self.view addSubview:scrollView];
-
 }
 - (void)viewDidLoad
 {
@@ -111,14 +139,6 @@
         self.viewDeckController.centerController = navApiVC;
         self.view.userInteractionEnabled = YES;
     }];
-    
-
-    
-    
-    
-        
-        
-        
- }
+}
  
 @end

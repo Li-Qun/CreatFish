@@ -33,7 +33,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-     [self.navigationController setNavigationBarHidden:NO ];
+     [self.navigationController setNavigationBarHidden:YES ];
       self.view.backgroundColor = [UIColor whiteColor];
     
     [self.view addSubview:self.scrollView];

@@ -24,6 +24,7 @@ UIScrollViewDelegate >
  
     BOOL Kind7;
     BOOL height5_flag;
+    NSMutableArray *arrName;
 }
 
 @property (retain, nonatomic) IBOutlet UIScrollView *klpScrollView1;

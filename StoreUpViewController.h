@@ -8,8 +8,9 @@
 
 #import "ViewController.h"
 #import "AppDelegate.h"
-@interface StoreUpViewController : ViewController<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface StoreUpViewController : UIViewController<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
+    AppDelegate *app;
     UITableView *tableView_Store;
     NSMutableArray *arrSave_ID;
     CGFloat heightStore;

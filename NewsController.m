@@ -23,8 +23,8 @@
 #import "ReadingViewController.h"
 
 #import "IIViewDeckController.h"
+#import "RightViewController.h"
 
- 
 @interface NewsController ()
 
 @end
@@ -50,10 +50,7 @@
     }
     return self;
 }
--(NSString *)PostReturn
-{
-    return @"1";
-}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -61,7 +58,7 @@
     CGSize size = rect.size;
     CGFloat width = size.width;
     height_Momente = size.height;
-  
+    
     if(height_Momente==480)
     {
         isFive=NO;
@@ -70,31 +67,6 @@
     if (version <7.0)
         isSeven=NO;
     else isSeven=YES;
-}
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
-{
-    app.jsonString=jsonString;
-    NSLog(@"%d",app.array.count);
-    NSLog(@"name %@", [[app.array objectAtIndex  :target ]objectForKey:@"name"]);
-    NewsId=[[app.array objectAtIndex  :target ]objectForKey:@"id"];
-    NewsName=[[app.array objectAtIndex  :target ]objectForKey:@"name"];
-    NewsPid=[[app.array objectAtIndex  :target ]objectForKey:@"pid"];
-    NewsImage=[[app.array objectAtIndex  :target ]objectForKey:@"image"];
-    NewsLevel=[[app.array objectAtIndex  :target ]objectForKey:@"level"];
-    NewsFlag=[[app.array objectAtIndex  :target ]objectForKey:@"flag"];
-    
-    
-    NSLog(@"target:======%d",target);
-    if(target<=4)
-        app.targetCenter=target;
-    if(target<1)
-        app.targetCenter=1;
-    
-    NSLog(@"centre  %d",app.targetCenter);
-    NSLog(@"NewsID   :  %@",NewsId);
-    
-    
-    [self postJSON:flag];
 }
 - (void)viewDidLoad
 {
@@ -108,7 +80,7 @@
     [self.navigationController setNavigationBarHidden:YES];
     self.navigationItem.hidesBackButton = YES;
     self.navigationController.toolbarHidden = YES;
-  
+    
     self.navigationController.navigationBarHidden=YES;
     tabView=[[[UITableView alloc]init]retain];
     contentRead =[[[ContentRead alloc]init]autorelease];
@@ -118,9 +90,31 @@
     [super viewDidLoad];
     //  [arr release];
 }
--(void)postJSON:(NSString *)flag
+
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
- 
+    app.jsonString=jsonString;
+//    NSLog(@"%d",app.array.count);
+//    NSLog(@"name %@", [[app.array objectAtIndex  :target ]objectForKey:@"name"]);
+//    NewsId=[[app.array objectAtIndex  :target ]objectForKey:@"id"];
+//    NewsName=[[app.array objectAtIndex  :target ]objectForKey:@"name"];
+//    NewsPid=[[app.array objectAtIndex  :target ]objectForKey:@"pid"];
+//    NewsImage=[[app.array objectAtIndex  :target ]objectForKey:@"image"];
+//    NewsLevel=[[app.array objectAtIndex  :target ]objectForKey:@"level"];
+//    NewsFlag=[[app.array objectAtIndex  :target ]objectForKey:@"flag"];
+    
+    
+   // NSLog(@"target:======%d",target);
+  //  if(target<=4)  app.targetCenter=target;
+  //  if(target<1)app.targetCenter=1;
+    
+    app.targetCenter=target;
+    RightViewController *rVC = [[[RightViewController alloc] initWithNibName:@"RightViewController" bundle:nil]autorelease];
+    rVC.target_centerView=target;
+    NSLog(@"centre  %d",app.targetCenter);
+  //    NSLog(@"NewsID   :  %@",NewsId);
+    
+    
     float heightTopbar;
     float littleHeinght;
     if(isSeven&&isFive)
@@ -140,7 +134,9 @@
         heightTopbar=45;
         littleHeinght=10;
     }
-
+    tabView.frame=CGRectMake(0, heightTopbar, 320, height_Momente);
+    
+    
     UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
@@ -175,11 +171,8 @@
     isFistLevel=[flag intValue];
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString:app.jsonString];
-  
-    tabView.frame=CGRectMake(0, heightTopbar, 320, height_Momente);
-    [self createHeaderView];
-	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
-	[_refreshHeaderView refreshLastUpdatedDate];
+    
+   
     
     
     if(isFistLevel==0)
@@ -189,7 +182,7 @@
         NSDictionary *data = [jsonObj objectForKey:@"data"];
         newSumCount=arr.count;
         for (int i =0; i <data.count; i++) {
-           
+            
             [arr insertObject:[data objectAtIndex:i] atIndex: newSumCount];
             [arrID insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]
                                                                   objectForKey:@"id"]]  atIndex:newSumCount];
@@ -200,24 +193,36 @@
     {
         app.jsonStringOne=app.jsonString;
     }
+    [self build_TableView];
+}
+-(void)build_TableView
+{
+    [self createHeaderView];
+    [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
+    [_refreshHeaderView refreshLastUpdatedDate];
+ 
     tabView.delegate=self;
     tabView.dataSource=self;//设置双重代理 很重要
     [tabView setBackgroundColor:[UIColor clearColor]];
     [tabView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.view addSubview:tabView];
     [tabView reloadData];
-   //[tabView release];
+    //[tabView release];
+
 }
 -(void)PessSwitch_BtnTag:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
     if(btn.tag==10)
-    [self.viewDeckController toggleLeftViewAnimated:YES];
-    else [self.viewDeckController toggleRightViewAnimated:YES];
-
+    {
+        [self.viewDeckController toggleLeftViewAnimated:YES];
+        
+    }
+    else
+    {
+        [self.viewDeckController toggleRightViewAnimated:YES];
+    }
 }
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -243,19 +248,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     InformationCell *cell=(InformationCell*)[tableView dequeueReusableCellWithIdentifier:@"InformationCell"];
-   
- 
+    
+    
     if(indexPath.row==0)
     {
-     
+        
         static NSString *identity = @"cell";
         skyCell *cellSky = (skyCell *)[tableView dequeueReusableCellWithIdentifier:identity];
         if(cellSky==nil)
         {
-           cellSky = [[[skyCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity]autorelease];
+            cellSky = [[[skyCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity]autorelease];
         }
         else{
-         
+            
         }return cellSky;
     }
     else
@@ -283,8 +288,8 @@
                               success:^(UIImage *image) {NSLog(@"OK");}
                               failure:^(NSError *error) {NSLog(@"NO");}];
         //#import "UIImageView+WebCache.h" 加载网络图片方法end
-      return cell;
-    }  
+        return cell;
+    }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -295,7 +300,7 @@
         DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
         //ReadingViewController *detail=[[[ReadingViewController alloc]initWithNibName:@"ReadingViewController" bundle:nil]autorelease];
         NSMutableDictionary* dict = [self.arr objectAtIndex:indexPath.row-1];
-      //  detail.dictForData=dict;
+        //  detail.dictForData=dict;
         detail.arrIDListNew=arrID;
         detail.yOrigin=cellFrameInSuperview.origin.y;
         detail.momentID=[dict objectForKey:@"id"];
@@ -316,8 +321,7 @@
 -(void)pressLeftSlide
 {
     [self.viewDeckController toggleLeftViewAnimated:YES];
-    [self.navigationController setNavigationBarHidden:NO ];//把后面的antimated=YES 去掉 就不会过渡出现问题了
-    
+  
 }
 -(void)pressRightSlide
 {
@@ -338,18 +342,18 @@
     if (_refreshHeaderView && [_refreshHeaderView superview]) {
         [_refreshHeaderView removeFromSuperview];
     }
-	_refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:
+    _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:
                           CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,
                                      self.view.frame.size.width, self.view.bounds.size.height)];
     _refreshHeaderView.delegate = self;
     
-	[tabView addSubview:_refreshHeaderView];
+    [tabView addSubview:_refreshHeaderView];
     
     [_refreshHeaderView refreshLastUpdatedDate];
 }
 
 -(void)testFinishedLoadData{
-	
+    
     [self finishReloadingData];
     [self setFooterView];
 }
@@ -357,11 +361,11 @@
 #pragma mark -
 #pragma mark method that should be called when the refreshing is finished
 - (void)finishReloadingData{
-	
-	//  model should call this when its done loading
-	_reloading = NO;
     
-	if (_refreshHeaderView) {
+    //  model should call this when its done loading
+    _reloading = NO;
+    
+    if (_refreshHeaderView) {
         [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading: tabView];
     }
     
@@ -374,18 +378,18 @@
 }
 
 -(void)setFooterView{
-	//    UIEdgeInsets test = self.aoView.contentInset;
+    //    UIEdgeInsets test = self.aoView.contentInset;
     // if the footerView is nil, then create it, reset the position of the footer
     CGFloat height = MAX(tabView.contentSize.height, tabView.frame.size.height);
     if (_refreshFooterView && [_refreshFooterView superview])
-	{
+    {
         // reset position
         _refreshFooterView.frame = CGRectMake(0.0f,
                                               height,
-                                             tabView.frame.size.width,
+                                              tabView.frame.size.width,
                                               self.view.bounds.size.height);
     }else
-	{
+    {
         // create the footerView
         _refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:
                               CGRectMake(0.0f, height,
@@ -395,7 +399,7 @@
     }
     
     if (_refreshFooterView)
-	{
+    {
         [_refreshFooterView refreshLastUpdatedDate];
     }
 }
@@ -404,7 +408,7 @@
 -(void)removeFooterView
 {
     if (_refreshFooterView && [_refreshFooterView superview])
-	{
+    {
         [_refreshFooterView removeFromSuperview];
     }
     _refreshFooterView = nil;
@@ -416,29 +420,29 @@
 #pragma mark data reloading methods that must be overide by the subclass
 
 -(void)beginToReloadData:(EGORefreshPos)aRefreshPos{
-	
-	//  should be calling your tableviews data source model to reload
-	_reloading = YES;
+    
+    //  should be calling your tableviews data source model to reload
+    _reloading = YES;
     
     if (aRefreshPos == EGORefreshHeader)
-	{
+    {
         // pull down to refresh data
         [self performSelector:@selector(refreshView) withObject:nil afterDelay:2.0];
     }else if(aRefreshPos == EGORefreshFooter)
-	{
+    {
         // pull up to load more data
         [self performSelector:@selector(getNextPageView) withObject:nil afterDelay:2.0];
     }
-	
-	// overide, the actual loading data operation is done in the subclass
+    
+    // overide, the actual loading data operation is done in the subclass
 }
 
 //刷新调用的方法
 -(void)refreshView
 {
-	NSLog(@"刷新完成");
+    NSLog(@"刷新完成");
     [self testFinishedLoadData];
-	
+    
 }
 //加载调用的方法
 -(void)getNextPageView
@@ -455,25 +459,25 @@
 #pragma mark UIScrollViewDelegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-	if (_refreshHeaderView)
-	{
+    if (_refreshHeaderView)
+    {
         [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
     }
-	
-	if (_refreshFooterView)
-	{
+    
+    if (_refreshFooterView)
+    {
         [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-	if (_refreshHeaderView)
-	{
+    if (_refreshHeaderView)
+    {
         [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
     }
-	
-	if (_refreshFooterView)
-	{
+    
+    if (_refreshFooterView)
+    {
         [_refreshFooterView egoRefreshScrollViewDidEndDragging:scrollView];
     }
 }
@@ -484,27 +488,27 @@
 
 - (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos
 {
-	
-	[self beginToReloadData:aRefreshPos];
-	
+    
+    [self beginToReloadData:aRefreshPos];
+    
 }
 
 - (BOOL)egoRefreshTableDataSourceIsLoading:(UIView*)view{
-	
-	return _reloading; // should return if data source model is reloading
-	
+    
+    return _reloading; // should return if data source model is reloading
+    
 }
 
 
 // if we don't realize this method, it won't display the refresh timestamp
 - (NSDate*)egoRefreshTableDataSourceLastUpdated:(UIView*)view
 {
-	
-	return [NSDate date]; // should return date data source was last changed
-	
+    
+    return [NSDate date]; // should return date data source was last changed
+    
 }
 
 
- 
+
 //加载瀑布流end
 @end
