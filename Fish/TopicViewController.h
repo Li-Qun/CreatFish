@@ -29,6 +29,11 @@
     IBOutlet UILabel *labelText;
     BOOL isOpenL;
     BOOL isOpenR;
+    //基本信息
+    NSString *CenterIB;
+    NSString *topicName;
+    NSString *topicID;
+    
     
 }
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
@@ -37,4 +42,9 @@
 @property (retain, nonatomic) IBOutlet UIScrollView *klpScrollView1;
 @property (retain, nonatomic) IBOutlet UILabel *labelText;
 @property (nonatomic,retain)NSMutableArray *klpImgArr;
+@property (nonatomic,retain) NSString *CenterIB;
+@property (nonatomic,retain) NSString *topicName;
+@property (nonatomic,retain) NSString *topicID;
+@property(readwrite,nonatomic)int target;
+@property(readwrite,nonatomic)int targetRight;
 @end

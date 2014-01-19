@@ -8,6 +8,8 @@
 
 #import "RightViewController.h"
 #import "NewsController.h"
+#import "TopicViewController.h"
+#import "LifeViewController.h"
 #import "AppDelegate.h"
 @interface RightViewController ()
 
@@ -67,22 +69,22 @@
     
     target_centerView=app.targetCenter;
     int total,start;
-    if(target_centerView==0)
+    if(target_centerView==1)
     {
         total=3;
         start=5;
     }
-    else if(target_centerView==1)
+    else if(target_centerView==2)
     {
         total=2;
         start=8;
     }
-    else if(target_centerView==2)
+    else if(target_centerView==3)
     {
-        total=3;
+        total=2;
         start=10;
     }
-    else if(target_centerView==3)
+    else if(target_centerView==4)
     {
         total=3;
         start=12;
@@ -132,13 +134,38 @@
 {
     UIButton *btn = (UIButton *)sender;
     NSLog(@"%d",btn.tag);
-    [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
-        NewsController *apiVC = [[[NewsController alloc] init] autorelease];
-        apiVC.target=btn.tag;
-        UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
-        self.viewDeckController.centerController = navApiVC;
-        self.view.userInteractionEnabled = YES;
-    }];
+    if(btn.tag<6&&btn.tag!=2&&btn.tag!=3)
+    {
+        [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
+            NewsController *apiVC = [[[NewsController alloc] init] autorelease];
+            apiVC.target=btn.tag;
+            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
+            self.viewDeckController.centerController = navApiVC;
+            self.view.userInteractionEnabled = YES;
+        }];
+
+    }
+    else if (btn.tag==3)
+    {
+        [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
+            LifeViewController *apiVC = [[[LifeViewController alloc] init] autorelease];
+            apiVC.target=btn.tag;
+            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
+            self.viewDeckController.centerController = navApiVC;
+            self.view.userInteractionEnabled = YES;
+        }];
+    }
+    else if(btn.tag==9||btn.tag==10)
+    {
+        [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
+            TopicViewController *apiVC = [[[TopicViewController alloc] init] autorelease];
+            apiVC.targetRight=btn.tag;
+            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
+            self.viewDeckController.centerController = navApiVC;
+            self.view.userInteractionEnabled = YES;
+        }];
+
+    }
 }
  
 @end

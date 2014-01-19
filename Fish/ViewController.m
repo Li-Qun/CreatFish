@@ -602,15 +602,15 @@
     else if(btn.tag==3)
     {
         LifeViewController *newVC = [[[LifeViewController alloc] initWithNibName:@"LifeViewController" bundle:nil]autorelease];
-        newVC.target=2;
+        newVC.target=3;//游钓
         //self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController :newVC animated:YES];
 
     }
-    else if(btn.tag==2)
+    else if(btn.tag==2)//专题
     {
         TopicViewController *newVC = [[[ TopicViewController alloc] initWithNibName:@"TopicViewController" bundle:nil]autorelease];
-      //  newVC.target=2;
+        newVC.target=2;
         //self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController :newVC animated:YES];
 

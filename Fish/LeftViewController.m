@@ -285,23 +285,27 @@
 {
     UIButton *btn = (UIButton *)sender;
     NSLog(@"%d",btn.tag);
-    if(btn.tag<5&&btn.tag!=2&&btn.tag!=3)
+    if(btn.tag<6&&btn.tag!=2&&btn.tag!=3)
     {
         [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
             NewsController *apiVC = [[[NewsController alloc] init] autorelease];
             apiVC.NewsName=[arrName objectAtIndex:btn.tag-1];
-            apiVC.target=btn.tag-1;
+            apiVC.target=btn.tag;
             UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
             self.viewDeckController.centerController = navApiVC;
             self.view.userInteractionEnabled = YES;
         }];
         [self.navigationController setNavigationBarHidden:YES ];
-    }else if(btn.tag==3)
+    }else if (btn.tag==2)
+    {
+         NSLog(@"%d",btn.tag);
+    }
+    else if(btn.tag==3)
     {
         
         [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
             LifeViewController *apiVC = [[[LifeViewController alloc] init] autorelease];
-            apiVC.target=1;
+            apiVC.target=3;
             UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
             self.viewDeckController.centerController = navApiVC;
             self.view.userInteractionEnabled = YES;

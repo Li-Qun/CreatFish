@@ -23,7 +23,13 @@
 @synthesize klpImgArr;
 @synthesize klpScrollView1;
 @synthesize labelText=labelText;
+@synthesize CenterIB=CenterIB;
+@synthesize topicID=topicID;
+@synthesize topicName=topicName;
+@synthesize target=target;
+@synthesize targetRight=targetRight;
 @synthesize leftSwipeGestureRecognizer,rightSwipeGestureRecognizer;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -203,15 +209,28 @@
 }
 - (void)viewDidLoad
 {
+    
+    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    app.targetCenter=target;//主视图
+    
+    CenterIB=[NSString stringWithFormat:@"%d",target];
+    if(targetRight==0)
+    {
+        topicID=CenterIB;
+    }
+    else
+    {
+        topicID=[NSString stringWithFormat:@"%d",targetRight];
+        targetRight=0;
+    }
     [super viewDidLoad];
     scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)]autorelease];
     imgToolView=[[[UIImageView alloc]init]autorelease];
     [self buildToolBar];
-    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    arr=[[[NSMutableArray alloc]init]retain];
+        arr=[[[NSMutableArray alloc]init]retain];
     contentRead =[[ContentRead alloc]init];
     contentRead.delegate=self;
-    [contentRead fetchList:@"2" isPri:@"0" Out:@"0"];
+    [contentRead fetchList:topicID isPri:@"0" Out:@"0"];
     
     
     isOpenR=NO;isOpenL=NO;
@@ -243,6 +262,7 @@
         
         if(!isOpenR&&!isOpenL)
         {
+             //app.targetCenter=[CenterIB integerValue];//主视图
             [self.viewDeckController toggleRightViewAnimated:YES];
             isOpenR=YES;
         }
