@@ -53,6 +53,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        
         CustomURLCache *urlCache = [[CustomURLCache alloc] initWithMemoryCapacity:20 * 1024 * 1024
                                                                      diskCapacity:200 * 1024 * 1024
                                                                          diskPath:nil
@@ -90,6 +91,11 @@
 }
 - (void)viewDidLoad
 {
+    for (UIView *subviews in [self.view subviews])
+    {
+        [subviews removeFromSuperview];
+    }
+
     float heightTopbar;
     float littleHeinght;
     if(isSeven&&isFive)

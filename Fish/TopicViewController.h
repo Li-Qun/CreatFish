@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "klpView.h"
-@interface TopicViewController : UIViewController<UIScrollViewDelegate>
+@interface TopicViewController : UIViewController<UIScrollViewDelegate,FishDelegate>
 {
     UIScrollView *scrollView;
     UIImageView *imgToolView;
@@ -22,9 +22,19 @@
     
 
     AppDelegate *app;
+    ContentRead *contentRead;
     NSMutableArray *arrName;
-
+    NSMutableArray *arr;
+    int index;
+    IBOutlet UILabel *labelText;
+    BOOL isOpenL;
+    BOOL isOpenR;
+    
 }
+@property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
+
 @property (retain, nonatomic) IBOutlet UIScrollView *klpScrollView1;
+@property (retain, nonatomic) IBOutlet UILabel *labelText;
 @property (nonatomic,retain)NSMutableArray *klpImgArr;
 @end

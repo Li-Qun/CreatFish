@@ -18,7 +18,7 @@
 //-(void)make_Sure_theCenter:(int) center;
 
 @end
-@interface NewsController : ViewController<UITableViewDataSource,UITableViewDelegate,FishDelegate,myDelegate,UIScrollViewDelegate,UIScrollViewAccessibilityDelegate,EGORefreshTableDelegate >
+@interface NewsController : UIViewController<UITableViewDataSource,UITableViewDelegate,FishDelegate,myDelegate,UIScrollViewDelegate,UIScrollViewAccessibilityDelegate,EGORefreshTableDelegate >
 {
     int total;
     int targetNumber;//哪一层级的标引
@@ -52,7 +52,16 @@
     BOOL isSeven;
     BOOL isFive;
     NSMutableArray *arrAdd;
+    
+    BOOL isOpenL;
+    BOOL isOpenR;
+    
+    int height_Momente;
+    AppDelegate *app;
 }
+@property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
+
 @property(nonatomic,retain)NSMutableArray *arr;
 @property(nonatomic,retain)NSMutableArray *arrPic;
 @property(nonatomic,retain)NSMutableArray *arrLabel;

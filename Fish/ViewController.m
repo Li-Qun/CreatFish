@@ -241,7 +241,7 @@
         buttonHeight=5+height_Momente-44-height;
     }else if(height5_flag&&!Kind7)
     {
-        heightTooBar=height_Momente-44;
+        heightTooBar=height_Momente-44-20;
         buttonHeight=5+height_Momente-44-20;
     }
     else if (!height5_flag&&Kind7)

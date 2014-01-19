@@ -19,7 +19,7 @@
 #import "SDWebImageDownloader.h"
 #import "EGORefreshTableHeaderView.h"
 #import "EGORefreshTableFooterView.h"
-@interface DetailViewController : ViewController<UIWebViewDelegate ,UIGestureRecognizerDelegate,UIGestureRecognizerDelegate,SDWebImageManagerDelegate,SDWebImageDownloaderDelegate ,EGORefreshTableDelegate,UIScrollViewDelegate,QuadCurveMenuDelegate,UIAlertViewDelegate,UIScrollViewDelegate,FishDelegate>
+@interface DetailViewController : UIViewController<UIWebViewDelegate ,UIGestureRecognizerDelegate,UIGestureRecognizerDelegate,SDWebImageManagerDelegate,SDWebImageDownloaderDelegate ,EGORefreshTableDelegate,UIScrollViewDelegate,QuadCurveMenuDelegate,UIAlertViewDelegate,UIScrollViewDelegate,FishDelegate>
 {
     UIWebView *showWebView;
     CGFloat height_Mag;//获取webView 高度

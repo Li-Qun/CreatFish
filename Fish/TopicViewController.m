@@ -22,6 +22,8 @@
 @implementation TopicViewController
 @synthesize klpImgArr;
 @synthesize klpScrollView1;
+@synthesize labelText=labelText;
+@synthesize leftSwipeGestureRecognizer,rightSwipeGestureRecognizer;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -67,7 +69,7 @@
         buttonHeight=5+height_Momente-44-height;
     }else if(height5_flag&&!Kind7)
     {
-        heightTooBar=height_Momente-44;
+        heightTooBar=height_Momente-44-20;
         buttonHeight=5+height_Momente-44-20;
     }
     else if (!height5_flag&&Kind7)
@@ -186,68 +188,144 @@
     //创建数据库end
     
 }
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+{
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+    
+    NSDictionary *data = [jsonObj objectForKey:@"data"];
+   
+    for (int i =0; i <data.count; i++) {
+        
+        [arr insertObject:[data objectAtIndex:i] atIndex: i];
+    }
+    [self createView];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)]autorelease];
     imgToolView=[[[UIImageView alloc]init]autorelease];
-    
     [self buildToolBar];
-    
-//    NSArray* klpArr = [NSArray arrayWithObjects:@"images-1.jpeg",@"images-2.jpeg",@"images-3.jpeg",@"images-4.jpeg",@"images-5.jpeg",@"images-6.jpeg",@"images-1.jpeg"
-//              ,@"images-2.jpeg",@"images-3.jpeg",@"images-4.jpeg",@"images-5.jpeg",@"images-6.jpeg",nil];
-//	self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:12];
-//    CGSize size = self.klpScrollView1.frame.size;
-//	for (int i=0; i < [klpArr count]; i++) {
-//        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height)];
-//        [iv setImage:[UIImage imageNamed:[klpArr objectAtIndex:i]]];
-//        [self.klpScrollView1 addSubview:iv];
-//        iv = nil;
-//    }
-//    [self.klpScrollView1 setContentSize:CGSizeMake(size.width * 12, size.height)];
-//	
-//	self.klpScrollView1.pagingEnabled = YES;
-//    self.klpScrollView1.showsHorizontalScrollIndicator = NO;
+    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    arr=[[[NSMutableArray alloc]init]retain];
+    contentRead =[[ContentRead alloc]init];
+    contentRead.delegate=self;
+    [contentRead fetchList:@"2" isPri:@"0" Out:@"0"];
     
     
-    
-    [self createView];
-    
-    
+    isOpenR=NO;isOpenL=NO;
+    self.leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+    self.rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+    self.leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    self.rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:self.leftSwipeGestureRecognizer];
+    [self.view addGestureRecognizer:self.rightSwipeGestureRecognizer];
+
+}
+- (void)handleSwipes:(UISwipeGestureRecognizer *)sender
+{
+    if (sender.direction == UISwipeGestureRecognizerDirectionRight)//na
+    {
+        if(!isOpenL&&!isOpenR)
+        {
+            [self.viewDeckController toggleLeftViewAnimated:YES];
+            isOpenL=YES;
+        }
+        if(!isOpenL&&isOpenR)
+        {
+            [self.viewDeckController toggleRightViewAnimated:YES];
+            isOpenR=NO;
+        }
+            
+    }
+    if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {//bie
+        
+        if(!isOpenR&&!isOpenL)
+        {
+            [self.viewDeckController toggleRightViewAnimated:YES];
+            isOpenR=YES;
+        }
+        if(isOpenL&&!isOpenR)
+        {
+            [self.viewDeckController toggleLeftViewAnimated:YES];
+            isOpenL=NO;
+        }
+    }
 }
 -(void)createView//:(NSMutableArray *)firstPageImage
 {
     ///UIScrollerView
-    NSArray* klpArr = [NSArray arrayWithObjects:@"images-1.jpeg",@"images-2.jpeg",@"images-3.jpeg",@"images-4.jpeg",@"images-5.jpeg",@"images-6.jpeg",@"images-1.jpeg"
-                                ,@"images-2.jpeg",@"images-3.jpeg",@"images-4.jpeg",@"images-5.jpeg",@"images-6.jpeg",nil];
+    //1.labelText
+    labelText.text=@"2014年1月18日，最近几日，杭州天气晴好，午后的气温蛮高，超过了10多度。杭州野生动物世界里的一只小白袋鼠，耐不住性子，时常从妈妈“口袋”里探出脑袋，看着外面这个新奇的世界。这只小白袋鼠是去年7月3日出生的，出生时的它只有有花生米般大小，才几克重。经过半年在妈";//[ [arr objectAtIndex:0] objectForKey:@"description"];
+    labelText.backgroundColor=[UIColor clearColor];
+    labelText.font=[UIFont systemFontOfSize:14.0f];
+    labelText.numberOfLines = 0;
+    [labelText sizeToFit];
 
-    self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:klpArr.count];
+    
+    //2.image
+    index = 0;
+    self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:arr.count];
     CGSize size = self.klpScrollView1.frame.size;
     if(height_Momente==480)  height=60;
-    for (int i=0; i < klpArr.count; i++) {
+    for (int i=0; i <arr.count; i++) {
+        NSDictionary* dict = [arr objectAtIndex:i];
         UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height+height)]autorelease];
-//        NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[klpArr objectAtIndex:i]];
-//        [iv setImageWithURL:[NSURL URLWithString: imgURL]
-//           placeholderImage:[UIImage imageNamed:@"placeholder.png"]
-//                    success:^(UIImage *image) {NSLog(@"OK");}
-//                    failure:^(NSError *error) {NSLog(@"NO");}];
-//        [self.klpScrollView1 addSubview:iv];
-//        iv = nil;
+        NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"] ];
+        [iv setImageWithURL:[NSURL URLWithString: imgURL]
+           placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                    success:^(UIImage *image) {NSLog(@"OK");}
+                    failure:^(NSError *error) {NSLog(@"NO");}];
         
-                [iv setImage:[UIImage imageNamed:[klpArr objectAtIndex:i]]];
+        UILabel *label=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 340, 31)]autorelease];
+        label.backgroundColor=[UIColor clearColor];
+        label.textColor=[UIColor whiteColor];
+        label.text=[dict objectForKey:@"image_title"];
+        UIImageView *clearBack=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 154, 340, 31)]autorelease];
+        clearBack.image=[UIImage imageNamed:@"clearBack@2X"];
+        [iv addSubview:clearBack];
+        [clearBack addSubview:label];
+        UIImageView *theArrow=[[[UIImageView alloc]initWithFrame:CGRectMake(300, 8,8,12)]autorelease];
+        theArrow.image=[UIImage imageNamed:@"theArrow"];
+        [clearBack addSubview:theArrow];
+        
+        [self.klpScrollView1 addSubview:iv];
+        iv = nil;
+        
+                [iv setImage:[UIImage imageNamed:[dict objectForKey:@"image"]]];
                [self.klpScrollView1 addSubview:iv];
               iv = nil;
 
         
     }
-    [self.klpScrollView1 setContentSize:CGSizeMake(size.width * klpArr.count, 0)];//只可横向滚动～
+    float heightScrollview;
+  
+    if(height5_flag&&Kind7)
+    {
+        heightScrollview=-20;
+    }else if(height5_flag&&!Kind7)
+    {
+        heightScrollview=0;
+    }
+    else if (!height5_flag&&Kind7)
+    {
+        heightScrollview=-20;
+    }
+    else {
+        heightScrollview=0;
+    }
+
+    self.klpScrollView1.frame=CGRectMake(0,heightScrollview, 320, 203);
+    [self.klpScrollView1 setContentSize:CGSizeMake(size.width * arr.count, 0)];//只可横向滚动～
     
     self.klpScrollView1.pagingEnabled = YES;
     self.klpScrollView1.showsHorizontalScrollIndicator = NO;
     //往数组里添加成员
-    for (int i=0; i<klpArr.count; i++) {
+    for (int i=0; i<arr.count; i++) {
+         NSDictionary* dict = [arr objectAtIndex:i];
         UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(100*i + 5*i,0,size.height+height,70)]autorelease];
-        [iv setImage:[UIImage imageNamed:[klpArr objectAtIndex:i]]];
+        [iv setImage:[UIImage imageNamed:[dict objectForKey:@"image"]]];
         [self.klpImgArr addObject:iv];
         iv = nil;
     }
@@ -263,7 +341,66 @@
     
     
 }
+#pragma mark-- UIScrollViewDelegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{\
+	//NSLog(@"scrollViewDidScroll");
+	if (scrollView == self.klpScrollView1) {
+		CGFloat pageWidth = scrollView.frame.size.width;
+		int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+		index = page;
+      
+        
+	}else {
+		
+	}
+}
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    //	NSLog(@"scrollViewWillBeginDragging");
+	if (scrollView == self.klpScrollView1) {
+        
+	}else {
+		
+	}
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+	//NSLog(@"scrollViewDidEndDecelerating");
+	if (scrollView == self.klpScrollView1) {
+		klp.frame = ((UIImageView*)[self.klpImgArr objectAtIndex:index]).frame;
+		[klp setAlpha:0];
+		[UIView animateWithDuration:0.2f animations:^(void){
+			[klp setAlpha:.85f];
+		}];
+        
+         NSDictionary* dict = [arr objectAtIndex:index];
+        labelText.text=[dict objectForKey:@"description"];
+        
+        
+//        someWords.font=[UIFont systemFontOfSize:14.0f];
+//        someWords.textColor=[UIColor whiteColor];
+//        //  someWords.lineBreakMode = UILineBreakModeWordWrap;
+//        someWords.numberOfLines = 0;
+//        someWords.backgroundColor=[UIColor clearColor];
+//        [someWords sizeToFit];
+        
+        
+        
+        
+	}else {
+		
+	}
+}
 
+#pragma mark 手势
+- (void) handleSingleTap:(UITapGestureRecognizer *) gestureRecognizer{
+	CGFloat pageWith = 320;
+    
+    CGPoint loc = [gestureRecognizer locationInView:self.klpScrollView1];
+    NSInteger touchIndex = floor(loc.x / pageWith) ;
+    if (touchIndex > app.firstPageImage.count) {
+        return;
+    }
+    NSLog(@"touch index %d",touchIndex);
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -309,4 +446,8 @@
     }
 }
 
+- (void)dealloc {
+    [labelText release];
+    [super dealloc];
+}
 @end

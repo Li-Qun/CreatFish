@@ -42,6 +42,7 @@
 @synthesize NewsName=NewsName;
 @synthesize NewsPid=NewsPid;
 @synthesize target=target;
+@synthesize leftSwipeGestureRecognizer,rightSwipeGestureRecognizer;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -70,8 +71,10 @@
 }
 - (void)viewDidLoad
 {
+    self.view.backgroundColor=[UIColor whiteColor];
     isFirstLoad=NO;
     newSumCount=0;
+    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     arr=[[[NSMutableArray alloc]init]retain];
     arrPic=[[[NSMutableArray alloc]init]retain];
     arrLabel=[[[NSMutableArray alloc]init]retain];
@@ -83,12 +86,50 @@
     
     self.navigationController.navigationBarHidden=YES;
     tabView=[[[UITableView alloc]init]retain];
-    contentRead =[[[ContentRead alloc]init]autorelease];
+    ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];//设置代理
     [contentRead fetchList:@"1" isPri:@"1" Out:@"0"];
     [contentRead fetchList:@"1" isPri:@"0" Out:@"0"];
     [super viewDidLoad];
     //  [arr release];
+    isOpenR=NO;isOpenL=NO;
+    self.leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+    self.rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+    self.leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    self.rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:self.leftSwipeGestureRecognizer];
+    [self.view addGestureRecognizer:self.rightSwipeGestureRecognizer];
+    
+}
+- (void)handleSwipes:(UISwipeGestureRecognizer *)sender
+{
+    if (sender.direction == UISwipeGestureRecognizerDirectionRight)//na
+    {
+        if(!isOpenL&&!isOpenR)
+        {
+            [self.viewDeckController toggleLeftViewAnimated:YES];
+            isOpenL=YES;
+        }
+        if(!isOpenL&&isOpenR)
+        {
+            [self.viewDeckController toggleRightViewAnimated:YES];
+            isOpenR=NO;
+        }
+        
+    }
+    if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {//bie
+        
+        if(!isOpenR&&!isOpenL)
+        {
+            [self.viewDeckController toggleRightViewAnimated:YES];
+            isOpenR=YES;
+        }
+        if(isOpenL&&!isOpenR)
+        {
+            [self.viewDeckController toggleLeftViewAnimated:YES];
+            isOpenL=NO;
+        }
+    }
 }
 
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
@@ -447,6 +488,7 @@
 //加载调用的方法
 -(void)getNextPageView
 {
+    ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];
     [contentRead fetchList:@"1" isPri:@"0" Out:@"0"];
     //    [contentRead Magazine:@"1" isPri:@"0" WeeklyId:@"0" Out:@"0"];
