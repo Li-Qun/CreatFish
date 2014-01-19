@@ -22,7 +22,7 @@
     
 
     AppDelegate *app;
-    ContentRead *contentRead;
+   // ContentRead *contentRead;
     NSMutableArray *arrName;
     NSMutableArray *arr;
     int index;

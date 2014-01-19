@@ -134,7 +134,7 @@
 {
     UIButton *btn = (UIButton *)sender;
     NSLog(@"%d",btn.tag);
-    if(btn.tag<6&&btn.tag!=2&&btn.tag!=3)
+    if(btn.tag>=6&&btn.tag<=8)
     {
         [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
             NewsController *apiVC = [[[NewsController alloc] init] autorelease];

@@ -116,7 +116,7 @@
         littleHeinght=10;
     }
     
-   ContentRead* contentRead=[[[ContentRead alloc]init]autorelease];
+    ContentRead* contentRead=[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
     [contentRead Category];
     [super viewDidLoad];

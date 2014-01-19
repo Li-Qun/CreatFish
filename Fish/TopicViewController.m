@@ -12,6 +12,7 @@
 
 #import "NewsController.h"
 #import "LifeViewController.h"
+#import "DetailViewController.h"
 
 #import "IIViewDeckController.h"
 #import <sqlite3.h>
@@ -209,7 +210,7 @@
 }
 - (void)viewDidLoad
 {
-    
+    [self.navigationController setNavigationBarHidden:YES];
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     app.targetCenter=target;//主视图
     
@@ -228,7 +229,7 @@
     imgToolView=[[[UIImageView alloc]init]autorelease];
     [self buildToolBar];
         arr=[[[NSMutableArray alloc]init]retain];
-    contentRead =[[ContentRead alloc]init];
+     ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
     [contentRead fetchList:topicID isPri:@"0" Out:@"0"];
     
@@ -244,7 +245,8 @@
 }
 - (void)handleSwipes:(UISwipeGestureRecognizer *)sender
 {
-    if (sender.direction == UISwipeGestureRecognizerDirectionRight)//na
+    
+    if (sender.direction == UISwipeGestureRecognizerDirectionRight&&sender.view!=scrollView)//na
     {
         if(!isOpenL&&!isOpenR)
         {
@@ -258,11 +260,11 @@
         }
             
     }
-    if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {//bie
+    if (sender.direction == UISwipeGestureRecognizerDirectionLeft&&sender.view!=scrollView) {//bie
         
         if(!isOpenR&&!isOpenL)
         {
-             //app.targetCenter=[CenterIB integerValue];//主视图
+            app.targetCenter=2;//主视图
             [self.viewDeckController toggleRightViewAnimated:YES];
             isOpenR=YES;
         }
@@ -419,7 +421,20 @@
     if (touchIndex > app.firstPageImage.count) {
         return;
     }
+    //进入详细阅读
     NSLog(@"touch index %d",touchIndex);
+    NSDictionary* dict = [arr objectAtIndex:touchIndex];
+ 
+    DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
+    [detail.arrIDListNew insertObject:@"9" atIndex:0 ];
+    [detail.arrIDListNew insertObject:@"10" atIndex:1 ];
+    detail.momentID=[dict objectForKey:@"id"];
+    [self.navigationController pushViewController:detail animated:YES];
+
+    
+    
+    
+    
 }
 - (void)didReceiveMemoryWarning
 {

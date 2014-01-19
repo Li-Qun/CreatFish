@@ -84,12 +84,20 @@
     self.navigationItem.hidesBackButton = YES;
     self.navigationController.toolbarHidden = YES;
     
-    self.navigationController.navigationBarHidden=YES;
+    // NSLog(@"target:======%d",target);
+    //  if(target<=4)  app.targetCenter=target;
+    //  if(target<1)app.targetCenter=1;
+    
+    app.targetCenter=target;
+    NSLog(@"centre  %d",app.targetCenter);
+   
+    
     tabView=[[[UITableView alloc]init]retain];
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];//设置代理
+    NSString *str=[NSString stringWithFormat:@"%d",target];
     [contentRead fetchList:@"1" isPri:@"1" Out:@"0"];
-    [contentRead fetchList:@"1" isPri:@"0" Out:@"0"];
+    [contentRead fetchList:str isPri:@"0" Out:@"0"];
     [super viewDidLoad];
     //  [arr release];
     isOpenR=NO;isOpenL=NO;
@@ -121,6 +129,7 @@
         
         if(!isOpenR&&!isOpenL)
         {
+            app.targetCenter=1;
             [self.viewDeckController toggleRightViewAnimated:YES];
             isOpenR=YES;
         }
@@ -134,7 +143,7 @@
 
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
-    app.jsonString=jsonString;
+      app.jsonString=jsonString;
 //    NSLog(@"%d",app.array.count);
 //    NSLog(@"name %@", [[app.array objectAtIndex  :target ]objectForKey:@"name"]);
 //    NewsId=[[app.array objectAtIndex  :target ]objectForKey:@"id"];
@@ -145,15 +154,6 @@
 //    NewsFlag=[[app.array objectAtIndex  :target ]objectForKey:@"flag"];
     
     
-   // NSLog(@"target:======%d",target);
-  //  if(target<=4)  app.targetCenter=target;
-  //  if(target<1)app.targetCenter=1;
-    
-    app.targetCenter=target;
-    RightViewController *rVC = [[[RightViewController alloc] initWithNibName:@"RightViewController" bundle:nil]autorelease];
-    rVC.target_centerView=target;
-    NSLog(@"centre  %d",app.targetCenter);
-  //    NSLog(@"NewsID   :  %@",NewsId);
     
     
     float heightTopbar;
@@ -257,7 +257,7 @@
     if(btn.tag==10)
     {
         [self.viewDeckController toggleLeftViewAnimated:YES];
-        
+        app.targetCenter=1;
     }
     else
     {
