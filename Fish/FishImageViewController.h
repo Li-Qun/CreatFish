@@ -17,6 +17,7 @@
     float heightTopbar;
     float littleHeinght;
     NSString *FishImageID;
+    NSString *shareImage;
     NSMutableArray *Fish_arr;
     klpView *klp;
     
@@ -25,6 +26,7 @@
     int height;
     BOOL Kind7;
     BOOL height5_flag;
+    
 }
 @property(nonatomic,strong)NSString *FishImageID;
 @property (nonatomic,retain)NSMutableArray *klpImgArr;

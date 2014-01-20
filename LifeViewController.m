@@ -211,9 +211,11 @@
 -(void)SwimSwitch_BtnTag:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    if(btn.tag==10)
+    if(btn.tag==10)//zuo
         [self.viewDeckController toggleLeftViewAnimated:YES];
-    else [self.viewDeckController toggleRightViewAnimated:YES];
+    else {
+        
+    }
 
 }
 

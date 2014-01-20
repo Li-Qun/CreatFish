@@ -8,6 +8,11 @@
 
 #import "FishImageViewController.h"
 
+
+#import <ShareSDK/ShareSDK.h>
+#import "WeiboApi.h"
+#import <ShareSDKCoreService/ShareSDKCoreService.h>
+
 @interface FishImageViewController ()
 
 @end
@@ -40,7 +45,6 @@
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
-    NSLog(@"%@",jsonString);
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString: jsonString];
     
@@ -61,7 +65,7 @@
     CGFloat height = size.height;
     
     Fish_arr=[[[NSMutableArray alloc]init]retain];
-    
+    shareImage=[[[NSString alloc]init]retain];
     if(height==480)
     {
         isFive=NO;
@@ -114,11 +118,41 @@
 }
 -(void)SwimSwitch_BtnTag:(id)sender
 {
+    
     UIButton *btn = (UIButton *)sender;
-    if(btn.tag==10)
+    if(btn.tag==10)//zuo
         [self.navigationController popViewControllerAnimated:YES];
     else
-    {}
+    {
+        NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
+        //构造分享内容
+        id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
+                                           defaultContent:@"分享一下你的心情吧"
+                                                    image:[ShareSDK imageWithPath:imagePath]
+                                                    title:@"ShareSDK"
+                                                      url:@"http://www.huiztech.com"
+                                              description:@"这是一条测试信息"
+                                                mediaType:SSPublishContentMediaTypeNews];
+        
+        [ShareSDK showShareActionSheet:nil
+                             shareList:nil
+                               content:publishContent
+                         statusBarTips:YES
+                           authOptions:nil
+                          shareOptions: nil
+                                result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                    if (state == SSResponseStateSuccess)
+                                    {
+                                        NSLog(@"分享成功");
+                                    }
+                                    else if (state == SSResponseStateFail)
+                                    {
+                                        NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode], [error errorDescription]);
+                                    }
+                                }];
+        
+        
+    }
 }
 -(void)createView//:(NSMutableArray *)firstPageImage
 {
@@ -197,22 +231,40 @@
     }
     //进入详细阅读
     NSLog(@"touch index %d",touchIndex);
-//    NSDictionary* dict = [arr objectAtIndex:touchIndex];
-//    
-//    DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
-//    [detail.arrIDListNew insertObject:@"9" atIndex:0 ];
-//    [detail.arrIDListNew insertObject:@"10" atIndex:1 ];
-//    detail.momentID=[dict objectForKey:@"id"];
-//    [self.navigationController pushViewController:detail animated:YES];
-//    
-//    
+    NSDictionary* dict = [Fish_arr objectAtIndex:touchIndex];
     
+    shareImage=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
     
+    //构造分享内容
+    id<ISSContent> publishContent = [ShareSDK content:shareImage
+                                       defaultContent:@"分享一下你的心情吧"
+                                                image:[ShareSDK imageWithPath:imagePath]
+                                                title:@"ShareSDK"
+                                                  url:@"http://www.huiztech.com"
+                                          description:@"这是一条测试信息"
+                                            mediaType:SSPublishContentMediaTypeNews];
     
+    [ShareSDK showShareActionSheet:nil
+                         shareList:nil
+                           content:publishContent
+                     statusBarTips:YES
+                       authOptions:nil
+                      shareOptions: nil
+                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                if (state == SSResponseStateSuccess)
+                                {
+                                    NSLog(@"分享成功");
+                                }
+                                else if (state == SSResponseStateFail)
+                                {
+                                    NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode], [error errorDescription]);
+                                }
+                            }];
 }
 
 #pragma mark-- UIScrollViewDelegate
- 
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
 	//NSLog(@"scrollViewDidEndDecelerating");
 	if (scrollView == self.klpScrollView1) {

@@ -75,11 +75,11 @@
     }
     
     UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
-    topBarView.image=[UIImage imageNamed:@"topBarRed"];
+    topBarView.image=[UIImage imageNamed:@"topBarRed"];//CGRectMake(135, littleHeinght+2, 40, 20)
     [self.view addSubview:topBarView];
     
-    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(135, littleHeinght+2, 40, 20)]autorelease];
-    wordView.image=[UIImage imageNamed:@"swimWordLabel"];
+    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(128, littleHeinght+2, 50, 23)]autorelease];
+    wordView.image=[UIImage imageNamed:@"BigFishList"];
     [topBarView addSubview:wordView];
     
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -99,6 +99,24 @@
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
+    
+    if(isSeven&&isFive)
+    {
+        img_height=20;
+        lab_height=80;
+    }
+    else if(isSeven&&!isFive)
+    {
+        lab_height=100;
+    }else if(!isSeven&&isFive)//
+    {
+        img_height=20;
+        lab_height=20;
+    }else {
+        
+        lab_height=100;
+    }
+
     //设置索引标识
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString:jsonString];
@@ -116,13 +134,13 @@
     {
         view.alpha = 1.0;
     }
-    labelText.text= [[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
+    labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
     labelText.textColor=[UIColor whiteColor];
     labelText.backgroundColor=[UIColor clearColor];
     labelText.font=[UIFont systemFontOfSize:14.0f];
     labelText.numberOfLines = 0;
     [labelText sizeToFit];
-    
+    labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
     
     
     
@@ -197,7 +215,7 @@
 -(void)SwimSwitch_BtnTag:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    if(btn.tag==10)
+    if(btn.tag==10)//zuo
     {
         app.targetCenter=1;
         [self.viewDeckController toggleLeftViewAnimated:YES];
@@ -232,20 +250,21 @@
     if(isSeven&&isFive)
     {
         img_height=20;
-        lab_height=10;
+        lab_height=80;
     }
     else if(isSeven&&!isFive)
     {
-        
+        lab_height=100;
     }else if(!isSeven&&isFive)//
     {
         img_height=20;
         lab_height=10;
     }else {
-        
+        img_height=20;
+        lab_height=100;
     }
     
-    carousel.frame=CGRectMake(25, 30+img_height, 220, 289);
+    carousel.frame=CGRectMake(24, 30+img_height, 220, 289);
     view1 = [[[UIImageView alloc] init ] autorelease];
     NSDictionary* dict = [BigFish_Description objectAtIndex:(index)];
     NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
@@ -267,6 +286,37 @@
     return view1;
 }
 - (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel {
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    CGSize size = rect.size;
+    CGFloat height = size.height;
+    
+    
+    if(height==480)
+    {
+        isFive=NO;
+    }else isFive=YES;
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (version <7.0)
+        isSeven=NO;
+    else isSeven=YES;
+    
+    
+    if(isSeven&&isFive)
+    {
+        img_height=20;
+        lab_height=80;
+    }
+    else if(isSeven&&!isFive)
+    {
+        lab_height=100;
+    }else if(!isSeven&&isFive)//
+    {
+        img_height=20;
+        lab_height=10;
+    }else {
+        
+    }
+
     if(index>=0&&index<carousel.indexesForVisibleItems.count)
     {
         
@@ -282,6 +332,7 @@
     labelText.font=[UIFont systemFontOfSize:14.0f];
     labelText.numberOfLines = 0;
     [labelText sizeToFit];
+     labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
 }
 
 - (NSUInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel
