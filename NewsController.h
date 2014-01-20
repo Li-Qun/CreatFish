@@ -58,6 +58,7 @@
     
     int height_Momente;
     AppDelegate *app;
+    NSString *str;//请求参数ID
 }
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
@@ -74,6 +75,7 @@
 @property(nonatomic,retain)NSString *NewsLevel;
 @property(nonatomic,retain)NSString *NewsFlag;
 @property(readwrite,nonatomic)int target;
+@property(readwrite,nonatomic)int targetCentre;
 - (void)reloadTableViewDataSource;
 - (void)doneLoadingTableViewData;
 @end

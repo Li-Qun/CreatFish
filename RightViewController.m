@@ -10,6 +10,7 @@
 #import "NewsController.h"
 #import "TopicViewController.h"
 #import "LifeViewController.h"
+#import "BigFishViewController.h"
 #import "AppDelegate.h"
 @interface RightViewController ()
 
@@ -66,8 +67,9 @@
     
     NSLog(@"==%d",app.targetCenter);
     NSLog(@"centre:%d",target_centerView );
-    
+    if(app.targetCenter<6)
     target_centerView=app.targetCenter;
+   // else target_centerView=app.targetCenter;
     int total,start;
     if(target_centerView==1)
     {
@@ -132,9 +134,10 @@
 }
 -(void)PessSwitchRight_Tag:(id)sender
 {
+    NSLog(@"%d",app.targetCenter);
     UIButton *btn = (UIButton *)sender;
     NSLog(@"%d",btn.tag);
-    if(btn.tag>=6&&btn.tag<=8)
+    if(btn.tag>=6&&btn.tag<8)
     {
         [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
             NewsController *apiVC = [[[NewsController alloc] init] autorelease];
@@ -145,7 +148,19 @@
         }];
 
     }
-    else if (btn.tag==3)
+    else if (btn.tag==8)
+    {
+        app.targetCenter=8;
+        [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
+            BigFishViewController *apiVC = [[[BigFishViewController alloc] init] autorelease];
+            apiVC.target=8;
+            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
+            self.viewDeckController.centerController = navApiVC;
+            self.view.userInteractionEnabled = YES;
+        }];
+
+    }
+    else if (btn.tag>=11&&btn.tag<=12)
     {
         [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
             LifeViewController *apiVC = [[[LifeViewController alloc] init] autorelease];
@@ -165,6 +180,17 @@
             self.view.userInteractionEnabled = YES;
         }];
 
+    }
+    else if (btn.tag>=13&&btn.tag<=18)
+    {
+        [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
+            NewsController *apiVC = [[[NewsController alloc] init] autorelease];
+            apiVC.target=btn.tag;
+            apiVC.targetCentre=target_centerView;
+            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
+            self.viewDeckController.centerController = navApiVC;
+            self.view.userInteractionEnabled = YES;
+        }];
     }
 }
  

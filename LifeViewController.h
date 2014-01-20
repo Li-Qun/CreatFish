@@ -40,27 +40,32 @@
     BOOL isFive;
     float heightTopbar;
     float littleHeinght;
+    
+    BOOL isOpenL;
+    BOOL isOpenR;
+    
 }
+@property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
+
+
 @property (nonatomic, retain)IBOutlet iCarousel *carousel;
 @property (nonatomic,assign) BOOL wrap;
 @property(assign,nonatomic)id<myLifeDelegate> delegate;
-@property(nonatomic)int target;
+
 @property(nonatomic,retain) NSString *MagId;
 @property(nonatomic,retain)NSString *MagName;
 @property(nonatomic,retain)NSString *NewsImage;
 @property(nonatomic,retain) NSString *MagImage;
 @property(nonatomic,retain) NSString *MagPid;
 @property(nonatomic,retain) NSString *MagFlag;
-@property(nonatomic,retain) ContentRead *contentRead;;
 @property(nonatomic,retain)NSMutableArray *arry_Mag_category_id;
 @property(nonatomic,retain)NSMutableArray *arry_Mag_description;
 @property(nonatomic,retain)NSMutableArray *arry_Mag_image;
 
+@property(readwrite,nonatomic)int target;//中心视图
 
 
-@property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
-
-@property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
 
 
 @end

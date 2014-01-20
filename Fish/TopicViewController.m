@@ -241,11 +241,11 @@
     self.rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:self.leftSwipeGestureRecognizer];
     [self.view addGestureRecognizer:self.rightSwipeGestureRecognizer];
-
+ NSLog(@"2======:%d",target);
 }
 - (void)handleSwipes:(UISwipeGestureRecognizer *)sender
 {
-    
+    NSLog(@"3======:%d",target);
     if (sender.direction == UISwipeGestureRecognizerDirectionRight&&sender.view!=scrollView)//na
     {
         if(!isOpenL&&!isOpenR)
@@ -279,7 +279,7 @@
 {
     ///UIScrollerView
     //1.labelText
-    labelText.text=@"2014年1月18日，最近几日，杭州天气晴好，午后的气温蛮高，超过了10多度。杭州野生动物世界里的一只小白袋鼠，耐不住性子，时常从妈妈“口袋”里探出脑袋，看着外面这个新奇的世界。这只小白袋鼠是去年7月3日出生的，出生时的它只有有花生米般大小，才几克重。经过半年在妈";//[ [arr objectAtIndex:0] objectForKey:@"description"];
+    labelText.text= [ [arr objectAtIndex:0] objectForKey:@"description"];
     labelText.backgroundColor=[UIColor clearColor];
     labelText.font=[UIFont systemFontOfSize:14.0f];
     labelText.numberOfLines = 0;

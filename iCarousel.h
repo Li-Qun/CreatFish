@@ -146,6 +146,10 @@ NSInteger compareViewDepth(id obj1, id obj2, void *context);
 
 - (void)carouselWillBeginScrollingAnimation:(iCarousel *)carousel;
 - (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel;
+
+- (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index;
+
+
 - (void)carouselDidScroll:(iCarousel *)carousel;
 - (void)carouselCurrentItemIndexUpdated:(iCarousel *)carousel;
 - (void)carouselWillBeginDragging:(iCarousel *)carousel;

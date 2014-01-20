@@ -266,6 +266,8 @@
 		BBD134141869CD2D008657B6 /* broom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD134101869CD2D008657B6 /* broom@2x.png */; };
 		BBD134151869CD2D008657B6 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD134111869CD2D008657B6 /* camera.png */; };
 		BBD134161869CD2D008657B6 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD134121869CD2D008657B6 /* camera@2x.png */; };
+		BBD31891188CCA6500618A5A /* BigFishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD3188F188CCA6500618A5A /* BigFishViewController.m */; };
+		BBD31892188CCA6500618A5A /* BigFishViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD31890188CCA6500618A5A /* BigFishViewController.xib */; };
 		BBD52A89185D470500575349 /* UIGestureRecognizer+GMGridViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD52A86185D470500575349 /* UIGestureRecognizer+GMGridViewAdditions.m */; };
 		BBD52A8A185D470500575349 /* UIView+GMGridViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD52A88185D470500575349 /* UIView+GMGridViewAdditions.m */; };
 		BBD52A93185D471D00575349 /* GMGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD52A8D185D471D00575349 /* GMGridView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc-flag"; }; };
@@ -684,6 +686,9 @@
 		BBD134101869CD2D008657B6 /* broom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "broom@2x.png"; sourceTree = "<group>"; };
 		BBD134111869CD2D008657B6 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		BBD134121869CD2D008657B6 /* camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera@2x.png"; sourceTree = "<group>"; };
+		BBD3188E188CCA6500618A5A /* BigFishViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigFishViewController.h; sourceTree = "<group>"; };
+		BBD3188F188CCA6500618A5A /* BigFishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigFishViewController.m; sourceTree = "<group>"; };
+		BBD31890188CCA6500618A5A /* BigFishViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BigFishViewController.xib; sourceTree = "<group>"; };
 		BBD52A85185D470500575349 /* UIGestureRecognizer+GMGridViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIGestureRecognizer+GMGridViewAdditions.h"; sourceTree = "<group>"; };
 		BBD52A86185D470500575349 /* UIGestureRecognizer+GMGridViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIGestureRecognizer+GMGridViewAdditions.m"; sourceTree = "<group>"; };
 		BBD52A87185D470500575349 /* UIView+GMGridViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GMGridViewAdditions.h"; sourceTree = "<group>"; };
@@ -1687,6 +1692,9 @@
 				BBDA38D6188A6FAD006A90F9 /* TopicViewController.h */,
 				BBDA38D7188A6FAD006A90F9 /* TopicViewController.m */,
 				BBDA38D8188A6FAD006A90F9 /* TopicViewController.xib */,
+				BBD3188E188CCA6500618A5A /* BigFishViewController.h */,
+				BBD3188F188CCA6500618A5A /* BigFishViewController.m */,
+				BBD31890188CCA6500618A5A /* BigFishViewController.xib */,
 			);
 			name = TopicVC;
 			path = Fish;
@@ -1922,6 +1930,7 @@
 				BBB2CF20187BFAA600C8F210 /* firstPage@2X.png in Resources */,
 				BBAF28EB187E99CF005A3FCB /* welcome@2X.png in Resources */,
 				BBA5B7D6187A8EB600D55899 /* theLineSet@2X.png in Resources */,
+				BBD31892188CCA6500618A5A /* BigFishViewController.xib in Resources */,
 				BBA1CA0F187FF6F60028E5BC /* selectedNow.png in Resources */,
 				BBDA38DA188A6FAD006A90F9 /* TopicViewController.xib in Resources */,
 				BBD0E1DD18781444000D1141 /* set_Nav.png in Resources */,
@@ -2062,6 +2071,7 @@
 				BBA4BE7818838B4B0008643E /* ReadingViewController.m in Sources */,
 				BB95154C1853387600BD82A7 /* SampleCell.m in Sources */,
 				BBD67E411876D6E800A6CD87 /* StoreUpViewController.m in Sources */,
+				BBD31891188CCA6500618A5A /* BigFishViewController.m in Sources */,
 				9006F344184D59250091B69F /* AppDelegate.m in Sources */,
 				BBA4789F185721A000E64289 /* UIImageView+WebCache.m in Sources */,
 				BBA11CF6185EDAAF000D39F8 /* SBJsonTokeniser.m in Sources */,

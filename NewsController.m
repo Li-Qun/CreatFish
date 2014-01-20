@@ -42,6 +42,7 @@
 @synthesize NewsName=NewsName;
 @synthesize NewsPid=NewsPid;
 @synthesize target=target;
+@synthesize targetCentre=targetCentre;
 @synthesize leftSwipeGestureRecognizer,rightSwipeGestureRecognizer;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -93,10 +94,13 @@
    
     
     tabView=[[[UITableView alloc]init]retain];
+    tabView.showsHorizontalScrollIndicator=NO;
+    tabView.showsVerticalScrollIndicator=NO;
+
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];//设置代理
-    NSString *str=[NSString stringWithFormat:@"%d",target];
-    [contentRead fetchList:@"1" isPri:@"1" Out:@"0"];
+    str=[NSString stringWithFormat:@"%d",target];
+    [contentRead fetchList:str isPri:@"1" Out:@"0"];
     [contentRead fetchList:str isPri:@"0" Out:@"0"];
     [super viewDidLoad];
     //  [arr release];
@@ -245,7 +249,7 @@
     tabView.delegate=self;
     tabView.dataSource=self;//设置双重代理 很重要
     [tabView setBackgroundColor:[UIColor clearColor]];
-    [tabView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    [tabView setSeparatorStyle:UITableViewCellSeparatorStyleNone];//hidden the lines
     [self.view addSubview:tabView];
     [tabView reloadData];
     //[tabView release];
@@ -488,10 +492,10 @@
 //加载调用的方法
 -(void)getNextPageView
 {
+    NSString *str=[NSString stringWithFormat:@"%d",target];
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];
-    [contentRead fetchList:@"1" isPri:@"0" Out:@"0"];
-    //    [contentRead Magazine:@"1" isPri:@"0" WeeklyId:@"0" Out:@"0"];
+    [contentRead fetchList:str isPri:@"0" Out:@"0"];
     [tabView reloadData];
     [self removeFooterView];
     [self testFinishedLoadData];

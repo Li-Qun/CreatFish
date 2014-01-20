@@ -1,34 +1,22 @@
 //
-//  LifeViewController.m
+//  BigFishViewController.m
 //  Fish
 //
-//  Created by DAWEI FAN on 23/12/2013.
-//  Copyright (c) 2013 liqun. All rights reserved.
+//  Created by DAWEI FAN on 20/01/2014.
+//  Copyright (c) 2014 liqun. All rights reserved.
 //
 
-#import "LifeViewController.h"
-#import "AppDelegate.h"
-#import "FishCore.h"
-#import "MagDetaiViewController.h"
-
-
+#import "BigFishViewController.h"
 #define ITEM_SPACING 200
-@interface LifeViewController ()
+@interface BigFishViewController ()
 
 @end
 
-@implementation LifeViewController
-@synthesize MagFlag=MagFlag;
-@synthesize MagId=MagId;
-@synthesize MagImage=MagImage;
-@synthesize MagPid=MagPid;
-@synthesize MagName=MagName;
+@implementation BigFishViewController
 @synthesize target=target;
 @synthesize carousel;
+@synthesize labelText=labelText;
 @synthesize wrap;
-@synthesize arry_Mag_category_id=arry_Mag_category_id;
-@synthesize arry_Mag_description=arry_Mag_description;
-@synthesize arry_Mag_image=arry_Mag_image;
 @synthesize leftSwipeGestureRecognizer,rightSwipeGestureRecognizer;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,21 +28,18 @@
         imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.view insertSubview:imgView atIndex:0];
         [imgView release];
-        
-        self.navigationController.toolbarHidden = YES;
-        self.navigationController.navigationBarHidden=YES;
-        
-       
     }
     return self;
 }
 - (void)dealloc
 {
     [carousel release];
+    [labelText release];
     [super dealloc];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [self.navigationController setNavigationBarHidden:YES];
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
     CGFloat height = size.height;
@@ -69,7 +54,7 @@
         isSeven=NO;
     else isSeven=YES;
     
-
+    
     if(isSeven&&isFive)
     {
         heightTopbar=65;
@@ -113,27 +98,14 @@
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
 {
-    NSLog(@"%@",jsonString);
     //设置索引标识
-    
-    MagId=[[app.array objectAtIndex  :target ]objectForKey:@"id"];
-    MagName=[[app.array objectAtIndex  :target ]objectForKey:@"name"];
-    MagPid=[[app.array objectAtIndex  :target ]objectForKey:@"pid"];
-    MagImage=[[app.array objectAtIndex  :target ]objectForKey:@"image"];
-    MagLevel=[[app.array objectAtIndex  :target ]objectForKey:@"level"];
-    MagFlag=[[app.array objectAtIndex  :target ]objectForKey:@"flag"];
-    
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString:jsonString];
     total = [[jsonObj objectForKey:@"total"] intValue];
-    NSLog(@"total : %d",total);
     NSDictionary *data = [jsonObj objectForKey:@"data"];
     for(int i=0;i<data.count;i++)
     {
-        [arry_Mag_description insertObject:[data objectAtIndex:i] atIndex: i];
-        [arry_Mag_category_id insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]objectForKey:@"id"]] atIndex:i];
-      
-        [arry_Mag_image insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]objectForKey:@"image"]] atIndex:i];
+        [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
     }
     carousel.delegate = self;
     carousel.dataSource = self;
@@ -143,68 +115,81 @@
     {
         view.alpha = 1.0;
     }
+    labelText.text= [[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
+    labelText.textColor=[UIColor whiteColor];
+    labelText.backgroundColor=[UIColor clearColor];
+    labelText.font=[UIFont systemFontOfSize:14.0f];
+    labelText.numberOfLines = 0;
+    [labelText sizeToFit];
+    
+    
+    
+    
     [UIView beginAnimations:nil context:nil];
     carousel.type=5;
     [UIView commitAnimations];
-   
 }
-
 
 - (void)viewDidLoad
 {//@"直线", @"圆圈", @"反向圆圈", @"圆桶", @"反向圆桶", @"封面展示", @"封面展示2", @"纸牌"
-    
-    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    app.targetCenter=target;
-    arry_Mag_image=[[NSMutableArray alloc]init];
-    arry_Mag_category_id=[[NSMutableArray alloc]init];
-    arry_Mag_description=[[NSMutableArray alloc]init];
-    contentRead =[[[ContentRead alloc]init]autorelease];
-    
-    
-    NSString *str=[NSString stringWithFormat:@"%d",target];
-    [contentRead setDelegate:self];//设置代理
-    [contentRead fetchList:@"3" isPri:@"0" Out:@"0"];
-    [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:YES];
+    [super viewDidLoad];
+    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    target=app.targetCenter;
+    BigFish_Description=   [[[NSMutableArray alloc]init]retain];
+    
+    ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
+    NSString *str=[NSString stringWithFormat:@"%d",target];
+    NSLog(@"%d",target);
+    [contentRead setDelegate:self];//设置代理
+    [contentRead fetchList:str isPri:@"0" Out:@"0"];
+    [super viewDidLoad];
     
     
+    
+    
+    isOpenR=NO;isOpenL=NO;
     self.leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
     self.rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
     self.leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
     self.rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:self.leftSwipeGestureRecognizer];
     [self.view addGestureRecognizer:self.rightSwipeGestureRecognizer];
+    
 }
 - (void)handleSwipes:(UISwipeGestureRecognizer *)sender
 {
-    
-    if (sender.direction == UISwipeGestureRecognizerDirectionRight )//na
+    if(sender.view!=carousel)
     {
-        if(!isOpenL&&!isOpenR)
+        if (sender.direction == UISwipeGestureRecognizerDirectionRight)//na
         {
-            [self.viewDeckController toggleLeftViewAnimated:YES];
-            isOpenL=YES;
+            if(!isOpenL&&!isOpenR)
+            {
+                [self.viewDeckController toggleLeftViewAnimated:YES];
+                isOpenL=YES;
+            }
+            if(!isOpenL&&isOpenR)
+            {
+                [self.viewDeckController toggleRightViewAnimated:YES];
+                isOpenR=NO;
+            }
+            
         }
-        if(!isOpenL&&isOpenR)
-        {
-            [self.viewDeckController toggleRightViewAnimated:YES];
-            isOpenR=NO;
+        if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {//bie
+            
+            if(!isOpenR&&!isOpenL)
+            {
+                app.targetCenter=1;
+                [self.viewDeckController toggleRightViewAnimated:YES];
+                isOpenR=YES;
+            }
+            if(isOpenL&&!isOpenR)
+            {
+                [self.viewDeckController toggleLeftViewAnimated:YES];
+                isOpenL=NO;
+            }
         }
-        
-    }
-    if (sender.direction == UISwipeGestureRecognizerDirectionLeft ) {//bie
-        
-        if(!isOpenR&&!isOpenL)
-        {
-            app.targetCenter=3;//主视图
-            [self.viewDeckController toggleRightViewAnimated:YES];
-            isOpenR=YES;
-        }
-        if(isOpenL&&!isOpenR)
-        {
-            [self.viewDeckController toggleLeftViewAnimated:YES];
-            isOpenL=NO;
-        }
+
     }
 }
 
@@ -212,20 +197,12 @@
 {
     UIButton *btn = (UIButton *)sender;
     if(btn.tag==10)
+    {
+        app.targetCenter=1;
         [self.viewDeckController toggleLeftViewAnimated:YES];
+    }
     else [self.viewDeckController toggleRightViewAnimated:YES];
-
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
     
-    self.carousel = nil;
-}
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
 }
 #pragma mark -
 
@@ -236,36 +213,74 @@
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index
 {
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    CGSize size = rect.size;
+    CGFloat height = size.height;
+    
+    
+    if(height==480)
+    {
+        isFive=NO;
+    }else isFive=YES;
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (version <7.0)
+        isSeven=NO;
+    else isSeven=YES;
+    
+    
+    if(isSeven&&isFive)
+    {
+        img_height=20;
+        lab_height=10;
+    }
+    else if(isSeven&&!isFive)
+    {
+        
+    }else if(!isSeven&&isFive)//
+    {
+        img_height=20;
+        lab_height=10;
+    }else {
+        
+    }
+
+    carousel.frame=CGRectMake(25, 30+img_height, 220, 289);
     view1 = [[[UIImageView alloc] init ] autorelease];
-    NSDictionary* dict = [arry_Mag_description objectAtIndex:(index)];
-     NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
-    UIImageView *ImageView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, -littleHeinght*4, 280, 350-littleHeinght*4)]autorelease];
+    NSDictionary* dict = [BigFish_Description objectAtIndex:(index)];
+    NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
+    UIImageView *ImageView=[[[UIImageView alloc]initWithFrame:carousel.frame ]autorelease];
     [ImageView  setImageWithURL:[NSURL URLWithString: imgURL]
                placeholderImage:[UIImage imageNamed:@"placeholder.png"]
                         success:^(UIImage *image) {NSLog(@"OK");}
                         failure:^(NSError *error) {NSLog(@"NO");}];
-
-    
     [view1 addSubview:ImageView];
-    UILabel *label=[[[UILabel alloc]initWithFrame:CGRectMake(0, 350-littleHeinght*8, 280, 150)]autorelease];
-    label.text=[dict objectForKey:@"description"];
-    label.textColor=[UIColor whiteColor];
-    label.backgroundColor=[UIColor clearColor];
-
-    label.layer.shadowColor = [UIColor whiteColor].CGColor;
-//    label.layer.shadowOpacity = 1.0;
-//    label.layer.shadowRadius = 5.0;
-//    label.layer.shadowOffset = CGSizeMake(1, 1);
-//    label.clipsToBounds = NO;
-//    
-    [view1 addSubview:label];
-    view1.frame = CGRectMake(0, -littleHeinght*6, 280, 400-littleHeinght*6);
+    view1.frame =CGRectMake(0, 0, 220, 289); //CGRectMake(0, -littleHeinght*6, 280, 400-littleHeinght*6);
     view1.layer.shadowColor = [UIColor blackColor].CGColor;
     view1.layer.shadowOpacity = 1.0;
     view1.layer.shadowRadius = 5.0;
     view1.layer.shadowOffset = CGSizeMake(1, 1);
     view1.clipsToBounds = NO;
+    labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
+    
+    
     return view1;
+}
+- (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel {
+    if(index>=0&&index<carousel.indexesForVisibleItems.count)
+    {
+        
+    }
+    else
+    {
+        index=0;
+    }
+    labelText.text=[[BigFish_Description objectAtIndex:index] objectForKey:@"description"];
+    index++;
+    labelText.textColor=[UIColor whiteColor];
+    labelText.backgroundColor=[UIColor clearColor];
+    labelText.font=[UIFont systemFontOfSize:14.0f];
+    labelText.numberOfLines = 0;
+    [labelText sizeToFit];
 }
 
 - (NSUInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel
@@ -290,16 +305,21 @@
     CATransform3D transform = CATransform3DIdentity;
     transform.m34 = self.carousel.perspective;
     transform = CATransform3DRotate(transform, M_PI / 8.0, 0, 1.0, 0);
+    
+    
+    
     return CATransform3DTranslate(transform, 0.0, 0.0, offset * carousel.itemWidth);
 }
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index;
 {
-    MagDetaiViewController *detail=[[MagDetaiViewController alloc]initWithNibName:@"MagDetaiViewController" bundle:nil];
-    NSDictionary* dict = [arry_Mag_description objectAtIndex:(index)];
-    detail.Id=[dict objectForKey:@"category_id"];
-    detail.weeklyId=[dict objectForKey:@"id"];
-    detail.name_Mag=[dict objectForKey:@"name"];
-    [self.navigationController pushViewController:detail animated:YES];
+    
+
+//    MagDetaiViewController *detail=[[MagDetaiViewController alloc]initWithNibName:@"MagDetaiViewController" bundle:nil];
+//    NSDictionary* dict = [arry_Mag_description objectAtIndex:(index)];
+//    detail.Id=[dict objectForKey:@"category_id"];
+//    detail.weeklyId=[dict objectForKey:@"id"];
+//    detail.name_Mag=[dict objectForKey:@"name"];
+//    [self.navigationController pushViewController:detail animated:YES];
     
 }
 - (BOOL)carouselShouldWrap:(iCarousel *)carousel

@@ -250,7 +250,7 @@
         buttonHeight=5+height_Momente-44 ;
     }
     else {
-        heightTooBar=height_Momente-height-44 ;
+        heightTooBar=height_Momente-height-4;
         buttonHeight=5+height_Momente-44-height;
     }
     
@@ -591,19 +591,20 @@
 //            [subviews removeFromSuperview];
 //        }
 //    }//必须从self.view中移除，不能从gpsClickView中移除
-    if(btn.tag<5&&btn.tag!=2&&btn.tag!=3)
+    if(btn.tag==1||btn.tag==4||btn.tag==5)
     {
         NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
         newVC.hidesBottomBarWhenPushed = YES;
-        newVC.target=btn.tag-1;
+        newVC.target=btn.tag;
         newVC.NewsName=[arrName objectAtIndex:btn.tag-1];
         [self.navigationController pushViewController :newVC animated:YES];
     }
     else if(btn.tag==3)
     {
         LifeViewController *newVC = [[[LifeViewController alloc] initWithNibName:@"LifeViewController" bundle:nil]autorelease];
+        self.hidesBottomBarWhenPushed = YES;
+
         newVC.target=3;//游钓
-        //self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController :newVC animated:YES];
 
     }

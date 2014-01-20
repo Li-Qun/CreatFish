@@ -69,7 +69,7 @@
 @property(nonatomic,retain)CategoryItem *categoryItem;
 @property(assign,nonatomic)id<FishDelegate> delegate;
 -(void)fetchList: (NSString  * )ID isPri:(NSString*)flag  Out:(NSString *) Offset;
--(void)Magazine:(NSString*)ID isPri:(NSString *)flag WeeklyId:(NSString *) Id Out:(NSString *)Offset;
+//-(void)Magazine:(NSString*)ID isPri:(NSString *)flag WeeklyId:(NSString *) Id Out:(NSString *)Offset;
 -(void)Magazine:(NSString *)ID Out:(NSString *)Offent;
 -(void)ContentDetail:(NSString*) content_id;
 -(void)Category;

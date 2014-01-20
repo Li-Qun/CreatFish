@@ -25,6 +25,7 @@
         table.dataSource = self;
         table.showsHorizontalScrollIndicator=NO;
         table.showsVerticalScrollIndicator=NO;
+        [table setSeparatorStyle:UITableViewCellSeparatorStyleNone];//hidden the lines
         table.transform = CGAffineTransformMakeRotation(M_PI / 2 *3);
         dataArray1=[[NSMutableArray alloc]initWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",nil];
         

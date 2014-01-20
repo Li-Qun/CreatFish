@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" id="HNz-JC-CYQ" customClass="iCarousel">
-                    <rect key="frame" x="0.0" y="60" width="320" height="424"/>
+                    <rect key="frame" x="0.0" y="60" width="320" height="272"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <inset key="insetFor6xAndEarlier" minX="0.0" minY="20" maxX="0.0" maxY="0.0"/>
                 </view>
