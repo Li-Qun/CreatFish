@@ -88,30 +88,53 @@
 
 
 }
-//杂志分期
--(void)Magazine:(NSString *)ID Out:(NSString *)Offent
+//【画廊】查询 - 列表 [gallery/read_lst]
+-(void)gallery:(NSString *)content_id
 {
-    NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/weekly/read_lst" ];
+    NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/gallery/read_lst" ];
     __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
     [request setRequestMethod:@"POST"];
-    [request setPostValue:ID forKey:@"filter_category_id"];
-    [request setPostValue:Offent forKey:@"offset"];
+    [request setPostValue:content_id forKey:@"content_id"];
     
     [request setDelegate:self];
     [request setCompletionBlock :^{
-     
-        NSString * jsonString  =  [request responseString];
-        [delegate getJsonString:jsonString isPri:@"0"];
         
+        NSString * jsonString  =  [request responseString];
+        [delegate  getJsonString:jsonString isPri:@"0"];
     }];
     [request setFailedBlock :^{
+      
         NSError *error = [request error ];
         NSLog ( @"error:%@" ,[error userInfo ]);
         
     }];
-    
     [request startAsynchronous ];//异步
+
 }
+////杂志分期
+//-(void)Magazine:(NSString *)ID Out:(NSString *)Offent
+//{
+//    NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/weekly/read_lst" ];
+//    __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
+//    [request setRequestMethod:@"POST"];
+//    [request setPostValue:ID forKey:@"filter_category_id"];
+//    [request setPostValue:Offent forKey:@"offset"];
+//    
+//    [request setDelegate:self];
+//    [request setCompletionBlock :^{
+//     
+//        NSString * jsonString  =  [request responseString];
+//        [delegate getJsonString:jsonString isPri:@"0"];
+//        
+//    }];
+//    [request setFailedBlock :^{
+//        NSError *error = [request error ];
+//        NSLog ( @"error:%@" ,[error userInfo ]);
+//        
+//    }];
+//    
+//    [request startAsynchronous ];//异步
+//}
 ////杂志查询列表
 //-(void)Magazine:(NSString*)ID isPri:(NSString *)flag WeeklyId:(NSString *) Id Out:(NSString *)Offset;
 //{

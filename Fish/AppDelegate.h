@@ -82,7 +82,7 @@ typedef enum
 @property(nonatomic,retain)NSString *jsonStringOne;
 @property(nonatomic)int targetCenter;
 
-@property (readwrite,retain)NSString * center;
+@property (nonatomic)int  center;
 //收藏杂志start
 @property(nonatomic,retain)NSString *saveId;
 @property(nonatomic,retain)NSString *saveName;

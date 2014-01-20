@@ -211,6 +211,7 @@
 - (void)viewDidLoad
 {
     [self.navigationController setNavigationBarHidden:YES];
+    
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     app.targetCenter=target;//主视图
     
@@ -229,7 +230,8 @@
     imgToolView=[[[UIImageView alloc]init]autorelease];
     [self buildToolBar];
         arr=[[[NSMutableArray alloc]init]retain];
-     ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
+    
+    ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
     [contentRead fetchList:topicID isPri:@"0" Out:@"0"];
     

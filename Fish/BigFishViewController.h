@@ -29,6 +29,7 @@
     //图片位置
     int img_height;
     int lab_height;
+    int select;
 }
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;

@@ -7,6 +7,7 @@
 //
 
 #import "BigFishViewController.h"
+#import "FishImageViewController.h"
 #define ITEM_SPACING 200
 @interface BigFishViewController ()
 
@@ -189,7 +190,7 @@
                 isOpenL=NO;
             }
         }
-
+        
     }
 }
 
@@ -243,7 +244,7 @@
     }else {
         
     }
-
+    
     carousel.frame=CGRectMake(25, 30+img_height, 220, 289);
     view1 = [[[UIImageView alloc] init ] autorelease];
     NSDictionary* dict = [BigFish_Description objectAtIndex:(index)];
@@ -285,7 +286,7 @@
 
 - (NSUInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel
 {
-	return 0;
+    return 0;
 }
 
 - (NSUInteger)numberOfVisibleItemsInCarousel:(iCarousel *)carousel
@@ -312,15 +313,12 @@
 }
 - (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index;
 {
-    
+    NSLog(@"%d",index);
+     NSDictionary* dict = [BigFish_Description objectAtIndex:index];
+    FishImageViewController *detail=[[[FishImageViewController alloc]initWithNibName:@"FishImageViewController" bundle:nil]autorelease];
+    detail.FishImageID=[dict objectForKey:@"id"];
+        [self.navigationController pushViewController:detail animated:YES];
 
-//    MagDetaiViewController *detail=[[MagDetaiViewController alloc]initWithNibName:@"MagDetaiViewController" bundle:nil];
-//    NSDictionary* dict = [arry_Mag_description objectAtIndex:(index)];
-//    detail.Id=[dict objectForKey:@"category_id"];
-//    detail.weeklyId=[dict objectForKey:@"id"];
-//    detail.name_Mag=[dict objectForKey:@"name"];
-//    [self.navigationController pushViewController:detail animated:YES];
-    
 }
 - (BOOL)carouselShouldWrap:(iCarousel *)carousel
 {

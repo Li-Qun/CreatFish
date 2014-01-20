@@ -268,6 +268,14 @@
 		BBD134161869CD2D008657B6 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD134121869CD2D008657B6 /* camera@2x.png */; };
 		BBD31891188CCA6500618A5A /* BigFishViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD3188F188CCA6500618A5A /* BigFishViewController.m */; };
 		BBD31892188CCA6500618A5A /* BigFishViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD31890188CCA6500618A5A /* BigFishViewController.xib */; };
+		BBD31896188D0CCD00618A5A /* FishImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD31894188D0CCD00618A5A /* FishImageViewController.m */; };
+		BBD31897188D0CCD00618A5A /* FishImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD31895188D0CCD00618A5A /* FishImageViewController.xib */; };
+		BBD3189A188D0D6C00618A5A /* BigFishList.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD31898188D0D6C00618A5A /* BigFishList.png */; };
+		BBD3189B188D0D6C00618A5A /* BigFishList@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD31899188D0D6C00618A5A /* BigFishList@2X.png */; };
+		BBD3189E188D10B300618A5A /* BigFishListShare.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD3189C188D10B300618A5A /* BigFishListShare.png */; };
+		BBD3189F188D10B300618A5A /* BigFishListShare@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD3189D188D10B300618A5A /* BigFishListShare@2X.png */; };
+		BBD318A2188D3F5F00618A5A /* imageLabel.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD318A0188D3F5F00618A5A /* imageLabel.png */; };
+		BBD318A3188D3F5F00618A5A /* imageLabel@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD318A1188D3F5F00618A5A /* imageLabel@2X.png */; };
 		BBD52A89185D470500575349 /* UIGestureRecognizer+GMGridViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD52A86185D470500575349 /* UIGestureRecognizer+GMGridViewAdditions.m */; };
 		BBD52A8A185D470500575349 /* UIView+GMGridViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD52A88185D470500575349 /* UIView+GMGridViewAdditions.m */; };
 		BBD52A93185D471D00575349 /* GMGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD52A8D185D471D00575349 /* GMGridView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc-flag"; }; };
@@ -689,6 +697,15 @@
 		BBD3188E188CCA6500618A5A /* BigFishViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigFishViewController.h; sourceTree = "<group>"; };
 		BBD3188F188CCA6500618A5A /* BigFishViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigFishViewController.m; sourceTree = "<group>"; };
 		BBD31890188CCA6500618A5A /* BigFishViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BigFishViewController.xib; sourceTree = "<group>"; };
+		BBD31893188D0CCD00618A5A /* FishImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FishImageViewController.h; sourceTree = "<group>"; };
+		BBD31894188D0CCD00618A5A /* FishImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FishImageViewController.m; sourceTree = "<group>"; };
+		BBD31895188D0CCD00618A5A /* FishImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FishImageViewController.xib; sourceTree = "<group>"; };
+		BBD31898188D0D6C00618A5A /* BigFishList.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BigFishList.png; sourceTree = "<group>"; };
+		BBD31899188D0D6C00618A5A /* BigFishList@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BigFishList@2X.png"; sourceTree = "<group>"; };
+		BBD3189C188D10B300618A5A /* BigFishListShare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BigFishListShare.png; sourceTree = "<group>"; };
+		BBD3189D188D10B300618A5A /* BigFishListShare@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BigFishListShare@2X.png"; sourceTree = "<group>"; };
+		BBD318A0188D3F5F00618A5A /* imageLabel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageLabel.png; sourceTree = "<group>"; };
+		BBD318A1188D3F5F00618A5A /* imageLabel@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imageLabel@2X.png"; sourceTree = "<group>"; };
 		BBD52A85185D470500575349 /* UIGestureRecognizer+GMGridViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIGestureRecognizer+GMGridViewAdditions.h"; sourceTree = "<group>"; };
 		BBD52A86185D470500575349 /* UIGestureRecognizer+GMGridViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIGestureRecognizer+GMGridViewAdditions.m"; sourceTree = "<group>"; };
 		BBD52A87185D470500575349 /* UIView+GMGridViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GMGridViewAdditions.h"; sourceTree = "<group>"; };
@@ -1154,6 +1171,12 @@
 		BBA49308187D48A70089D35E /* NewsImg */ = {
 			isa = PBXGroup;
 			children = (
+				BBD318A0188D3F5F00618A5A /* imageLabel.png */,
+				BBD318A1188D3F5F00618A5A /* imageLabel@2X.png */,
+				BBD3189C188D10B300618A5A /* BigFishListShare.png */,
+				BBD3189D188D10B300618A5A /* BigFishListShare@2X.png */,
+				BBD31898188D0D6C00618A5A /* BigFishList.png */,
+				BBD31899188D0D6C00618A5A /* BigFishList@2X.png */,
 				BBAF9848188547BA002DDA7A /* tableCell.png */,
 				BBAF9849188547BA002DDA7A /* tableCell@2X.png */,
 				BBA4931D187D6DF30089D35E /* theArrow.png */,
@@ -1695,6 +1718,9 @@
 				BBD3188E188CCA6500618A5A /* BigFishViewController.h */,
 				BBD3188F188CCA6500618A5A /* BigFishViewController.m */,
 				BBD31890188CCA6500618A5A /* BigFishViewController.xib */,
+				BBD31893188D0CCD00618A5A /* FishImageViewController.h */,
+				BBD31894188D0CCD00618A5A /* FishImageViewController.m */,
+				BBD31895188D0CCD00618A5A /* FishImageViewController.xib */,
 			);
 			name = TopicVC;
 			path = Fish;
@@ -1810,6 +1836,7 @@
 				BB95155F185348C000BD82A7 /* bg-addbutton-highlighted@2x.png in Resources */,
 				BBAF28DD187E62D2005A3FCB /* SwimFish.png in Resources */,
 				BBD81BB1186C34DA000DBEEE /* 18.jpg in Resources */,
+				BBD3189F188D10B300618A5A /* BigFishListShare@2X.png in Resources */,
 				BBB2CF1F187BFAA600C8F210 /* firstPage.png in Resources */,
 				BBAF28F3187E9A75005A3FCB /* clearbar@2X.png in Resources */,
 				BB31A48D186ED80D00F23782 /* OneCell.xib in Resources */,
@@ -1818,6 +1845,7 @@
 				BBA4BE8A1884003B0008643E /* ShareSDKLocalizable.strings in Resources */,
 				BB951565185348C000BD82A7 /* bg-menuitem-highlighted@2x.png in Resources */,
 				BB95155E185348C000BD82A7 /* bg-addbutton-highlighted.png in Resources */,
+				BBD3189A188D0D6C00618A5A /* BigFishList.png in Resources */,
 				BBD81BC3186C34DA000DBEEE /* 8.jpg in Resources */,
 				BBAF28EA187E99CF005A3FCB /* welcome.png in Resources */,
 				BBA783F7185404AC002D0433 /* MagazineViewController.xib in Resources */,
@@ -1902,11 +1930,13 @@
 				BBC95B2018532E4600A10431 /* SampleData.plist in Resources */,
 				BBC95B3618532E5F00A10431 /* images-9.jpeg in Resources */,
 				BBD81BBA186C34DA000DBEEE /* 26.jpg in Resources */,
+				BBD318A2188D3F5F00618A5A /* imageLabel.png in Resources */,
 				BBD134131869CD2D008657B6 /* broom.png in Resources */,
 				BBA49306187D2F090089D35E /* TitleWhiteBack@2X.png in Resources */,
 				BBA1CA0A187FF06C0028E5BC /* theGoBack@2X.png in Resources */,
 				BB951562185348C000BD82A7 /* icon-star@2x.png in Resources */,
 				BBA4931F187D6DF30089D35E /* theArrow.png in Resources */,
+				BBD318A3188D3F5F00618A5A /* imageLabel@2X.png in Resources */,
 				BBAF28F0187E9A75005A3FCB /* clearArrow.png in Resources */,
 				BBA352AB18792A2900A8239C /* TypeSelect@2X.png in Resources */,
 				BBAF28CA187E451E005A3FCB /* BackImg.png in Resources */,
@@ -1935,6 +1965,7 @@
 				BBDA38DA188A6FAD006A90F9 /* TopicViewController.xib in Resources */,
 				BBD0E1DD18781444000D1141 /* set_Nav.png in Resources */,
 				BBD81BBE186C34DA000DBEEE /* 3.jpg in Resources */,
+				BBD31897188D0CCD00618A5A /* FishImageViewController.xib in Resources */,
 				BB951563185348C000BD82A7 /* bg-menuitem-highlighted.png in Resources */,
 				BBC95B3218532E5F00A10431 /* images-5.jpeg in Resources */,
 				BBD81BB9186C34DA000DBEEE /* 25.jpg in Resources */,
@@ -1958,6 +1989,7 @@
 				BBAF28F1187E9A75005A3FCB /* clearArrow@2X.png in Resources */,
 				BBAF28CF187E451E005A3FCB /* saveImgNormal@2X.png in Resources */,
 				BBAF983F18852EB3002DDA7A /* WeiboSDK.bundle in Resources */,
+				BBD3189E188D10B300618A5A /* BigFishListShare.png in Resources */,
 				BBAF28DE187E62D2005A3FCB /* SwimFish@2X.png in Resources */,
 				BBA492F8187CEE8E0089D35E /* Save@2X.png in Resources */,
 				BB951569185348C000BD82A7 /* icon-plus-highlighted.png in Resources */,
@@ -1990,6 +2022,7 @@
 				BBAF984618852EB3002DDA7A /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				BBA49320187D6DF30089D35E /* theArrow@2X.png in Resources */,
 				BBDBE952184DD995009FA292 /* NewViewController.xib in Resources */,
+				BBD3189B188D0D6C00618A5A /* BigFishList@2X.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2080,6 +2113,7 @@
 				BBA783FB18540838002D0433 /* ReadViewController.m in Sources */,
 				BBA11CED185EDAAF000D39F8 /* NSObject+SBJson.m in Sources */,
 				BBC95B4718532FA100A10431 /* QuadCurveMenu.m in Sources */,
+				BBD31896188D0CCD00618A5A /* FishImageViewController.m in Sources */,
 				BBA4789B185721A000E64289 /* SDWebImageDownloader.m in Sources */,
 				BBD52A95185D471D00575349 /* GMGridViewLayoutStrategies.m in Sources */,
 				BBD52A93185D471D00575349 /* GMGridView.m in Sources */,

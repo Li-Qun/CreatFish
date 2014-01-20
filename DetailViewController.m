@@ -576,27 +576,27 @@ didFailWithError:(NSError *)error
     }
 }
 #pragma mark -响应对UIWebView 文本操作start
-- (void)pressme:(id)sender
-{
-    [[UIMenuController sharedMenuController] setTargetRect:[sender frame] inView:self.view];
-    [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES]
-    ;
-}
-
-- (void)cameraAction:(id)sender
-{
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Camera Item Pressed", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil] show];
-}
-
-- (void)broomAction:(id)sender
-{
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Broom Item Pressed", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil] show];
-}
-
-- (void)textAction:(id)sender
-{
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Text Item Pressed", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil] show];
-}
+//- (void)pressme:(id)sender
+//{
+//    [[UIMenuController sharedMenuController] setTargetRect:[sender frame] inView:self.view];
+//    [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES]
+//    ;
+//}
+//
+//- (void)cameraAction:(id)sender
+//{
+//    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Camera Item Pressed", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil] show];
+//}
+//
+//- (void)broomAction:(id)sender
+//{
+//    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Broom Item Pressed", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil] show];
+//}
+//
+//- (void)textAction:(id)sender
+//{
+//    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Text Item Pressed", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil] show];
+//}
 //菜单按钮响应end
 //实现翻页响应start
 -(void)PressGo
