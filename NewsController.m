@@ -58,7 +58,6 @@
     [super viewWillAppear:animated];
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
-    CGFloat width = size.width;
     height_Momente = size.height;
     
     if(height_Momente==480)
@@ -69,6 +68,14 @@
     if (version <7.0)
         isSeven=NO;
     else isSeven=YES;
+    
+    ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
+    [contentRead setDelegate:self];//设置代理
+    app.targetCenter=target;
+    NSLog(@"%d %d",target,app.targetCenter);
+    str=[NSString stringWithFormat:@"%d",target];
+    [contentRead fetchList:str isPri:@"1" Out:@"0"];
+    [contentRead fetchList:str isPri:@"0" Out:@"0"];
 }
 - (void)viewDidLoad
 {
@@ -97,11 +104,7 @@
     tabView.showsHorizontalScrollIndicator=NO;
     tabView.showsVerticalScrollIndicator=NO;
 
-    ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
-    [contentRead setDelegate:self];//设置代理
-    str=[NSString stringWithFormat:@"%d",target];
-    [contentRead fetchList:str isPri:@"1" Out:@"0"];
-    [contentRead fetchList:str isPri:@"0" Out:@"0"];
+   
     [super viewDidLoad];
     //  [arr release];
     isOpenR=NO;isOpenL=NO;
@@ -133,7 +136,6 @@
         
         if(!isOpenR&&!isOpenL)
         {
-            app.targetCenter=1;
             [self.viewDeckController toggleRightViewAnimated:YES];
             isOpenR=YES;
         }
@@ -156,9 +158,6 @@
 //    NewsImage=[[app.array objectAtIndex  :target ]objectForKey:@"image"];
 //    NewsLevel=[[app.array objectAtIndex  :target ]objectForKey:@"level"];
 //    NewsFlag=[[app.array objectAtIndex  :target ]objectForKey:@"flag"];
-    
-    
-    
     
     float heightTopbar;
     float littleHeinght;
@@ -261,7 +260,7 @@
     if(btn.tag==10)
     {
         [self.viewDeckController toggleLeftViewAnimated:YES];
-        app.targetCenter=1;
+       
     }
     else
     {

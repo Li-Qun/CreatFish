@@ -36,10 +36,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-//        for (UIView *subviews in [self.view subviews])
-//        {
-//            [subviews removeFromSuperview];
-//        }
         CGRect rect = [[UIScreen mainScreen] bounds];
         CGSize size = rect.size;
         CGFloat width = size.width;
@@ -98,7 +94,7 @@
     // 首先是数据库要保存的路径
     NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPaths=[array objectAtIndex:0];
-    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar1"];
+    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar5"];
     //  然后建立数据库，新建数据库这个苹果做的非常好，非常方便
     sqlite3 *database;
     //新建数据库，存在则打开，不存在则创建
@@ -110,16 +106,16 @@
         NSLog(@"open failed");
     }
     // 对数据库建表操作：如果在些程序的过程中，发现表的字段要更改，一定要删除之前的表，如何做，就是删除程序或者换个表名，主键是自增的
-    char *errorMsg;
-    NSString *sql=@"CREATE TABLE IF NOT EXISTS buttonList (ID INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,num TEXT)";
-    //创建表
-    if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-    {
-        NSLog(@"create success");
-    }else{
-        NSLog(@"create error:%s",errorMsg);
-        sqlite3_free(errorMsg);
-    }
+   // char *errorMsg;
+    NSString *sql;//=@"CREATE TABLE IF NOT EXISTS buttonList (ID INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,num TEXT)";
+//    //创建表
+//    if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+//    {
+//        NSLog(@"create success");
+//    }else{
+//        NSLog(@"create error:%s",errorMsg);
+//        sqlite3_free(errorMsg);
+//    }
     // 查找数据
     sql = @"select * from buttonList";
     sqlite3_stmt *stmt;
@@ -132,12 +128,18 @@
             if(i==5)break;
             
             const unsigned char *theName= sqlite3_column_text(stmt, 1);
-            
             NSString *name_Database= [NSString stringWithUTF8String: theName];
-            const unsigned char *num= sqlite3_column_text(stmt, 2);
             
+            const unsigned char *num= sqlite3_column_text(stmt, 2);
             NSString *Num_Database= [NSString stringWithUTF8String: num];
+            
+            const unsigned char *_count= sqlite3_column_text(stmt, 3);
+            NSString *today_count= [NSString stringWithUTF8String: _count];
+            
             NSString *name=[[[NSString alloc]init]autorelease];
+            
+            NSLog(@"name:%@ num:%@ count %@",name_Database,Num_Database,today_count);
+            
             
             
             
@@ -160,7 +162,7 @@
             label.font  = [UIFont fontWithName:@"Arial" size:15.0];
             label.backgroundColor=[UIColor clearColor];
             UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
-            labelNum.text=[NSString stringWithFormat: Num_Database];
+            labelNum.text=today_count;
             labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
             labelNum.textColor=[UIColor whiteColor];
             labelNum.backgroundColor=[UIColor clearColor];
@@ -175,14 +177,12 @@
             button.backgroundColor=[UIColor clearColor];
             [scrollView addSubview:button];
             [label release];
-            
+            // */
             
         }
     }
-    scrollView.contentSize = CGSizeMake(640, 0);
+    scrollView.contentSize = CGSizeMake(640, 44);
     [scrollView setShowsHorizontalScrollIndicator:NO];//隐藏横向滚动条
-    [scrollView setShowsVerticalScrollIndicator:NO];//隐藏横向滚动条
-
     [imgToolView addSubview:scrollView];
     imgToolView . userInteractionEnabled = YES;
     [self.view addSubview:imgToolView];
@@ -192,6 +192,7 @@
     //  最后，关闭数据库：
     sqlite3_close(database);
     
+    //创建数据库end
     //创建数据库end
     
 }
@@ -243,7 +244,7 @@
     self.rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:self.leftSwipeGestureRecognizer];
     [self.view addGestureRecognizer:self.rightSwipeGestureRecognizer];
- NSLog(@"2======:%d",target);
+     NSLog(@"2======:%d",target);
 }
 - (void)handleSwipes:(UISwipeGestureRecognizer *)sender
 {
@@ -266,7 +267,7 @@
         
         if(!isOpenR&&!isOpenL)
         {
-            app.targetCenter=2;//主视图
+            app.targetCenter=3;//主视图
             [self.viewDeckController toggleRightViewAnimated:YES];
             isOpenR=YES;
         }
@@ -453,33 +454,36 @@
     //            [subviews removeFromSuperview];
     //        }
     //    }//必须从self.view中移除，不能从gpsClickView中移除
-    if(btn.tag<5&&btn.tag!=2&&btn.tag!=3)
+    if(btn.tag==2||btn.tag==5||btn.tag==6)
     {
         NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
         newVC.hidesBottomBarWhenPushed = YES;
-        newVC.target=btn.tag-1;
-        newVC.NewsName=[arrName objectAtIndex:btn.tag-1];
+        newVC.target=btn.tag;
+        newVC.NewsName=[arrName objectAtIndex:btn.tag-2];
         [self.navigationController pushViewController :newVC animated:YES];
     }
-    else if(btn.tag==3)
+    else if(btn.tag==4)
     {
         LifeViewController *newVC = [[[LifeViewController alloc] initWithNibName:@"LifeViewController" bundle:nil]autorelease];
-        newVC.target=2;
-        //self.hidesBottomBarWhenPushed = YES;
+        self.hidesBottomBarWhenPushed = YES;
+        
+        newVC.target=4;//游钓
         [self.navigationController pushViewController :newVC animated:YES];
         
     }
-    else if(btn.tag==2)
+    else if(btn.tag==3)//专题
     {
         TopicViewController *newVC = [[[ TopicViewController alloc] initWithNibName:@"TopicViewController" bundle:nil]autorelease];
-        //  newVC.target=2;
+        newVC.target=3;
         //self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController :newVC animated:YES];
         
     }
     else if(btn.tag==100)
     {
-        
+//        StoreUpViewController *newVC = [[[StoreUpViewController alloc] initWithNibName:@"StoreUpViewController" bundle:nil]autorelease];
+//        self.hidesBottomBarWhenPushed = YES;//OK~
+//        [self.navigationController pushViewController :newVC animated:YES];
     }
 }
 
