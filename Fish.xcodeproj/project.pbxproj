@@ -259,6 +259,14 @@
 		BBD0791A188E910500325927 /* aboard@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07916188E910500325927 /* aboard@2X.png */; };
 		BBD0791B188E910500325927 /* nation.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07917188E910500325927 /* nation.png */; };
 		BBD0791C188E910500325927 /* nation@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07918188E910500325927 /* nation@2X.png */; };
+		BBD07925188EB1D400325927 /* bag_Small.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD0791D188EB1D400325927 /* bag_Small.png */; };
+		BBD07926188EB1D400325927 /* bag_Small@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD0791E188EB1D400325927 /* bag_Small@2X.png */; };
+		BBD07927188EB1D400325927 /* Function_Small.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD0791F188EB1D400325927 /* Function_Small.png */; };
+		BBD07928188EB1D400325927 /* Function_Small@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07920188EB1D400325927 /* Function_Small@2X.png */; };
+		BBD07929188EB1D400325927 /* swimFish_Small.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07921188EB1D400325927 /* swimFish_Small.png */; };
+		BBD0792A188EB1D400325927 /* swimFish_Small@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07922188EB1D400325927 /* swimFish_Small@2X.png */; };
+		BBD0792B188EB1D400325927 /* topic_Small.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07923188EB1D400325927 /* topic_Small.png */; };
+		BBD0792C188EB1D400325927 /* topic_Small@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07924188EB1D400325927 /* topic_Small@2X.png */; };
 		BBD0E1CE1877D8D1000D1141 /* Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0E1CD1877D8D1000D1141 /* Singleton.m */; };
 		BBD0E1D818780909000D1141 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0E1D618780909000D1141 /* SettingViewController.m */; };
 		BBD0E1D918780909000D1141 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD0E1D718780909000D1141 /* SettingViewController.xib */; };
@@ -691,6 +699,14 @@
 		BBD07916188E910500325927 /* aboard@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "aboard@2X.png"; sourceTree = "<group>"; };
 		BBD07917188E910500325927 /* nation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nation.png; sourceTree = "<group>"; };
 		BBD07918188E910500325927 /* nation@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nation@2X.png"; sourceTree = "<group>"; };
+		BBD0791D188EB1D400325927 /* bag_Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bag_Small.png; sourceTree = "<group>"; };
+		BBD0791E188EB1D400325927 /* bag_Small@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bag_Small@2X.png"; sourceTree = "<group>"; };
+		BBD0791F188EB1D400325927 /* Function_Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Function_Small.png; sourceTree = "<group>"; };
+		BBD07920188EB1D400325927 /* Function_Small@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Function_Small@2X.png"; sourceTree = "<group>"; };
+		BBD07921188EB1D400325927 /* swimFish_Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swimFish_Small.png; sourceTree = "<group>"; };
+		BBD07922188EB1D400325927 /* swimFish_Small@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swimFish_Small@2X.png"; sourceTree = "<group>"; };
+		BBD07923188EB1D400325927 /* topic_Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topic_Small.png; sourceTree = "<group>"; };
+		BBD07924188EB1D400325927 /* topic_Small@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topic_Small@2X.png"; sourceTree = "<group>"; };
 		BBD0E1CC1877D8D1000D1141 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = ../Singleton.h; sourceTree = "<group>"; };
 		BBD0E1CD1877D8D1000D1141 /* Singleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Singleton.m; path = ../Singleton.m; sourceTree = "<group>"; };
 		BBD0E1D518780909000D1141 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
@@ -1456,6 +1472,14 @@
 		BBB2CF14187BF00D00C8F210 /* slideLeft */ = {
 			isa = PBXGroup;
 			children = (
+				BBD0791D188EB1D400325927 /* bag_Small.png */,
+				BBD0791E188EB1D400325927 /* bag_Small@2X.png */,
+				BBD0791F188EB1D400325927 /* Function_Small.png */,
+				BBD07920188EB1D400325927 /* Function_Small@2X.png */,
+				BBD07921188EB1D400325927 /* swimFish_Small.png */,
+				BBD07922188EB1D400325927 /* swimFish_Small@2X.png */,
+				BBD07923188EB1D400325927 /* topic_Small.png */,
+				BBD07924188EB1D400325927 /* topic_Small@2X.png */,
 				BBB2CF15187BF01C00C8F210 /* LeftTitle.png */,
 				BBB2CF16187BF01C00C8F210 /* LeftTitle@2X.png */,
 				BBB2CF19187BF80C00C8F210 /* selectOne.png */,
@@ -1876,6 +1900,7 @@
 				BBAF28EA187E99CF005A3FCB /* welcome.png in Resources */,
 				BBA783F7185404AC002D0433 /* MagazineViewController.xib in Resources */,
 				BBD0E1E3187817D3000D1141 /* AdviceViewController.xib in Resources */,
+				BBD07929188EB1D400325927 /* swimFish_Small.png in Resources */,
 				BBD81BC4186C34DA000DBEEE /* 9.jpg in Resources */,
 				BBD81BA9186C34DA000DBEEE /* 10.jpg in Resources */,
 				BBC95B2D18532E5F00A10431 /* images-1.jpeg in Resources */,
@@ -1912,6 +1937,7 @@
 				BBA492F9187CEE8E0089D35E /* Set.png in Resources */,
 				BBD81BBB186C34DA000DBEEE /* 27.jpg in Resources */,
 				BBA49310187D48BE0089D35E /* LeftBtn@2X.png in Resources */,
+				BBD07928188EB1D400325927 /* Function_Small@2X.png in Resources */,
 				BB95154D1853387600BD82A7 /* SampleCell.xib in Resources */,
 				BBA492FD187CF0BE0089D35E /* slideLeft_Back.png in Resources */,
 				BBAF28D1187E451E005A3FCB /* shareImg@2X.png in Resources */,
@@ -1926,6 +1952,7 @@
 				BBD81BB8186C34DA000DBEEE /* 24.jpg in Resources */,
 				BBD81BC0186C34DA000DBEEE /* 5.jpg in Resources */,
 				BBB2CF1C187BF80C00C8F210 /* selectOne@2X.png in Resources */,
+				BBD0792A188EB1D400325927 /* swimFish_Small@2X.png in Resources */,
 				BBD07914188E766A00325927 /* signble@2X.png in Resources */,
 				BBD0E1E718781B95000D1141 /* advice_nav_red.png in Resources */,
 				BBAF983C18852EB2002DDA7A /* GooglePlus.bundle in Resources */,
@@ -1938,13 +1965,17 @@
 				BBD81BB3186C34DA000DBEEE /* 2.jpg in Resources */,
 				BBA49303187D2F090089D35E /* TitleRedBack.png in Resources */,
 				BB951561185348C000BD82A7 /* icon-star.png in Resources */,
+				BBD07927188EB1D400325927 /* Function_Small.png in Resources */,
 				BBD7A05F186D2DED000A4675 /* selectedButton.png in Resources */,
 				BBD07913188E766A00325927 /* signble.png in Resources */,
+				BBD0792B188EB1D400325927 /* topic_Small.png in Resources */,
 				BBA5B7D2187A875000D55899 /* labelNormal_Set@2X.png in Resources */,
 				BBD07910188E5E5700325927 /* LifeItemViewController.xib in Resources */,
+				BBD0792C188EB1D400325927 /* topic_Small@2X.png in Resources */,
 				BBE61232188BAA3F00DCCB52 /* topicBack.png in Resources */,
 				BBD81BBD186C34DA000DBEEE /* 29.jpg in Resources */,
 				BBA492FE187CF0BE0089D35E /* slideLeft_Back@2X.png in Resources */,
+				BBD07925188EB1D400325927 /* bag_Small.png in Resources */,
 				BBA18E791864277100EEEFC8 /* DetailViewController.xib in Resources */,
 				BBD134141869CD2D008657B6 /* broom@2x.png in Resources */,
 				BBA0987218751A1B008C49E2 /* MagDetaiViewController.xib in Resources */,
@@ -1959,6 +1990,7 @@
 				BBAF984A188547BA002DDA7A /* tableCell.png in Resources */,
 				BBB2CF0D187BA7D500C8F210 /* redBack.png in Resources */,
 				BBC95B2018532E4600A10431 /* SampleData.plist in Resources */,
+				BBD07926188EB1D400325927 /* bag_Small@2X.png in Resources */,
 				BBC95B3618532E5F00A10431 /* images-9.jpeg in Resources */,
 				BBD81BBA186C34DA000DBEEE /* 26.jpg in Resources */,
 				BBD318A2188D3F5F00618A5A /* imageLabel.png in Resources */,

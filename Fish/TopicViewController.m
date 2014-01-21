@@ -193,7 +193,6 @@
     sqlite3_close(database);
     
     //创建数据库end
-    //创建数据库end
     
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
