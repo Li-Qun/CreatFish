@@ -16,26 +16,7 @@
 @end
 @interface LifeViewController : UIViewController <iCarouselDataSource,iCarouselDelegate,UIActionSheetDelegate,myLifeDelegate,FishDelegate>
 {
-    id<myLifeDelegate>delegate;
-    UIButton *left;
-    UIButton *right;
-    UIView *view1;
-    UIView *view2;
-    AppDelegate * app;
-    //单元属性
-    NSString *MagId;
-    NSString *MagName;
-    NSString *MagImage;
-    NSString *MagPid;
-    NSString *MagLevel;
-    NSString *MagFlag;
-    
-    ContentRead *contentRead;
-    int total;//杂志树目；
-    NSMutableArray *arry_Mag_category_id;
-    NSMutableArray *arry_Mag_description;
-    NSMutableArray *arry_Mag_image;
- 
+    AppDelegate *app;
     BOOL isSeven;
     BOOL isFive;
     float heightTopbar;
@@ -44,28 +25,24 @@
     BOOL isOpenL;
     BOOL isOpenR;
     
+    int total;
+    NSMutableArray *BigFish_Description;
+    UIView *view1;
+    IBOutlet UILabel *labelText;
+    int index;
+    //图片位置
+    int img_height;
+    int lab_height;
+    int select;
+
 }
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
 
-
-@property (nonatomic, retain)IBOutlet iCarousel *carousel;
 @property (nonatomic,assign) BOOL wrap;
-@property(assign,nonatomic)id<myLifeDelegate> delegate;
-
-@property(nonatomic,retain) NSString *MagId;
-@property(nonatomic,retain)NSString *MagName;
-@property(nonatomic,retain)NSString *NewsImage;
-@property(nonatomic,retain) NSString *MagImage;
-@property(nonatomic,retain) NSString *MagPid;
-@property(nonatomic,retain) NSString *MagFlag;
-@property(nonatomic,retain)NSMutableArray *arry_Mag_category_id;
-@property(nonatomic,retain)NSMutableArray *arry_Mag_description;
-@property(nonatomic,retain)NSMutableArray *arry_Mag_image;
-
-@property(readwrite,nonatomic)int target;//中心视图
-
-
+@property (nonatomic, retain)IBOutlet iCarousel *carousel;
+@property (retain, nonatomic) IBOutlet UILabel *labelText;
+@property(readwrite,nonatomic)int target;
 
 
 @end

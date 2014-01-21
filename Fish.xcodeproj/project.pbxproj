@@ -251,6 +251,8 @@
 		BBC95B4718532FA100A10431 /* QuadCurveMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC95B4418532FA100A10431 /* QuadCurveMenu.m */; };
 		BBC95B4818532FA100A10431 /* QuadCurveMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC95B4618532FA100A10431 /* QuadCurveMenuItem.m */; };
 		BBC95B4B1853303F00A10431 /* klpView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC95B4A1853303F00A10431 /* klpView.m */; };
+		BBD0790F188E5E5700325927 /* LifeItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0790D188E5E5700325927 /* LifeItemViewController.m */; };
+		BBD07910188E5E5700325927 /* LifeItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD0790E188E5E5700325927 /* LifeItemViewController.xib */; };
 		BBD0E1CE1877D8D1000D1141 /* Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0E1CD1877D8D1000D1141 /* Singleton.m */; };
 		BBD0E1D818780909000D1141 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0E1D618780909000D1141 /* SettingViewController.m */; };
 		BBD0E1D918780909000D1141 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD0E1D718780909000D1141 /* SettingViewController.xib */; };
@@ -674,6 +676,9 @@
 		BBC95B4618532FA100A10431 /* QuadCurveMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuadCurveMenuItem.m; sourceTree = "<group>"; };
 		BBC95B491853303F00A10431 /* klpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = klpView.h; sourceTree = "<group>"; };
 		BBC95B4A1853303F00A10431 /* klpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = klpView.m; sourceTree = "<group>"; };
+		BBD0790C188E5E5700325927 /* LifeItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LifeItemViewController.h; sourceTree = "<group>"; };
+		BBD0790D188E5E5700325927 /* LifeItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifeItemViewController.m; sourceTree = "<group>"; };
+		BBD0790E188E5E5700325927 /* LifeItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LifeItemViewController.xib; sourceTree = "<group>"; };
 		BBD0E1CC1877D8D1000D1141 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = ../Singleton.h; sourceTree = "<group>"; };
 		BBD0E1CD1877D8D1000D1141 /* Singleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Singleton.m; path = ../Singleton.m; sourceTree = "<group>"; };
 		BBD0E1D518780909000D1141 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
@@ -1721,6 +1726,9 @@
 				BB9D90AD18684545000CB89C /* LifeViewController.h */,
 				BB9D90AE18684545000CB89C /* LifeViewController.m */,
 				BB9D90AF18684545000CB89C /* LifeViewController.xib */,
+				BBD0790C188E5E5700325927 /* LifeItemViewController.h */,
+				BBD0790D188E5E5700325927 /* LifeItemViewController.m */,
+				BBD0790E188E5E5700325927 /* LifeItemViewController.xib */,
 			);
 			name = TopicVC;
 			path = Fish;
@@ -1912,6 +1920,7 @@
 				BB951561185348C000BD82A7 /* icon-star.png in Resources */,
 				BBD7A05F186D2DED000A4675 /* selectedButton.png in Resources */,
 				BBA5B7D2187A875000D55899 /* labelNormal_Set@2X.png in Resources */,
+				BBD07910188E5E5700325927 /* LifeItemViewController.xib in Resources */,
 				BBE61232188BAA3F00DCCB52 /* topicBack.png in Resources */,
 				BBD81BBD186C34DA000DBEEE /* 29.jpg in Resources */,
 				BBA492FE187CF0BE0089D35E /* slideLeft_Back@2X.png in Resources */,
@@ -2106,6 +2115,7 @@
 				BBD67E411876D6E800A6CD87 /* StoreUpViewController.m in Sources */,
 				BBD31891188CCA6500618A5A /* BigFishViewController.m in Sources */,
 				9006F344184D59250091B69F /* AppDelegate.m in Sources */,
+				BBD0790F188E5E5700325927 /* LifeItemViewController.m in Sources */,
 				BBA4789F185721A000E64289 /* UIImageView+WebCache.m in Sources */,
 				BBA11CF6185EDAAF000D39F8 /* SBJsonTokeniser.m in Sources */,
 				BB31A48B186ED7F600F23782 /* OneCell.m in Sources */,
