@@ -179,6 +179,10 @@
             NewsController *apiVC = [[[NewsController alloc] init] autorelease];
             apiVC.target=btn.tag;
             apiVC.targetCentre=target_centerView;
+            if(btn.tag<17)
+                apiVC.NewsName=@"攻略";
+            else
+            apiVC.NewsName=@"装备";
             UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
             self.viewDeckController.centerController = navApiVC;
             self.view.userInteractionEnabled = YES;

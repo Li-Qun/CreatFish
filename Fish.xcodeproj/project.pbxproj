@@ -255,6 +255,10 @@
 		BBD07910188E5E5700325927 /* LifeItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD0790E188E5E5700325927 /* LifeItemViewController.xib */; };
 		BBD07913188E766A00325927 /* signble.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07911188E766A00325927 /* signble.png */; };
 		BBD07914188E766A00325927 /* signble@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07912188E766A00325927 /* signble@2X.png */; };
+		BBD07919188E910500325927 /* aboard.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07915188E910500325927 /* aboard.png */; };
+		BBD0791A188E910500325927 /* aboard@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07916188E910500325927 /* aboard@2X.png */; };
+		BBD0791B188E910500325927 /* nation.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07917188E910500325927 /* nation.png */; };
+		BBD0791C188E910500325927 /* nation@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07918188E910500325927 /* nation@2X.png */; };
 		BBD0E1CE1877D8D1000D1141 /* Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0E1CD1877D8D1000D1141 /* Singleton.m */; };
 		BBD0E1D818780909000D1141 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0E1D618780909000D1141 /* SettingViewController.m */; };
 		BBD0E1D918780909000D1141 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD0E1D718780909000D1141 /* SettingViewController.xib */; };
@@ -683,6 +687,10 @@
 		BBD0790E188E5E5700325927 /* LifeItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LifeItemViewController.xib; sourceTree = "<group>"; };
 		BBD07911188E766A00325927 /* signble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = signble.png; sourceTree = "<group>"; };
 		BBD07912188E766A00325927 /* signble@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signble@2X.png"; sourceTree = "<group>"; };
+		BBD07915188E910500325927 /* aboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aboard.png; sourceTree = "<group>"; };
+		BBD07916188E910500325927 /* aboard@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "aboard@2X.png"; sourceTree = "<group>"; };
+		BBD07917188E910500325927 /* nation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nation.png; sourceTree = "<group>"; };
+		BBD07918188E910500325927 /* nation@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nation@2X.png"; sourceTree = "<group>"; };
 		BBD0E1CC1877D8D1000D1141 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = ../Singleton.h; sourceTree = "<group>"; };
 		BBD0E1CD1877D8D1000D1141 /* Singleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Singleton.m; path = ../Singleton.m; sourceTree = "<group>"; };
 		BBD0E1D518780909000D1141 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
@@ -1352,6 +1360,10 @@
 		BBAF28DA187E62A9005A3FCB /* swimFish */ = {
 			isa = PBXGroup;
 			children = (
+				BBD07915188E910500325927 /* aboard.png */,
+				BBD07916188E910500325927 /* aboard@2X.png */,
+				BBD07917188E910500325927 /* nation.png */,
+				BBD07918188E910500325927 /* nation@2X.png */,
 				BBAF28DF187E8606005A3FCB /* swimWordLabel.png */,
 				BBAF28E0187E8606005A3FCB /* swimWordLabel@2X.png */,
 				BBAF28DB187E62D2005A3FCB /* SwimFish.png */,
@@ -1920,6 +1932,7 @@
 				BBDBE948184DD064009FA292 /* LeftViewController.xib in Resources */,
 				BBA1CA02187FED790028E5BC /* adviceTheBigTitle@2X.png in Resources */,
 				BBD81BB7186C34DA000DBEEE /* 23.jpg in Resources */,
+				BBD0791A188E910500325927 /* aboard@2X.png in Resources */,
 				BBD7A05E186D2DED000A4675 /* selectButtonNormal.png in Resources */,
 				BBA4BE97188400BE0008643E /* ShareSDKiPhoneDefaultShareViewUI.bundle in Resources */,
 				BBD81BB3186C34DA000DBEEE /* 2.jpg in Resources */,
@@ -1936,6 +1949,7 @@
 				BBD134141869CD2D008657B6 /* broom@2x.png in Resources */,
 				BBA0987218751A1B008C49E2 /* MagDetaiViewController.xib in Resources */,
 				BBD81BAB186C34DA000DBEEE /* 12.jpg in Resources */,
+				BBD0791C188E910500325927 /* nation@2X.png in Resources */,
 				BBD81BAF186C34DA000DBEEE /* 16.jpg in Resources */,
 				BBA5B7D5187A8EB600D55899 /* theLineSet.png in Resources */,
 				BBC95B3018532E5F00A10431 /* images-3.jpeg in Resources */,
@@ -1949,6 +1963,7 @@
 				BBD81BBA186C34DA000DBEEE /* 26.jpg in Resources */,
 				BBD318A2188D3F5F00618A5A /* imageLabel.png in Resources */,
 				BBD134131869CD2D008657B6 /* broom.png in Resources */,
+				BBD07919188E910500325927 /* aboard.png in Resources */,
 				BBA49306187D2F090089D35E /* TitleWhiteBack@2X.png in Resources */,
 				BBA1CA0A187FF06C0028E5BC /* theGoBack@2X.png in Resources */,
 				BB951562185348C000BD82A7 /* icon-star@2x.png in Resources */,
@@ -1983,6 +1998,7 @@
 				BBD0E1DD18781444000D1141 /* set_Nav.png in Resources */,
 				BBD81BBE186C34DA000DBEEE /* 3.jpg in Resources */,
 				BBD31897188D0CCD00618A5A /* FishImageViewController.xib in Resources */,
+				BBD0791B188E910500325927 /* nation.png in Resources */,
 				BB951563185348C000BD82A7 /* bg-menuitem-highlighted.png in Resources */,
 				BBC95B3218532E5F00A10431 /* images-5.jpeg in Resources */,
 				BBD81BB9186C34DA000DBEEE /* 25.jpg in Resources */,

@@ -529,8 +529,8 @@
     UIImageView *topBarRed=[[[UIImageView alloc]initWithFrame:CGRectMake(108, 0, 110, 55)]autorelease];
     topBarRed.image=[UIImage imageNamed:@"TitleRedBack"];
     [topBarWhite addSubview:topBarRed];
-    UILabel *titleBigName=[[[UILabel alloc]initWithFrame:CGRectMake(10, 5, 100, 50)]autorelease];
-    titleBigName.text=@"路亚中国";
+    UILabel *titleBigName=[[[UILabel alloc]initWithFrame:CGRectMake(10, 8, 100, 50)]autorelease];
+    titleBigName.text=@"环球垂钓";
     titleBigName.textColor=[UIColor whiteColor];
     titleBigName.backgroundColor=[UIColor clearColor];
     titleBigName.font =[UIFont boldSystemFontOfSize:22];

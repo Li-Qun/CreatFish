@@ -179,12 +179,12 @@
     [self.view addSubview:topBarView];
     UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(105, littleHeinght/2, 90, 23)]autorelease];
     wordView.image=[UIImage imageNamed:@"word"];
-    [topBarView addSubview:wordView];
-    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105,littleHeinght,95,65-littleHeinght)]autorelease];
+   // [topBarView addSubview:wordView];
+    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105,littleHeinght/2+3,95,65-littleHeinght)]autorelease];
     name.textColor=[UIColor whiteColor];
     name.text=NewsName;
     name.textAlignment = UITextAlignmentCenter;
-    name.font =[UIFont boldSystemFontOfSize:15];
+    name.font =[UIFont boldSystemFontOfSize:21];
     name.shadowColor = [UIColor grayColor];
     name.shadowOffset = CGSizeMake(0.0,0.5);
     name.backgroundColor=[UIColor clearColor];

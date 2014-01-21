@@ -67,7 +67,7 @@
     UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(120, 15, 100, 30)];
     customLab.backgroundColor=[UIColor clearColor];
     [customLab setTextColor:[UIColor whiteColor]];
-    [customLab setText:@"路亚中国"];
+    [customLab setText:@"环球垂钓"];
     customLab.font = [UIFont boldSystemFontOfSize:20];
     [topBarView addSubview:customLab];
     

@@ -41,25 +41,6 @@
     contentRead.delegate=self;
     [contentRead  gallery:@"9"];
     
-}
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
-{
-    NSLog(@"  js:   %@",jsonString);
-    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-    NSDictionary *jsonObj =[parser objectWithString: jsonString];
-    
-    NSDictionary *data = [jsonObj objectForKey:@"data"];
-    
-    for (int i =0; i <data.count; i++) {
-        
-        [Fish_arr insertObject:[data objectAtIndex:i] atIndex: i];
-    }
-    [self createView];
-    
-}
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
     CGFloat height = size.height;
@@ -98,8 +79,12 @@
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
     
+    
     UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(135, littleHeinght+2, 40, 20)]autorelease];
-    wordView.image=[UIImage imageNamed:@"swimWordLabel"];
+    if(FishImageID==12)
+        wordView.image=[UIImage imageNamed:@"nation"];
+    else
+    wordView.image=[UIImage imageNamed:@"aboard"];
     [topBarView addSubview:wordView];
     
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -115,6 +100,25 @@
     [self.view addSubview:rightBtn];
     [rightBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
     rightBtn.tag=20;
+}
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
+{
+    NSLog(@"  js:   %@",jsonString);
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+    
+    NSDictionary *data = [jsonObj objectForKey:@"data"];
+    
+    for (int i =0; i <data.count; i++) {
+        
+        [Fish_arr insertObject:[data objectAtIndex:i] atIndex: i];
+    }
+    [self createView];
+    
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
 }
 -(void)SwimSwitch_BtnTag:(id)sender
 {
