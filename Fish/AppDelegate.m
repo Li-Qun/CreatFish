@@ -22,14 +22,14 @@
 @implementation AppDelegate
 @synthesize viewDeckController;
 
-@synthesize CategoryId=CategoryId;
-@synthesize CategoryPid=CategoryPid;
-@synthesize CategoryFlag=CategoryFlag;
-@synthesize CategoryImage=CategoryImage;
-@synthesize CategoryLevel=CategoryLevel;
-@synthesize CategoryName=CategoryName;
-@synthesize content=content;
-@synthesize total=total;
+//@synthesize CategoryId=CategoryId;
+//@synthesize CategoryPid=CategoryPid;
+//@synthesize CategoryFlag=CategoryFlag;
+//@synthesize CategoryImage=CategoryImage;
+//@synthesize CategoryLevel=CategoryLevel;
+//@synthesize CategoryName=CategoryName;
+//@synthesize content=content;
+//@synthesize total=total;
 @synthesize filter_is_sticky=filter_is_sticky;
 @synthesize filter_category_id=filter_category_id;
 @synthesize offset=offset;
@@ -98,6 +98,7 @@
 //    [ShareSDK connectWeChatTimelineWithAppId:appId wechatCls:[WXApi class]];
     
 }
+
 //先生成 再替换
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -128,12 +129,11 @@
     CGFloat height = size.height;
     if(height==480)height_First=100;
     
-    
     //先生成 再替换
     self.window.rootViewController = self.viewDeckController;
     self.window.backgroundColor=[UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    
+
     UIImageView *splashScreen = [[[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 360, height)]autorelease];
     splashScreen.image = [UIImage imageNamed:@"welcome@2X"];
     [self.window addSubview:splashScreen];

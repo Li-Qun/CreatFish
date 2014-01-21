@@ -196,7 +196,7 @@
     //创建数据库end
     
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString: jsonString];
@@ -398,16 +398,6 @@
         
          NSDictionary* dict = [arr objectAtIndex:index];
         labelText.text=[dict objectForKey:@"description"];
-        
-        
-//        someWords.font=[UIFont systemFontOfSize:14.0f];
-//        someWords.textColor=[UIColor whiteColor];
-//        //  someWords.lineBreakMode = UILineBreakModeWordWrap;
-//        someWords.numberOfLines = 0;
-//        someWords.backgroundColor=[UIColor clearColor];
-//        [someWords sizeToFit];
-        
-        
         
         
 	}else {

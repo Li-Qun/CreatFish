@@ -77,7 +77,7 @@
     
     [self.view addSubview:navBar];
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
     
 }

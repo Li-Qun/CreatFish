@@ -30,7 +30,7 @@
     contentRead.delegate=self;
     [contentRead Category];
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
     
 }

@@ -253,6 +253,8 @@
 		BBC95B4B1853303F00A10431 /* klpView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC95B4A1853303F00A10431 /* klpView.m */; };
 		BBD0790F188E5E5700325927 /* LifeItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0790D188E5E5700325927 /* LifeItemViewController.m */; };
 		BBD07910188E5E5700325927 /* LifeItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD0790E188E5E5700325927 /* LifeItemViewController.xib */; };
+		BBD07913188E766A00325927 /* signble.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07911188E766A00325927 /* signble.png */; };
+		BBD07914188E766A00325927 /* signble@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07912188E766A00325927 /* signble@2X.png */; };
 		BBD0E1CE1877D8D1000D1141 /* Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0E1CD1877D8D1000D1141 /* Singleton.m */; };
 		BBD0E1D818780909000D1141 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0E1D618780909000D1141 /* SettingViewController.m */; };
 		BBD0E1D918780909000D1141 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD0E1D718780909000D1141 /* SettingViewController.xib */; };
@@ -679,6 +681,8 @@
 		BBD0790C188E5E5700325927 /* LifeItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LifeItemViewController.h; sourceTree = "<group>"; };
 		BBD0790D188E5E5700325927 /* LifeItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifeItemViewController.m; sourceTree = "<group>"; };
 		BBD0790E188E5E5700325927 /* LifeItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LifeItemViewController.xib; sourceTree = "<group>"; };
+		BBD07911188E766A00325927 /* signble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = signble.png; sourceTree = "<group>"; };
+		BBD07912188E766A00325927 /* signble@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signble@2X.png"; sourceTree = "<group>"; };
 		BBD0E1CC1877D8D1000D1141 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = ../Singleton.h; sourceTree = "<group>"; };
 		BBD0E1CD1877D8D1000D1141 /* Singleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Singleton.m; path = ../Singleton.m; sourceTree = "<group>"; };
 		BBD0E1D518780909000D1141 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
@@ -1262,6 +1266,8 @@
 		BBA5B7DF187ABF2C00D55899 /* firstView */ = {
 			isa = PBXGroup;
 			children = (
+				BBD07911188E766A00325927 /* signble.png */,
+				BBD07912188E766A00325927 /* signble@2X.png */,
 				BBA492FF187D2F090089D35E /* TitleRedBack.png */,
 				BBA49300187D2F090089D35E /* TitleRedBack@2X.png */,
 				BBA49301187D2F090089D35E /* TitleWhiteBack.png */,
@@ -1908,6 +1914,7 @@
 				BBD81BB8186C34DA000DBEEE /* 24.jpg in Resources */,
 				BBD81BC0186C34DA000DBEEE /* 5.jpg in Resources */,
 				BBB2CF1C187BF80C00C8F210 /* selectOne@2X.png in Resources */,
+				BBD07914188E766A00325927 /* signble@2X.png in Resources */,
 				BBD0E1E718781B95000D1141 /* advice_nav_red.png in Resources */,
 				BBAF983C18852EB2002DDA7A /* GooglePlus.bundle in Resources */,
 				BBDBE948184DD064009FA292 /* LeftViewController.xib in Resources */,
@@ -1919,6 +1926,7 @@
 				BBA49303187D2F090089D35E /* TitleRedBack.png in Resources */,
 				BB951561185348C000BD82A7 /* icon-star.png in Resources */,
 				BBD7A05F186D2DED000A4675 /* selectedButton.png in Resources */,
+				BBD07913188E766A00325927 /* signble.png in Resources */,
 				BBA5B7D2187A875000D55899 /* labelNormal_Set@2X.png in Resources */,
 				BBD07910188E5E5700325927 /* LifeItemViewController.xib in Resources */,
 				BBE61232188BAA3F00DCCB52 /* topicBack.png in Resources */,

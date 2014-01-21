@@ -39,10 +39,10 @@
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
-    [contentRead  gallery:FishImageID];
+    [contentRead  gallery:@"9"];
     
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
     NSLog(@"  js:   %@",jsonString);
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
@@ -226,7 +226,7 @@
     
     CGPoint loc = [gestureRecognizer locationInView:self.klpScrollView1];
     NSInteger touchIndex = floor(loc.x / pageWith) ;
-    if (touchIndex > app.firstPageImage.count) {
+    if (touchIndex > app.firstPageImage.count+1) {
         return;
     }
     //进入详细阅读

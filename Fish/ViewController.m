@@ -30,7 +30,9 @@
 @synthesize categoryItem=categoryItem;
 @synthesize contentRead=contentRead;
 @synthesize klpImgArr;
-@synthesize klpScrollView1,klpScrollView2;
+@synthesize klpScrollView1;
+@synthesize labelText=labelText;
+@synthesize labelDay=labelDay;
 - (void)viewWillAppear:(BOOL)animated
 {//视图即将可见时调用。默认情况下不执行任何操作
     
@@ -56,13 +58,13 @@
 }
 -(void)BuildFirstPage
 {
-    [contentRead ContentSetting];
+    [contentRead fetchList:@"1" isPri:@"0" Out:@"0"];
     [contentRead Category];
 }
 -(void)_init
 {
     arrName=[[[NSMutableArray alloc]init]retain];
-    contentRead =[[ContentRead alloc]init];
+    contentRead =[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [app build];
@@ -179,10 +181,10 @@
         sqlite3_finalize(stmt);
         
         //  最后，关闭数据库：
-        sqlite3_close(database);
+        sqlite3_close(database);//
     }
     else
-    {
+    {/*
         NSMutableArray *firstPageImage= [[[NSMutableArray alloc]init]autorelease];
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
@@ -224,13 +226,14 @@
             [app.firstPageImage insertObject:[firstPageImage objectAtIndex:i] atIndex: i];
         }
         [self createView:firstPageImage];
-
+//*/
     }
 
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
-    
+    NSLog(@"%@",flag);
+  //  NSLog(@"%@",jsonString);
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString: jsonString];
     float heightTooBar;
@@ -255,11 +258,18 @@
     }
     
     
-    if([flag integerValue]==5)
+    if([ID integerValue]==1)
     {
-        NSDictionary *data = [jsonObj objectForKey:@"home_image"];
-        NSMutableArray *firstPageImage= [[[NSMutableArray alloc] initWithCapacity:data.count]autorelease];
         
+        NSDictionary *data = [jsonObj objectForKey:@"data"];
+        NSMutableArray *firstPageImage= [[[NSMutableArray alloc] initWithCapacity:data.count]autorelease];
+        for (int i =0; i <data.count; i++) {
+            
+            [firstPageImage insertObject:[data objectAtIndex:i] atIndex: i];
+            [arr insertObject:[data objectAtIndex:i] atIndex: i];
+        }
+         [self createView:firstPageImage];
+   /*
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
         NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_Pic"];
@@ -328,7 +338,7 @@
             [app.firstPageImage insertObject:[data objectAtIndex:i] atIndex: i];
         }
         [self createView:firstPageImage];
-        
+//*/
     }
     else //==2
     {
@@ -459,14 +469,27 @@
 }
 -(void)createView:(NSMutableArray *)firstPageImage
 {
+    labelText.text= [ [arr objectAtIndex:0] objectForKey:@"description"];
+    labelText.backgroundColor=[UIColor clearColor];
+    labelText.font=[UIFont systemFontOfSize:15.0f];
+    labelText.numberOfLines = 0;
+    [labelText sizeToFit];
+    
+    labelDay.textColor=[UIColor lightGrayColor];
+    labelDay.text= [ [arr objectAtIndex:0] objectForKey:@"create_time"];
+    labelDay.backgroundColor=[UIColor clearColor];
+    labelDay.font=[UIFont systemFontOfSize:15.0f];
+    labelDay.numberOfLines = 0;
+    
+   
     ///UIScrollerView
     index = 0;
     self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:firstPageImage.count];
     CGSize size = self.klpScrollView1.frame.size;
-    if(height_Momente==480)  height=60;
+  //  if(height_Momente==480)  height=60;
     for (int i=0; i < [firstPageImage count]; i++) {
-        UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height+height)]autorelease];
-        NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[firstPageImage objectAtIndex:i]];
+        UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height)]autorelease];
+        NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[[firstPageImage objectAtIndex:i]objectForKey:@"image"]];
         [iv setImageWithURL:[NSURL URLWithString: imgURL]
            placeholderImage:[UIImage imageNamed:@"placeholder.png"]
                     success:^(UIImage *image) {NSLog(@"OK");}
@@ -482,7 +505,7 @@
     //往数组里添加成员
     for (int i=0; i<firstPageImage.count; i++) {
         UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(100*i + 5*i,0,size.height+height,70)]autorelease];
-        [iv setImage:[UIImage imageNamed:[firstPageImage objectAtIndex:i]]];
+        [iv setImage:[UIImage imageNamed:[[firstPageImage objectAtIndex:i] objectForKey:@"image"]  ]];
         [self.klpImgArr addObject:iv];
         iv = nil;
     }
@@ -519,13 +542,14 @@
     smallTitle.textColor=[UIColor lightGrayColor];
     smallTitle.text=@"首页";//AppleGothic
     smallTitle.backgroundColor=[UIColor clearColor];
-    [self.view addSubview:smallTitle];
+   // [self.view addSubview:smallTitle];
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.view.backgroundColor=[UIColor whiteColor];
     scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    arr=[[[NSMutableArray alloc]init]retain];
     [self _init];
 }
 #pragma mark-- UIScrollViewDelegate
@@ -556,6 +580,20 @@
 		[UIView animateWithDuration:0.2f animations:^(void){
 			[klp setAlpha:.85f];
 		}];
+        
+        labelText.text= [ [arr objectAtIndex:index] objectForKey:@"description"];
+        labelText.backgroundColor=[UIColor clearColor];
+        labelText.font=[UIFont systemFontOfSize:15.0f];
+        labelText.numberOfLines = 0;
+        [labelText sizeToFit];
+        
+        labelDay.textColor=[UIColor lightGrayColor];
+        labelDay.text= [ [arr objectAtIndex:index] objectForKey:@"create_time"];
+        labelDay.backgroundColor=[UIColor clearColor];
+        labelDay.font=[UIFont systemFontOfSize:15.0f];
+        labelDay.numberOfLines = 0;
+        
+        
 	}else {
 		
 	}
@@ -628,5 +666,10 @@
         self.hidesBottomBarWhenPushed = YES;//OK~
         [self.navigationController pushViewController :newVC animated:YES];
     }
+}
+- (void)dealloc {
+    [labelText release];
+    [labelDay release];
+    [super dealloc];
 }
 @end

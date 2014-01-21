@@ -87,7 +87,7 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor=[UIColor whiteColor];
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
     
 }

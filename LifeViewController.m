@@ -53,7 +53,7 @@
     [contentRead setDelegate:self];//设置代理
     [contentRead fetchList:str isPri:@"0" Out:@"0"];
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
     
     if(isSeven&&isFive)

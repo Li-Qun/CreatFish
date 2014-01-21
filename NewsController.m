@@ -147,17 +147,10 @@
     }
 }
 
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
       app.jsonString=jsonString;
-//    NSLog(@"%d",app.array.count);
-//    NSLog(@"name %@", [[app.array objectAtIndex  :target ]objectForKey:@"name"]);
-//    NewsId=[[app.array objectAtIndex  :target ]objectForKey:@"id"];
-//    NewsName=[[app.array objectAtIndex  :target ]objectForKey:@"name"];
-//    NewsPid=[[app.array objectAtIndex  :target ]objectForKey:@"pid"];
-//    NewsImage=[[app.array objectAtIndex  :target ]objectForKey:@"image"];
-//    NewsLevel=[[app.array objectAtIndex  :target ]objectForKey:@"level"];
-//    NewsFlag=[[app.array objectAtIndex  :target ]objectForKey:@"flag"];
+ 
     
     float heightTopbar;
     float littleHeinght;

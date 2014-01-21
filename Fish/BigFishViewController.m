@@ -97,7 +97,7 @@
     rightBtn.tag=20;
     
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
     
     if(isSeven&&isFive)

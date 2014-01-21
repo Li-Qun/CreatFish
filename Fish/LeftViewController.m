@@ -162,7 +162,7 @@
         //创建数据库end
     }
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
     [self.navigationController setNavigationBarHidden:YES];
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
