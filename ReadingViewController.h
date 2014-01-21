@@ -10,7 +10,16 @@
 #import "FishCore.h"
 #import "EGORefreshTableHeaderView.h"
 #import "EGORefreshTableFooterView.h"
-@interface ReadingViewController :UIViewController<UIWebViewDelegate,FishDelegate,UIScrollViewDelegate,EGORefreshTableDelegate>
+
+#import "SDImageCache.h"
+#import "SDWebImageManager.h"
+#import "SDWebImageDownloader.h"
+#import "QuadCurveMenu.h"
+#import "UIImageView+WebCache.h"
+
+#import "CustomURLCache.h"
+#import "MBProgressHUD.h"
+@interface ReadingViewController :UIViewController<UIWebViewDelegate,FishDelegate,UIScrollViewDelegate,EGORefreshTableDelegate,  UIGestureRecognizerDelegate,SDWebImageManagerDelegate, QuadCurveMenuDelegate,UIAlertViewDelegate >
 {
     NSMutableDictionary *Data;
     NSMutableArray *arrIDList;
@@ -48,8 +57,12 @@
 @property (retain, nonatomic)NSMutableArray *arrIDListNew;
 @property (readwrite, nonatomic) int yOrigin;
 @property (retain, nonatomic) NSMutableDictionary *dictForData;
-@property (retain, nonatomic)NSString *momentID;
 @property (nonatomic,retain) NSString *jsString;
 @property (nonatomic,retain)NSMutableString *htmlTextTotals;
 @property (nonatomic,retain)NSString *detailSave;
+
+
+@property (nonatomic,retain)NSString *next_Page;
+@property (nonatomic,retain)NSString *pre_Page;
+@property (retain, nonatomic)NSString *momentID;
 @end

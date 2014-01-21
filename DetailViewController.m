@@ -46,6 +46,8 @@
 @synthesize page_label=page_label;
 @synthesize htmlTextTotals=htmlTextTotals;
 @synthesize momentID=momentID;
+@synthesize pre_Page=pre_Page;
+@synthesize next_Page=next_Page;
 //@synthesize detailImage=detailImage;
 //@synthesize detailName=detailName;
 //@synthesize detailID=detailID;
@@ -91,6 +93,8 @@
 }
 - (void)viewDidLoad
 {
+    app=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+
     for (UIView *subviews in [self.view subviews])
     {
         [subviews removeFromSuperview];
@@ -215,18 +219,14 @@
     moment=[[jsonObj objectForKey:@"id"]intValue];
     detailTotal=[[NSString alloc]init];
     htmlText=[[NSString alloc]init];
-//    detailName=[[NSString alloc]init] ;
-//    detailImage=[[NSString alloc]init] ;
-//    detailID=[[NSString alloc]init];
+ 
     detailTotal=receiveStr;
     htmlText=[jsonObj objectForKey:@"content"];
-//    detailName=[jsonObj objectForKey:@"name"];
-//    detailImage=[jsonObj objectForKey:@"image"];
-//    detailID=[jsonObj objectForKey:@"id"];
+    app.next_Page=[jsonObj objectForKey:@"next_id"];
+ 
     [htmlTextTotals appendFormat:[NSString stringWithFormat: htmlText]];
     //<body style="background-color: transparent">//设置网页背景透明
-   // htmlTextTotals = [htmlTextTotals stringByAppendingString:htmlText];
-   //  NSLog(@"%@",htmlTextTotals);
+ 
     jsString = [NSString stringWithFormat:@"<html> \n"
                           "<head> \n"
                           "<style type=\"text/css\"> \n"
@@ -576,63 +576,6 @@ didFailWithError:(NSError *)error
     }
 }
 #pragma mark -响应对UIWebView 文本操作start
-//- (void)pressme:(id)sender
-//{
-//    [[UIMenuController sharedMenuController] setTargetRect:[sender frame] inView:self.view];
-//    [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES]
-//    ;
-//}
-//
-//- (void)cameraAction:(id)sender
-//{
-//    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Camera Item Pressed", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil] show];
-//}
-//
-//- (void)broomAction:(id)sender
-//{
-//    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Broom Item Pressed", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil] show];
-//}
-//
-//- (void)textAction:(id)sender
-//{
-//    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Text Item Pressed", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil] show];
-//}
-//菜单按钮响应end
-//实现翻页响应start
--(void)PressGo
-{
-    [UIView beginAnimations:@"animationID" context:nil];
-	[UIView setAnimationDuration:0.8f];
-	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-	[UIView setAnimationRepeatAutoreverses:NO];
-    if(moment>=[[arrIDList objectAtIndex:arrIDList.count-1]intValue])
-        moment=[[arrIDList objectAtIndex:arrIDList.count-1]intValue];
-    else moment+=1;
-    [self postURL:[NSString stringWithFormat:@"%d",moment]];
-     [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.view cache:YES];
-    [self.view exchangeSubviewAtIndex:0 withSubviewAtIndex:0];
-	[UIView commitAnimations];
-}
--(void)Pressleft
-{
-    [UIView beginAnimations:@"animationID" context:nil];
-	[UIView setAnimationDuration:0.8f];
-	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-	[UIView setAnimationRepeatAutoreverses:NO];
-    if(moment<=[[arrIDList objectAtIndex:0]intValue])
-         moment=[[arrIDList objectAtIndex:0]intValue];
-    else moment-=1;
-    [self postURL:[NSString stringWithFormat:@"%d",moment]];
-    [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:self.view cache:YES];
-    [self.view exchangeSubviewAtIndex:0 withSubviewAtIndex:0];
-	[UIView commitAnimations];
-}
-
-////实现翻页响应end
-//- (void)dealloc {
-//  //  [showWebView release];
-//    [super dealloc];
-//}
 -(void)PressWord:(id)sender
 {
     [[UIMenuController sharedMenuController] setTargetRect:[sender frame] inView:self.view];
@@ -762,49 +705,20 @@ didFailWithError:(NSError *)error
 //加载调用的方法
 -(void)getNextPageView
 {
-//    if(isStore==YES){
-//        isStore=NO;  
-//
-//    }
-//    else {
-//        int a=[detailID intValue];
-//        int b=[[arrIDListNew objectAtIndex:arrIDListNew.count-1] intValue];
-//        if(a> b)
-//        {
-//            NSString *string=[NSString stringWithFormat:@"%d",--a];
-//            [self postURL:string];
-//            //[self.dictForData objectForKey:@"id"]
-//        }
-//        
-    
-    if(isStore==YES){
-                 isStore=NO;
-            }
-    ContentRead *read=[[[ContentRead alloc]init]autorelease];
-    read.delegate=self;
-    BOOL Ok;
-    Ok=NO;
-    for(int i=0;i< arrIDListNew.count;i++)
+
+    if(app.next_Page.length!=0)
     {
-        if([momentID isEqualToString:[arrIDListNew objectAtIndex:i]]&&i+1<arrIDListNew.count)
-        {
-            [self postURL:[arrIDListNew objectAtIndex:i+1]];
-            [showWebView reload];
-            [self removeFooterView];
-            [self testFinishedLoadData];
-            Ok=YES;
-                momentID=[arrIDListNew objectAtIndex:i+1];
-            break;
-        }
+        [self postURL:app.next_Page];
+        [showWebView reload];
+        [self removeFooterView];
+        [self testFinishedLoadData];
+        momentID=app.next_Page;
     }
-    if(!Ok)
+    else
     {
         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"没有更多了，去返回查看其它精彩游钓资讯吧!", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"确定", nil) otherButtonTitles:nil] show];
         
     }
-
-
-        
     
 }
 

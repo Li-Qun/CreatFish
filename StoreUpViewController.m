@@ -37,9 +37,6 @@
 -(void)PessTheStoreBack
 {
     [self.viewDeckController toggleLeftViewAnimated:YES];
-//    ViewController *newVC = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil]autorelease];
-//    self.hidesBottomBarWhenPushed = YES;//OK~
-//    [self.navigationController pushViewController :newVC animated:YES];
 
 }
 - (void)viewDidLoad

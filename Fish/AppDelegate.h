@@ -53,6 +53,10 @@ typedef enum
     //首页幻灯片
     NSMutableArray *firstPageImage;
     int height_First;
+    
+    NSString *pre_Page;
+    NSString *next_Page;
+    
 }
 @property (nonatomic, retain)NSMutableArray  *array;
 @property (nonatomic,retain)NSMutableArray *arrayData;
@@ -93,8 +97,9 @@ typedef enum
 @property(nonatomic)int saveNum;
 //收藏杂志end
 @property(nonatomic,retain)NSMutableArray *firstPageImage;
-
-
+//翻页
+@property (nonatomic,retain)NSString *next_Page;
+@property (nonatomic,retain)NSString *pre_Page;
 @end
 
 

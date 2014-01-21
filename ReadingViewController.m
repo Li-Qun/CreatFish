@@ -17,6 +17,8 @@
 
 @implementation ReadingViewController
 @synthesize momentID=momentID;
+@synthesize pre_Page=pre_Page;
+@synthesize next_Page=next_Page;
 @synthesize arrIDListNew=arrIDListNew;
 @synthesize jsString=jsString;
 @synthesize htmlTextTotals=htmlTextTotals;
@@ -103,6 +105,7 @@
 }
 -(void)reBack:(NSString *)jsonString
 {
+    NSLog(@"%@",jsonString);
     fontSize=16.0;
     line_height=18.0;
     showWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, 320, totalHeight)];
@@ -134,17 +137,17 @@
    
 }
 -(void)viewWillAppear:(BOOL)animated
-{
-    
+{[self build];
+    NSLog(@"%@",momentID);
+    contentRead=[[[ContentRead alloc]init]autorelease];
+    contentRead.delegate=self;
+    [contentRead ContentDetail:@"2" ];
 }
 - (void)viewDidLoad
 {
-    [self build];
+    
     htmlTextTotals=[[[NSMutableString alloc]init]retain];
     jsString=[[[NSString alloc]init]retain];
-    contentRead=[[[ContentRead alloc]init]autorelease];
-    contentRead.delegate=self;
-    [contentRead ContentDetail:momentID ];
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
@@ -170,6 +173,26 @@
     
     return [super canPerformAction:action withSender:sender];
 }
+-(void)PressWord:(id)sender
+{
+    [[UIMenuController sharedMenuController] setTargetRect:[sender frame] inView:self.view];
+    [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES];
+    
+    UIMenuItem *wordBig = [[[UIMenuItem alloc] initWithTitle:nil action:@selector(wordBigAction:)]autorelease];
+    [wordBig  setTitle:@"字体大"];
+    UIMenuItem *wordSmall = [[[UIMenuItem alloc] initWithTitle:nil action:@selector(wordSmallAction:)]autorelease];
+    [wordSmall setTitle:@"字体小"];
+    
+    UIMenuItem *lineSmall = [[[UIMenuItem alloc] initWithTitle:@"间距窄" action:@selector(lineSmallAction:)]autorelease];
+    
+    UIMenuItem *lineBig = [[[UIMenuItem alloc] initWithTitle: @"间距宽" action:@selector(lineBigAction:)]autorelease];
+    [UIMenuController sharedMenuController].menuItems = @[wordBig,wordSmall,lineSmall,lineBig ];
+    //菜单按钮选项
+    [[UIMenuController sharedMenuController] setTargetRect:CGRectMake(175, 23, 28, 20) inView:self.view];
+    [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES];
+    
+}
+
 #pragma mark -响应对UIWebView 文本操作start
 -(void)wordBigAction:(id)sender
 {
@@ -261,7 +284,6 @@
     
     [showWebView loadHTMLString:jsString baseURL:nil];
     [showWebView stringByEvaluatingJavaScriptFromString:jsString];
-    
 }
 -(void)cameraSaveAction:(id)sender
 {
@@ -272,7 +294,7 @@
 {    
     UIButton *saveBtn = (UIButton *)sender;
     [saveBtn setImage:[UIImage imageNamed:@"saveImgHighted@2X"] forState:UIControlStateNormal];
-    UIAlertView *alert =[[[UIAlertView alloc] initWithTitle:@"hello"
+    UIAlertView *alert =[[[UIAlertView alloc] initWithTitle:@"温情提示"
                                                     message:@"收藏当前阅读内容"
                                                    delegate:self
                                           cancelButtonTitle:@"确定"
@@ -284,9 +306,9 @@
     AppDelegate * app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
 
     if(buttonIndex==0)//确定
-    {
-       // [[Singleton sharedInstance].single_Data insertObject:app.saveDataId atIndex:app.saveNum++] ;
-    NSLog(@"%@",app.saveDataId);
+    {  NSLog(@"%@",app.saveDataId);
+    [[Singleton sharedInstance].single_Data insertObject:app.saveDataId atIndex:app.saveNum++] ;
+  
     }
     else if(buttonIndex==1)//取消
     {
@@ -439,38 +461,7 @@
 //加载调用的方法
 -(void)getNextPageView
 {
-   // int a=[momentID intValue];
-    ContentRead *read=[[[ContentRead alloc]init]autorelease];
-    read.delegate=self;
-    BOOL Ok;
-    Ok=NO;
-    for(int i=0;i< arrIDListNew.count;i++)
-    {
-           if([momentID isEqualToString:[arrIDListNew objectAtIndex:i]]&&i-1>=0)
-            {
-                 [read ContentDetail:[arrIDListNew objectAtIndex:i-1] ];
-                  Ok=YES;
-                  break;
-            }
-    }
-    if(!Ok)
-    {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"没有更多了，去看看其它精彩游钓资讯吧!", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"确定", nil) otherButtonTitles:nil] show];
-
-    }
     
-//    int b=[[arrIDListNew objectAtIndex:arrIDListNew.count-1] intValue];
-//    if(a> b)
-//    {
-//        NSString *string=[NSString stringWithFormat:@"%d",--a];
-//        [self postURL:string];
-//        //[self.dictForData objectForKey:@"id"]
-//    }
-    
-        [showWebView reload];
-        [self removeFooterView];
-        [self testFinishedLoadData];
-  
 }
 
 #pragma mark -

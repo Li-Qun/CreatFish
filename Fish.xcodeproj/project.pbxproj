@@ -396,9 +396,9 @@
 		BB95155A185348C000BD82A7 /* icon-plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus@2x.png"; sourceTree = "<group>"; };
 		BB95155B185348C000BD82A7 /* icon-plus-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus-highlighted.png"; sourceTree = "<group>"; };
 		BB95155C185348C000BD82A7 /* icon-plus-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus-highlighted@2x.png"; sourceTree = "<group>"; };
-		BB9D90AD18684545000CB89C /* LifeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LifeViewController.h; sourceTree = "<group>"; };
-		BB9D90AE18684545000CB89C /* LifeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifeViewController.m; sourceTree = "<group>"; };
-		BB9D90AF18684545000CB89C /* LifeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LifeViewController.xib; sourceTree = "<group>"; };
+		BB9D90AD18684545000CB89C /* LifeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LifeViewController.h; path = ../LifeViewController.h; sourceTree = "<group>"; };
+		BB9D90AE18684545000CB89C /* LifeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LifeViewController.m; path = ../LifeViewController.m; sourceTree = "<group>"; };
+		BB9D90AF18684545000CB89C /* LifeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LifeViewController.xib; path = ../LifeViewController.xib; sourceTree = "<group>"; };
 		BB9EAED1185DEFE2005E2697 /* OptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
 		BB9EAED2185DEFE2005E2697 /* OptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
 		BBA0986E18751A1B008C49E2 /* MagDetaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagDetaiViewController.h; sourceTree = "<group>"; };
@@ -1013,9 +1013,6 @@
 				BBACDE7618713C20002F1BF5 /* LoadMoreCell.h */,
 				BBACDE7718713C20002F1BF5 /* LoadMoreCell.m */,
 				BBACDE7918713C41002F1BF5 /* LoadMoreCell.xib */,
-				BB9D90AD18684545000CB89C /* LifeViewController.h */,
-				BB9D90AE18684545000CB89C /* LifeViewController.m */,
-				BB9D90AF18684545000CB89C /* LifeViewController.xib */,
 				BBA0986E18751A1B008C49E2 /* MagDetaiViewController.h */,
 				BBA0986F18751A1B008C49E2 /* MagDetaiViewController.m */,
 				BBA0987018751A1B008C49E2 /* MagDetaiViewController.xib */,
@@ -1721,6 +1718,9 @@
 				BBD31893188D0CCD00618A5A /* FishImageViewController.h */,
 				BBD31894188D0CCD00618A5A /* FishImageViewController.m */,
 				BBD31895188D0CCD00618A5A /* FishImageViewController.xib */,
+				BB9D90AD18684545000CB89C /* LifeViewController.h */,
+				BB9D90AE18684545000CB89C /* LifeViewController.m */,
+				BB9D90AF18684545000CB89C /* LifeViewController.xib */,
 			);
 			name = TopicVC;
 			path = Fish;

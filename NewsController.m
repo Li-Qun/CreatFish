@@ -342,8 +342,8 @@
     {
         CGRect cellFrameInTableView = [tableView rectForRowAtIndexPath:indexPath];
         CGRect cellFrameInSuperview = [tableView convertRect:cellFrameInTableView toView:[tableView superview]];
-        DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
-        //ReadingViewController *detail=[[[ReadingViewController alloc]initWithNibName:@"ReadingViewController" bundle:nil]autorelease];
+    DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
+    //  ReadingViewController *detail=[[[ReadingViewController alloc]initWithNibName:@"ReadingViewController" bundle:nil]autorelease];
         NSMutableDictionary* dict = [self.arr objectAtIndex:indexPath.row-1];
         //  detail.dictForData=dict;
         detail.arrIDListNew=arrID;

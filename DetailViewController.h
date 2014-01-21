@@ -38,7 +38,7 @@
     NSString *detailTotal;
 //    NSString *detailName;
 //    NSString *detailImage;
-//    NSString *detailID;
+    NSString *detailID;
     //
     NSMutableString *htmlTextTotals;
     float fontSize;
@@ -55,6 +55,11 @@
     float totalHeight;
     BOOL isSeven;
     BOOL isFive;
+    
+    NSString *pre_Page;
+    NSString *next_Page;
+    
+    AppDelegate *app;
 }
 @property (nonatomic,retain) UILabel *page_num;
 @property (nonatomic,retain)NSString *pic_url;
@@ -67,7 +72,7 @@
 @property (retain, nonatomic) NSMutableArray *arrIDList;
 @property (retain, nonatomic)NSMutableArray *arrIDListNew;
 @property (nonatomic,retain)NSString *htmlText;
-@property (retain, nonatomic)NSString *momentID;
+
 //@property (nonatomic,retain)NSString *detailName;
 //@property (nonatomic,retain)NSString *detailImage;
 //@property (nonatomic,retain)NSString *detailID;
@@ -75,8 +80,9 @@
 @property (nonatomic,retain)NSMutableString *htmlTextTotals;
 @property (nonatomic,retain) NSString *jsString;
 @property (nonatomic)BOOL isStore;
-
-
+@property (nonatomic,retain)NSString *next_Page;
+@property (nonatomic,retain)NSString *pre_Page;
+@property (retain, nonatomic)NSString *momentID;
 - (void)pressme:(id)sender;
 - (void)cameraAction:(id)sender;
 - (void)broomAction:(id)sender;
