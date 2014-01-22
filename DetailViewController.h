@@ -21,6 +21,7 @@
 #import "EGORefreshTableFooterView.h"
 @interface DetailViewController : UIViewController<UIWebViewDelegate ,UIGestureRecognizerDelegate,UIGestureRecognizerDelegate,SDWebImageManagerDelegate,SDWebImageDownloaderDelegate ,EGORefreshTableDelegate,UIScrollViewDelegate, UIAlertViewDelegate,UIScrollViewDelegate,FishDelegate>
 {
+    
     UIWebView *showWebView;
     UIImageView *topBarView;
     CGFloat height_Mag;//获取webView 高度
@@ -60,7 +61,18 @@
     NSString *next_Page;
     
     AppDelegate *app;
+    NSString *momentID;
+    NSString *fatherID;
+    int FatherID;
+    
+    BOOL isOpenL;
+    BOOL isOpenR;
 }
+@property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
+
+
+
 @property (nonatomic,retain) UILabel *page_num;
 @property (nonatomic,retain)NSString *page_label;
 @property (retain, nonatomic) IBOutlet UIView *tableView;
@@ -78,6 +90,7 @@
 @property (nonatomic,retain)NSString *next_Page;
 @property (nonatomic,retain)NSString *pre_Page;
 @property (retain, nonatomic)NSString *momentID;
+@property (retain, nonatomic)NSString *fatherID;
 
 
 @end

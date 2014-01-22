@@ -46,8 +46,10 @@
 @synthesize page_label=page_label;
 @synthesize htmlTextTotals=htmlTextTotals;
 @synthesize momentID=momentID;
+@synthesize fatherID=fatherID;
 @synthesize pre_Page=pre_Page;
 @synthesize next_Page=next_Page;
+@synthesize leftSwipeGestureRecognizer,rightSwipeGestureRecognizer;
 //@synthesize detailImage=detailImage;
 //@synthesize detailName=detailName;
 //@synthesize detailID=detailID;
@@ -93,6 +95,50 @@
         [subviews removeFromSuperview];
     }
     
+    
+    [super viewDidLoad];
+    
+
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"readBack@2X.png"]];
+    imgView.frame = self.view.bounds;
+    imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.view insertSubview:imgView atIndex:0];
+    [imgView release];
+    
+    [self buildTheTopBar];
+    app.topBarView.userInteractionEnabled = YES;//使添加的按钮可选
+    fontSize=16.0;
+    line_height=18.0;
+    Data=[[NSMutableDictionary alloc]init];
+    jsString=[[[NSString alloc]init]retain] ;
+    htmlTextTotals=[[NSMutableString alloc]init];
+    
+    NSLog(@" fa :%@  child :%@",fatherID,momentID);
+    FatherID=[fatherID integerValue];
+    
+    ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
+    [contentRead setDelegate:self];//设置代理
+    
+    [contentRead Content:fatherID Detail:momentID];
+    
+    
+    
+    showWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, 320, totalHeight)];
+    showWebView.delegate=self;
+    showWebView.scrollView.delegate=self;
+    showWebView.backgroundColor=[UIColor clearColor];
+    showWebView.opaque = NO;
+    
+    self.leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+    self.rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+    self.leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    self.rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:self.leftSwipeGestureRecognizer];
+    [self.view addGestureRecognizer:self.rightSwipeGestureRecognizer];
+}
+-(void)buildTheTopBar
+{
     float heightTopbar;
     float littleHeinght;
     if(isSeven&&isFive)
@@ -113,13 +159,6 @@
         littleHeinght=10;
     }
 
-    
-    [super viewDidLoad];
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"readBack@2X.png"]];
-    imgView.frame = self.view.bounds;
-    imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    [self.view insertSubview:imgView atIndex:0];
-    [imgView release];
     //创建导航按钮start
     app. topBarView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)];
     app. topBarView.image=[UIImage imageNamed:@"topViewBarWhite"];
@@ -151,118 +190,107 @@
     [saveBtn setImage:[UIImage imageNamed:@"saveImgHighted@2X"] forState:UIControlStateHighlighted];
     
     app.topBarView.userInteractionEnabled = YES;//使添加的按钮可选
-
+    
     //创建导航按钮end
     
-    
-    fontSize=16.0;
-    line_height=18.0;
-    Data=[[NSMutableDictionary alloc]init];
-    jsString=[[[NSString alloc]init]retain] ;
-    htmlTextTotals=[[NSMutableString alloc]init];
-    
-    [self postURL:momentID];
-    showWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, 320, totalHeight)];
-    showWebView.delegate=self;
-    showWebView.scrollView.delegate=self;
-    showWebView.backgroundColor=[UIColor clearColor];
-    showWebView.opaque = NO;
-
 }
+- (void)handleSwipes:(UISwipeGestureRecognizer *)sender
+{
+    if (sender.direction == UISwipeGestureRecognizerDirectionRight)//na
+    {
+        if(!isOpenL&&!isOpenR)
+        {
+            [self.viewDeckController toggleLeftViewAnimated:YES];
+            isOpenL=YES;
+        }
+        if(!isOpenL&&isOpenR)
+        {
+            [self.viewDeckController toggleRightViewAnimated:YES];
+            isOpenR=NO;
+        }
+        
+    }
+    if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {//bie
+        
+        if(!isOpenR&&!isOpenL)
+        {
+            [self.viewDeckController toggleRightViewAnimated:YES];
+            isOpenR=YES;
+        }
+        if(isOpenL&&!isOpenR)
+        {
+            [self.viewDeckController toggleLeftViewAnimated:YES];
+            isOpenL=NO;
+        }
+    }
+}
+
 - (void)viewDidLoad
 {
     
 }
--(void)postURL:(NSString*)ID
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
-      //第一步，创建url
-    
-    NSURL *url = [NSURL URLWithString:@"http://42.96.192.186/ifish/server/index.php/app/mgz/content/read_dtl" ];
-    
-    //第二步，创建请求
-   
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10];
-
-    [request setHTTPMethod:@"POST"];
-   
-    NSString *str=[[NSString stringWithFormat:@"content_id=%@",ID]retain];
-    
-    NSData *data = [str dataUsingEncoding:NSUTF8StringEncoding];
-    
-    [request setHTTPBody:data];
-  
-    //第三步，连接服务器
-   
-    NSURLConnection *connection =[[[NSURLConnection alloc]initWithRequest:request delegate:self]autorelease];
-    [request  release];
-}
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    self.Data = [NSMutableData data];
-}
-//接收到服务器传输数据的时候调用，此方法根据数据大小执行若干次
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [self.Data appendData:data];
-}
-//数据传完之后调用此方法
--(void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    NSString *receiveStr = [[NSString alloc]initWithData:self.Data encoding:NSUTF8StringEncoding];
-    
     SBJsonParser *parser = [[SBJsonParser alloc] init];
-    NSDictionary *jsonObj =[parser objectWithString: receiveStr];
+    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+    NSLog(@"%@",jsonObj);
     moment=[[jsonObj objectForKey:@"id"]intValue];
     detailTotal=[[NSString alloc]init];
     htmlText=[[NSString alloc]init];
- 
-    detailTotal=receiveStr;
+    
+    detailTotal=jsonString;
     htmlText=[jsonObj objectForKey:@"content"];
     app.next_Page=[jsonObj objectForKey:@"next_id"];
- 
-    [htmlTextTotals appendFormat:[NSString stringWithFormat: htmlText]];
+    app.pre_Page=[jsonObj objectForKey:@"prev_id"];
+    NSLog(@"next:%@  pre:%@",app.next_Page,app.pre_Page);
+    //[htmlTextTotals appendFormat:[NSString stringWithFormat: htmlText]];
     //<body style="background-color: transparent">//设置网页背景透明
- 
+    
     jsString = [NSString stringWithFormat:@"<html> \n"
-                          "<head> \n"
-                          "<style type=\"text/css\"> \n"
-                          "body {font-size:%fpx; line-height:%fpx;background-color: transparent;}\n"
-                          "</style> \n"
-                          "</head> \n"
-                          "<body>%@</body> \n"
-                          "</html>",  fontSize ,line_height,htmlTextTotals];
+                "<head> \n"
+                "<style type=\"text/css\"> \n"
+                "body {font-size:%fpx; line-height:%fpx;background-color: transparent;}\n"
+                "</style> \n"
+                "</head> \n"
+                "<body>%@</body> \n"
+                "</html>",  fontSize ,line_height,htmlText];
     
     [self.navigationController setNavigationBarHidden:YES];
     
     
-   [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+    [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     showWebView.delegate=self;
     showWebView.scrollView.delegate=self;
-
+    
     self.view.backgroundColor=[UIColor clearColor];
- 
+    
     [showWebView setUserInteractionEnabled: YES ];
-    [self.view addSubview:showWebView];
-    
-       //showWebView.
-    
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    [showWebView loadHTMLString:jsString baseURL:nil];
-    [showWebView stringByEvaluatingJavaScriptFromString:jsString];
-    
     //UIWebView
     //[receiveStr release];
-   
+    
     arrIDList=[[NSMutableArray alloc]init];
-       //获取web文本高度start
-    if ([showWebView subviews]) {
-        UIScrollView* scrollView = [[showWebView subviews] objectAtIndex:0];
-        [scrollView setContentOffset:CGPointMake(0, height_Mag*2+100) animated:YES];
-        height_Mag=scrollView.contentOffset.y;
-        NSLog(@"%f",scrollView.contentOffset.y);   //scrollView.contentOffset.y
-    }
-    height_Mag = [[showWebView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
-    //获取web文本高度end
+    //       //获取web文本高度start
+    //    if ([showWebView subviews]) {
+    //        UIScrollView* scrollView = [[showWebView subviews] objectAtIndex:0];
+    //        [scrollView setContentOffset:CGPointMake(0, height_Mag*2+100) animated:YES];
+    //
+    //
+    //        height_Mag=scrollView.contentOffset.y;
+    //        NSLog(@"%f",scrollView.contentOffset.y);   //scrollView.contentOffset.y
+    //    }
+    //    height_Mag = [[showWebView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+    //    showWebView.scrollView.contentSize = CGSizeMake(320, height_Mag++);
+    //
+    //    //获取web文本高度end
+    
+    
+    [self.view addSubview:showWebView];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    //  [showWebView loadHTMLString:jsString baseURL:nil];
+    // [showWebView stringByEvaluatingJavaScriptFromString:jsString];
+    //showWebView.
+    
+
 }
 #pragma mark - webview
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
@@ -276,7 +304,7 @@
 }
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
-   
+    showWebView.scrollView.delegate=self;
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 
     [showWebView stringByEvaluatingJavaScriptFromString:@"imageWidth(320);"];//设置网络图片统一宽度320
@@ -287,8 +315,6 @@
     [_refreshHeaderView refreshLastUpdatedDate];
     //刷新设置end
     [self addTapOnWebView];//调用触摸图片事件
-
- 
 }
 //网络请求过程中，出现任何错误（断网，连接超时等）会进入此方法
 -(void)connection:(NSURLConnection *)connection
@@ -407,35 +433,22 @@ didFailWithError:(NSError *)error
 }
 //////查看web图片  end
 #pragma mark-  scrollviewDelegate
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView;//滑动隐藏toolbar
+{
+    
+}
+
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
 {
     app.topBarView.hidden=YES;
-    showWebView.frame= CGRectMake(0,0, 320, totalHeight);
+    showWebView.scrollView.delegate=self;
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     app.topBarView.hidden=NO;
-    float heightTopbar;
-    float littleHeinght;
-    if(isSeven&&isFive)
-    {
-        heightTopbar=60;
-        littleHeinght=23;
-    }
-    else if(isSeven&&!isFive)
-    {
-        heightTopbar=60;
-        littleHeinght=23;
-    }else if(!isSeven&&isFive)//
-    {
-        heightTopbar=60;
-        littleHeinght=20;
-    }else {
-        heightTopbar=45;
-        littleHeinght=10;
-    }
-
-    showWebView.frame= CGRectMake(0, heightTopbar, 320, totalHeight);
+    
+    //[self buildTheTopBar];
+    showWebView.scrollView.delegate=self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -771,20 +784,31 @@ didFailWithError:(NSError *)error
 //刷新调用的方法
 -(void)refreshView
 {
-	NSLog(@"刷新完成");
+   
     [self testFinishedLoadData];
+	 NSLog(@"刷新完成");
+    if(app.pre_Page.length!=0)
+    {
+       
+         [self Pressleft];
+    }
+    else
+    {
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"没有更多了，去返回查看其它精彩游钓资讯吧!", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"确定", nil) otherButtonTitles:nil] show];
+    }
+   
 }
 //加载调用的方法
 -(void)getNextPageView
 {
 
+    [self removeFooterView];
+    [self testFinishedLoadData];
+
     if(app.next_Page.length!=0)
     {
-        [self postURL:app.next_Page];
-        [showWebView reload];
-        [self removeFooterView];
-        [self testFinishedLoadData];
-        momentID=app.next_Page;
+        [self PressGo];
+       
     }
     else
     {
@@ -852,6 +876,50 @@ didFailWithError:(NSError *)error
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void)PressGo
+{
+    
+    [UIView beginAnimations:@"animationID" context:nil];
+	[UIView setAnimationDuration:0.8f];
+	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+	[UIView setAnimationRepeatAutoreverses:NO];
+   // NSLog(@"Fa %d    next:%@  pre： %@",FatherID,app.next_Page,app.pre_Page);
+    
+    ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
+    [contentRead setDelegate:self];//设置代理
+    
+    [contentRead Content:[NSString stringWithFormat:@"%d",FatherID ] Detail:app.next_Page];
+    
+    [showWebView reload];
+    
+    
+    [self buildTheTopBar];
+   
+    [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.view cache:YES];
+    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
+	[UIView commitAnimations];
+}
+-(void)Pressleft
+{
+    [UIView beginAnimations:@"animationID" context:nil];
+	[UIView setAnimationDuration:0.8f];
+	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+	[UIView setAnimationRepeatAutoreverses:NO];
+    
+  //  NSLog(@"Fa %d    next:%@  pre： %@",FatherID,app.next_Page,app.pre_Page);
+    
+    ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
+    [contentRead setDelegate:self];//设置代理
+    
+    [contentRead Content:[NSString stringWithFormat:@"%d",FatherID ] Detail:app.pre_Page];
+    [showWebView reload];
+    
+    [self buildTheTopBar];
+    app.topBarView.userInteractionEnabled = YES;//使添加的按钮可选
+    [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:self.view cache:YES];
+    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
+	[UIView commitAnimations];
+}
 
 
 @end

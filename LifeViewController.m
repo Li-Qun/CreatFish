@@ -47,6 +47,7 @@
 {
     [self.navigationController setNavigationBarHidden:YES];
     app.targetCenter=target;
+    isNation=app.targetCenter;
     ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
     NSString *str=[NSString stringWithFormat:@"%d",target];
     NSLog(@"%d",target);
@@ -374,6 +375,7 @@
     NSDictionary* dict = [BigFish_Description objectAtIndex:index];
     LifeItemViewController *detail=[[[LifeItemViewController alloc]initWithNibName:@"LifeItemViewController" bundle:nil]autorelease];
     detail.FishImageID=[dict objectForKey:@"id"];
+    detail.isNationID=[NSString stringWithFormat:@"%d",isNation];
     [self.navigationController pushViewController:detail animated:YES];
     
 }

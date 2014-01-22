@@ -48,6 +48,7 @@
     BOOL isFirstLoad;
     //
     int newSumCount;
+    int NewsID;
     
     BOOL isSeven;
     BOOL isFive;

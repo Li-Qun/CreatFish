@@ -134,6 +134,8 @@
         [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
             NewsController *apiVC = [[[NewsController alloc] init] autorelease];
             apiVC.target=btn.tag;
+            apiVC.targetCentre=target_centerView;
+            apiVC.NewsName=@"资讯";
             UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
             self.viewDeckController.centerController = navApiVC;
             self.view.userInteractionEnabled = YES;

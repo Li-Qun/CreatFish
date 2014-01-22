@@ -54,7 +54,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{0, 281}, {320, 277}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<string key="NSHuggingPriority">{251, 251}</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>

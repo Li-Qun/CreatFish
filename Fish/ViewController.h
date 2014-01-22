@@ -24,6 +24,8 @@ UIScrollViewDelegate >
  
     BOOL Kind7;
     BOOL height5_flag;
+    BOOL isSeven;
+    BOOL isFive;
     NSMutableArray *arrName;
     NSMutableArray *arr;
     IBOutlet UILabel *labelDay;

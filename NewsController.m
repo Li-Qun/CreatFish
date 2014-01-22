@@ -20,7 +20,7 @@
 #import "skyCell.h"
 #import "UIImageView+WebCache.h"
 #import "DetailViewController.h"
-#import "ReadingViewController.h"
+
 
 #import "IIViewDeckController.h"
 #import "RightViewController.h"
@@ -74,8 +74,10 @@
     app.targetCenter=target;
     NSLog(@"%d %d",target,app.targetCenter);
     str=[NSString stringWithFormat:@"%d",target];
+    NewsID=[str integerValue];
     [contentRead fetchList:str isPri:@"1" Out:@"0"];
     [contentRead fetchList:str isPri:@"0" Out:@"0"];
+    
 }
 - (void)viewDidLoad
 {
@@ -154,22 +156,27 @@
     
     float heightTopbar;
     float littleHeinght;
+    int labelName;
     if(isSeven&&isFive)
     {
         heightTopbar=65;
         littleHeinght=20+5;
+        labelName=0;
     }
     else if(isSeven&&!isFive)
     {
         heightTopbar=65;
         littleHeinght=20+5;
+        labelName=0;
     }else if(!isSeven&&isFive)//
     {
         heightTopbar=45;
         littleHeinght=10;
+        labelName=7;
     }else {
         heightTopbar=45;
         littleHeinght=10;
+        labelName=12;
     }
     tabView.frame=CGRectMake(0, heightTopbar, 320, height_Momente);
     
@@ -180,7 +187,7 @@
     UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(105, littleHeinght/2, 90, 23)]autorelease];
     wordView.image=[UIImage imageNamed:@"word"];
    // [topBarView addSubview:wordView];
-    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105,littleHeinght/2+3,95,65-littleHeinght)]autorelease];
+    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105,littleHeinght/2+3-labelName,95,65-littleHeinght)]autorelease];
     name.textColor=[UIColor whiteColor];
     name.text=NewsName;
     name.textAlignment = UITextAlignmentCenter;
@@ -341,6 +348,8 @@
         detail.arrIDListNew=arrID;
         detail.yOrigin=cellFrameInSuperview.origin.y;
         detail.momentID=[dict objectForKey:@"id"];
+        NSLog(@"NewsID :  %d",NewsID);
+        detail.fatherID=[NSString stringWithFormat:@"%d",NewsID];
         [self.navigationController pushViewController:detail animated:YES];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }

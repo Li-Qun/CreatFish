@@ -20,6 +20,7 @@
 @synthesize FishImageID=FishImageID;
 @synthesize klpImgArr;
 @synthesize klpScrollView1;
+@synthesize isNationID=isNationID;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -39,7 +40,7 @@
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
-    [contentRead  gallery:@"9"];
+    [contentRead  gallery:@"9"];//@"9"
     
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
@@ -81,7 +82,7 @@
     
     
     UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(135, littleHeinght+2, 40, 20)]autorelease];
-    if(FishImageID==12)
+    if([isNationID integerValue]==12)
         wordView.image=[UIImage imageNamed:@"nation"];
     else
     wordView.image=[UIImage imageNamed:@"aboard"];
@@ -103,7 +104,6 @@
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
-    NSLog(@"  js:   %@",jsonString);
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString: jsonString];
     
@@ -162,13 +162,32 @@
 {
     ///UIScrollerView
     //2.image
+    int bottom;
+    int width;
+    if(isSeven&&isFive)
+    {
+        bottom=405;
+    }
+    else if(isSeven&&!isFive)
+    {
+        bottom=370;
+    }else if(!isSeven&&isFive)//
+    {
+        bottom=405;
+    }else {
+        width=5;
+        bottom=360;
+    }
+    
+    klpScrollView1.frame=CGRectMake(0, 81, 320,bottom);
+
     index = 0;
     self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:Fish_arr.count];
     CGSize size = self.klpScrollView1.frame.size;
     if(height_Momente==480)  height=60;
     for (int i=0; i <Fish_arr.count; i++) {
         NSDictionary* dict = [Fish_arr objectAtIndex:i];
-        UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(20+size.width * i, 0, size.width-40, size.height+height)]autorelease];
+        UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(width+ 20+size.width * i, 0, size.width-40-width*2, size.height+height)]autorelease];
         NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"] ];
         [iv setImageWithURL:[NSURL URLWithString: imgURL]
            placeholderImage:[UIImage imageNamed:@"placeholder.png"]
@@ -178,7 +197,7 @@
         
         
         UIImageView *red=[[[UIImageView alloc]init]autorelease];
-        red.frame=CGRectMake(210, 5, 72, 30);
+        red.frame=CGRectMake(210-width*16/9, 5, 72, 30);
         red.image=[UIImage imageNamed:@"imageLabel"];
         UILabel *lable=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 72, 30)];
         lable.backgroundColor=[UIColor clearColor];

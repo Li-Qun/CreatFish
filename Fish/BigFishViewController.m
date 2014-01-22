@@ -258,7 +258,7 @@
     }else if(!isSeven&&isFive)//
     {
         img_height=20;
-        lab_height=10;
+        lab_height=20;
     }else {
         img_height=20;
         lab_height=100;
@@ -312,7 +312,7 @@
     }else if(!isSeven&&isFive)//
     {
         img_height=20;
-        lab_height=10;
+        lab_height=20;
     }else {
         
     }

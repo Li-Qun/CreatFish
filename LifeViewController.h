@@ -34,6 +34,8 @@
     int img_height;
     int lab_height;
     int select;
+    
+    int isNation;
 
 }
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;

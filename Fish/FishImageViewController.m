@@ -36,6 +36,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES];
+
      NSLog(@"%@ %d",self.FishImageID,app.targetCenter);
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
@@ -55,7 +56,6 @@
         [Fish_arr insertObject:[data objectAtIndex:i] atIndex: i];
     }
     [self createView];
-    
 }
 - (void)viewDidLoad
 {
@@ -75,24 +75,30 @@
         isSeven=NO;
     else isSeven=YES;
     
-    
+    int bottom;
     if(isSeven&&isFive)
     {
         heightTopbar=65;
         littleHeinght=20;
+        bottom=405;
     }
     else if(isSeven&&!isFive)
     {
         heightTopbar=58;
         littleHeinght=20;
+        bottom=370;
     }else if(!isSeven&&isFive)//
     {
         heightTopbar=45;
         littleHeinght=10;
+        bottom=405;
     }else {
         heightTopbar=45;
         littleHeinght=10;
+        bottom=405;
     }
+    
+    klpScrollView1.frame=CGRectMake(0, 486, 320,bottom);
     
     UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
@@ -156,6 +162,24 @@
 }
 -(void)createView//:(NSMutableArray *)firstPageImage
 {
+    int bottom;
+    int width;
+    if(isSeven&&isFive)
+    {
+        bottom=405;
+    }
+    else if(isSeven&&!isFive)
+    {
+        bottom=370;
+    }else if(!isSeven&&isFive)//
+    {
+        bottom=405;
+    }else {
+        width=5;
+        bottom=360;
+    }
+    
+    klpScrollView1.frame=CGRectMake(0, 81, 320,bottom);
     ///UIScrollerView
     //2.image
     index = 0;
@@ -164,7 +188,7 @@
     if(height_Momente==480)  height=60;
     for (int i=0; i <Fish_arr.count; i++) {
         NSDictionary* dict = [Fish_arr objectAtIndex:i];
-        UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(20+size.width * i, 0, size.width-40, size.height+height)]autorelease];
+        UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(width+20+size.width * i, 0, size.width-40-width*2, size.height+height)]autorelease];
         NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"] ];
         [iv setImageWithURL:[NSURL URLWithString: imgURL]
            placeholderImage:[UIImage imageNamed:@"placeholder.png"]
@@ -174,7 +198,7 @@
         
         
         UIImageView *red=[[[UIImageView alloc]init]autorelease];
-        red.frame=CGRectMake(210, 5, 72, 30);
+        red.frame=CGRectMake(210-width*16/9, 5, 72, 30);
         red.image=[UIImage imageNamed:@"imageLabel"];
         UILabel *lable=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 72, 30)];
         lable.backgroundColor=[UIColor clearColor];

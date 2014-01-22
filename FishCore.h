@@ -77,7 +77,7 @@
 -(void)reLoad;
 -(void)Submmit:(NSString *)contact typeBack:(NSString *)feedback_category content:(NSString *)feedback_content;
 -(void)gallery:(NSString *)content_id;
-
+-(void)Content:(NSString *)current_category_id  Detail:(NSString*)content_id;
 @end
 
 

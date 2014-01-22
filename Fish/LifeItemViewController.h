@@ -17,6 +17,7 @@
     float heightTopbar;
     float littleHeinght;
     NSString *FishImageID;
+    NSString *isNationID;
     NSString *shareImage;
     NSMutableArray *Fish_arr;
     klpView *klp;
@@ -29,6 +30,7 @@
     
 }
 @property(nonatomic,strong)NSString *FishImageID;
+@property(nonatomic,strong)NSString *isNationID;
 @property (nonatomic,retain)NSMutableArray *klpImgArr;
 @property (retain, nonatomic) IBOutlet UIScrollView *klpScrollView1;
 

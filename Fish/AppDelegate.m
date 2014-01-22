@@ -63,6 +63,7 @@
     saveDataImage=[[NSMutableArray  alloc]init];
     firstPageImage=[[NSMutableArray  alloc]init];
     next_Page=@"11";
+    pre_Page=@"11";
 }
 -(void)Pre:(int)index
 {

@@ -184,7 +184,7 @@
     scrollView.contentSize = CGSizeMake(640, 44);
     [scrollView setShowsHorizontalScrollIndicator:NO];//隐藏横向滚动条
     [imgToolView addSubview:scrollView];
-    imgToolView . userInteractionEnabled = YES;//使添加的按钮可选
+    imgToolView . userInteractionEnabled = YES;
     [self.view addSubview:imgToolView];
     
     sqlite3_finalize(stmt);
@@ -292,7 +292,8 @@
     index = 0;
     self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:arr.count];
     CGSize size = self.klpScrollView1.frame.size;
-    if(height_Momente==480)  height=60;
+    int clearImgHeight;
+    if(height_Momente==480){  height=60;clearImgHeight=20;}
     for (int i=0; i <arr.count; i++) {
         NSDictionary* dict = [arr objectAtIndex:i];
         UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height+height)]autorelease];
@@ -306,7 +307,7 @@
         label.backgroundColor=[UIColor clearColor];
         label.textColor=[UIColor whiteColor];
         label.text=[dict objectForKey:@"image_title"];
-        UIImageView *clearBack=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 154, 340, 31)]autorelease];
+        UIImageView *clearBack=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 154+clearImgHeight, 340, 31)]autorelease];
         clearBack.image=[UIImage imageNamed:@"clearBack@2X"];
         [iv addSubview:clearBack];
         [clearBack addSubview:label];
@@ -448,7 +449,9 @@
         NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
         newVC.hidesBottomBarWhenPushed = YES;
         newVC.target=btn.tag;
-        newVC.NewsName=[arrName objectAtIndex:btn.tag-2];
+        if(btn.tag==2)newVC.NewsName=@"资讯";
+        else if (btn.tag==5)newVC.NewsName=@"攻略";
+        else newVC.NewsName=@"装备";
         [self.navigationController pushViewController :newVC animated:YES];
     }
     else if(btn.tag==4)
@@ -468,13 +471,8 @@
         [self.navigationController pushViewController :newVC animated:YES];
         
     }
-    else if(btn.tag==100)
-    {
-//        StoreUpViewController *newVC = [[[StoreUpViewController alloc] initWithNibName:@"StoreUpViewController" bundle:nil]autorelease];
-//        self.hidesBottomBarWhenPushed = YES;//OK~
-//        [self.navigationController pushViewController :newVC animated:YES];
-    }
 }
+
 
 - (void)dealloc {
     [labelText release];

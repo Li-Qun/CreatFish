@@ -94,7 +94,6 @@
 		BBA352AB18792A2900A8239C /* TypeSelect@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA352A718792A2900A8239C /* TypeSelect@2X.png */; };
 		BBA352AE1879568800A8239C /* advice_back.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA352AC1879568800A8239C /* advice_back.png */; };
 		BBA352AF1879568800A8239C /* advice_back@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA352AD1879568800A8239C /* advice_back@2X.png */; };
-		BBA3D312185ADAC4009CDC9A /* FishCore.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA3D311185ADAC4009CDC9A /* FishCore.m */; };
 		BBA43765188647C9004D1576 /* QZoneConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA43764188647C9004D1576 /* QZoneConnection.framework */; };
 		BBA43767188647D2004D1576 /* RenRenConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA43766188647D2004D1576 /* RenRenConnection.framework */; };
 		BBA437711886828C004D1576 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA437701886828C004D1576 /* Foundation.framework */; };
@@ -133,8 +132,6 @@
 		BBA4931C187D6C390089D35E /* clearBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4931A187D6C390089D35E /* clearBack@2X.png */; };
 		BBA4931F187D6DF30089D35E /* theArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4931D187D6DF30089D35E /* theArrow.png */; };
 		BBA49320187D6DF30089D35E /* theArrow@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4931E187D6DF30089D35E /* theArrow@2X.png */; };
-		BBA4BE7818838B4B0008643E /* ReadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA4BE7618838B4B0008643E /* ReadingViewController.m */; };
-		BBA4BE7918838B4B0008643E /* ReadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBA4BE7718838B4B0008643E /* ReadingViewController.xib */; };
 		BBA4BE7C1883E7D80008643E /* whiteBack.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4BE7A1883E7D80008643E /* whiteBack.png */; };
 		BBA4BE7D1883E7D80008643E /* whiteBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA4BE7B1883E7D80008643E /* whiteBack@2X.png */; };
 		BBA4BE82188400090008643E /* SinaWeiboConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA4BE80188400090008643E /* SinaWeiboConnection.framework */; };
@@ -257,6 +254,7 @@
 		BBD067C3188F78CF00DBC8B9 /* Close_webImage@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD067BD188F78CF00DBC8B9 /* Close_webImage@2X.png */; };
 		BBD067C4188F78CF00DBC8B9 /* Share_webImage.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD067BE188F78CF00DBC8B9 /* Share_webImage.png */; };
 		BBD067C5188F78CF00DBC8B9 /* Share_webImage@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD067BF188F78CF00DBC8B9 /* Share_webImage@2X.png */; };
+		BBD067C7189012F300DBC8B9 /* FishCore.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD067C6189012F300DBC8B9 /* FishCore.m */; };
 		BBD0790F188E5E5700325927 /* LifeItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD0790D188E5E5700325927 /* LifeItemViewController.m */; };
 		BBD07910188E5E5700325927 /* LifeItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD0790E188E5E5700325927 /* LifeItemViewController.xib */; };
 		BBD07913188E766A00325927 /* signble.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07911188E766A00325927 /* signble.png */; };
@@ -498,7 +496,6 @@
 		BBA352AC1879568800A8239C /* advice_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = advice_back.png; sourceTree = "<group>"; };
 		BBA352AD1879568800A8239C /* advice_back@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "advice_back@2X.png"; sourceTree = "<group>"; };
 		BBA3D310185ADAC4009CDC9A /* FishCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FishCore.h; sourceTree = SOURCE_ROOT; };
-		BBA3D311185ADAC4009CDC9A /* FishCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FishCore.m; sourceTree = SOURCE_ROOT; };
 		BBA43764188647C9004D1576 /* QZoneConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QZoneConnection.framework; sourceTree = "<group>"; };
 		BBA43766188647D2004D1576 /* RenRenConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RenRenConnection.framework; sourceTree = "<group>"; };
 		BBA4376818864952004D1576 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -554,9 +551,6 @@
 		BBA4931A187D6C390089D35E /* clearBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clearBack@2X.png"; sourceTree = "<group>"; };
 		BBA4931D187D6DF30089D35E /* theArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theArrow.png; sourceTree = "<group>"; };
 		BBA4931E187D6DF30089D35E /* theArrow@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "theArrow@2X.png"; sourceTree = "<group>"; };
-		BBA4BE7518838B4B0008643E /* ReadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadingViewController.h; sourceTree = "<group>"; };
-		BBA4BE7618838B4B0008643E /* ReadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadingViewController.m; sourceTree = "<group>"; };
-		BBA4BE7718838B4B0008643E /* ReadingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReadingViewController.xib; sourceTree = "<group>"; };
 		BBA4BE7A1883E7D80008643E /* whiteBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteBack.png; sourceTree = "<group>"; };
 		BBA4BE7B1883E7D80008643E /* whiteBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteBack@2X.png"; sourceTree = "<group>"; };
 		BBA4BE80188400090008643E /* SinaWeiboConnection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SinaWeiboConnection.framework; sourceTree = "<group>"; };
@@ -702,6 +696,7 @@
 		BBD067BD188F78CF00DBC8B9 /* Close_webImage@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Close_webImage@2X.png"; sourceTree = "<group>"; };
 		BBD067BE188F78CF00DBC8B9 /* Share_webImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Share_webImage.png; sourceTree = "<group>"; };
 		BBD067BF188F78CF00DBC8B9 /* Share_webImage@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Share_webImage@2X.png"; sourceTree = "<group>"; };
+		BBD067C6189012F300DBC8B9 /* FishCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FishCore.m; sourceTree = "<group>"; };
 		BBD0790C188E5E5700325927 /* LifeItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LifeItemViewController.h; sourceTree = "<group>"; };
 		BBD0790D188E5E5700325927 /* LifeItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifeItemViewController.m; sourceTree = "<group>"; };
 		BBD0790E188E5E5700325927 /* LifeItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LifeItemViewController.xib; sourceTree = "<group>"; };
@@ -1322,7 +1317,7 @@
 			isa = PBXGroup;
 			children = (
 				BBA3D310185ADAC4009CDC9A /* FishCore.h */,
-				BBA3D311185ADAC4009CDC9A /* FishCore.m */,
+				BBD067C6189012F300DBC8B9 /* FishCore.m */,
 				BBD0E1CC1877D8D1000D1141 /* Singleton.h */,
 				BBD0E1CD1877D8D1000D1141 /* Singleton.m */,
 			);
@@ -1601,9 +1596,6 @@
 		BBC95B3718532EC600A10431 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				BBA4BE7518838B4B0008643E /* ReadingViewController.h */,
-				BBA4BE7618838B4B0008643E /* ReadingViewController.m */,
-				BBA4BE7718838B4B0008643E /* ReadingViewController.xib */,
 				BBB79BD81861DCCC007DCEEA /* Pre */,
 			);
 			name = VC;
@@ -2106,7 +2098,6 @@
 				BBD0E1E818781B95000D1141 /* advice_nav_red@2X.png in Resources */,
 				BB951567185348C000BD82A7 /* icon-plus.png in Resources */,
 				BBAF984B188547BA002DDA7A /* tableCell@2X.png in Resources */,
-				BBA4BE7918838B4B0008643E /* ReadingViewController.xib in Resources */,
 				BBA6989D186FE9DD00DE10AB /* whiteArrow@2x.png in Resources */,
 				BBAF984618852EB3002DDA7A /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				BBA49320187D6DF30089D35E /* theArrow@2X.png in Resources */,
@@ -2190,7 +2181,6 @@
 				BB9D90B018684545000CB89C /* LifeViewController.m in Sources */,
 				BBD0E1D818780909000D1141 /* SettingViewController.m in Sources */,
 				BBAC8737185FFA6100A36D8A /* TViewController.m in Sources */,
-				BBA4BE7818838B4B0008643E /* ReadingViewController.m in Sources */,
 				BB95154C1853387600BD82A7 /* SampleCell.m in Sources */,
 				BBD67E411876D6E800A6CD87 /* StoreUpViewController.m in Sources */,
 				BBD31891188CCA6500618A5A /* BigFishViewController.m in Sources */,
@@ -2213,11 +2203,11 @@
 				BBA11CCB185ECABC000D39F8 /* ASIDataCompressor.m in Sources */,
 				BBACDE7818713C20002F1BF5 /* LoadMoreCell.m in Sources */,
 				BBA47898185721A000E64289 /* MKAnnotationView+WebCache.m in Sources */,
+				BBD067C7189012F300DBC8B9 /* FishCore.m in Sources */,
 				BBA1CA0C187FF2010028E5BC /* LeftViewController.m in Sources */,
 				BBA11CD0185ECABC000D39F8 /* ASIInputStream.m in Sources */,
 				BBC95B4B1853303F00A10431 /* klpView.m in Sources */,
 				BBA0987118751A1B008C49E2 /* MagDetaiViewController.m in Sources */,
-				BBA3D312185ADAC4009CDC9A /* FishCore.m in Sources */,
 				BBA11CCF185ECABC000D39F8 /* ASIHTTPRequest.m in Sources */,
 				BBA11CEF185EDAAF000D39F8 /* SBJsonStreamParser.m in Sources */,
 				BBDBE951184DD995009FA292 /* NewViewController.m in Sources */,

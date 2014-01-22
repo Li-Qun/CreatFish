@@ -45,15 +45,21 @@
     if(height_Momente==480){
         height=20;
         height5_flag=NO;
+        isFive=NO;
     }
-    else  height5_flag=YES;
+    else  {height5_flag=YES;isFive=YES;}
+    
     // 判断设备的iOS 版本号
     float  version = [[[UIDevice currentDevice] systemVersion] floatValue];
     if(version==7.0)
     {
         Kind7=YES;
+        isSeven=YES;
     }
-    else Kind7=NO;
+    else {
+        Kind7=NO;
+        isSeven=NO;
+    }
     [self theTopBar];
 }
 -(void)BuildFirstPage
@@ -253,7 +259,7 @@
         buttonHeight=5+height_Momente-44 ;
     }
     else {
-        heightTooBar=height_Momente-height-4;
+        heightTooBar=height_Momente-height-44;
         buttonHeight=5+height_Momente-44-height;
     }
     
@@ -469,6 +475,25 @@
 }
 -(void)createView:(NSMutableArray *)firstPageImage
 {
+    
+    int bottom;
+    if(isSeven&&isFive)
+    {
+        
+        bottom=230;
+    }
+    else if(isSeven&&!isFive)
+    {
+        bottom=230;
+    }else if(!isSeven&&isFive)//
+    {
+        bottom=230;
+    }else {
+        
+        bottom=200;
+    }
+
+    
     labelText.text= [ [arr objectAtIndex:0] objectForKey:@"description"];
     labelText.backgroundColor=[UIColor clearColor];
     labelText.font=[UIFont systemFontOfSize:15.0f];
@@ -481,7 +506,9 @@
     labelDay.font=[UIFont systemFontOfSize:15.0f];
     labelDay.numberOfLines = 0;
     
-   
+    
+    klpScrollView1.frame=CGRectMake(0, 57, 320,bottom);
+
     ///UIScrollerView
     index = 0;
     self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:firstPageImage.count];
@@ -659,12 +686,6 @@
         //self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController :newVC animated:YES];
 
-    }
-    else if(btn.tag==100)
-    {
-        StoreUpViewController *newVC = [[[StoreUpViewController alloc] initWithNibName:@"StoreUpViewController" bundle:nil]autorelease];
-        self.hidesBottomBarWhenPushed = YES;//OK~
-        [self.navigationController pushViewController :newVC animated:YES];
     }
 }
 - (void)dealloc {
