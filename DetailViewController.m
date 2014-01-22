@@ -33,7 +33,7 @@
 @end
 
 @implementation DetailViewController
-@synthesize pic_url=pic_url;
+
 @synthesize showWebView=showWebView;
 //@synthesize dictForData=dictForData;
 @synthesize Data=Data;
@@ -86,20 +86,13 @@
     
     [super viewWillAppear:animated];
     self.view.backgroundColor=[UIColor whiteColor];
-}
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
-{
-    
-}
-- (void)viewDidLoad
-{
     app=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-
+    
     for (UIView *subviews in [self.view subviews])
     {
         [subviews removeFromSuperview];
     }
-
+    
     float heightTopbar;
     float littleHeinght;
     if(isSeven&&isFive)
@@ -119,10 +112,8 @@
         heightTopbar=45;
         littleHeinght=10;
     }
+
     
-    ContentRead* contentRead=[[[ContentRead alloc]init]autorelease];
-    contentRead.delegate=self;
-    [contentRead Category];
     [super viewDidLoad];
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"readBack@2X.png"]];
     imgView.frame = self.view.bounds;
@@ -130,38 +121,39 @@
     [self.view insertSubview:imgView atIndex:0];
     [imgView release];
     //创建导航按钮start
-    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
-    topBarView.image=[UIImage imageNamed:@"topViewBarWhite"];
-    [self.view addSubview:topBarView];
+    app. topBarView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)];
+    app. topBarView.image=[UIImage imageNamed:@"topViewBarWhite"];
+    [self.view addSubview:app.topBarView];
     
     UIButton *backBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame=CGRectMake(10, littleHeinght, 26, 25);
     [backBtn setImage:[UIImage imageNamed:@"BackImg@2X"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backParentView) forControlEvents:UIControlEventTouchUpInside];
-    [self.view  addSubview:backBtn];
+    [app.topBarView  addSubview:backBtn];
     
     UIButton *wordBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     wordBtn.frame=CGRectMake(175, littleHeinght+3, 28, 20);
     [wordBtn setImage:[UIImage imageNamed:@"AaImg@2X"] forState:UIControlStateNormal];
     [wordBtn addTarget:self action:@selector(PressWord:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view  addSubview:wordBtn];
+    [app.topBarView  addSubview:wordBtn];
     
     UIButton *shareBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     shareBtn.frame=CGRectMake(280, littleHeinght, 26, 25);
     [shareBtn setImage:[UIImage imageNamed:@"shareImg@2X"] forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(shareBtn) forControlEvents:UIControlEventTouchUpInside];
-    [self.view  addSubview:shareBtn];
+    [app.topBarView  addSubview:shareBtn];
     
     saveBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     saveBtn.frame=CGRectMake(230, littleHeinght, 26, 25);
     [saveBtn setImage:[UIImage imageNamed:@"saveImgNormal@2X"] forState:UIControlStateNormal];
     [saveBtn addTarget:self action:@selector(SaveBook:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view  addSubview:saveBtn];
+    [app.topBarView  addSubview:saveBtn];
     [saveBtn setImage:[UIImage imageNamed:@"saveImgHighted@2X"] forState:UIControlStateHighlighted];
     
-    
+    app.topBarView.userInteractionEnabled = YES;//使添加的按钮可选
+
     //创建导航按钮end
- 
+    
     
     fontSize=16.0;
     line_height=18.0;
@@ -175,7 +167,11 @@
     showWebView.scrollView.delegate=self;
     showWebView.backgroundColor=[UIColor clearColor];
     showWebView.opaque = NO;
-  
+
+}
+- (void)viewDidLoad
+{
+    
 }
 -(void)postURL:(NSString*)ID
 {
@@ -308,7 +304,6 @@ didFailWithError:(NSError *)error
     singleTap.delegate = self;
     singleTap.cancelsTouchesInView = NO;
 }
-
 #pragma mark- TapGestureRecognizer
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
@@ -330,7 +325,7 @@ didFailWithError:(NSError *)error
 //呈现图片
 -(void)showImageURL:(NSString *)url point:(CGPoint)point
 {
-    pic_url=url;
+    app.pic_URL=url;
     
     UIImageView *showView = [[UIImageView alloc] initWithFrame:self.view.frame  ];
     showView.center = point;
@@ -343,16 +338,61 @@ didFailWithError:(NSError *)error
     showView.alpha = 0.9;
     showView.userInteractionEnabled = YES;
     [self.view addSubview:showView];
+    UIImageView * bottomBackBar=[[[UIImageView alloc]initWithFrame:CGRectMake(0, showView.frame.size.height-70, 320,70 )]autorelease];
+    bottomBackBar.image=[UIImage imageNamed:@"BottomBar_webImage"];
+    [showView addSubview:bottomBackBar];
+    UIButton *shareBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    shareBtn.frame=CGRectMake(280, 10, 20, 30);
+    [shareBtn setImage:[UIImage imageNamed:@"Share_webImage"] forState:UIControlStateNormal];
+    [shareBtn addTarget:self action:@selector(shareThewebImage) forControlEvents:UIControlEventTouchUpInside];
+    [bottomBackBar  addSubview:shareBtn];
+    
+    UIButton *isCloseBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    isCloseBtn.frame=CGRectMake(235, 12, 20, 30);
+    [isCloseBtn setImage:[UIImage imageNamed:@"Close_webImage"] forState:UIControlStateNormal];
+    [isCloseBtn addTarget:self action:@selector(isCancelBtn) forControlEvents:UIControlEventTouchUpInside];
+    [bottomBackBar addSubview:isCloseBtn];
+    bottomBackBar.userInteractionEnabled=YES;
+
     [showView setImageWithURL:[NSURL URLWithString:url]];
-    
-    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleViewTap:)];
-    [showView addGestureRecognizer:singleTap];
-    
+//    
+//    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleViewTap:)];
+//    [showView addGestureRecognizer:singleTap];
+//    
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
+-(SEL)shareThewebImage
+{
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
+    //构造分享内容
+    id<ISSContent> publishContent = [ShareSDK content:app.pic_URL
+                                       defaultContent:@"默认分享内容，没内容时显示"
+                                                image:[ShareSDK imageWithPath:imagePath]
+                                                title:@"ShareSDK"
+                                                  url:@"http://www.huiztech.com"
+                                          description:@"这是一条测试信息"
+                                            mediaType:SSPublishContentMediaTypeNews];
+    
+    [ShareSDK showShareActionSheet:nil
+                         shareList:nil
+                           content:publishContent
+                     statusBarTips:YES
+                       authOptions:nil
+                      shareOptions: nil
+                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                if (state == SSResponseStateSuccess)
+                                {
+                                    NSLog(@"分享成功");
+                                }
+                                else if (state == SSResponseStateFail)
+                                {
+                                    NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode], [error errorDescription]);
+                                }
+                            }];
 
+}
 //移除图片查看视图
--(void)handleSingleViewTap:(UITapGestureRecognizer *)sender
+-(void)isCancelBtn//-(void)handleSingleViewTap:(UITapGestureRecognizer *)sender
 {
     for (id obj in self.view.subviews) {
         if ([obj isKindOfClass:[UIImageView class]]) {
@@ -366,6 +406,37 @@ didFailWithError:(NSError *)error
     [imgView release];
 }
 //////查看web图片  end
+#pragma mark-  scrollviewDelegate
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    app.topBarView.hidden=YES;
+    showWebView.frame= CGRectMake(0,0, 320, totalHeight);
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    app.topBarView.hidden=NO;
+    float heightTopbar;
+    float littleHeinght;
+    if(isSeven&&isFive)
+    {
+        heightTopbar=60;
+        littleHeinght=23;
+    }
+    else if(isSeven&&!isFive)
+    {
+        heightTopbar=60;
+        littleHeinght=23;
+    }else if(!isSeven&&isFive)//
+    {
+        heightTopbar=60;
+        littleHeinght=20;
+    }else {
+        heightTopbar=45;
+        littleHeinght=10;
+    }
+
+    showWebView.frame= CGRectMake(0, heightTopbar, 320, totalHeight);
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -402,7 +473,7 @@ didFailWithError:(NSError *)error
 }
 //更新显示下载的图片
 -(void) updateImageView:(NSData*) data {
-    UIImageView *imageView = (UIImageView *)[self.view viewWithTag:pic_url];
+    UIImageView *imageView = (UIImageView *)[self.view viewWithTag:app.pic_URL];
     imageView.image = [UIImage imageWithData:data];
     [self.view addSubview:imageView];
 }
@@ -410,6 +481,7 @@ didFailWithError:(NSError *)error
 //菜单按钮响应start
 - (void)viewWillLayoutSubviews
 {
+    
 }
 
 #pragma mark -
@@ -737,6 +809,8 @@ didFailWithError:(NSError *)error
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    
+    
 	if (_refreshHeaderView)
 	{
         [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];

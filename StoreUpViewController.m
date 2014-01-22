@@ -163,7 +163,6 @@
     detail.momentID=[dict objectForKey:@"id"];
      detail.yOrigin=cellFrameInSuperview.origin.y;
      detail.arrIDListNew=arrSave_ID;
-    detail.isStore=YES;
     [self.navigationController pushViewController:detail animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

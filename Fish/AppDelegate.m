@@ -48,7 +48,11 @@
 @synthesize saveDataImage=saveDataImage;
 @synthesize saveDataName=saveDataName;
 @synthesize saveNum=saveNum;
+@synthesize next_Page=next_Page;
+@synthesize pre_Page=pre_Page;
 @synthesize firstPageImage=firstPageImage;
+@synthesize pic_URL;
+@synthesize topBarView;
 -(void)build
 {
    // AppDelegate * app = (AppDelegate *)[[UIApplication sharedApplication] delegate];

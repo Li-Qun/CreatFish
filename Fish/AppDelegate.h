@@ -56,8 +56,8 @@ typedef enum
     
     NSString *pre_Page;
     NSString *next_Page;
-    //开机动画图片
-    NSString *activeImage;
+   
+  
     
 }
 @property (nonatomic, retain)NSMutableArray  *array;
@@ -102,6 +102,10 @@ typedef enum
 //翻页
 @property (nonatomic,retain)NSString *next_Page;
 @property (nonatomic,retain)NSString *pre_Page;
+//阅读查看图片
+@property (nonatomic,retain)NSString *pic_URL;
+//阅读详细 的最上边bar
+@property (nonatomic,retain)UIImageView *topBarView;
 @end
 
 

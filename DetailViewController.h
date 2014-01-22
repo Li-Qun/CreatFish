@@ -19,9 +19,10 @@
 #import "SDWebImageDownloader.h"
 #import "EGORefreshTableHeaderView.h"
 #import "EGORefreshTableFooterView.h"
-@interface DetailViewController : UIViewController<UIWebViewDelegate ,UIGestureRecognizerDelegate,UIGestureRecognizerDelegate,SDWebImageManagerDelegate,SDWebImageDownloaderDelegate ,EGORefreshTableDelegate,UIScrollViewDelegate,QuadCurveMenuDelegate,UIAlertViewDelegate,UIScrollViewDelegate,FishDelegate>
+@interface DetailViewController : UIViewController<UIWebViewDelegate ,UIGestureRecognizerDelegate,UIGestureRecognizerDelegate,SDWebImageManagerDelegate,SDWebImageDownloaderDelegate ,EGORefreshTableDelegate,UIScrollViewDelegate, UIAlertViewDelegate,UIScrollViewDelegate,FishDelegate>
 {
     UIWebView *showWebView;
+    UIImageView *topBarView;
     CGFloat height_Mag;//获取webView 高度
     NSMutableDictionary *Data;
     NSMutableArray *arrIDList;
@@ -31,7 +32,6 @@
     NSString *page_label;
     IBOutlet UIView *tableView;
     UIToolbar *toolBar;
-    NSString *pic_url;
     //设字体
     NSString *htmlText;
     //收藏信息
@@ -51,7 +51,7 @@
     EGORefreshTableFooterView *_refreshFooterView;
     //
     BOOL _reloading;
-    BOOL isStore;
+ 
     float totalHeight;
     BOOL isSeven;
     BOOL isFive;
@@ -62,7 +62,6 @@
     AppDelegate *app;
 }
 @property (nonatomic,retain) UILabel *page_num;
-@property (nonatomic,retain)NSString *pic_url;
 @property (nonatomic,retain)NSString *page_label;
 @property (retain, nonatomic) IBOutlet UIView *tableView;
 @property (retain,nonatomic)UIWebView *showWebView;
@@ -73,20 +72,13 @@
 @property (retain, nonatomic)NSMutableArray *arrIDListNew;
 @property (nonatomic,retain)NSString *htmlText;
 
-//@property (nonatomic,retain)NSString *detailName;
-//@property (nonatomic,retain)NSString *detailImage;
-//@property (nonatomic,retain)NSString *detailID;
-
 @property (nonatomic,retain)NSMutableString *htmlTextTotals;
 @property (nonatomic,retain) NSString *jsString;
-@property (nonatomic)BOOL isStore;
+
 @property (nonatomic,retain)NSString *next_Page;
 @property (nonatomic,retain)NSString *pre_Page;
 @property (retain, nonatomic)NSString *momentID;
-- (void)pressme:(id)sender;
-- (void)cameraAction:(id)sender;
-- (void)broomAction:(id)sender;
-- (void)textAction:(id)sender;
+
 
 @end
 

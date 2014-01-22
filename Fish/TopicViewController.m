@@ -184,7 +184,7 @@
     scrollView.contentSize = CGSizeMake(640, 44);
     [scrollView setShowsHorizontalScrollIndicator:NO];//隐藏横向滚动条
     [imgToolView addSubview:scrollView];
-    imgToolView . userInteractionEnabled = YES;
+    imgToolView . userInteractionEnabled = YES;//使添加的按钮可选
     [self.view addSubview:imgToolView];
     
     sqlite3_finalize(stmt);
