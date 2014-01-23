@@ -34,11 +34,13 @@
         dataLabel=[[[NSMutableArray alloc]init]retain];
         //  NSLog(@"%@",app.jsonStringOne);
         SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-        jsonObj =[parser objectWithString:app.jsonStringOne];
-        for(int i=0;i<jsonObj.count ;i++)
+         NSDictionary *jsonObj =[parser objectWithString:app.jsonStringOne];
+         NSDictionary *data = [jsonObj objectForKey:@"data"];
+        
+        for(int i=0;i<data.count ;i++)
         {
-            [dataPic insertObject:[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[[jsonObj objectAtIndex:i] objectForKey:@"image"]] atIndex:i];
-            [dataLabel insertObject:[NSString stringWithFormat:@"%@",[[jsonObj objectAtIndex:i]objectForKey:@"name"]]  atIndex:i];
+            [dataPic insertObject:[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[[data  objectAtIndex:i] objectForKey:@"image"]] atIndex:i];
+            [dataLabel insertObject:[NSString stringWithFormat:@"%@",[[data  objectAtIndex:i]objectForKey:@"name"]]  atIndex:i];
         }
         
         

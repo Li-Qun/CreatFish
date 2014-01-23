@@ -35,7 +35,7 @@
     return self;
 }
 
--(void)reBack:(NSString *)jsonString
+-(void)reBack:(NSString *)jsonString reLoad :(NSString *)ID
 {
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString:jsonString];

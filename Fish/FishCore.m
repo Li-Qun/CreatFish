@@ -54,7 +54,7 @@
     [request setFailedBlock :^{
         // 请求响应失败，返回错误信息
         NSError *error = [request error ];
-        [delegate reBack:@"6"];
+        [delegate reBack:@"6" reLoad:@"0"];
         NSLog ( @"error:%@" ,[error userInfo ]);
     }];
     [request startAsynchronous ];
@@ -80,7 +80,7 @@
     }];
     [request setFailedBlock :^{
         // 请求响应失败，返回错误信息
-        [delegate reBack:flag];
+        [delegate reBack:flag reLoad:@"0"];
         NSError *error = [request error ];
         NSLog ( @"error:%@" ,[error userInfo ]);
     }];
@@ -218,7 +218,7 @@
         
     }];
     [request setFailedBlock :^{
-        [delegate reBack:@"5"];
+        [delegate reBack:@"5" reLoad:@"0"];
         NSError *error = [request error ];
         NSLog ( @"error:%@" ,[error userInfo ]);
     }];
@@ -238,7 +238,7 @@
     NSLog(@"%d",[request responseStatusCode]);
     [request setCompletionBlock :^{
         NSString * string =  [request responseString];
-        [delegate reBack:string];
+        [delegate reBack:string reLoad:@"0"];
     }];
     [request setFailedBlock :^{
         NSError *error = [request error ];

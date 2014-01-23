@@ -878,8 +878,6 @@
 				BBD7A05A186D2C2F000A4675 /* My Part */,
 				BB78463A1859A71000260712 /* Resourse */,
 				9006F339184D59250091B69F /* Fish */,
-				BBDA38D5188A6F69006A90F9 /* TopicVC */,
-				BB9D90AC186833B1000CB89C /* FormalVC */,
 				BBC95B3718532EC600A10431 /* VC */,
 				9006F35D184D59260091B69F /* FishTests */,
 				9006F332184D59250091B69F /* Frameworks */,
@@ -929,6 +927,8 @@
 				BBD0E1D4187808E6000D1141 /* Beauty */,
 				BBA689F418613DB1007CB68E /* FishCores */,
 				BBA49307187D48590089D35E /* Mostly */,
+				BB9D90AC186833B1000CB89C /* FormalVC */,
+				BBDA38D5188A6F69006A90F9 /* TopicVC */,
 				9006F33A184D59250091B69F /* Supporting Files */,
 			);
 			path = Fish;
@@ -1061,6 +1061,7 @@
 				BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */,
 			);
 			name = FormalVC;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		BBA0FFF4186F137300E75116 /* scroll Picture Classe */ = {
@@ -1783,7 +1784,6 @@
 				BBD0790E188E5E5700325927 /* LifeItemViewController.xib */,
 			);
 			name = TopicVC;
-			path = Fish;
 			sourceTree = "<group>";
 		};
 		BBDBE93D184DCF52009FA292 /* Slide */ = {

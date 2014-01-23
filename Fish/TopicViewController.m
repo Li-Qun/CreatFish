@@ -279,6 +279,30 @@
 }
 -(void)createView//:(NSMutableArray *)firstPageImage
 {
+    
+    float heightScrollview;
+    int clearImgHeight;
+    if(height5_flag&&Kind7)
+    {
+        heightScrollview=-20;
+        clearImgHeight=0;
+        
+    }else if(height5_flag&&!Kind7)
+    {
+        heightScrollview=0;
+    }
+    else if (!height5_flag&&Kind7)
+    {
+        heightScrollview=-20;
+        clearImgHeight=0;
+    }
+    else {
+        heightScrollview=0;
+        clearImgHeight=20;
+    }
+    
+    self.klpScrollView1.frame=CGRectMake(0,heightScrollview, 320, 203);
+
     ///UIScrollerView
     //1.labelText
     labelText.text= [ [arr objectAtIndex:0] objectForKey:@"description"];
@@ -292,8 +316,8 @@
     index = 0;
     self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:arr.count];
     CGSize size = self.klpScrollView1.frame.size;
-    int clearImgHeight;
-    if(height_Momente==480){  height=60;clearImgHeight=20;}
+    
+   
     for (int i=0; i <arr.count; i++) {
         NSDictionary* dict = [arr objectAtIndex:i];
         UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height+height)]autorelease];
@@ -307,7 +331,9 @@
         label.backgroundColor=[UIColor clearColor];
         label.textColor=[UIColor whiteColor];
         label.text=[dict objectForKey:@"image_title"];
+        
         UIImageView *clearBack=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 154+clearImgHeight, 340, 31)]autorelease];
+        
         clearBack.image=[UIImage imageNamed:@"clearBack@2X"];
         [iv addSubview:clearBack];
         [clearBack addSubview:label];
@@ -324,24 +350,6 @@
 
         
     }
-    float heightScrollview;
-  
-    if(height5_flag&&Kind7)
-    {
-        heightScrollview=-20;
-    }else if(height5_flag&&!Kind7)
-    {
-        heightScrollview=0;
-    }
-    else if (!height5_flag&&Kind7)
-    {
-        heightScrollview=-20;
-    }
-    else {
-        heightScrollview=0;
-    }
-
-    self.klpScrollView1.frame=CGRectMake(0,heightScrollview, 320, 203);
     [self.klpScrollView1 setContentSize:CGSizeMake(size.width * arr.count, 0)];//只可横向滚动～
     
     self.klpScrollView1.pagingEnabled = YES;

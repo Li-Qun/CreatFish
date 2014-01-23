@@ -233,7 +233,7 @@
 {
     SBJsonParser *parser = [[SBJsonParser alloc] init];
     NSDictionary *jsonObj =[parser objectWithString: jsonString];
-    NSLog(@"%@",jsonObj);
+    
     moment=[[jsonObj objectForKey:@"id"]intValue];
     detailTotal=[[NSString alloc]init];
     htmlText=[[NSString alloc]init];

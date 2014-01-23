@@ -54,11 +54,10 @@
 }
 -(void)visitDataBase
 {
-    //创建数据库start
-    // 首先是数据库要保存的路径
+    NSString *strJson;
     NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPaths=[array objectAtIndex:0];
-    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar5"];
+    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar7"];
     //  然后建立数据库，新建数据库这个苹果做的非常好，非常方便
     sqlite3 *database;
     //新建数据库，存在则打开，不存在则创建
@@ -70,40 +69,50 @@
         NSLog(@"open failed");
     }
     // 对数据库建表操作：如果在些程序的过程中，发现表的字段要更改，一定要删除之前的表，如何做，就是删除程序或者换个表名，主键是自增的
-    // char *errorMsg;
-    NSString *sql;//=@"CREATE TABLE IF NOT EXISTS buttonList (ID INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,num TEXT)";
-    //    //创建表
-    //    if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-    //    {
-    //        NSLog(@"create success");
-    //    }else{
-    //        NSLog(@"create error:%s",errorMsg);
-    //        sqlite3_free(errorMsg);
-    //    }
+    char *errorMsg;
+    NSString *sql=@"CREATE TABLE IF NOT EXISTS buttonList (ID INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT)";
+    //创建表
+    if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+    {
+        NSLog(@"create success");
+    }else{
+        NSLog(@"create error:%s",errorMsg);
+        sqlite3_free(errorMsg);
+    }
     // 查找数据
     sql = @"select * from buttonList";
     sqlite3_stmt *stmt;
-    //查找数据
     if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
     {
-        int height;
-        if(isSeven) height=60;
-        else height=45;
+        while (sqlite3_step(stmt)==SQLITE_ROW) {
+            const unsigned char *theName= sqlite3_column_text(stmt, 1);
+            strJson= [NSString stringWithUTF8String: theName];
+            break;
+        }
+    }
+    int height;
+    if(isSeven) height=60;
+    else height=45;
+    UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
+    scrollView.backgroundColor=[UIColor clearColor];
+    scrollView.delegate=self;
+    UIView *myView=[[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
+    myView.backgroundColor=[UIColor clearColor];
+    UIImageView *imageViewTitle=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
+    imageViewTitle.image=[UIImage imageNamed:@"LeftTitle@2X"];
+    [myView addSubview:imageViewTitle];
+    UILabel *mainTitle=[[[UILabel alloc]initWithFrame:CGRectMake(105, 0, 320, height)]autorelease];
+    mainTitle.text=@"阅钓";
+    mainTitle.backgroundColor=[UIColor clearColor];
+    mainTitle.font = [UIFont boldSystemFontOfSize:20];
+    mainTitle.textColor=[UIColor whiteColor];
+    [imageViewTitle addSubview:mainTitle];
+
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString: strJson];
+    for(int i=0;i<5;i++)
+    {
         
-        UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
-        scrollView.backgroundColor=[UIColor clearColor];
-        scrollView.delegate=self;
-        UIView *myView=[[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
-        myView.backgroundColor=[UIColor clearColor];
-        UIImageView *imageViewTitle=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
-        imageViewTitle.image=[UIImage imageNamed:@"LeftTitle@2X"];
-        [myView addSubview:imageViewTitle];
-        UILabel *mainTitle=[[[UILabel alloc]initWithFrame:CGRectMake(105, 0, 320, height)]autorelease];
-        mainTitle.text=@"阅钓";
-        mainTitle.backgroundColor=[UIColor clearColor];
-        mainTitle.font = [UIFont boldSystemFontOfSize:20];
-        mainTitle.textColor=[UIColor whiteColor];
-        [imageViewTitle addSubview:mainTitle];
         //首页
         UIButton *firstBtn=[UIButton buttonWithType:UIButtonTypeCustom];
         firstBtn.frame=CGRectMake(0, height+2, 320, 44);
@@ -119,24 +128,7 @@
         firstBtn.tag=103;
         [firstBtn addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
         firstPageName.backgroundColor=[UIColor clearColor];
-//////创建动态按钮start
-        while (sqlite3_step(stmt)==SQLITE_ROW) {
-            
-            int i=sqlite3_column_int(stmt, 0)-1;
-            if(i==5)break;
-            
-            const unsigned char *theName= sqlite3_column_text(stmt, 1);
-            NSString *name_Database= [NSString stringWithUTF8String: theName];
-            
-            const unsigned char *num= sqlite3_column_text(stmt, 2);
-            NSString *Num_Database= [NSString stringWithUTF8String: num];
-            
-            const unsigned char *_count= sqlite3_column_text(stmt, 3);
-            NSString *today_count= [NSString stringWithUTF8String: _count];
-            
-            NSString *name=[[[NSString alloc]init]autorelease];
-            
-            NSLog(@"name:%@ num:%@ count %@",name_Database,Num_Database,today_count);
+        //////创建动态按钮start
             NSString *key=[NSString stringWithFormat:@"%d",i];
             UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
             OneButton.frame=CGRectMake(0, height+44+5+i*45, 320, 44);
@@ -144,7 +136,7 @@
             [myView addSubview:OneButton ];
             UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(60, 0, 320, 44)]autorelease];
             OneName.textColor=[UIColor whiteColor];
-            OneName.text=name_Database;
+            OneName.text=[[jsonObj  objectAtIndex:i+1] objectForKey:@"name"];
             [OneButton addSubview:OneName];
             [OneButton addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
             UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(10, 10,25 , 25)] autorelease];
@@ -168,11 +160,11 @@
             }
             
             [OneButton  addSubview:pictureOneName];
-            OneButton.tag=[Num_Database integerValue];
+            OneButton.tag=[[[jsonObj  objectAtIndex:i+1] objectForKey:@"id"]integerValue];
             UIImageView *theRedNum=[[[UIImageView alloc]initWithFrame:CGRectMake(200, 10, 28, 22)]autorelease];
             [OneButton addSubview:theRedNum];
             UILabel *labelNum=[[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 22)]autorelease];
-            labelNum.text=today_count;
+            labelNum.text=[NSString stringWithFormat:@"%@", [[jsonObj  objectAtIndex:i+1] objectForKey:@"today_count"]];
             labelNum.textColor=[UIColor whiteColor];
             labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
             [theRedNum addSubview:labelNum];
@@ -184,38 +176,37 @@
             labelNum.backgroundColor=[UIColor clearColor];
             OneButton.backgroundColor=[UIColor clearColor];
             OneName.backgroundColor=[UIColor clearColor];
-/////动态创建按钮end
-
-        }
-        //收藏&设置
-        for(int i=0;i<2;i++)
+      }      /////动态创建按钮end
+    //收藏&设置
+    for(int i=0;i<2;i++)
+    {
+        UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
+        OneButton.frame=CGRectMake(0,330+height/2+i*45, 320, 44);
+        [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
+        OneButton.backgroundColor=[UIColor clearColor];
+        [myView addSubview:OneButton ];
+        UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(60, 0, 320, 44)]autorelease];
+        OneName.textColor=[UIColor whiteColor];
+        [OneButton addSubview:OneName];
+        [OneButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
+        UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(10, 10,25 , 25)] autorelease];
+        if(i==0)
         {
-            UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
-            OneButton.frame=CGRectMake(0,330+height/2+i*45, 320, 44);
-            [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
-            OneButton.backgroundColor=[UIColor clearColor];
-            [myView addSubview:OneButton ];
-            UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(60, 0, 320, 44)]autorelease];
-            OneName.textColor=[UIColor whiteColor];
-            [OneButton addSubview:OneName];
-            [OneButton addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
-            UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(10, 10,25 , 25)] autorelease];
-            if(i==0)
-            {
-                OneName.text=@"收藏";
-                pictureOneName.image=[UIImage imageNamed:@"Save@2X.png"];
-                OneButton.tag=101;
-            }
-            else
-            {
-                OneName.text=@"设置";
-                pictureOneName.image=[UIImage imageNamed:@"Set@2X.png"];
-                OneButton.tag=102;
-            }
-            [OneButton  addSubview:pictureOneName];
-            [OneButton addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
-            OneName.backgroundColor=[UIColor clearColor];
+            OneName.text=@"收藏";
+            pictureOneName.image=[UIImage imageNamed:@"Save@2X.png"];
+            OneButton.tag=101;
         }
+        else
+        {
+            OneName.text=@"设置";
+            pictureOneName.image=[UIImage imageNamed:@"Set@2X.png"];
+            OneButton.tag=102;
+        }
+        [OneButton  addSubview:pictureOneName];
+        [OneButton addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
+        OneName.backgroundColor=[UIColor clearColor];
+    }
+
         UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slideLeft_Back@2X.png"]];
         imgView.frame = CGRectMake(0, 330+height/2, 320,568 );
         imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -226,15 +217,15 @@
         [scrollView addSubview:myView];
         scrollView.contentSize = myView.frame.size;
         [self.view addSubview:scrollView];
-    }
 
+
+    
     sqlite3_finalize(stmt);
     
     //  最后，关闭数据库：
     sqlite3_close(database);
     
     //创建数据库end
-
 }
 -(void)PessSwitch_Tag:(id)sender
 {
