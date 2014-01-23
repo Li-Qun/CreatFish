@@ -162,7 +162,6 @@
      NSMutableDictionary* dict =jsonObj;
     detail.momentID=[dict objectForKey:@"id"];
      detail.yOrigin=cellFrameInSuperview.origin.y;
-     detail.arrIDListNew=arrSave_ID;
     [self.navigationController pushViewController:detail animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

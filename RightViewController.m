@@ -12,6 +12,7 @@
 #import "LifeViewController.h"
 #import "BigFishViewController.h"
 #import "AppDelegate.h"
+#import <sqlite3.h>
 @interface RightViewController ()
 
 @end
@@ -42,13 +43,52 @@
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     contentRead.delegate=self;
-    [contentRead Category];
+   // [contentRead Category];
+    [self buildTheBtn];
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
+-(void)buildTheBtn
+//-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
  
+    NSString *strJson;
+    NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPaths=[array objectAtIndex:0];
+    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar7"];
+    //  然后建立数据库，新建数据库这个苹果做的非常好，非常方便
+    sqlite3 *database;
+    //新建数据库，存在则打开，不存在则创建
+    if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+    {
+        NSLog(@"open success");
+    }
+    else {
+        NSLog(@"open failed");
+    }
+    // 对数据库建表操作：如果在些程序的过程中，发现表的字段要更改，一定要删除之前的表，如何做，就是删除程序或者换个表名，主键是自增的
+    char *errorMsg;
+    NSString *sql=@"CREATE TABLE IF NOT EXISTS buttonList (ID INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT)";
+    //创建表
+    if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+    {
+        NSLog(@"create success");
+    }else{
+        NSLog(@"create error:%s",errorMsg);
+        sqlite3_free(errorMsg);
+    }
+    // 查找数据
+    sql = @"select * from buttonList";
+    sqlite3_stmt *stmt;
+    if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+    {
+        while (sqlite3_step(stmt)==SQLITE_ROW) {
+            const unsigned char *theName= sqlite3_column_text(stmt, 1);
+            strJson= [NSString stringWithUTF8String: theName];
+            break;
+        }
+    }
+    
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+    NSDictionary *jsonObj =[parser objectWithString: strJson];
     
     UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
     scrollView.backgroundColor=[UIColor clearColor];

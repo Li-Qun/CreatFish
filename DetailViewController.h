@@ -36,7 +36,6 @@
     //设字体
     NSString *htmlText;
     //收藏信息
-    NSString *detailTotal;
 //    NSString *detailName;
 //    NSString *detailImage;
     NSString *detailID;

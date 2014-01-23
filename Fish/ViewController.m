@@ -330,9 +330,6 @@
                 const unsigned char *_pic= sqlite3_column_text(stmt, 1);
                 strJson= [NSString stringWithUTF8String: _pic];
                 NSLog(@"********%d",i);
-                
-               
-                
             }
             
             SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];

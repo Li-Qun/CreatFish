@@ -12,7 +12,7 @@
     NSMutableArray* dataPic;
     NSMutableArray* dataLabel;
     AppDelegate *app;
-   
+    NSDictionary *jsonObj;
 }
 @property (nonatomic, retain) NSMutableArray* dataArray1;
 @property (nonatomic, retain) NSMutableArray* dataPic;

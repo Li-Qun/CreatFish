@@ -148,107 +148,8 @@
         }
     }
 }
--(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID
+-(void)buildTheTopBar
 {
-/*if (<#condition#>) {
-        //////////
-        ///start database
-        
-        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"News_DB%@",ID]];
-        
-        sqlite3 *database;
-        
-        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-        {
-            NSLog(@"open success");
-        }
-        else {
-            NSLog(@"open failed");
-        }
-        char *errorMsg;
-        // 查找数据
-        NSString* sql = @"select * from picture";
-        sqlite3_stmt *stmt;
-        //查找数据
-        
-        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-        {
-            
-            while (sqlite3_step(stmt)==SQLITE_ROW) {
-                int i=sqlite3_column_int(stmt, 0)-1;
-                
-                
-                const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-                strJson= [NSString stringWithUTF8String: _pic];
-                NSLog(@"New********%d",i);
-                
-                
-            }
-            
-            SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
-            NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
-            
-            NSDictionary *data = [jsonObj1 objectForKey:@"data"];
-            total += [[jsonObj1 objectForKey:@"total"] intValue];
-            NSLog(@"total : %d",total);
-            newSumCount=arr.count;
-            for (int i =0; i <data.count; i++) {
-                
-                [arr insertObject:[data objectAtIndex:i] atIndex: newSumCount];
-                //            [arrID insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]
-                //                                                                  objectForKey:@"id"]]  atIndex:newSumCount];
-                //            newSumCount++;
-            }
-            
-        }
-        // 删除所有数据 并进行更新数据库操作
-        //删除所有数据，条件为1>0永真
-        const char *deleteAllSql="delete from picture where 1>0";
-        //执行删除语句
-        if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
-            NSLog(@"删除所有数据成功");
-        }
-        else NSLog(@"delect failde!!!!");
-        
-        
-        sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
-        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-        {
-            NSLog(@"create success");
-        }else{
-            NSLog(@"create error:%s",errorMsg);
-            sqlite3_free(errorMsg);
-        }
-        NSString *insertSQLStr = [NSString stringWithFormat:
-                                  @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
-        const char *insertSQL=[insertSQLStr UTF8String];
-        //插入数据 进行更新操作
-        if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
-            NSLog(@"insert operation is ok.");
-        }
-        else{
-            NSLog(@"insert error:%s",errorMsg);
-            sqlite3_free(errorMsg);
-        }
-        sqlite3_finalize(stmt);
-        
-        //  最后，关闭数据库：
-        sqlite3_close(database);
-        
-        //创建数据库end
-    }
-    else
-    {
-        
-    }//*/
-}
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
-{
-      app.jsonString=jsonString;
- 
-    
     float heightTopbar;
     float littleHeinght;
     int labelName;
@@ -281,7 +182,7 @@
     [self.view addSubview:topBarView];
     UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(105, littleHeinght/2, 90, 23)]autorelease];
     wordView.image=[UIImage imageNamed:@"word"];
-   // [topBarView addSubview:wordView];
+    // [topBarView addSubview:wordView];
     UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105,littleHeinght/2+3-labelName,95,65-littleHeinght)]autorelease];
     name.textColor=[UIColor whiteColor];
     name.text=NewsName;
@@ -306,11 +207,21 @@
     [rightBtn addTarget:self action:@selector(PessSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
     rightBtn.tag=20;
     
+}
+-(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID
+{
+     NSString *strJson;
     
+   
+    [self build_TableView];
+}
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
+{
+   
+    app.jsonString=jsonString;
+
     isFistLevel=[flag intValue];
-    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-    NSDictionary *jsonObj =[parser objectWithString:app.jsonString];
-    NSString *strJson;
+     NSString *strJson;
     
     if(isFistLevel==0)
     {
@@ -332,8 +243,30 @@
             NSLog(@"open failed");
         }
         char *errorMsg;
+        
+        NSString*sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
+        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+        {
+            NSLog(@"create success");
+        }else{
+            NSLog(@"create error:%s",errorMsg);
+            sqlite3_free(errorMsg);
+        }
+
+        NSString *insertSQLStr = [NSString stringWithFormat:
+                                  @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
+        const char *insertSQL=[insertSQLStr UTF8String];
+        //插入数据 进行更新操作
+        if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
+            NSLog(@"insert operation is ok.");
+        }
+        else{
+            NSLog(@"insert error:%s",errorMsg);
+            sqlite3_free(errorMsg);
+        }
+
         // 查找数据
-        NSString* sql = @"select * from picture";
+        sql = @"select * from picture";
         sqlite3_stmt *stmt;
         //查找数据
         
@@ -361,9 +294,7 @@
             for (int i =0; i <data.count; i++) {
                 
                 [arr insertObject:[data objectAtIndex:i] atIndex: newSumCount];
-                //            [arrID insertObject:[NSString stringWithFormat:@"%@",[[data objectAtIndex:i]
-                //                                                                  objectForKey:@"id"]]  atIndex:newSumCount];
-                //            newSumCount++;
+                newSumCount++;
             }
             
         }
@@ -385,11 +316,12 @@
             NSLog(@"create error:%s",errorMsg);
             sqlite3_free(errorMsg);
         }
-        NSString *insertSQLStr = [NSString stringWithFormat:
+        
+        NSString* insertSQLStr1 = [NSString stringWithFormat:
                                   @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
-        const char *insertSQL=[insertSQLStr UTF8String];
+        const char *insertSQL1=[insertSQLStr1 UTF8String];
         //插入数据 进行更新操作
-        if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
+        if (sqlite3_exec(database, insertSQL1 , NULL, NULL, &errorMsg)==SQLITE_OK) {
             NSLog(@"insert operation is ok.");
         }
         else{
@@ -402,16 +334,14 @@
         sqlite3_close(database);
         
         //创建数据库end
-
         
-        
-            }
+    }
     else if (isFistLevel==1)
     {
-        
+        [self buildTheTopBar];
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"News_DB%@",ID]];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"NewsTop_DB%@",ID]];
         
         sqlite3 *database;
         
@@ -423,8 +353,29 @@
             NSLog(@"open failed");
         }
         char *errorMsg;
+        
+        NSString*sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
+        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+        {
+            NSLog(@"create success");
+        }else{
+            NSLog(@"create error:%s",errorMsg);
+            sqlite3_free(errorMsg);
+        }
+        
+        NSString *insertSQLStr = [NSString stringWithFormat:
+                                  @"INSERT INTO 'picture' ('pic') VALUES ('%@')", jsonString];
+        const char *insertSQL=[insertSQLStr UTF8String];
+        //插入数据 进行更新操作
+        if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
+            NSLog(@"insert operation is ok.");
+        }
+        else{
+            NSLog(@"insert error:%s",errorMsg);
+            sqlite3_free(errorMsg);
+        }
         // 查找数据
-        NSString* sql = @"select * from picture";
+        sql = @"select * from picture";
         sqlite3_stmt *stmt;
         //查找数据
         
@@ -439,6 +390,37 @@
                 app.jsonStringOne=strJson;
             }
         }
+        // 删除所有数据 并进行更新数据库操作
+        //删除所有数据，条件为1>0永真
+        const char *deleteAllSql="delete from picture where 1>0";
+        //执行删除语句
+        if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
+            NSLog(@"删除所有数据成功");
+        }
+        else NSLog(@"delect failde!!!!");
+        
+        
+        sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
+        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+        {
+            NSLog(@"create success");
+        }else{
+            NSLog(@"create error:%s",errorMsg);
+            sqlite3_free(errorMsg);
+        }
+        insertSQLStr = [NSString stringWithFormat:
+                        @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
+        const char *insertSQL1=[insertSQLStr UTF8String];
+        //插入数据 进行更新操作
+        if (sqlite3_exec(database, insertSQL1 , NULL, NULL, &errorMsg)==SQLITE_OK) {
+            NSLog(@"insert operation is ok.");
+        }
+        else{
+            NSLog(@"insert error:%s",errorMsg);
+            sqlite3_free(errorMsg);
+        }
+    
+        
         sqlite3_finalize(stmt);
         
         //  最后，关闭数据库：

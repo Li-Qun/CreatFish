@@ -38,7 +38,7 @@
         
         CGRect rect = [[UIScreen mainScreen] bounds];
         CGSize size = rect.size;
-        CGFloat width = size.width;
+ 
         height_Momente = size.height;
         if(height_Momente==480){
             height=20;
@@ -63,16 +63,16 @@
 }
 -(void)buildToolBar
 {
-    
     float heightTooBar;
     float buttonHeight;
+    
     if(height5_flag&&Kind7)
     {
         heightTooBar=height_Momente-height-44;
         buttonHeight=5+height_Momente-44-height;
     }else if(height5_flag&&!Kind7)
     {
-        heightTooBar=height_Momente-44-20;
+        heightTooBar=height_Momente-44;
         buttonHeight=5+height_Momente-44-20;
     }
     else if (!height5_flag&&Kind7)
@@ -84,17 +84,10 @@
         heightTooBar=height_Momente-height-44 ;
         buttonHeight=5+height_Momente-44-height;
     }
-
-    
-    
-    imgToolView.frame= CGRectMake(0,heightTooBar, 320, 44);
-    imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
-    imgToolView.tag=22;
-    //创建数据库start
-    // 首先是数据库要保存的路径
+    NSString *strJson;
     NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPaths=[array objectAtIndex:0];
-    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar5"];
+    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar7"];
     //  然后建立数据库，新建数据库这个苹果做的非常好，非常方便
     sqlite3 *database;
     //新建数据库，存在则打开，不存在则创建
@@ -106,106 +99,246 @@
         NSLog(@"open failed");
     }
     // 对数据库建表操作：如果在些程序的过程中，发现表的字段要更改，一定要删除之前的表，如何做，就是删除程序或者换个表名，主键是自增的
-   // char *errorMsg;
-    NSString *sql;//=@"CREATE TABLE IF NOT EXISTS buttonList (ID INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,num TEXT)";
-//    //创建表
-//    if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-//    {
-//        NSLog(@"create success");
-//    }else{
-//        NSLog(@"create error:%s",errorMsg);
-//        sqlite3_free(errorMsg);
-//    }
+    char *errorMsg;
+    NSString *sql=@"CREATE TABLE IF NOT EXISTS buttonList (ID INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT)";
+    //创建表
+    if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+    {
+        NSLog(@"create success");
+    }else{
+        NSLog(@"create error:%s",errorMsg);
+        sqlite3_free(errorMsg);
+    }
     // 查找数据
     sql = @"select * from buttonList";
     sqlite3_stmt *stmt;
-    //查找数据
     if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
     {
         while (sqlite3_step(stmt)==SQLITE_ROW) {
-            
-            int i=sqlite3_column_int(stmt, 0)-1;
-            if(i==5)break;
-            
             const unsigned char *theName= sqlite3_column_text(stmt, 1);
-            NSString *name_Database= [NSString stringWithUTF8String: theName];
-            
-            const unsigned char *num= sqlite3_column_text(stmt, 2);
-            NSString *Num_Database= [NSString stringWithUTF8String: num];
-            
-            const unsigned char *_count= sqlite3_column_text(stmt, 3);
-            NSString *today_count= [NSString stringWithUTF8String: _count];
-            
-            NSString *name=[[[NSString alloc]init]autorelease];
-            
-            NSLog(@"name:%@ num:%@ count %@",name_Database,Num_Database,today_count);
-            
-            
-            
-            
-            UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
-            if(i<5)
-            {
-                name= [NSString stringWithFormat: name_Database];
-                button.tag=[Num_Database integerValue];
-                [arrName insertObject:name atIndex:i];
-            }
-            //                else if(i==4){
-            //                    name= [NSString stringWithFormat:@"收藏"];
-            //                    button.tag=100;
-            //                }
-            button.frame=CGRectMake(10+i*60, 0, 30, 40);
-            button.showsTouchWhenHighlighted = YES;
-            [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
-            UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
-            label.text=name;
-            label.font  = [UIFont fontWithName:@"Arial" size:15.0];
-            label.backgroundColor=[UIColor clearColor];
-            UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
-            labelNum.text=today_count;
-            labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
-            labelNum.textColor=[UIColor whiteColor];
-            labelNum.backgroundColor=[UIColor clearColor];
-            UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
-            if([labelNum.text isEqual:@"0"])
-                imgViewRed.image=[UIImage imageNamed:@"whiteBack.png"];
-            else
-                imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
-            [imgViewRed addSubview:labelNum];
-            [button addSubview:imgViewRed];
-            [button addSubview:label];
-            button.backgroundColor=[UIColor clearColor];
-            [scrollView addSubview:button];
-            [label release];
-            // */
-            
+            strJson= [NSString stringWithUTF8String: theName];
+            break;
         }
     }
+    
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString: strJson];
+    UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];
+    imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
+    imgToolView.tag=22;
+    UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)]autorelease];
     scrollView.contentSize = CGSizeMake(640, 44);
     [scrollView setShowsHorizontalScrollIndicator:NO];//隐藏横向滚动条
     [imgToolView addSubview:scrollView];
     imgToolView . userInteractionEnabled = YES;
     [self.view addSubview:imgToolView];
     
+    for(int i=0;i<5;i++)
+    {
+        UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
+        NSString* name= [[jsonObj  objectAtIndex:i+1] objectForKey:@"name"];
+        button.tag=[[[jsonObj  objectAtIndex:i+1] objectForKey:@"id"]integerValue];
+        
+        [arrName insertObject:name atIndex:i];
+        
+        
+        
+        button.frame=CGRectMake(10+i*60, 0, 30, 40);
+        button.showsTouchWhenHighlighted = YES;
+        [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
+        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
+        label.text=name;
+        label.font  = [UIFont fontWithName:@"Arial" size:15.0];
+        label.backgroundColor=[UIColor clearColor];
+        UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
+        labelNum.text=[NSString stringWithFormat:@"%@", [[jsonObj  objectAtIndex:i+1] objectForKey:@"today_count"]];
+        labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
+        labelNum.textColor=[UIColor whiteColor];
+        labelNum.backgroundColor=[UIColor clearColor];
+        UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
+        if([labelNum.text isEqual:@"0"])
+            imgViewRed.image=[UIImage imageNamed:@"whiteBack.png"];
+        else
+            imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
+        [imgViewRed addSubview:labelNum];
+        [button addSubview:imgViewRed];
+        [button addSubview:label];
+        button.backgroundColor=[UIColor clearColor];
+        [scrollView addSubview:button];
+        [label release];
+        
+        
+    }
+ 
     sqlite3_finalize(stmt);
     
     //  最后，关闭数据库：
     sqlite3_close(database);
+}
+-(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID
+{
+    NSString *strJson;
+    NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPaths=[array objectAtIndex:0];
+    NSString *str=[NSString stringWithFormat:@"Topic_DB%@",ID];
+    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+    sqlite3 *database;
     
-    //创建数据库end
+    if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+    {
+        NSLog(@"open success");
+    }
+    else {
+        NSLog(@"open failed");
+    }
+    char *errorMsg;
+    // 查找数据
+    NSString* sql = @"select * from picture";
+    sqlite3_stmt *stmt;
+    //查找数据
     
+    if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+    {
+        
+        while (sqlite3_step(stmt)==SQLITE_ROW) {
+            int i=sqlite3_column_int(stmt, 0)-1;
+            
+            
+            const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+            strJson= [NSString stringWithUTF8String: _pic];
+            NSLog(@"********%d",i);
+            
+            
+            
+        }
+        SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+        NSDictionary *jsonObj =[parser objectWithString: strJson];
+        NSDictionary *data = [jsonObj objectForKey:@"data"];
+        
+        for (int i =0; i <data.count; i++) {
+            
+            [arr insertObject:[data objectAtIndex:i] atIndex: i];
+        }
+        
+        
+    }
+    [self createView];
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
-    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+    //////
     
-    NSDictionary *data = [jsonObj objectForKey:@"data"];
-   
-    for (int i =0; i <data.count; i++) {
-        
-        [arr insertObject:[data objectAtIndex:i] atIndex: i];
+    NSString *strJson;
+    NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPaths=[array objectAtIndex:0];
+    NSString *str=[NSString stringWithFormat:@"Topic_DB%@",ID];
+    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+    sqlite3 *database;
+    
+    if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+    {
+        NSLog(@"open success");
     }
+    else {
+        NSLog(@"open failed");
+    }
+    char *errorMsg;
+    NSString *insertSQLStr = [NSString stringWithFormat:
+                              @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
+    const char *insertSQL=[insertSQLStr UTF8String];
+    //插入数据 进行更新操作
+    if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
+        NSLog(@"insert operation is ok.");
+    }
+    else{
+        NSLog(@"insert error:%s",errorMsg);
+        sqlite3_free(errorMsg);
+    }
+
+    // 查找数据
+    NSString* sql = @"select * from picture";
+    sqlite3_stmt *stmt;
+    //查找数据
+    
+    if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+    {
+        
+        while (sqlite3_step(stmt)==SQLITE_ROW) {
+            int i=sqlite3_column_int(stmt, 0)-1;
+            
+            
+            const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+            strJson= [NSString stringWithUTF8String: _pic];
+            NSLog(@"********%d",i);
+            
+            
+            
+        }
+        SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+        NSDictionary *jsonObj =[parser objectWithString: strJson];
+        NSDictionary *data = [jsonObj objectForKey:@"data"];
+        
+        for (int i =0; i <data.count; i++) {
+            
+            [arr insertObject:[data objectAtIndex:i] atIndex: i];
+        }
+                
+        
+    }
+    // 删除所有数据 并进行更新数据库操作
+    //删除所有数据，条件为1>0永真
+    const char *deleteAllSql="delete from picture where 1>0";
+    //执行删除语句
+    if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
+        NSLog(@"删除所有数据成功");
+    }
+    else NSLog(@"delect failde!!!!");
+    
+    
+    sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
+    if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+    {
+        NSLog(@"create success");
+    }else{
+        NSLog(@"create error:%s",errorMsg);
+        sqlite3_free(errorMsg);
+    }
+    NSString *insertSQLStr1 = [NSString stringWithFormat:
+                              @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
+    const char *insertSQL1=[insertSQLStr1 UTF8String];
+    //插入数据 进行更新操作
+    if (sqlite3_exec(database, insertSQL1 , NULL, NULL, &errorMsg)==SQLITE_OK) {
+        NSLog(@"insert operation is ok.");
+    }
+    else{
+        NSLog(@"insert error:%s",errorMsg);
+        sqlite3_free(errorMsg);
+    }
+    sqlite3_finalize(stmt);
+    
+    //  最后，关闭数据库：
+    sqlite3_close(database);
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    ////////
+//    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+//    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+    
+   
     [self createView];
 }
 - (void)viewDidLoad

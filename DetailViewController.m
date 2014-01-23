@@ -22,12 +22,10 @@
 
 #import "Singleton.h"
 
-
-
 #import <ShareSDK/ShareSDK.h>
 #import "WeiboApi.h"
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
-
+#import "sqlite3.h"
 @interface DetailViewController ()
 
 @end
@@ -231,14 +229,79 @@
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
-    SBJsonParser *parser = [[SBJsonParser alloc] init];
-    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+    ////
+    /*
+    NSString * strJson;
+    NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPaths=[array objectAtIndex:0];
+    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"Detail11111111_DB%@",ID]];
     
+    sqlite3 *database;
+    
+    if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+    {
+        NSLog(@"open success");
+    }
+    else {
+        NSLog(@"open failed");
+    }
+    char *errorMsg;
+    NSString* sql=@"CREATE TABLE IF NOT EXISTS detail (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
+    if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+    {
+        NSLog(@"create success");
+    }else{
+        NSLog(@"create error:%s",errorMsg);
+        sqlite3_free(errorMsg);
+    }
+
+    NSString *insertSQLStr = [NSString stringWithFormat:
+                              @"INSERT INTO 'detail' ('pic' ) VALUES ('%@')", jsonString];
+    const char *insertSQL=[insertSQLStr UTF8String];
+    //插入数据 进行更新操作
+    if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
+        NSLog(@"insert operation is ok.");
+    }
+    else{
+        NSLog(@"insert error:%s",errorMsg);
+        sqlite3_free(errorMsg);
+    }
+    
+    // 查找数据
+    sql = @"select * from detail";
+    sqlite3_stmt *stmt;
+    //查找数据
+    
+    if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+    {
+        
+        while (sqlite3_step(stmt)==SQLITE_ROW) {
+            int i=sqlite3_column_int(stmt, 0)-1;
+            
+            
+            const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+            strJson= [NSString stringWithUTF8String: _pic];
+            
+            
+        }    
+       
+    }
+    sqlite3_finalize(stmt);//  最后，关闭数据库：
+    sqlite3_close(database);//创建数据库end
+    
+ 
+     ///////*/
+    
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString:jsonString];
+    
+   
+ 
     moment=[[jsonObj objectForKey:@"id"]intValue];
-    detailTotal=[[NSString alloc]init];
-    htmlText=[[NSString alloc]init];
-    
-    detailTotal=jsonString;
+     
+    htmlText=[[[NSString alloc]init]retain];
+    app.saveId=jsonString;
+
     htmlText=[jsonObj objectForKey:@"content"];
     app.next_Page=[jsonObj objectForKey:@"next_id"];
     app.pre_Page=[jsonObj objectForKey:@"prev_id"];
@@ -525,7 +588,7 @@ didFailWithError:(NSError *)error
                 "</style> \n"
                 "</head> \n"
                 "<body>%@</body> \n"
-                "</html>",  fontSize ,line_height, htmlTextTotals];
+                "</html>",  fontSize ,line_height, htmlText];
     
     
     [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
@@ -533,6 +596,7 @@ didFailWithError:(NSError *)error
 
     [showWebView loadHTMLString:jsString baseURL:nil];
     [showWebView stringByEvaluatingJavaScriptFromString:jsString];
+    
 
 }
 -(void)wordSmallAction:(id)sender
@@ -546,7 +610,7 @@ didFailWithError:(NSError *)error
                 "</style> \n"
                 "</head> \n"
                 "<body>%@</body> \n"
-                "</html>",  fontSize ,line_height, htmlTextTotals];
+                "</html>",  fontSize ,line_height, htmlText];
     
     
     [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
@@ -569,7 +633,7 @@ didFailWithError:(NSError *)error
                 "</style> \n"
                 "</head> \n"
                 "<body>%@</body> \n"
-                "</html>",  fontSize ,line_height, htmlTextTotals];
+                "</html>",  fontSize ,line_height, htmlText];
     
     
     [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
@@ -592,7 +656,7 @@ didFailWithError:(NSError *)error
                 "</style> \n"
                 "</head> \n"
                 "<body>%@</body> \n"
-                "</html>",  fontSize ,line_height, htmlTextTotals];
+                "</html>",  fontSize ,line_height, htmlText];
     
     
     [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
@@ -653,7 +717,8 @@ didFailWithError:(NSError *)error
     {
     [saveBtn setImage:[UIImage imageNamed:@"saveImgHighted@2X"] forState:UIControlStateNormal];
 
-      [[Singleton sharedInstance].single_Data insertObject:detailTotal atIndex:app.saveNum++] ;
+      
+      [[Singleton sharedInstance].single_Data insertObject:app.saveId atIndex:app.saveNum++] ;
     }
     else if(buttonIndex==1)//取消
     {

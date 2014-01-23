@@ -80,7 +80,7 @@
     }];
     [request setFailedBlock :^{
         // 请求响应失败，返回错误信息
-        [delegate reBack:flag reLoad:@"0"];
+        [delegate reBack:flag reLoad:ID];
         NSError *error = [request error ];
         NSLog ( @"error:%@" ,[error userInfo ]);
     }];
@@ -104,6 +104,7 @@
     }];
     [request setFailedBlock :^{
       
+        [delegate reBack:@"0" reLoad:content_id];
         NSError *error = [request error ];
         NSLog ( @"error:%@" ,[error userInfo ]);
         
@@ -173,7 +174,7 @@
     [request setDelegate:self];
     [request setCompletionBlock :^{
         NSString * jsonString  =  [request responseString];
-        [delegate getJsonString:jsonString isPri:@"0" isID:@"0"];
+        [delegate getJsonString:jsonString isPri:@"0" isID:content_id];
        // [delegate reBack :jsonString];
     }];
     [request setFailedBlock :^{

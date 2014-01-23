@@ -12,6 +12,8 @@
 #import <ShareSDK/ShareSDK.h>
 #import "WeiboApi.h"
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
+
+#import <sqlite3.h>
 @interface LifeItemViewController ()
 
 @end
@@ -102,10 +104,48 @@
     [rightBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
     rightBtn.tag=20;
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
+-(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID
 {
+    NSString *strJson;
+    NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPaths=[array objectAtIndex:0];
+    NSString *str=[NSString stringWithFormat:@"LifeItem_DB%@",ID];
+    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+    sqlite3 *database;
+    
+    if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+    {
+        NSLog(@"open success");
+    }
+    else {
+        NSLog(@"open failed");
+    }
+    
+    char *errorMsg;
+    // 查找数据
+    NSString* sql = @"select * from picture";
+    sqlite3_stmt *stmt;
+    //查找数据
+    
+    if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+    {
+        
+        while (sqlite3_step(stmt)==SQLITE_ROW) {
+            int i=sqlite3_column_int(stmt, 0)-1;
+            
+            
+            const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+            strJson= [NSString stringWithUTF8String: _pic];
+            
+        }
+    }
+       sqlite3_finalize(stmt);
+    
+    //  最后，关闭数据库：
+    sqlite3_close(database);
+    
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+    NSDictionary *jsonObj =[parser objectWithString: strJson];
     
     NSDictionary *data = [jsonObj objectForKey:@"data"];
     
@@ -114,7 +154,97 @@
         [Fish_arr insertObject:[data objectAtIndex:i] atIndex: i];
     }
     [self createView];
+}
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
+{
+    NSString *strJson;
+    NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPaths=[array objectAtIndex:0];
+    NSString *str=[NSString stringWithFormat:@"LifeItem_DB%@",ID];
+    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+    sqlite3 *database;
     
+    if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+    {
+        NSLog(@"open success");
+    }
+    else {
+        NSLog(@"open failed");
+    }
+    
+    char *errorMsg;
+    NSString *insertSQLStr = [NSString stringWithFormat:
+                              @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
+    const char *insertSQL=[insertSQLStr UTF8String];
+    //插入数据 进行更新操作
+    if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
+        NSLog(@"insert operation is ok.");
+    }
+    else{
+        NSLog(@"insert error:%s",errorMsg);
+        sqlite3_free(errorMsg);
+    }
+    // 查找数据
+    NSString* sql = @"select * from picture";
+    sqlite3_stmt *stmt;
+    //查找数据
+    
+    if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+    {
+        
+        while (sqlite3_step(stmt)==SQLITE_ROW) {
+            int i=sqlite3_column_int(stmt, 0)-1;
+            
+            
+            const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+            strJson= [NSString stringWithUTF8String: _pic];
+            
+        }
+    }
+    // 删除所有数据 并进行更新数据库操作
+    //删除所有数据，条件为1>0永真
+    const char *deleteAllSql="delete from picture where 1>0";
+    //执行删除语句
+    if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
+        NSLog(@"删除所有数据成功");
+    }
+    else NSLog(@"delect failde!!!!");
+    
+    
+    sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)"; //创建表
+    if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+    {
+        NSLog(@"create success");
+    }else{
+        NSLog(@"create error:%s",errorMsg);
+        sqlite3_free(errorMsg);
+    }
+    NSString *insertSQLStr1 = [NSString stringWithFormat:
+                               @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
+    const char *insertSQL1=[insertSQLStr1 UTF8String];
+    //插入数据 进行更新操作
+    if (sqlite3_exec(database, insertSQL1 , NULL, NULL, &errorMsg)==SQLITE_OK) {
+        NSLog(@"insert operation is ok.");
+    }
+    else{
+        NSLog(@"insert error:%s",errorMsg);
+        sqlite3_free(errorMsg);
+    }
+    sqlite3_finalize(stmt);
+    
+    //  最后，关闭数据库：
+    sqlite3_close(database);
+    
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString: strJson];
+    
+    NSDictionary *data = [jsonObj objectForKey:@"data"];
+    
+    for (int i =0; i <data.count; i++) {
+        
+        [Fish_arr  insertObject:[data objectAtIndex:i] atIndex: i];
+    }
+    [self createView];
 }
 - (void)viewDidLoad
 {
