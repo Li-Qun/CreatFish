@@ -113,7 +113,8 @@
     htmlTextTotals=[[NSMutableString alloc]init];
     
     NSLog(@" fa :%@  child :%@",fatherID,momentID);
-    FatherID=[fatherID integerValue];
+    app.momentID=momentID;
+    app.fatherID=fatherID;
     
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];//设置代理
@@ -732,9 +733,61 @@ didFailWithError:(NSError *)error
     if(buttonIndex==0)//确定
     {
     [saveBtn setImage:[UIImage imageNamed:@"saveImgHighted@2X"] forState:UIControlStateNormal];
+////////////
+//
+        /*    NSString *strJson;
+        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths=[array objectAtIndex:0];
+        NSString *str=[NSString stringWithFormat:@"DetailItem"];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+        sqlite3 *database;
+        
+        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+        {
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        
+        char *errorMsg;
+        NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)"; //创建表
+        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+        {
+            NSLog(@"create success");
+        }else{
+            NSLog(@"create error:%s",errorMsg);
+            sqlite3_free(errorMsg);
+        }
+        sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",app.momentID];
+        sqlite3_stmt *stmt;
+        //查找数据
+        
+        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+        {
+            
+            while (sqlite3_step(stmt)==SQLITE_ROW) {
+                
+                
+                const unsigned char *_id= sqlite3_column_text(stmt, 0);
+                NSString *Id= [NSString stringWithUTF8String: _id];
+                const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                // strJson= [NSString stringWithUTF8String: _pic];
+                
+                
+                
+            }
+        }
 
-      
-      [[Singleton sharedInstance].single_Data insertObject:app.saveId atIndex:app.saveNum++] ;
+        
+        */
+        
+        
+        
+        
+        
+        
+    [[Singleton sharedInstance].single_Data insertObject:app.saveId atIndex:app.saveNum++] ;
     }
     else if(buttonIndex==1)//取消
     {
@@ -959,7 +1012,7 @@ didFailWithError:(NSError *)error
 
 -(void)PressGo
 {
-    
+    app.momentID=app.fatherID;
     [UIView beginAnimations:@"animationID" context:nil];
 	[UIView setAnimationDuration:0.8f];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
@@ -969,7 +1022,7 @@ didFailWithError:(NSError *)error
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];//设置代理
     
-    [contentRead Content:[NSString stringWithFormat:@"%d",FatherID ] Detail:app.next_Page];
+    [contentRead Content:[NSString stringWithFormat:app.fatherID ] Detail:app.next_Page];
     
     [showWebView reload];
     
@@ -982,6 +1035,7 @@ didFailWithError:(NSError *)error
 }
 -(void)Pressleft
 {
+    app.momentID=app.fatherID;
     [UIView beginAnimations:@"animationID" context:nil];
 	[UIView setAnimationDuration:0.8f];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
@@ -991,8 +1045,7 @@ didFailWithError:(NSError *)error
     
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];//设置代理
-    
-    [contentRead Content:[NSString stringWithFormat:@"%d",FatherID ] Detail:app.pre_Page];
+    [contentRead Content:[NSString stringWithFormat:app.fatherID ] Detail:app.pre_Page];
     [showWebView reload];
     
     [self buildTheTopBar];

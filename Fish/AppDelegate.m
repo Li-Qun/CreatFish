@@ -41,7 +41,9 @@
 @synthesize jsonStringOne=jsonStringOne;
 @synthesize targetCenter=targetCenter;
 @synthesize center=centre;
+@synthesize fatherID=fatherID;
 @synthesize saveId=saveID;
+@synthesize momentID=momentID;
 @synthesize saveImage=saveImage;
 @synthesize saveName=saveName;
 @synthesize saveDataId=saveDataId;

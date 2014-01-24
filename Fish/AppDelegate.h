@@ -44,6 +44,8 @@ typedef enum
     NSString *jsonStringOne;
  
     //收藏name\image\id 数量、容器
+    NSString *fatherID;
+    NSString *momentID;
     NSString *saveID;
     NSString *saveName;
     NSString *saveImage;
@@ -90,7 +92,9 @@ typedef enum
 
 @property (nonatomic)int  center;
 //收藏杂志start
+@property(nonatomic,retain)NSString *fatherID;
 @property(nonatomic,retain)NSString *saveId;
+@property(nonatomic,retain)NSString *momentID;
 @property(nonatomic,retain)NSString *saveName;
 @property(nonatomic,retain)NSString *saveImage;
 @property(nonatomic,retain) NSMutableArray  *saveDataId;

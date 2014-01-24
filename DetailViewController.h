@@ -62,7 +62,6 @@
     AppDelegate *app;
     NSString *momentID;
     NSString *fatherID;
-    int FatherID;
     
     BOOL isOpenL;
     BOOL isOpenR;
