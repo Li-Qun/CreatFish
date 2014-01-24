@@ -33,7 +33,7 @@
 @synthesize filter_is_sticky=filter_is_sticky;
 @synthesize filter_category_id=filter_category_id;
 @synthesize offset=offset;
-@synthesize categoryItem=categoryItem;
+//@synthesize categoryItem=categoryItem;
 @synthesize array=array;
 @synthesize arrayData=arrayData;
 @synthesize contentRead=contentRead;

@@ -81,7 +81,7 @@ typedef enum
 //@property(nonatomic,retain)NSString *total;
 //@property(nonatomic,retain)NSString *content;
 
-@property(nonatomic,retain) CategoryItem *categoryItem;
+//@property(nonatomic,retain) CategoryItem *categoryItem;
 @property(nonatomic,retain)ContentRead *contentRead;
 
 @property(nonatomic,retain)NSString *jsonString;

@@ -8,7 +8,12 @@
 
 #import "NewsController.h"
 #import "FishCore.h"
+
 #import "ASIHTTPRequest.h"
+#import "MBProgressHUD.h"
+#import "Reachability.h"
+
+
 #import "SBJson.h"
 #import "JSONKit.h"
 #import "ASIFormDataRequest.h"
@@ -20,8 +25,6 @@
 #import "skyCell.h"
 #import "UIImageView+WebCache.h"
 #import "DetailViewController.h"
-
-
 #import "IIViewDeckController.h"
 #import "RightViewController.h"
 #import "sqlite3.h"
@@ -52,9 +55,9 @@
     }
     return self;
 }
-
 - (void)viewWillAppear:(BOOL)animated
 {
+    
     [super viewWillAppear:animated];
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
@@ -75,6 +78,7 @@
     NSLog(@"%d %d",target,app.targetCenter);
     str=[NSString stringWithFormat:@"%d",target];
     NewsID=[str integerValue];
+    
     [contentRead fetchList:str isPri:@"1" Out:@"0"];
     [contentRead fetchList:str isPri:@"0" Out:@"0"];
     
@@ -211,8 +215,111 @@
 -(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID
 {
      NSString *strJson;
-    
-   
+     if([jsonString isEqualToString:@"0"])
+     {
+         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+         NSString *documentsPaths=[array objectAtIndex:0];
+         NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"News_DB%@",ID]];
+         
+         sqlite3 *database;
+         
+         if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+         {
+             NSLog(@"open success");
+         }
+         else {
+             NSLog(@"open failed");
+         }
+         // 查找数据
+         NSString* sql = @"select * from picture";
+         sqlite3_stmt *stmt;
+         //查找数据
+         
+         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+         {
+             
+             while (sqlite3_step(stmt)==SQLITE_ROW) {
+                 int i=sqlite3_column_int(stmt, 0)-1;
+                
+                 const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                 strJson= [NSString stringWithUTF8String: _pic];
+                 NSLog(@"New********%d",i);
+                 break;
+             }
+             
+             SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
+             NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
+             
+             NSDictionary *data = [jsonObj1 objectForKey:@"data"];
+             total += [[jsonObj1 objectForKey:@"total"] intValue];
+             NSLog(@"total : %d",total);
+             newSumCount=arr.count;
+             for (int i =0; i <data.count; i++) {
+                 
+                 [arr insertObject:[data objectAtIndex:i] atIndex: newSumCount];
+                 newSumCount++;
+             }
+         }
+
+         sqlite3_finalize(stmt);
+         
+         //  最后，关闭数据库：
+         sqlite3_close(database);
+         
+         //创建数据库end
+         
+
+     }
+     else{
+         
+         [self buildTheTopBar];
+         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+         NSString *documentsPaths=[array objectAtIndex:0];
+         NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"NewsTop_DB%@",ID]];
+         
+         sqlite3 *database;
+         
+         if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+         {
+             NSLog(@"open success");
+         }
+         else {
+             NSLog(@"open failed");
+         }
+         char *errorMsg;
+         
+        // 查找数据
+        NSString* sql = @"select * from picture";
+         sqlite3_stmt *stmt;
+         //查找数据
+         
+         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+         {
+             
+             while (sqlite3_step(stmt)==SQLITE_ROW) {
+                 int i=sqlite3_column_int(stmt, 0)-1;
+                 
+                 const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                 strJson= [NSString stringWithUTF8String: _pic];
+                 app.jsonStringOne=strJson;
+                 break;
+             }
+         }
+         // 删除所有数据 并进行更新数据库操作
+         //删除所有数据，条件为1>0永真
+         const char *deleteAllSql="delete from picture where 1>0";
+         //执行删除语句
+         if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
+             NSLog(@"删除所有数据成功");
+         }
+         else NSLog(@"delect failde!!!!");
+         sqlite3_finalize(stmt);
+         
+         //  最后，关闭数据库：
+         sqlite3_close(database);
+         
+         //创建数据库end
+     }
     [self build_TableView];
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
@@ -283,7 +390,6 @@
  
                 
             }
-            
             SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
             NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
             

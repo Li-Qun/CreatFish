@@ -333,13 +333,13 @@
     
     
     
-    isOpenR=NO;isOpenL=NO;
-    self.leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
-    self.rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
-    self.leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-    self.rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.view addGestureRecognizer:self.leftSwipeGestureRecognizer];
-    [self.view addGestureRecognizer:self.rightSwipeGestureRecognizer];
+//    isOpenR=NO;isOpenL=NO;
+//    self.leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+//    self.rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+//    self.leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+//    self.rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+//    [self.view addGestureRecognizer:self.leftSwipeGestureRecognizer];
+//    [self.view addGestureRecognizer:self.rightSwipeGestureRecognizer];
     
 }
 - (void)handleSwipes:(UISwipeGestureRecognizer *)sender
@@ -434,7 +434,7 @@
                 }
     
     carousel.frame=CGRectMake(24, 30+img_height, 220, 289);
-    view1 = [[[UIImageView alloc] init ] autorelease];
+    UIView * view1 = [[[UIImageView alloc] init ]autorelease];
     NSDictionary* dict = [BigFish_Description objectAtIndex:(index)];
     NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
     UIImageView *ImageView=[[[UIImageView alloc]initWithFrame:carousel.frame ]autorelease];
@@ -521,7 +521,7 @@
 
 - (CATransform3D)carousel:(iCarousel *)_carousel transformForItemView:(UIView *)view withOffset:(CGFloat)offset
 {
-    view.alpha = 1.0 - fminf(fmaxf(offset, 0.0), 1.0);
+    view.alpha =5.0 - fminf(fmaxf(offset, 0.0), 1.0);
     
     CATransform3D transform = CATransform3DIdentity;
     transform.m34 = self.carousel.perspective;

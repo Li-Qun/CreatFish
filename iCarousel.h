@@ -139,7 +139,6 @@ NSInteger compareViewDepth(id obj1, id obj2, void *context);
 
 @end
 
-
 @protocol iCarouselDelegate <NSObject>
 
 @optional

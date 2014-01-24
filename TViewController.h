@@ -13,14 +13,14 @@
 #import "AppDelegate.h"
 @interface TViewController : UIViewController<NIDropDownDelegate,UITableViewDelegate, UITableViewDataSource>
 {
-   CategoryItem *categoryItem;
+    
    AppDelegate *app ;
    NIDropDown *dropDown;
     int selectNum;
 }
 
 @property (strong,nonatomic) ContentRead *contentRead;
-@property (strong,nonatomic)  CategoryItem *categoryItem;
+ 
 
 
 - (void)pressme:(id)sender;

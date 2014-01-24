@@ -230,11 +230,11 @@
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
     ////
-    /*
+  /*
     NSString * strJson;
     NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPaths=[array objectAtIndex:0];
-    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"Detail11111111_DB%@",ID]];
+    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"Detail_DB%@",ID]];
     
     sqlite3 *database;
     
@@ -254,22 +254,38 @@
         NSLog(@"create error:%s",errorMsg);
         sqlite3_free(errorMsg);
     }
-
-    NSString *insertSQLStr = [NSString stringWithFormat:
-                              @"INSERT INTO 'detail' ('pic' ) VALUES ('%@')", jsonString];
-    const char *insertSQL=[insertSQLStr UTF8String];
-    //插入数据 进行更新操作
-    if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
-        NSLog(@"insert operation is ok.");
+    sqlite3_stmt *stmt;
+    char *Sql = "insert into 'detail' ('pic')values (?);";
+    if (sqlite3_prepare_v2(database, Sql, -1, &stmt, nil) == SQLITE_OK) {
+        sqlite3_bind_text(stmt, 1,[jsonString   UTF8String], -1, NULL);
     }
-    else{
-        NSLog(@"insert error:%s",errorMsg);
-        sqlite3_free(errorMsg);
-    }
+    if (sqlite3_step(stmt) != SQLITE_DONE)
+        NSLog(@"Something is Wrong!");
+    sqlite3_finalize(stmt);
     
+    
+    
+    
+//    if (sqlite3_prepare_v2(database, [@"insert into 'detail' ('pic') values(?);" UTF8String], -1, &stmt, NULL)==SQLITE_OK) {
+//        
+//        //绑定参数
+//        
+//        const char *text=[jsonString cStringUsingEncoding:NSUTF8StringEncoding];
+//        
+//        sqlite3_bind_text(stmt, 1, text, -1, SQLITE_STATIC);
+//        
+//        
+//        
+//        if (sqlite3_step(stmt)!=SQLITE_DONE) {
+//            
+//            sqlite3_finalize(stmt);
+//            
+//    
+//        }
+//    }
     // 查找数据
     sql = @"select * from detail";
-    sqlite3_stmt *stmt;
+    
     //查找数据
     
     if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
@@ -280,8 +296,8 @@
             
             
             const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-            strJson= [NSString stringWithUTF8String: _pic];
-            
+       //     strJson= [NSString stringWithUTF8String: _pic];
+    
             
         }    
        

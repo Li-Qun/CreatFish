@@ -148,8 +148,6 @@
                           failure:^(NSError *error) {NSLog(@"NO");}];
     
     return cell;
-    
-    
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

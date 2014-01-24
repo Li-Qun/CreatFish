@@ -24,24 +24,24 @@
 @end
 
 
-@interface CategoryItem : NSObject
-{
-    //类别目录 层级
-    NSString *CategoryId;
-    NSString *CategoryName;
-    NSString *CategoryImage;
-    NSString *CategoryLevel;
-    NSString *CategoryFlag;
-    NSString *CategoryPid;
-}
-@property(nonatomic,retain) NSString *CategoryId;
-@property(nonatomic,retain) NSString *CategoryName;
-@property(nonatomic,retain) NSString *CategoryImage;
-@property(nonatomic,retain) NSString *CategoryLevel;
-@property(nonatomic,retain) NSString *CategoryFlag;
-@property(nonatomic,retain) NSString *CategoryPid;
-
-@end
+//@interface CategoryItem : NSObject
+//{
+//    //类别目录 层级
+//    NSString *CategoryId;
+//    NSString *CategoryName;
+//    NSString *CategoryImage;
+//    NSString *CategoryLevel;
+//    NSString *CategoryFlag;
+//    NSString *CategoryPid;
+//}
+//@property(nonatomic,retain) NSString *CategoryId;
+//@property(nonatomic,retain) NSString *CategoryName;
+//@property(nonatomic,retain) NSString *CategoryImage;
+//@property(nonatomic,retain) NSString *CategoryLevel;
+//@property(nonatomic,retain) NSString *CategoryFlag;
+//@property(nonatomic,retain) NSString *CategoryPid;
+//
+//@end
 
 
 @protocol FishDelegate
@@ -66,7 +66,7 @@
 @property(nonatomic ,retain)NSString *filter_is_sticky;
 @property(nonatomic,retain)NSString *total;
 @property(nonatomic,retain)NSString *content;
-@property(nonatomic,retain)CategoryItem *categoryItem;
+//@property(nonatomic,retain)CategoryItem *categoryItem;
 @property(assign,nonatomic)id<FishDelegate> delegate;
 -(void)fetchList: (NSString  * )ID isPri:(NSString*)flag  Out:(NSString *) Offset;
 //-(void)Magazine:(NSString*)ID isPri:(NSString *)flag WeeklyId:(NSString *) Id Out:(NSString *)Offset;

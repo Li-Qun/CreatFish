@@ -27,7 +27,7 @@
     
     int total;
     NSMutableArray *BigFish_Description;
-    UIView *view1;
+    
     IBOutlet UILabel *labelText;
     int index;
     //图片位置

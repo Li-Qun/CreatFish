@@ -338,9 +338,7 @@
     [contentRead fetchList:str isPri:@"0" Out:@"0"];
     [super viewDidLoad];
     
-    
-    
-    
+
     isOpenR=NO;isOpenL=NO;
     self.leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
     self.rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
@@ -456,7 +454,7 @@
     view1.clipsToBounds = NO;
     labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
     
-    
+    [self.view  reloadInputViews];
     return view1;
 }
 - (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel {

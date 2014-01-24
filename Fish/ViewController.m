@@ -27,7 +27,7 @@
 @end
 
 @implementation ViewController
-@synthesize categoryItem=categoryItem;
+//@synthesize categoryItem=categoryItem;
 @synthesize contentRead=contentRead;
 @synthesize klpImgArr;
 @synthesize klpScrollView1;
@@ -61,6 +61,7 @@
         isSeven=NO;
     }
     [self theTopBar];
+    [self _init];
 }
 -(void)BuildFirstPage
 {
@@ -550,8 +551,19 @@
     labelText.numberOfLines = 0;
     [labelText sizeToFit];
     
+    
+    
+    
+    NSDate *date = [[[NSDate alloc]initWithTimeIntervalSince1970:[[ [arr objectAtIndex:0] objectForKey:@"create_time"]integerValue]
+                     /1000.0]autorelease];
+    
+    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    
+    
+    
     labelDay.textColor=[UIColor lightGrayColor];
-    labelDay.text= [ [arr objectAtIndex:0] objectForKey:@"create_time"];
+    labelDay.text=[dateFormatter stringFromDate:date];  ;
     labelDay.backgroundColor=[UIColor clearColor];
     labelDay.font=[UIFont systemFontOfSize:15.0f];
     labelDay.numberOfLines = 0;
@@ -627,7 +639,10 @@
     self.view.backgroundColor=[UIColor whiteColor];
     scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
     arr=[[[NSMutableArray alloc]init]retain];
-    [self _init];
+}
+-(id)translateDate:(id)date
+{
+    
 }
 #pragma mark-- UIScrollViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{\
@@ -664,11 +679,19 @@
         labelText.numberOfLines = 0;
         [labelText sizeToFit];
         
+        NSDate *date = [[[NSDate alloc]initWithTimeIntervalSince1970:[[ [arr objectAtIndex:index] objectForKey:@"create_time"]integerValue]
+/1000.0]autorelease];
+        
+        NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+        dateFormatter.dateFormat = @"yyyy-MM-dd";
+    
         labelDay.textColor=[UIColor lightGrayColor];
-        labelDay.text= [ [arr objectAtIndex:index] objectForKey:@"create_time"];
+        labelDay.text=[dateFormatter stringFromDate:date];
         labelDay.backgroundColor=[UIColor clearColor];
         labelDay.font=[UIFont systemFontOfSize:15.0f];
         labelDay.numberOfLines = 0;
+        
+        
         
         
 	}else {

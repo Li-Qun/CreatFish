@@ -318,27 +318,9 @@
     
     //  最后，关闭数据库：
     sqlite3_close(database);
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     ////////
 //    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
 //    NSDictionary *jsonObj =[parser objectWithString: jsonString];
-    
-   
     [self createView];
 }
 - (void)viewDidLoad

@@ -15,7 +15,7 @@ UIScrollViewDelegate >
     UIScrollView *scrollView;
 	klpView *klp;
 	int index;
-    CategoryItem *categoryItem;
+   // CategoryItem *categoryItem;
     ContentRead *contentRead;
     AppDelegate *app;
     UINavigationBar *NavBar;
@@ -38,7 +38,7 @@ UIScrollViewDelegate >
 
 @property (nonatomic,retain)NSMutableArray *klpImgArr;
 
-@property(nonatomic,retain)CategoryItem *categoryItem;
+//@property(nonatomic,retain)CategoryItem *categoryItem;
 @property(nonatomic,retain)ContentRead *contentRead;
 
 @end
