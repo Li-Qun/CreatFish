@@ -195,7 +195,7 @@
     }
     else
     {
-        
+        [delegate reBack:@"5" reLoad:content_id];
     }
     
 }
@@ -225,7 +225,7 @@
     }
     else
     {
-        
+        [delegate reBack:content_id reLoad:content_id];
     }
     
 }

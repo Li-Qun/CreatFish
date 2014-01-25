@@ -17,23 +17,16 @@
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import "WXApi.h"
 #import <TencentOpenAPI/QQApiInterface.h>
- 
 #import <TencentOpenAPI/TencentOAuth.h>
+
+
+#import <sqlite3.h>
 @implementation AppDelegate
 @synthesize viewDeckController;
 
-//@synthesize CategoryId=CategoryId;
-//@synthesize CategoryPid=CategoryPid;
-//@synthesize CategoryFlag=CategoryFlag;
-//@synthesize CategoryImage=CategoryImage;
-//@synthesize CategoryLevel=CategoryLevel;
-//@synthesize CategoryName=CategoryName;
-//@synthesize content=content;
-//@synthesize total=total;
 @synthesize filter_is_sticky=filter_is_sticky;
 @synthesize filter_category_id=filter_category_id;
 @synthesize offset=offset;
-//@synthesize categoryItem=categoryItem;
 @synthesize array=array;
 @synthesize arrayData=arrayData;
 @synthesize contentRead=contentRead;
@@ -55,6 +48,8 @@
 @synthesize firstPageImage=firstPageImage;
 @synthesize pic_URL;
 @synthesize topBarView;
+@synthesize isRead=isRead;
+@synthesize isRead_arr=isRead_arr;
 -(void)build
 {
    // AppDelegate * app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -64,6 +59,7 @@
     saveDataName=[[NSMutableArray  alloc]init];
     saveDataImage=[[NSMutableArray  alloc]init];
     firstPageImage=[[NSMutableArray  alloc]init];
+    
     next_Page=@"11";
     pre_Page=@"11";
 }
@@ -76,6 +72,13 @@
     [_window release];
     [_viewController release];
     [array release];
+    [arrayData release ];
+    [saveDataId release];
+    [saveDataName release];
+    [saveDataImage release];
+    [firstPageImage release];
+    [isRead_arr release];
+    
     [super dealloc];
 }
 -(void)setShare
@@ -91,77 +94,119 @@
                                   appSecret:@"a381d8a35096c2212c68bb4e51936eb6"
                                 redirectUri:@"http://www.huiztech.com"
                             wbApiCls:[WeiboApi class]];
-    //添加QQ
-//[ShareSDK connectQZoneWithAppKey:@"101007721"
-//                           appSecret:@"50d186e81867f8f88fac3cd9269352bc"
-//                   qqApiInterfaceCls:nil//[QQApiInterface class]
-//                     tencentOAuthCls:nil];//[TencentOAuth class]];
-
     //添加微信应用
     [ShareSDK importWeChatClass:[WXApi class]];
     [ShareSDK connectWeChatWithAppId:@"wx3a4f2774b2a663a9" wechatCls:[WXApi class]]; //此参数为申请的微信AppID
-//    NSString *appId = @"wx3a4f2774b2a663a9";
-//    [ShareSDK connectWeChatSessionWithAppId: appId wechatCls:[WXApi class]];
-//    [ShareSDK connectWeChatTimelineWithAppId:appId wechatCls:[WXApi class]];
-    
+
 }
 
 //先生成 再替换
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
     
-    [self setShare];
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    
-    UIViewController  *centerView = [[[ViewController alloc] init] autorelease];
-    
-    centerView.title = @"中心视图";
-    UINavigationController  *centerNav = [[[UINavigationController alloc] initWithRootViewController:centerView] autorelease];
-    
-    LeftViewController *leftView = [[[LeftViewController alloc] init] autorelease];
-    RightViewController *rightView=[[[RightViewController alloc]init]autorelease];
-  //  TopViewController *topView = [[[TopViewController alloc] init] autorelease];
-
-    IIViewDeckController *vc =[[IIViewDeckController alloc]initWithCenterViewController:centerNav leftViewController:leftView rightViewController:rightView  ];
-    vc.leftSize =  (320 - 244.0);  // 这里的size可以根据你的需求去设置,我这里是为了测试,设置比较大 这里也可以不设置size
-    vc.rightSize = 320.0-244.0;
-    vc.topSize = 460+44;
-    self.viewDeckController = vc;
-
-    
-    CGRect rect = [[UIScreen mainScreen] bounds];
-    CGSize size = rect.size;
-    CGFloat width = size.width;
-    CGFloat height = size.height;
-    if(height==480)height_First=100;
-    
-    //先生成 再替换
-    self.window.rootViewController = self.viewDeckController;
-    self.window.backgroundColor=[UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-
-    UIImageView *splashScreen = [[[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 360, height)]autorelease];
-    splashScreen.image = [UIImage imageNamed:@"welcome@2X"];
-    [self.window addSubview:splashScreen];
-    
-    UIImageView *splashScreen2 = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 400-height_First, 270, 80)]autorelease];
-    splashScreen2.image = [UIImage imageNamed:@"clearbar@2X"];
-    [self.window addSubview:splashScreen2];
-    
-    UIImageView *splashScreen3 = [[[UIImageView alloc] initWithFrame:CGRectMake(280, 400-height_First,40, 80)]autorelease];
-    splashScreen3.image = [UIImage imageNamed:@"clearArrow@2X"];
-    [self.window addSubview:splashScreen3];
-    
-    [UIView animateWithDuration:4.0 animations:^{
-        CATransform3D transform = CATransform3DMakeTranslation(30, 0, 0);
-        splashScreen.layer.transform = transform;
-        splashScreen.alpha = 0.0;
-    } completion:^(BOOL finished) {
-        [splashScreen removeFromSuperview];
-        [splashScreen2 removeFromSuperview];
-        [splashScreen3 removeFromSuperview];
-    }];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //耗时的一些操作
+        NSString *strID;
+        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths=[array objectAtIndex:0];
+        NSString *str=[NSString stringWithFormat:@"News_dataBases"];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+        sqlite3 *database;
+        
+        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+        {
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        
+        char *errorMsg;
+        NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)"; //创建表
+        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+        {
+            NSLog(@"create success");
+        }else{
+            NSLog(@"create error:%s",errorMsg);
+            sqlite3_free(errorMsg);
+        }
+        sql= @"select ID from picture";
+        sqlite3_stmt *stmt;
+        //查找数据
+        isRead_arr=[[NSMutableArray  alloc]init];
+        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+        {
+            int i=0;
+            while (sqlite3_step(stmt)==SQLITE_ROW) {
+                
+                
+                const unsigned char *_id= sqlite3_column_text(stmt, 0);
+                strID= [NSString stringWithUTF8String: _id];
+                const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                //strJson= [NSString stringWithUTF8String: _pic];
+                [isRead_arr insertObject:strID atIndex:i++];
+                
+            }
+        }
+        sqlite3_finalize(stmt);
+        sqlite3_close(database);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{//主线程
+            
+            [self setShare];
+            self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+            
+            UIViewController  *centerView = [[[ViewController alloc] init] autorelease];
+            
+            centerView.title = @"中心视图";
+            UINavigationController  *centerNav = [[[UINavigationController alloc] initWithRootViewController:centerView] autorelease];
+            
+            LeftViewController *leftView = [[[LeftViewController alloc] init] autorelease];
+            RightViewController *rightView=[[[RightViewController alloc]init]autorelease];
+            //  TopViewController *topView = [[[TopViewController alloc] init] autorelease];
+            
+            IIViewDeckController *vc =[[IIViewDeckController alloc]initWithCenterViewController:centerNav leftViewController:leftView rightViewController:rightView  ];
+            vc.leftSize =  (320 - 244.0);  // 这里的size可以根据你的需求去设置,我这里是为了测试,设置比较大 这里也可以不设置size
+            vc.rightSize = 320.0-244.0;
+            vc.topSize = 460+44;
+            self.viewDeckController = vc;
+            
+            CGRect rect = [[UIScreen mainScreen] bounds];
+            CGSize size = rect.size;
+            CGFloat width = size.width;
+            CGFloat height = size.height;
+            if(height==480)height_First=100;
+            
+            //先生成 再替换
+            self.window.rootViewController = self.viewDeckController;
+            self.window.backgroundColor=[UIColor whiteColor];
+            [self.window makeKeyAndVisible];
+            
+            UIImageView *splashScreen = [[[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 360, height)]autorelease];
+            splashScreen.image = [UIImage imageNamed:@"welcome@2X"];
+            [self.window addSubview:splashScreen];
+            
+            UIImageView *splashScreen2 = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 400-height_First, 270, 80)]autorelease];
+            splashScreen2.image = [UIImage imageNamed:@"clearbar@2X"];
+            [self.window addSubview:splashScreen2];
+            
+            UIImageView *splashScreen3 = [[[UIImageView alloc] initWithFrame:CGRectMake(280, 400-height_First,40, 80)]autorelease];
+            splashScreen3.image = [UIImage imageNamed:@"clearArrow@2X"];
+            [self.window addSubview:splashScreen3];
+            
+            [UIView animateWithDuration:4.0 animations:^{
+                CATransform3D transform = CATransform3DMakeTranslation(30, 0, 0);
+                splashScreen.layer.transform = transform;
+                splashScreen.alpha = 0.0;
+            } completion:^(BOOL finished) {
+                [splashScreen removeFromSuperview];
+                [splashScreen2 removeFromSuperview];
+                [splashScreen3 removeFromSuperview];
+            }];
+ 
+            
+        });
+    });
     
     return YES;
 }

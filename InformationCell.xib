@@ -23,7 +23,14 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DS2-Ln-aIR">
-                        <rect key="frame" x="73" y="13" width="232" height="25"/>
+                        <rect key="frame" x="65" y="4" width="245" height="25"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1y7-63-rGT">
+                        <rect key="frame" x="65" y="30" width="245" height="15"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -35,6 +42,7 @@
                 <outlet property="ImageViewBack" destination="j4K-nh-Dd4" id="2CT-eV-A5J"/>
                 <outlet property="backgroundView" destination="YRf-Sl-t4g" id="jf6-Z3-S8M"/>
                 <outlet property="imgView" destination="j8j-lp-h24" id="dFp-6c-Ifu"/>
+                <outlet property="labelForID" destination="1y7-63-rGT" id="645-jR-hqK"/>
                 <outlet property="labelForName" destination="DS2-Ln-aIR" id="CKN-UB-Vce"/>
             </connections>
         </tableViewCell>

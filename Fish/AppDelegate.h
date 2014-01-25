@@ -22,19 +22,6 @@ typedef enum
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,FishDelegate>
 {
-//    //类别目录 层级
-//    NSString *CategoryId;
-//    NSString *CategoryName;
-//    NSString *CategoryImage;
-//    NSString *CategoryLevel;
-//    NSString *CategoryFlag;
-//    NSString *CategoryPid;
-//    NSString *filter_category_id;
-//    NSString *filter_is_sticky;
-//    NSString * offset;
-//    NSString *total;
-//    NSString *content;
-//    CategoryItem *categoryItem;
     ContentRead *contentRead;
     
     NSMutableArray  *array;
@@ -58,8 +45,9 @@ typedef enum
     
     NSString *pre_Page;
     NSString *next_Page;
-   
-  
+    //设置
+    BOOL isRead;//全部标记为已读；
+    NSMutableArray *isRead_arr;
     
 }
 @property (nonatomic, retain)NSMutableArray  *array;
@@ -70,20 +58,11 @@ typedef enum
 @property (strong, nonatomic) MainViewController *mainviewController;
 @property (nonatomic , strong) IIViewDeckController  *viewDeckController;
 
-//@property(nonatomic,retain) NSString *CategoryId;
-//@property(nonatomic,retain) NSString *CategoryName;
-//@property(nonatomic,retain) NSString *CategoryImage;
-//@property(nonatomic,retain) NSString *CategoryLevel;
-//@property(nonatomic,retain) NSString *CategoryFlag;
-//@property(nonatomic,retain) NSString *CategoryPid;
-
 @property(nonatomic,retain )NSString *filter_category_id;
 @property(nonatomic ,retain)NSString * offset;
 @property(nonatomic ,retain)NSString *filter_is_sticky;
-//@property(nonatomic,retain)NSString *total;
-//@property(nonatomic,retain)NSString *content;
 
-//@property(nonatomic,retain) CategoryItem *categoryItem;
+
 @property(nonatomic,retain)ContentRead *contentRead;
 
 @property(nonatomic,retain)NSString *jsonString;
@@ -110,6 +89,8 @@ typedef enum
 @property (nonatomic,retain)NSString *pic_URL;
 //阅读详细 的最上边bar
 @property (nonatomic,retain)UIImageView *topBarView;
+@property (nonatomic)BOOL isRead;//全部标记为已读；
+@property (nonatomic,retain)NSMutableArray *isRead_arr;
 @end
 
 

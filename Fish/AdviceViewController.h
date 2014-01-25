@@ -24,6 +24,8 @@
     UIButton *submmit;
     ContentRead *content_Read;
     int Height;
+    BOOL isSeven;
+    BOOL isFive;
 }
 
 @property (retain, nonatomic) IBOutlet UILabel *someWords;

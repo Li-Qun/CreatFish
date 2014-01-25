@@ -38,7 +38,8 @@
 }
 -(void)Press_allRead
 {
-    
+    AppDelegate * app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    app.isRead=YES;
 }
 
 -(void)Back

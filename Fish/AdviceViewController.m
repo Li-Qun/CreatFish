@@ -78,23 +78,48 @@
 }
 - (void)viewDidLoad
 {
+
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
-    CGFloat height_A = size.height;
+   int height_Momente = size.height;
+    
+    if(height_Momente==480)
+    {
+        isFive=NO;
+    }else isFive=YES;
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (version <7.0)
+        isSeven=NO;
+    else isSeven=YES;
+
  
-    if(height_A==480)Height=20;
-    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 65-Height)]autorelease];
+    if(isSeven&&isFive)
+    {
+        
+    }
+    else if(isSeven&&!isFive)
+    {
+        
+    }else if(!isSeven&&isFive)//
+    {
+        Height=20;
+        
+    }else {
+        Height=20;
+    }
+
+    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 50-Height)]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
     
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.frame=CGRectMake(10, 20-Height/2, 37, 30);
+    leftBtn.frame=CGRectMake(10, 20-Height/2-2, 25, 27);
     leftBtn.tag=10;
-    [leftBtn setImage:[UIImage imageNamed:@"LeftBtn@2X"] forState:UIControlStateNormal];
+    [leftBtn setImage:[UIImage imageNamed:@"theGoBack"] forState:UIControlStateNormal];
     [self.view addSubview:leftBtn];
     [leftBtn addTarget:self action:@selector(backSet) forControlEvents:UIControlEventTouchUpInside];
     
-    UIImageView *nameAdvice=[[[UIImageView alloc]initWithFrame:CGRectMake(105, 20-Height/2, 92, 23)]autorelease];
+    UIImageView *nameAdvice=[[[UIImageView alloc]initWithFrame:CGRectMake(120, 20-Height/2, 83, 21)]autorelease];
     nameAdvice.image=[UIImage imageNamed:@"adviceTheBigTitle"];
     [topBarView addSubview:nameAdvice];
     
@@ -181,18 +206,21 @@
     UIActionSheet *  actionSheet = [[UIActionSheet alloc]
                                     initWithTitle:string
                                     delegate:self
-                                    cancelButtonTitle:@"其他"
+                                    cancelButtonTitle:@"取消"
                                     destructiveButtonTitle:@"建议"
-                                    otherButtonTitles:@"意见",nil];
+                                    otherButtonTitles:@"意见",@"Bug",@"树洞",@"其他",nil];
+    
     
     [actionSheet showInView:self.view];
     [actionSheet release];
+    
 }
 #pragma mark -
 #pragma mark actionSheet delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (buttonIndex) {
+           
         case 0:
         {
             labelType.text=@" 建议";
@@ -204,6 +232,14 @@
             break;
         }
         case 2:
+            labelType.text=@" Bug";
+            break;
+        case 3:
+        {
+            labelType.text=@" 树洞";
+            break;
+        }
+        case 4:
             labelType.text=@" 其他";
             break;
         default:

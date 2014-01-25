@@ -109,7 +109,7 @@
     NSString *strJson;
     NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPaths=[array objectAtIndex:0];
-    NSString *str=[NSString stringWithFormat:@"LifeItem_Database3"];
+    NSString *str=[NSString stringWithFormat:@"LifeItem_Database4"];
     NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
     sqlite3 *database;
     
@@ -168,7 +168,7 @@
         NSString *strJson;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *str=[NSString stringWithFormat:@"LifeItem_Database3"];
+        NSString *str=[NSString stringWithFormat:@"LifeItem_Database4"];
         NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
         sqlite3 *database;
         
@@ -201,7 +201,7 @@
                 
                 const unsigned char *_id= sqlite3_column_text(stmt, 0);
                 NSString *Id= [NSString stringWithUTF8String: _id];
-                const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+               // const unsigned char *_pic= sqlite3_column_text(stmt, 1);
                 // strJson= [NSString stringWithUTF8String: _pic];
                 if([ID isEqualToString:Id])
                 {
