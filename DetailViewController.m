@@ -233,7 +233,7 @@
   
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //耗时的一些操作
-          NSString * strJson;
+        NSString * strJson;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
         NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"detailRead"]];
@@ -279,11 +279,11 @@
             
             
             
-            moment=[[jsonObj objectForKey:@"id"]intValue];
+           // moment=[[jsonObj objectForKey:@"id"]intValue];
             
             htmlText=[[[NSString alloc]init]retain];
-            app.saveId=jsonString;
-            
+            app.saveId=[jsonObj objectForKey:@"id"];
+            app.saveImage=jsonString;
             htmlText=[jsonObj objectForKey:@"content"];
             app.next_Page=[jsonObj objectForKey:@"next_id"];
             app.pre_Page=[jsonObj objectForKey:@"prev_id"];
@@ -353,27 +353,36 @@
             sqlite3_free(errorMsg);
         }
         sqlite3_stmt *stmt;
-        char *Sql = "insert into 'detail' ('ID','pic')values (?,?);";
-        if (sqlite3_prepare_v2(database, Sql, -1, &stmt, nil) == SQLITE_OK) {
-            sqlite3_bind_text(stmt, 1,[ID   UTF8String], -1, NULL);
-            sqlite3_bind_text(stmt, 2,[jsonString   UTF8String], -1, NULL);
-        }
-        if (sqlite3_step(stmt) != SQLITE_DONE)
-            NSLog(@"Something is Wrong!");
         // 查找数据
-        sql = @"select * from detail";
+        sql =  [ NSString stringWithFormat: @"select ID from detail  where ID=%@",app.saveId];
         
         //查找数据
-        
+        int flag=0;
         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
         {
             
             while (sqlite3_step(stmt)==SQLITE_ROW) {
                 const unsigned char *_id=sqlite3_column_text(stmt, 0);
-                const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                if([[NSString stringWithUTF8String:_id] isEqualToString:app.saveId])
+                {
+                    flag=1;
+                    break;
+                }
             }
             
         }
+        if(flag==1)
+        {
+            char *Sql = "insert into 'detail' ('ID','pic')values (?,?);";
+            if (sqlite3_prepare_v2(database, Sql, -1, &stmt, nil) == SQLITE_OK) {
+                sqlite3_bind_text(stmt, 1,[ID   UTF8String], -1, NULL);
+                sqlite3_bind_text(stmt, 2,[jsonString   UTF8String], -1, NULL);
+            }
+            if (sqlite3_step(stmt) != SQLITE_DONE)
+                NSLog(@"Something is Wrong!");
+        }
+        
+        
         sqlite3_finalize(stmt);//  最后，关闭数据库：
         sqlite3_close(database);//创建数据库end
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
@@ -383,10 +392,11 @@
             
             
             
-            moment=[[jsonObj objectForKey:@"id"]intValue];
+            //moment=[[jsonObj objectForKey:@"id"]intValue];
             
             htmlText=[[[NSString alloc]init]retain];
-            app.saveId=jsonString;
+            app.saveId=[jsonObj objectForKey:@"id"];
+            app.saveImage=jsonString;
             
             htmlText=[jsonObj objectForKey:@"content"];
             app.next_Page=[jsonObj objectForKey:@"next_id"];
@@ -429,94 +439,6 @@
             
         });
     });
-    
-    
-    
-    
-    
-    
-    
-    
-    ////
-  /*
-    NSString * strJson;
-    NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPaths=[array objectAtIndex:0];
-    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"Detail_DB%@",ID]];
-    
-    sqlite3 *database;
-    
-    if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-    {
-        NSLog(@"open success");
-    }
-    else {
-        NSLog(@"open failed");
-    }
-    char *errorMsg;
-    NSString* sql=@"CREATE TABLE IF NOT EXISTS detail (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
-    if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-    {
-        NSLog(@"create success");
-    }else{
-        NSLog(@"create error:%s",errorMsg);
-        sqlite3_free(errorMsg);
-    }
-    sqlite3_stmt *stmt;
-    char *Sql = "insert into 'detail' ('pic')values (?);";
-    if (sqlite3_prepare_v2(database, Sql, -1, &stmt, nil) == SQLITE_OK) {
-        sqlite3_bind_text(stmt, 1,[jsonString   UTF8String], -1, NULL);
-    }
-    if (sqlite3_step(stmt) != SQLITE_DONE)
-        NSLog(@"Something is Wrong!");
-    sqlite3_finalize(stmt);
-    
-    
-    
-    
-//    if (sqlite3_prepare_v2(database, [@"insert into 'detail' ('pic') values(?);" UTF8String], -1, &stmt, NULL)==SQLITE_OK) {
-//        
-//        //绑定参数
-//        
-//        const char *text=[jsonString cStringUsingEncoding:NSUTF8StringEncoding];
-//        
-//        sqlite3_bind_text(stmt, 1, text, -1, SQLITE_STATIC);
-//        
-//        
-//        
-//        if (sqlite3_step(stmt)!=SQLITE_DONE) {
-//            
-//            sqlite3_finalize(stmt);
-//            
-//    
-//        }
-//    }
-    // 查找数据
-    sql = @"select * from detail";
-    
-    //查找数据
-    
-    if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-    {
-        
-        while (sqlite3_step(stmt)==SQLITE_ROW) {
-            int i=sqlite3_column_int(stmt, 0)-1;
-            
-            
-            const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-       //     strJson= [NSString stringWithUTF8String: _pic];
-    
-            
-        }    
-       
-    }
-    sqlite3_finalize(stmt);//  最后，关闭数据库：
-    sqlite3_close(database);//创建数据库end
-    
- 
-     ///////*/
-    
-
 }
 #pragma mark - webview
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
@@ -658,24 +580,7 @@ didFailWithError:(NSError *)error
     [imgView release];
 }
 //////查看web图片  end
-#pragma mark-  scrollviewDelegate
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView;//滑动隐藏toolbar
-{
-    
-}
 
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
-{
-    app.topBarView.hidden=YES;
-    showWebView.scrollView.delegate=self;
-}
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    app.topBarView.hidden=NO;
-    
-    //[self buildTheTopBar];
-    showWebView.scrollView.delegate=self;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -875,65 +780,76 @@ didFailWithError:(NSError *)error
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     AppDelegate * app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-
+    
     if(buttonIndex==0)//确定
     {
     [saveBtn setImage:[UIImage imageNamed:@"saveImgHighted@2X"] forState:UIControlStateNormal];
 ////////////
-//
-        /*    NSString *strJson;
-        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *str=[NSString stringWithFormat:@"DetailItem"];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
-        sqlite3 *database;
-        
-        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-        {
-            NSLog(@"open success");
-        }
-        else {
-            NSLog(@"open failed");
-        }
-        
-        char *errorMsg;
-        NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)"; //创建表
-        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-        {
-            NSLog(@"create success");
-        }else{
-            NSLog(@"create error:%s",errorMsg);
-            sqlite3_free(errorMsg);
-        }
-        sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",app.momentID];
-        sqlite3_stmt *stmt;
-        //查找数据
-        
-        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-        {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            //耗时的一些操作
+            NSString * strJsonID;
+            NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsPaths=[array objectAtIndex:0];
+            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"detailRead"]];
             
-            while (sqlite3_step(stmt)==SQLITE_ROW) {
-                
-                
-                const unsigned char *_id= sqlite3_column_text(stmt, 0);
-                NSString *Id= [NSString stringWithUTF8String: _id];
-                const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-                // strJson= [NSString stringWithUTF8String: _pic];
-                
-                
-                
+            sqlite3 *database;
+            
+            if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+            {
+                NSLog(@"open success");
             }
-        }
-
+            else {
+                NSLog(@"open failed");
+            }
+            char *errorMsg;
+            NSString* sql=@"CREATE TABLE IF NOT EXISTS detailIDD (ID TEXT,pic TEXT)";         //创建表
+            if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+            {
+                NSLog(@"create success");
+            }else{
+                NSLog(@"create error:%s",errorMsg);
+                sqlite3_free(errorMsg);
+            }
+            sqlite3_stmt *stmt;
+            // 查找数据
+            sql =[NSString stringWithFormat: @"select ID from detailIDD where ID='%@'",app.saveId];
+            
+            //查找数据
+            int OK=0;
+            if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+            {
+                while (sqlite3_step(stmt)==SQLITE_ROW) {
+                    const unsigned char *_id=sqlite3_column_text(stmt, 0);
+                    // const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                    if([app.saveId isEqualToString:[NSString stringWithUTF8String:_id]] )
+                    {
+                        OK=1;
+                        break;
+                    }
+                }
+            }
+            if(OK==0)
+            {
+                char *Sql = "insert into 'detailIDD' ('ID','pic')values (?,?);";
+                if (sqlite3_prepare_v2(database, Sql, -1, &stmt, nil) == SQLITE_OK) {
+                    sqlite3_bind_text(stmt, 1,[app.saveId   UTF8String], -1, NULL);
+                    sqlite3_bind_text(stmt, 2,[app.saveImage   UTF8String], -1, NULL);
+                }
+                if (sqlite3_step(stmt) != SQLITE_DONE)
+                    NSLog(@"Something is Wrong!");
+            }
+            sqlite3_finalize(stmt);//  最后，关闭数据库：
+            sqlite3_close(database);//创建数据库end
+            dispatch_async(dispatch_get_main_queue(), ^{//主线程
+                
+                if(OK==0)
+             [[Singleton sharedInstance].single_Data insertObject:app.saveImage atIndex:app.saveNum++] ;
+                
+            });
+        });
         
-        */
-        
-        
-        
-        
-        
-        
-    [[Singleton sharedInstance].single_Data insertObject:app.saveId atIndex:app.saveNum++] ;
+ 
+    
     }
     else if(buttonIndex==1)//取消
     {

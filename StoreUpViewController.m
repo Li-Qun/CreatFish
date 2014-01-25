@@ -10,6 +10,7 @@
 #import "Singleton.h"
 #import "InformationCell.h"
 #import "DetailViewController.h"
+#import "sqlite3.h"
 @interface StoreUpViewController ()
 
 @end
@@ -41,6 +42,8 @@
 }
 - (void)viewDidLoad
 {
+    [self.navigationController setNavigationBarHidden:YES];
+
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
     CGFloat width = size.width;
@@ -71,11 +74,10 @@
         littleHeinght=10;
     }
     
-    [self.navigationController setNavigationBarHidden:YES];
     
     self.navigationController.toolbarHidden = YES;
     
-    self.navigationController.navigationBarHidden=YES;
+    
     UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar )]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
@@ -102,14 +104,65 @@
     tableView_Store.delegate=self;
     tableView_Store.dataSource=self;//设置双重代理 很重要
     tableView_Store.separatorStyle = NO;
-    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
- 
-    for(int i=0;i<app.saveNum;i++)
-    {
-        NSDictionary *jsonObj =[parser objectWithString: [[Singleton sharedInstance].single_Data objectAtIndex:i]];
-        [arrSave_ID insertObject:[jsonObj objectForKey:@"category_id"] atIndex:i];
-    }[
-      self.view addSubview:tableView_Store];
+   
+    
+    
+    [self buildTheLongTime];
+    
+}
+-(void)buildTheLongTime
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //耗时的一些操作
+//        NSString * strJsonID;
+//        NSArray *array1=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString *documentsPaths1=[array1 objectAtIndex:0];
+//        NSString *databasePaths1=[documentsPaths1 stringByAppendingPathComponent:[NSString stringWithFormat:@"detailRead"]];
+//        
+//        sqlite3 *database1;
+//        
+//        if (sqlite3_open([databasePaths1 UTF8String], &database1)==SQLITE_OK)
+//        {
+//            NSLog(@"open success");
+//        }
+//        else {
+//            NSLog(@"open failed");
+//        }
+//        char *errorMsg;
+//        sqlite3_stmt *stmt1;
+//        // 查找数据
+//        NSString* sql =[NSString stringWithFormat: @"select pic from detailIDD"];
+//        
+//        //查找数据
+//        int OK=0;
+//        if(sqlite3_prepare_v2(database1, [sql UTF8String], -1, &stmt1, nil)==SQLITE_OK)
+//        {
+//            while (sqlite3_step(stmt1)==SQLITE_ROW) {
+//                const unsigned char *_id=sqlite3_column_text(stmt1, 0);
+//                // const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+//                NSString *str= [NSString stringWithUTF8String:_id];
+//                [[Singleton sharedInstance].single_Data insertObject:str atIndex:app.saveNum++] ;
+//                
+//            }
+//        }
+//        sqlite3_finalize(stmt1);//  最后，关闭数据库：
+//        sqlite3_close(database1);//创建数据库end
+//        
+        
+        dispatch_async(dispatch_get_main_queue(), ^{//主线程
+            
+            SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+            
+            for(int i=0;i<app.saveNum;i++)
+            {
+                NSDictionary *jsonObj =[parser objectWithString: [[Singleton sharedInstance].single_Data objectAtIndex:i]];
+                [arrSave_ID insertObject:[jsonObj objectForKey:@"category_id"] atIndex:i];
+            }[
+              self.view addSubview:tableView_Store];
+            
+        });
+    });
+
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

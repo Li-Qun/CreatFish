@@ -21,6 +21,7 @@
 
 
 #import <sqlite3.h>
+#import "Singleton.h"
 @implementation AppDelegate
 @synthesize viewDeckController;
 
@@ -106,6 +107,8 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //耗时的一些操作
+        
+        //打开判断可读数据库
         NSString *strID;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
@@ -150,6 +153,48 @@
         }
         sqlite3_finalize(stmt);
         sqlite3_close(database);
+//打开判断可读数据库end
+//打开 判断收藏数据库start
+        NSString * strJsonID;
+        NSArray *array1=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths1=[array1 objectAtIndex:0];
+        NSString *databasePaths1=[documentsPaths1 stringByAppendingPathComponent:[NSString stringWithFormat:@"detailRead"]];
+        
+        sqlite3 *database1;
+        
+        if (sqlite3_open([databasePaths1 UTF8String], &database1)==SQLITE_OK)
+        {
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        char *error_Msg;
+        sqlite3_stmt *stmt1;
+        // 查找数据
+        NSString* Sql =[NSString stringWithFormat: @"select pic from detailIDD"];
+        
+        //查找数据
+        int OK=0;
+        if(sqlite3_prepare_v2(database1, [Sql UTF8String], -1, &stmt1, nil)==SQLITE_OK)
+        {
+            while (sqlite3_step(stmt1)==SQLITE_ROW) {
+                const unsigned char *_id=sqlite3_column_text(stmt1, 0);
+                // const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                NSString *str= [NSString stringWithUTF8String:_id];
+                [[Singleton sharedInstance].single_Data insertObject:str atIndex:saveNum++] ;
+                
+            }
+        }
+        sqlite3_finalize(stmt1);//  最后，关闭数据库：
+        sqlite3_close(database1);//创建数据库end
+//打开 判断收藏数据库end
+        
+        
+        
+        
+        
+        
         
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
