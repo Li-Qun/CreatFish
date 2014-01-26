@@ -319,7 +319,7 @@
     UILabel *Kind=[[[UILabel alloc]initWithFrame:CGRectMake(0, 334, 320, 50)]autorelease];
     Kind.textColor=[UIColor whiteColor];
     Kind.backgroundColor=[UIColor clearColor];
-    Kind.text=@"  程序版本    1.1";
+    Kind.text=@"  程序版本    1.0";
     [myView addSubview:Kind];
     //分割线
     UIImageView *imgLineSix=[[UIImageView alloc]initWithFrame:CGRectMake(0, 384, 320, 2)];

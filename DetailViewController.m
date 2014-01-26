@@ -255,12 +255,18 @@
             sqlite3_free(errorMsg);
         }
         sqlite3_stmt *stmt;
+         BOOL flag=NO;
         sql =[NSString stringWithFormat:@"select pic from detail where ID='%@'",ID];
         //查找数据
         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
         {
             
               while (sqlite3_step(stmt)==SQLITE_ROW) {
+                  if(sqlite3_column_count(stmt)==0)
+                  {
+                      flag=YES;
+                      break;
+                  }
                 const unsigned char *_id=sqlite3_column_text(stmt, 0);
                strJson=[NSString stringWithUTF8String:_id];
                   break;
@@ -272,53 +278,65 @@
         sqlite3_close(database);//创建数据库end
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
-            
-            [self buildTheTopBar];
-            SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-            NSDictionary *jsonObj =[parser objectWithString:strJson];
-            
-            
-            
-           // moment=[[jsonObj objectForKey:@"id"]intValue];
-            
-            htmlText=[[[NSString alloc]init]retain];
-            app.saveId=[jsonObj objectForKey:@"id"];
-            app.saveImage=jsonString;
-            htmlText=[jsonObj objectForKey:@"content"];
-            app.next_Page=[jsonObj objectForKey:@"next_id"];
-            app.pre_Page=[jsonObj objectForKey:@"prev_id"];
-            NSLog(@"next:%@  pre:%@",app.next_Page,app.pre_Page);
-            //[htmlTextTotals appendFormat:[NSString stringWithFormat: htmlText]];
-            //<body style="background-color: transparent">//设置网页背景透明
-            
-            jsString = [NSString stringWithFormat:@"<html> \n"
-                        "<head> \n"
-                        "<style type=\"text/css\"> \n"
-                        "body {font-size:%fpx; line-height:%fpx;background-color: transparent;}\n"
-                        "</style> \n"
-                        "</head> \n"
-                        "<body>%@</body> \n"
-                        "</html>",  fontSize ,line_height,htmlText];
-            
-            [self.navigationController setNavigationBarHidden:YES];
-            
-            
-            [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-            showWebView.delegate=self;
-            showWebView.scrollView.delegate=self;
-            
-            self.view.backgroundColor=[UIColor clearColor];
-            
-            [showWebView setUserInteractionEnabled: YES ];
-            //UIWebView
-            //[receiveStr release];
-            
-            arrIDList=[[NSMutableArray alloc]init];
-            
-            [self.view addSubview:showWebView];
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-            
-            //showWebView.
+            if(flag)
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                message:@"该缓存为空，请连接网络使用"
+                                                               delegate:self
+                                                      cancelButtonTitle:@"确定"
+                                                      otherButtonTitles: nil];
+                
+            }
+            else
+            {
+                [self buildTheTopBar];
+                SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+                NSDictionary *jsonObj =[parser objectWithString:strJson];
+                
+                
+                
+                // moment=[[jsonObj objectForKey:@"id"]intValue];
+                
+                htmlText=[[[NSString alloc]init]retain];
+                app.saveId=[jsonObj objectForKey:@"id"];
+                app.saveImage=jsonString;
+                htmlText=[jsonObj objectForKey:@"content"];
+                app.next_Page=[jsonObj objectForKey:@"next_id"];
+                app.pre_Page=[jsonObj objectForKey:@"prev_id"];
+                NSLog(@"next:%@  pre:%@",app.next_Page,app.pre_Page);
+                //[htmlTextTotals appendFormat:[NSString stringWithFormat: htmlText]];
+                //<body style="background-color: transparent">//设置网页背景透明
+                
+                jsString = [NSString stringWithFormat:@"<html> \n"
+                            "<head> \n"
+                            "<style type=\"text/css\"> \n"
+                            "body {font-size:%fpx; line-height:%fpx;background-color: transparent;}\n"
+                            "</style> \n"
+                            "</head> \n"
+                            "<body>%@</body> \n"
+                            "</html>",  fontSize ,line_height,htmlText];
+                
+                [self.navigationController setNavigationBarHidden:YES];
+                
+                
+                [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+                showWebView.delegate=self;
+                showWebView.scrollView.delegate=self;
+                
+                self.view.backgroundColor=[UIColor clearColor];
+                
+                [showWebView setUserInteractionEnabled: YES ];
+                //UIWebView
+                //[receiveStr release];
+                
+                arrIDList=[[NSMutableArray alloc]init];
+                
+                [self.view addSubview:showWebView];
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+                
+                //showWebView.
+
+            }
             
         });
     });

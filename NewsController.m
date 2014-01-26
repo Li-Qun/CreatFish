@@ -249,13 +249,18 @@
              sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",ID];
              sqlite3_stmt *stmt;
              //查找数据
-             
+            BOOL flag=NO;
+
              if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
              {
                  
                  while (sqlite3_step(stmt)==SQLITE_ROW) {
                      
-                     
+                     if(sqlite3_column_count(stmt)==0)
+                     {
+                         flag=YES;
+                         break;
+                     }
                      const unsigned char *_id= sqlite3_column_text(stmt, 0);
                      strJson= [NSString stringWithUTF8String: _id];
                      const unsigned char *_pic= sqlite3_column_text(stmt, 1);
@@ -268,20 +273,31 @@
              
              
              dispatch_async(dispatch_get_main_queue(), ^{//主线程
-                 
-                 SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
-                 NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
-                 
-                 NSDictionary *data = [jsonObj1 objectForKey:@"data"];
-                 total += [[jsonObj1 objectForKey:@"total"] intValue];
-                 NSLog(@"total : %d",total);
-                 newSumCount=arr.count;
-                 for (int i =0; i <data.count; i++) {
+                 if(flag)
+                 {
+                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                     message:@"该缓存为空，请连接网络使用"
+                                                                    delegate:self
+                                                           cancelButtonTitle:@"确定"
+                                                           otherButtonTitles: nil];
                      
-                     [arr insertObject:[data objectAtIndex:i] atIndex: newSumCount];
-                     newSumCount++;
                  }
-                 [self build_TableView];
+                 else
+                 {
+                     SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
+                     NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
+                     
+                     NSDictionary *data = [jsonObj1 objectForKey:@"data"];
+                     total += [[jsonObj1 objectForKey:@"total"] intValue];
+                     NSLog(@"total : %d",total);
+                     newSumCount=arr.count;
+                     for (int i =0; i <data.count; i++) {
+                         
+                         [arr insertObject:[data objectAtIndex:i] atIndex: newSumCount];
+                         newSumCount++;
+                     }
+                     [self build_TableView];
+                 }
              });
          });
      }

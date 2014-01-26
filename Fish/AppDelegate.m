@@ -151,13 +151,14 @@
         sql= @"select ID from isReadList";
         sqlite3_stmt *stmt;
         //查找数据
+        BOOL flag=NO;
         isRead_arr=[[NSMutableArray  alloc]init];
         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
         {
             int i=0;
             while (sqlite3_step(stmt)==SQLITE_ROW) {
-                
-                
+                if(sqlite3_column_count(stmt)==0)
+                break;
                 const unsigned char *_id= sqlite3_column_text(stmt, 0);
                 strID= [NSString stringWithUTF8String: _id];
                 [[IsRead sharedInstance].single_isRead_Data insertObject:strID atIndex:isReadCount++] ;
@@ -188,10 +189,13 @@
         NSString* Sql =[NSString stringWithFormat: @"select pic from detailIDD"];
         
         //查找数据
-        int OK=0;
         if(sqlite3_prepare_v2(database1, [Sql UTF8String], -1, &stmt1, nil)==SQLITE_OK)
         {
             while (sqlite3_step(stmt1)==SQLITE_ROW) {
+                if(sqlite3_column_count(stmt)==0)
+                {
+                    break;
+                }
                 const unsigned char *_id=sqlite3_column_text(stmt1, 0);
                 // const unsigned char *_pic= sqlite3_column_text(stmt, 1);
                 NSString *str= [NSString stringWithUTF8String:_id];
@@ -249,7 +253,7 @@
             splashScreen3.image = [UIImage imageNamed:@"clearArrow@2X"];
             [self.window addSubview:splashScreen3];
             
-            [UIView animateWithDuration:4.0 animations:^{
+            [UIView animateWithDuration:6.0 animations:^{
                 CATransform3D transform = CATransform3DMakeTranslation(30, 0, 0);
                 splashScreen.layer.transform = transform;
                 splashScreen.alpha = 0.0;

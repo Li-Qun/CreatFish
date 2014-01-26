@@ -140,8 +140,8 @@
                 
                 const unsigned char *_id= sqlite3_column_text(stmt, 0);
                 NSString *Id= [NSString stringWithUTF8String: _id];
-                const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-                // strJson= [NSString stringWithUTF8String: _pic];
+//                const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+//                // strJson= [NSString stringWithUTF8String: _pic];
                 if([ID isEqualToString:Id])
                 {
                     OK=YES;
