@@ -91,6 +91,7 @@ typedef enum
 @property (nonatomic,retain)UIImageView *topBarView;
 @property (nonatomic)BOOL isRead;//全部标记为已读；
 @property (nonatomic,retain)NSMutableArray *isRead_arr;
+@property(nonatomic)int isReadCount;
 @end
 
 

@@ -21,6 +21,7 @@
 
 
 #import "Singleton.h"
+#import "IsRead.h"
 
 #import <ShareSDK/ShareSDK.h>
 #import "WeiboApi.h"
@@ -96,15 +97,13 @@
     
     [super viewDidLoad];
     
-
-    
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"readBack@2X.png"]];
     imgView.frame = self.view.bounds;
     imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.view insertSubview:imgView atIndex:0];
     [imgView release];
     
-    [self buildTheTopBar];
+    
     app.topBarView.userInteractionEnabled = YES;//使添加的按钮可选
     fontSize=16.0;
     line_height=18.0;
@@ -274,6 +273,8 @@
         sqlite3_close(database);//创建数据库end
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
+            
+            [self buildTheTopBar];
             SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
             NSDictionary *jsonObj =[parser objectWithString:strJson];
             
@@ -369,9 +370,8 @@
                     break;
                 }
             }
-            
         }
-        if(flag==1)
+        if(flag==0)
         {
             char *Sql = "insert into 'detail' ('ID','pic')values (?,?);";
             if (sqlite3_prepare_v2(database, Sql, -1, &stmt, nil) == SQLITE_OK) {
@@ -385,8 +385,79 @@
         
         sqlite3_finalize(stmt);//  最后，关闭数据库：
         sqlite3_close(database);//创建数据库end
+        
+        //建立是否已读数据库
+        NSString *strID;
+        NSArray *array1=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths1=[array1 objectAtIndex:0];
+        NSString *str=[NSString stringWithFormat:@"News_dataBases"];
+        NSString *databasePaths1=[documentsPaths1 stringByAppendingPathComponent:str];
+        sqlite3 *database1;
+        
+        if (sqlite3_open([databasePaths1 UTF8String], &database1)==SQLITE_OK)
+        {
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        
+        char *errorMsg1;
+        NSString *sql1=@"CREATE TABLE IF NOT EXISTS isReadList (ID TEXT)"; //创建表
+        if (sqlite3_exec(database1, [sql1 UTF8String], NULL, NULL, &errorMsg1)==SQLITE_OK )
+        {
+            NSLog(@"create success");
+        }else{
+            NSLog(@"create error:%s",errorMsg1);
+            sqlite3_free(errorMsg1);
+        }
+        sql1= @"select ID from isReadList";
+        sqlite3_stmt *stmt1;
+        //查找数据
+        SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
+        NSDictionary *jsonObj1 =[parser1 objectWithString:jsonString];
+        int OK;
+        if(sqlite3_prepare_v2(database1, [sql1 UTF8String], -1, &stmt1, nil)==SQLITE_OK)
+        {
+            OK=0;
+            while (sqlite3_step(stmt1)==SQLITE_ROW) {
+                
+                
+                const unsigned char *_id1= sqlite3_column_text(stmt1, 0);
+                strID= [NSString stringWithUTF8String: _id1];
+                if([strID isEqualToString: ID ])
+                {
+                    OK=1;
+                    break;
+                }
+            }
+        }
+        if(OK==0)
+        {
+            NSString *string=[jsonObj1 objectForKey:@"create_time"];
+            NSString* date;
+            NSDateFormatter* formatter = [[[NSDateFormatter alloc]init]autorelease];
+            [formatter  setDateFormat:@"20YY-MM-dd"];
+            date = [formatter stringFromDate:[NSDate date]];
+            if(1)//[string isEqualToString:date]
+            {
+                char *Sql = "insert into 'isReadList' ('ID')values (?);";
+                if (sqlite3_prepare_v2(database1, Sql, -1, &stmt1, nil) == SQLITE_OK) {
+                    sqlite3_bind_text(stmt1, 1,[ID  UTF8String], -1, NULL);
+                    [[IsRead sharedInstance].single_isRead_Data insertObject: ID atIndex:app.isReadCount++] ;
+                }
+                if (sqlite3_step(stmt1) != SQLITE_DONE)
+                    NSLog(@"Something is Wrong!");
+            }
+        }
+        sqlite3_finalize(stmt1);
+        sqlite3_close(database1);
+        
+        
+        //建立是否已读数据库
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
+            [self buildTheTopBar];
             SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
             NSDictionary *jsonObj =[parser objectWithString:jsonString];
             
@@ -847,9 +918,6 @@ didFailWithError:(NSError *)error
                 
             });
         });
-        
- 
-    
     }
     else if(buttonIndex==1)//取消
     {

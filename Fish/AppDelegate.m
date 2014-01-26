@@ -22,6 +22,7 @@
 
 #import <sqlite3.h>
 #import "Singleton.h"
+#import "IsRead.h"
 @implementation AppDelegate
 @synthesize viewDeckController;
 
@@ -44,6 +45,7 @@
 @synthesize saveDataImage=saveDataImage;
 @synthesize saveDataName=saveDataName;
 @synthesize saveNum=saveNum;
+@synthesize isReadCount=isReadCount;
 @synthesize next_Page=next_Page;
 @synthesize pre_Page=pre_Page;
 @synthesize firstPageImage=firstPageImage;
@@ -125,7 +127,7 @@
         }
         
         char *errorMsg;
-        NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)"; //创建表
+        NSString *sql=@"CREATE TABLE IF NOT EXISTS isReadList(ID TEXT)"; //创建表
         if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
         {
             NSLog(@"create success");
@@ -133,7 +135,7 @@
             NSLog(@"create error:%s",errorMsg);
             sqlite3_free(errorMsg);
         }
-        sql= @"select ID from picture";
+        sql= @"select ID from isReadList";
         sqlite3_stmt *stmt;
         //查找数据
         isRead_arr=[[NSMutableArray  alloc]init];
@@ -145,9 +147,7 @@
                 
                 const unsigned char *_id= sqlite3_column_text(stmt, 0);
                 strID= [NSString stringWithUTF8String: _id];
-                const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-                //strJson= [NSString stringWithUTF8String: _pic];
-                [isRead_arr insertObject:strID atIndex:i++];
+                [[IsRead sharedInstance].single_isRead_Data insertObject:strID atIndex:isReadCount++] ;
                 
             }
         }

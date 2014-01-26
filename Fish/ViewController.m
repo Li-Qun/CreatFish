@@ -19,6 +19,8 @@
 
 #import "AppDelegate.h"
 #import "StoreUpViewController.h"
+#import "Singleton.h"
+#import "IsRead.h"
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
@@ -62,6 +64,7 @@
     }
     [self theTopBar];
     [self _init];
+ 
 }
 -(void)BuildFirstPage
 {
@@ -198,9 +201,6 @@
         sqlite3_close(database);
     
     
-        
-        
-        
         
     }
     else

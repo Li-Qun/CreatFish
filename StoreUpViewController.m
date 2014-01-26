@@ -191,6 +191,12 @@
     cell.labelForCategory_id.text= [jsonObj objectForKey:@"category_id"];
     
     cell.labelForName.text=[jsonObj objectForKey:@"name"];
+    cell.labelForName.textColor =[UIColor redColor ];
+    cell.labelForName.font=[UIFont systemFontOfSize:15.0f];
+        
+    cell.labelForID.text=[jsonObj objectForKey:@"description"];
+    cell.labelForID.font=[UIFont systemFontOfSize:12.0f];
+    cell.labelForID.textColor=[UIColor grayColor];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     

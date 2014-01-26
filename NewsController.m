@@ -8,6 +8,7 @@
 
 #import "NewsController.h"
 #import "FishCore.h"
+#import "IsRead.h"
 
 #import "ASIHTTPRequest.h"
 #import "MBProgressHUD.h"
@@ -59,11 +60,6 @@
 {
     
     [super viewWillAppear:animated];
-    
-//    NSString* date;
-//    NSDateFormatter* formatter = [[[NSDateFormatter alloc]init]autorelease];
-//    [formatter  setDateFormat:@"20YY-MM-dd"];
-//    date = [formatter stringFromDate:[NSDate date]];
     
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
@@ -424,7 +420,7 @@
             }
             sqlite3_finalize(stmt);
             sqlite3_close(database);
-            
+    
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 
                 SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
@@ -600,17 +596,26 @@
         NSDictionary* dict = [arr objectAtIndex:(indexPath.row-1)];
         
         cell.labelForCategory_id.text=[dict objectForKey:@"category_id"];
-//         if(app.isRead)
-//         {
-//             cell.labelForName.textColor=[UIColor redColor];
-//             if(arr.count==indexPath.row)
-//                 app.isRead=NO;
-//         }
+        
         cell.labelForName.text=[dict objectForKey:@"name"];
-        cell.labelForName.textColor =[UIColor redColor ];
+
+        if(app.isRead)
+        {
+            for(int i=0;i<app.isReadCount;i++)
+            {
+                 if([[dict objectForKey:@"id"]isEqualToString: [[IsRead sharedInstance].single_isRead_Data objectAtIndex:i]  ])
+                 {
+                      cell.labelForName.textColor =[UIColor blackColor ];
+                 }
+            }
+        }
+        else{
+             cell.labelForName.textColor =[UIColor redColor ];
+        }
+        
         cell.labelForName.font=[UIFont systemFontOfSize:15.0f];
-     
-    
+        
+        
         cell.labelForID.text=[dict objectForKey:@"description"];
         cell.labelForID.font=[UIFont systemFontOfSize:12.0f];
         cell.labelForID.textColor=[UIColor grayColor];
@@ -623,7 +628,10 @@
                      placeholderImage:[UIImage imageNamed:@"placeholder.png"]
                               success:^(UIImage *image) {NSLog(@"OK");}
                               failure:^(NSError *error) {NSLog(@"NO");}];
+        
+        
         //#import "UIImageView+WebCache.h" 加载网络图片方法end
+
         return cell;
     }
 }
@@ -642,6 +650,7 @@
         detail.momentID=[dict objectForKey:@"id"];
         NSLog(@"NewsID :  %d",NewsID);
         detail.fatherID=[NSString stringWithFormat:@"%d",NewsID];
+ 
         [self.navigationController pushViewController:detail animated:YES];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }

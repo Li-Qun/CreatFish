@@ -10,13 +10,9 @@
 
 @interface Singleton : NSObject
 {
- 
     NSMutableArray *single_Data;
-
 }
 
 + (Singleton *) sharedInstance;
 @property(nonatomic,retain)   NSMutableArray *single_Data;
-
-
 @end

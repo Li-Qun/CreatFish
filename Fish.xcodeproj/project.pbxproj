@@ -46,6 +46,7 @@
 		BB951568185348C000BD82A7 /* icon-plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BB95155A185348C000BD82A7 /* icon-plus@2x.png */; };
 		BB951569185348C000BD82A7 /* icon-plus-highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = BB95155B185348C000BD82A7 /* icon-plus-highlighted.png */; };
 		BB95156A185348C000BD82A7 /* icon-plus-highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BB95155C185348C000BD82A7 /* icon-plus-highlighted@2x.png */; };
+		BB99211A1894ADA20093DC84 /* IsRead.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9921191894ADA20093DC84 /* IsRead.m */; };
 		BB9D90B018684545000CB89C /* LifeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9D90AE18684545000CB89C /* LifeViewController.m */; };
 		BB9D90B118684545000CB89C /* LifeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB9D90AF18684545000CB89C /* LifeViewController.xib */; };
 		BB9EAED3185DEFE2005E2697 /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EAED2185DEFE2005E2697 /* OptionsViewController.m */; };
@@ -416,6 +417,8 @@
 		BB95155A185348C000BD82A7 /* icon-plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus@2x.png"; sourceTree = "<group>"; };
 		BB95155B185348C000BD82A7 /* icon-plus-highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus-highlighted.png"; sourceTree = "<group>"; };
 		BB95155C185348C000BD82A7 /* icon-plus-highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-plus-highlighted@2x.png"; sourceTree = "<group>"; };
+		BB9921181894ADA20093DC84 /* IsRead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsRead.h; sourceTree = "<group>"; };
+		BB9921191894ADA20093DC84 /* IsRead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IsRead.m; sourceTree = "<group>"; };
 		BB9D90AD18684545000CB89C /* LifeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LifeViewController.h; path = ../LifeViewController.h; sourceTree = "<group>"; };
 		BB9D90AE18684545000CB89C /* LifeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LifeViewController.m; path = ../LifeViewController.m; sourceTree = "<group>"; };
 		BB9D90AF18684545000CB89C /* LifeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LifeViewController.xib; path = ../LifeViewController.xib; sourceTree = "<group>"; };
@@ -1321,6 +1324,8 @@
 				BBD067C6189012F300DBC8B9 /* FishCore.m */,
 				BBD0E1CC1877D8D1000D1141 /* Singleton.h */,
 				BBD0E1CD1877D8D1000D1141 /* Singleton.m */,
+				BB9921181894ADA20093DC84 /* IsRead.h */,
+				BB9921191894ADA20093DC84 /* IsRead.m */,
 			);
 			name = FishCores;
 			sourceTree = "<group>";
@@ -2160,6 +2165,7 @@
 				BBA11CF0185EDAAF000D39F8 /* SBJsonStreamParserAccumulator.m in Sources */,
 				BBA0FFF7186F13B000E75116 /* skyCell.m in Sources */,
 				BBDBE94C184DD6CB009FA292 /* RightViewController.m in Sources */,
+				BB99211A1894ADA20093DC84 /* IsRead.m in Sources */,
 				BBD1340E1869C928008657B6 /* UIMenuItem+CXAImageSupport.m in Sources */,
 				9006F340184D59250091B69F /* main.m in Sources */,
 				BB95154A1853387600BD82A7 /* DetailItemViewController.m in Sources */,
