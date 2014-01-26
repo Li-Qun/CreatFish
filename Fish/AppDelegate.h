@@ -10,8 +10,10 @@
 
 #import "IIViewDeckController.h"
 #import "FishCore.h"
+#import "WeiboSDK.h"
 @class ViewController;
 @class MainViewController;
+
 typedef enum
 {
     onlyShowLeftView = 0,
@@ -20,7 +22,7 @@ typedef enum
     
 } showType;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,FishDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,FishDelegate,WeiboSDKDelegate >
 {
     ContentRead *contentRead;
     
@@ -48,6 +50,7 @@ typedef enum
     //设置
     BOOL isRead;//全部标记为已读；
     NSMutableArray *isRead_arr;
+ 
     
 }
 @property (nonatomic, retain)NSMutableArray  *array;
@@ -92,6 +95,8 @@ typedef enum
 @property (nonatomic)BOOL isRead;//全部标记为已读；
 @property (nonatomic,retain)NSMutableArray *isRead_arr;
 @property(nonatomic)int isReadCount;
+//分享好友
+
 @end
 
 

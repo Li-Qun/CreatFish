@@ -14,6 +14,7 @@
 #import "FishCore.h"
 #import <ShareSDK/ShareSDK.h>
 #import "WeiboApi.h"
+#import "WeiboSDK.h"
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import "WXApi.h"
 #import <TencentOpenAPI/QQApiInterface.h>
@@ -92,11 +93,15 @@
                                appSecret:@"dd5a1fd45ed30443a8d6a805771e15dd"
                              redirectUri:@"http://www.huiztech.com"];   //回调URL
     
+    
+    [WeiboSDK enableDebugMode:YES];
+    [WeiboSDK registerApp:@"3334408824"];
     //添加腾讯微博应用
       [ShareSDK connectTencentWeiboWithAppKey:@"801470547"
                                   appSecret:@"a381d8a35096c2212c68bb4e51936eb6"
                                 redirectUri:@"http://www.huiztech.com"
                             wbApiCls:[WeiboApi class]];
+    
     //添加微信应用
     [ShareSDK importWeChatClass:[WXApi class]];
     [ShareSDK connectWeChatWithAppId:@"wx3a4f2774b2a663a9" wechatCls:[WXApi class]]; //此参数为申请的微信AppID
@@ -107,6 +112,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //耗时的一些操作
         
@@ -191,8 +197,10 @@
 //打开 判断收藏数据库end
         
         
-        dispatch_async(dispatch_get_main_queue(), ^{//主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
             
+            [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
             [self setShare];
             self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
             
@@ -210,7 +218,6 @@
             vc.rightSize = 320.0-244.0;
             vc.topSize = 460+44;
             self.viewDeckController = vc;
-            
             
             CGRect rect = [[UIScreen mainScreen] bounds];
             CGSize size = rect.size;
@@ -256,6 +263,7 @@
 {
     //TODO: 3. 实现handleOpenUrl相关的两个方法，用来处理微信的回调信息
     return [ShareSDK handleOpenURL:url wxDelegate:self];
+    
 }
 
 - (BOOL)application:(UIApplication *)application

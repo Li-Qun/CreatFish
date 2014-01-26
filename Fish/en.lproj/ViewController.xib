@@ -119,7 +119,7 @@
 						</object>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 					</object>
-					<object class="IBUITextView" id="762974455">
+					<object class="IBUITextView" id="820111397">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{29, 312}, {271, 62}}</string>
@@ -216,7 +216,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">textView</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="762974455"/>
+						<reference key="destination" ref="820111397"/>
 					</object>
 					<int key="connectionID">60</int>
 				</object>
@@ -257,7 +257,7 @@
 							<reference ref="971148900"/>
 							<reference ref="1055322700"/>
 							<reference ref="600213164"/>
-							<reference ref="762974455"/>
+							<reference ref="820111397"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -293,7 +293,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">58</int>
-						<reference key="object" ref="762974455"/>
+						<reference key="object" ref="820111397"/>
 						<reference key="parent" ref="774585933"/>
 					</object>
 				</array>

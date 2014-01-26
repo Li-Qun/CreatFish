@@ -640,6 +640,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     self.view.backgroundColor=[UIColor whiteColor];
     scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
     arr=[[[NSMutableArray alloc]init]retain];

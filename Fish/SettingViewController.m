@@ -9,6 +9,10 @@
 #import "SettingViewController.h"
 #import "AdviceViewController.h"
 #import "ViewController.h"
+#import <ShareSDK/ShareSDK.h>
+#import "WeiboApi.h"
+#import <ShareSDKCoreService/ShareSDKCoreService.h>
+#import  "WeiboSDK.h"
 @interface SettingViewController ()
 
 @end
@@ -38,17 +42,86 @@
 }
 -(void)Press_allRead
 {
+    NSString *str;
     AppDelegate * app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     if(app.isRead==NO)
-    app.isRead=YES;
-    else
-    app.isRead=NO;
-}
+    {
+        str=@"已全部标记为已读";
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        [alert release];
 
+        app.isRead=YES;
+    }
+    else
+    {
+        str=@"已恢复不标记已读";
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"提示" message:str delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+
+        app.isRead=NO;
+
+    }
+}
+-(void)cleaAllCathce
+{
+    
+}
+-(void)shareToFriend
+{
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
+    //构造分享内容
+    id<ISSContent> publishContent = [ShareSDK content:@"快快@你的好友,推荐阅钓app,说一说你使用阅钓心得吧～"
+                                       defaultContent:@"默认分享内容，没内容时显示"
+                                                image:[ShareSDK imageWithPath:imagePath]
+                                                title:@"@我的好友"
+                                                  url:@"http://www.huiztech.com"
+                                          description:@"我很喜欢这篇钓鱼文章！"
+                                            mediaType:SSPublishContentMediaTypeNews];
+    [ShareSDK showShareActionSheet:nil
+                         shareList:nil
+                           content:publishContent
+                     statusBarTips:YES
+                       authOptions:nil
+                      shareOptions: nil
+                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                if (state == SSResponseStateSuccess)
+                                {
+                                    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"提示" message:@"@好友‘成功" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:nil];
+                                    [alert show];
+                                    [alert release];
+                                }
+                                else if (state == SSResponseStateFail)
+                                {
+                                    [error errorCode];//错误码
+                                    NSString *str=[NSString stringWithFormat:@"发送失败，错误原因：%@",[error errorDescription]];
+                                    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"提示" message: str  delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:nil];
+                                    [alert show];
+                                    [alert release];
+                                }
+                            }];
+
+}
+-(void)pressBtn1
+{
+    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
+    request.redirectURI = @"http://www.huiztech.com";
+    
+    [WeiboSDK sendRequest:request];
+    
+ 
+     
+}
+-(void)pressBtn2
+{
+    
+}
 -(void)Back
 {
         [self.viewDeckController toggleLeftViewAnimated:YES];
 }
+
 - (void)viewDidLoad
 {
     
@@ -130,7 +203,7 @@
     clearAll.backgroundColor=[UIColor clearColor];
     clearAll.text=@"  清除所有缓存";
     [clear addSubview:clearAll];
-    [clear addTarget:self action:nil forControlEvents:UIControlEventTouchDown];
+    [clear addTarget:self action:@selector(cleaAllCathce) forControlEvents:UIControlEventTouchDown];
     [myView addSubview:clear];
     //分割线
     UIImageView *imgLineThree=[[UIImageView alloc]initWithFrame:CGRectMake(0, 193, 320, 2)];
@@ -168,7 +241,7 @@
     [share setImage:[UIImage imageNamed:@"selectedNow"] forState:UIControlStateHighlighted];
     share.backgroundColor=[UIColor clearColor];
     share.frame=CGRectMake(0, 282, 320, 50);
-    [share addTarget:self action:nil forControlEvents:UIControlEventTouchDown];
+    [share addTarget:self action:@selector(shareToFriend) forControlEvents:UIControlEventTouchDown];
     UILabel *shareLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 50)]autorelease];
     shareLabel.backgroundColor=[UIColor clearColor];
     shareLabel.text=@"  向朋友推荐本应用";
@@ -205,15 +278,15 @@
     btn1.backgroundColor=[UIColor clearColor];
     btn1.frame=CGRectMake(10, 425, 42, 42);
     [btn1 setImage:[UIImage imageNamed:@"xinlang.png"] forState:UIControlStateNormal];
-    [btn1 addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
+    [btn1 addTarget:self action:@selector(pressBtn1) forControlEvents:UIControlEventTouchUpInside];
     [myView addSubview:btn1];
 
     UIButton *btn2=[UIButton buttonWithType:UIButtonTypeCustom];
     btn2.backgroundColor=[UIColor clearColor];
     btn2.frame=CGRectMake(62, 425, 42, 42);
     [btn2 setImage:[UIImage imageNamed:@"weixin.png"] forState:UIControlStateNormal];
-    [btn2 addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
-    [myView addSubview:btn2];
+    [btn2 addTarget:self action:@selector(pressBtn2) forControlEvents:UIControlEventTouchUpInside];
+    [myView addSubview: btn2];
     
     //分割线
     UIImageView *imgLineSeven=[[UIImageView alloc]initWithFrame:CGRectMake(0, 470, 320, 2)];
