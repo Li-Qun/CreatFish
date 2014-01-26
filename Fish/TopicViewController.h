@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "klpView.h"
-@interface TopicViewController : UIViewController<UIScrollViewDelegate,FishDelegate>
+@interface TopicViewController : UIViewController<UIScrollViewDelegate,FishDelegate,UITextViewDelegate>
 {
     UIScrollView *scrollView;
     UIImageView *imgToolView;
@@ -27,6 +27,7 @@
     NSMutableArray *arr;
     int index;
     IBOutlet UILabel *labelText;
+    IBOutlet UITextView *textView;
     BOOL isOpenL;
     BOOL isOpenR;
     //基本信息
@@ -41,6 +42,7 @@
 
 @property (retain, nonatomic) IBOutlet UIScrollView *klpScrollView1;
 @property (retain, nonatomic) IBOutlet UILabel *labelText;
+@property (retain, nonatomic) IBOutlet UITextView *textView;
 @property (nonatomic,retain)NSMutableArray *klpImgArr;
 @property (nonatomic,retain) NSString *CenterIB;
 @property (nonatomic,retain) NSString *topicName;

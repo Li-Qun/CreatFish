@@ -29,6 +29,7 @@
 @synthesize topicName=topicName;
 @synthesize target=target;
 @synthesize targetRight=targetRight;
+@synthesize textView=textView;
 @synthesize leftSwipeGestureRecognizer,rightSwipeGestureRecognizer;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -319,8 +320,7 @@
     //  最后，关闭数据库：
     sqlite3_close(database);
     ////////
-//    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-//    NSDictionary *jsonObj =[parser objectWithString: jsonString];
+ 
     [self createView];
 }
 - (void)viewDidLoad
@@ -419,13 +419,22 @@
     self.klpScrollView1.frame=CGRectMake(0,heightScrollview, 320, 203);
 
     ///UIScrollerView
-    //1.labelText
+    //1.labelText// frame=CGRectMake(10,211,300,146);
     labelText.text= [ [arr objectAtIndex:0] objectForKey:@"description"];
     labelText.backgroundColor=[UIColor clearColor];
     labelText.font=[UIFont systemFontOfSize:14.0f];
     labelText.numberOfLines = 0;
     [labelText sizeToFit];
-
+    
+    textView.text=[ [arr objectAtIndex:0] objectForKey:@"description"];
+    textView.backgroundColor=[UIColor clearColor];
+    textView.font=[UIFont systemFontOfSize:14.0f];
+    [textView setEditable:NO];
+    textView.scrollEnabled=YES;
+    
+    
+    
+    
     
     //2.image
     index = 0;
@@ -521,7 +530,11 @@
         
          NSDictionary* dict = [arr objectAtIndex:index];
         labelText.text=[dict objectForKey:@"description"];
-        
+        textView.text=[ dict objectForKey:@"description"];
+        textView.backgroundColor=[UIColor clearColor];
+        textView.font=[UIFont systemFontOfSize:14.0f];
+        [textView setEditable:NO];
+        textView.scrollEnabled=YES;
         
 	}else {
 		
@@ -599,6 +612,7 @@
 
 - (void)dealloc {
     [labelText release];
+    [textView release];
     [super dealloc];
 }
 @end

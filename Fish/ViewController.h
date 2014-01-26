@@ -30,11 +30,13 @@ UIScrollViewDelegate >
     NSMutableArray *arr;
     IBOutlet UILabel *labelDay;
     IBOutlet UILabel *labelText;
+    IBOutlet UITextView *textView;
 }
 
 @property (retain, nonatomic) IBOutlet UILabel *labelDay;
 @property (retain, nonatomic) IBOutlet UIScrollView *klpScrollView1;
 @property (retain, nonatomic) IBOutlet UILabel *labelText;
+@property (retain, nonatomic) IBOutlet UITextView *textView;
 
 @property (nonatomic,retain)NSMutableArray *klpImgArr;
 

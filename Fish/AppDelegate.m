@@ -191,11 +191,6 @@
 //打开 判断收藏数据库end
         
         
-        
-        
-        
-        
-        
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
             [self setShare];
@@ -215,6 +210,7 @@
             vc.rightSize = 320.0-244.0;
             vc.topSize = 460+44;
             self.viewDeckController = vc;
+            
             
             CGRect rect = [[UIScreen mainScreen] bounds];
             CGSize size = rect.size;

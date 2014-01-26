@@ -29,11 +29,12 @@
 @end
 
 @implementation ViewController
-//@synthesize categoryItem=categoryItem;
+
 @synthesize contentRead=contentRead;
 @synthesize klpImgArr;
 @synthesize klpScrollView1;
 @synthesize labelText=labelText;
+@synthesize textView=textView;
 @synthesize labelDay=labelDay;
 - (void)viewWillAppear:(BOOL)animated
 {//视图即将可见时调用。默认情况下不执行任何操作
@@ -64,8 +65,7 @@
     }
     [self theTopBar];
     [self _init];
- 
-}
+ }
 -(void)BuildFirstPage
 {
     [contentRead fetchList:@"1" isPri:@"0" Out:@"0"];
@@ -544,15 +544,19 @@
         bottom=200;
     }
 
-    
+    //frame=CGRectMake(35,308,265,60);
     labelText.text= [ [arr objectAtIndex:0] objectForKey:@"description"];
     labelText.backgroundColor=[UIColor clearColor];
     labelText.font=[UIFont systemFontOfSize:15.0f];
     labelText.numberOfLines = 0;
     [labelText sizeToFit];
     
-    
-    
+    textView.text= [ [arr objectAtIndex:0] objectForKey:@"description"];
+    textView.backgroundColor=[UIColor clearColor];
+    textView.font=[UIFont systemFontOfSize:14.0f];
+    [textView setEditable:NO];
+    textView.scrollEnabled=YES;
+    textView.showsVerticalScrollIndicator=NO;
     
     NSDate *date = [[[NSDate alloc]initWithTimeIntervalSince1970:[[ [arr objectAtIndex:0] objectForKey:@"create_time"]integerValue]
                      /1000.0]autorelease];
@@ -679,6 +683,13 @@
         labelText.numberOfLines = 0;
         [labelText sizeToFit];
         
+        textView.text= [ [arr objectAtIndex:index] objectForKey:@"description"];
+        textView.backgroundColor=[UIColor clearColor];
+        textView.font=[UIFont systemFontOfSize:14.0f];
+        [textView setEditable:NO];
+        textView.scrollEnabled=YES;
+        textView.showsVerticalScrollIndicator=NO;
+        
         NSDate *date = [[[NSDate alloc]initWithTimeIntervalSince1970:[[ [arr objectAtIndex:index] objectForKey:@"create_time"]integerValue]
 /1000.0]autorelease];
         
@@ -764,6 +775,7 @@
 - (void)dealloc {
     [labelText release];
     [labelDay release];
+    [textView release];
     [super dealloc];
 }
 @end
