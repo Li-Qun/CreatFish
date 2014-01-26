@@ -8,11 +8,6 @@
 
 #import "ViewController.h"
 #import "IIViewDeckController.h"
-#import "NewViewController.h"
-
-#import "MagazineViewController.h"
-#import "SaveViewController.h"
-
 #import "NewsController.h"
 #import "LifeViewController.h"
 #import "TopicViewController.h"
@@ -50,8 +45,8 @@
         height5_flag=NO;
         isFive=NO;
     }
-    else  {height5_flag=YES;isFive=YES;}
-    
+    else  {height5_flag=YES;isFive=YES;
+    }
     // 判断设备的iOS 版本号
     float  version = [[[UIDevice currentDevice] systemVersion] floatValue];
     if(version==7.0)
@@ -98,7 +93,7 @@
     }
     else if (!height5_flag&&Kind7)
     {
-        heightTooBar=height_Momente-44;
+        heightTooBar=height_Momente-44-20;
         buttonHeight=5+height_Momente-44 ;
     }
     else {
@@ -616,13 +611,32 @@
 }
 -(void)theTopBar
 {
+ 
+    int height_sum;
+    if(height5_flag&&Kind7)
+    {
+        
+    }
+    else if(height5_flag&&!Kind7)
+    {
+        height_sum=10;
+    }
+    else if (!height5_flag&&Kind7)
+    {
+       
+    }
+    else
+    {
+        height_sum=10;
+    }
+
     UIImageView *topBarWhite=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)]autorelease];
     topBarWhite.image=[UIImage imageNamed:@"TitleWhiteBack"];
     [self.view addSubview:topBarWhite];
-    UIImageView *topBarRed=[[[UIImageView alloc]initWithFrame:CGRectMake(108, 0, 110, 55)]autorelease];
+    UIImageView *topBarRed=[[[UIImageView alloc]initWithFrame:CGRectMake(108, 0, 110, 55-height_sum )]autorelease];
     topBarRed.image=[UIImage imageNamed:@"TitleRedBack"];
     [topBarWhite addSubview:topBarRed];
-    UILabel *titleBigName=[[[UILabel alloc]initWithFrame:CGRectMake(10, 8, 100, 50)]autorelease];
+    UILabel *titleBigName=[[[UILabel alloc]initWithFrame:CGRectMake(10, 8-height_sum, 100, 50)]autorelease];
     titleBigName.text=@"环球垂钓";
     titleBigName.textColor=[UIColor whiteColor];
     titleBigName.backgroundColor=[UIColor clearColor];

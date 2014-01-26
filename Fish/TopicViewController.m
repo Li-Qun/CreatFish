@@ -7,9 +7,6 @@
 //
 
 #import "TopicViewController.h"
-#import "MagazineViewController.h"
-#import "SaveViewController.h"
-
 #import "NewsController.h"
 #import "LifeViewController.h"
 #import "DetailViewController.h"
@@ -451,12 +448,12 @@
                     success:^(UIImage *image) {NSLog(@"OK");}
                     failure:^(NSError *error) {NSLog(@"NO");}];
         
-        UILabel *label=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 340, 31)]autorelease];
+        UILabel *label=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 31)]autorelease];
         label.backgroundColor=[UIColor clearColor];
         label.textColor=[UIColor whiteColor];
         label.text=[dict objectForKey:@"image_title"];
         
-        UIImageView *clearBack=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 154+clearImgHeight, 340, 31)]autorelease];
+        UIImageView *clearBack=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 154+clearImgHeight, 320, 31)]autorelease];
         
         clearBack.image=[UIImage imageNamed:@"clearBack@2X"];
         [iv addSubview:clearBack];

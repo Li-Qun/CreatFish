@@ -16,7 +16,6 @@
 #import "LifeViewController.h"
 #import "StoreUpViewController.h"
 #import "SettingViewController.h"
-#import "TViewController.h"
 #import "NewsController.h"
 #import "TopicViewController.h"
 

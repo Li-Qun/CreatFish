@@ -7,7 +7,6 @@
 //
 
 #import "DetailViewController.h"
-#import "QuadCurveMenu.h"
 #import "UIImageView+WebCache.h"
 
 #import "CustomURLCache.h"

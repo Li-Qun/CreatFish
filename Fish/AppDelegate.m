@@ -11,8 +11,11 @@
 #import "ViewController.h"
 
 #import "TopViewController.h"
+
 #import "FishCore.h"
 #import <ShareSDK/ShareSDK.h>
+#import <Parse/Parse.h>
+
 #import "WeiboApi.h"
 #import "WeiboSDK.h"
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
@@ -102,9 +105,13 @@
                                 redirectUri:@"http://www.huiztech.com"
                             wbApiCls:[WeiboApi class]];
     
-    //添加微信应用
-    [ShareSDK importWeChatClass:[WXApi class]];
-    [ShareSDK connectWeChatWithAppId:@"wx3a4f2774b2a663a9" wechatCls:[WXApi class]]; //此参数为申请的微信AppID
+//    //添加微信应用
+//    [ShareSDK importWeChatClass:[WXApi class]];
+//    [ShareSDK connectWeChatWithAppId:@"wx3a4f2774b2a663a9" wechatCls:[WXApi class]]; //此参数为申请的微信AppID
+    
+    
+    [Parse setApplicationId:@"vrg7swgpHbG9xt9ziSliylHkxLeQX2rwgtdNdWjt"
+                  clientKey:@"cPCuhXPQKHBzv0ucOFfm0TmuYhMKcQyMEH0LxZJG"];
 
 }
 

@@ -8,7 +8,6 @@
 
 #import "ViewController.h"
 #import <UIKit/UIKit.h>
-#import "QuadCurveMenu.h"
 #import "UIImageView+WebCache.h"
 
 #import "CustomURLCache.h"
