@@ -10,6 +10,7 @@
 #import "IIViewDeckController.h"
 #import "NewsController.h"
 #import "LifeViewController.h"
+#import "BigFishViewController.h"
 #import "TopicViewController.h"
 
 #import "AppDelegate.h"
@@ -21,6 +22,7 @@
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
+#import "whole.h"
 @interface ViewController ()
 
 @end
@@ -168,6 +170,8 @@
                 }
                 else
                 {
+                    app.saveName=strJson;
+                    [whole sharedInstance].wholeString=strJson ;
                     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                     NSDictionary *jsonObj =[parser objectWithString: strJson];
                     UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];
@@ -357,9 +361,9 @@
             NSString* sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
             if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
             {
-                NSLog(@"create success");
+                NSLog(@"首页图片表打开");
             }else{
-                NSLog(@"create error:%s",errorMsg);
+                NSLog(@"create 首页图片表打开error:%s",errorMsg);
                 sqlite3_free(errorMsg);
             }
             // 删除所有数据 并进行更新数据库操作
@@ -392,7 +396,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 
-                
+    
                 SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
                 NSDictionary *jsonObj1 =[parser1 objectWithString:  jsonString];
                 
@@ -429,7 +433,7 @@
             //新建数据库，存在则打开，不存在则创建
             if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
             {
-                NSLog(@"open success");
+                NSLog(@"首页按钮栏打开");
             }
             else {
                 NSLog(@"open failed");
@@ -440,7 +444,7 @@
             //创建表
             if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
             {
-                NSLog(@"create success");
+                NSLog(@"创建打开toolbar");
             }else{
                 NSLog(@"create error:%s",errorMsg);
                 sqlite3_free(errorMsg);
@@ -473,7 +477,8 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 
-                
+                app.saveName=jsonString;
+                [whole sharedInstance].wholeString=jsonString;
                 SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                NSArray *jsonObj =[parser objectWithString: jsonString];
                 UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];
@@ -521,7 +526,6 @@
                     }
                     
                 }
-                
                 scrollView.contentSize = CGSizeMake(640, 44);
                 [scrollView setShowsHorizontalScrollIndicator:NO];//隐藏横向滚动条
                 [imgToolView addSubview:scrollView];
@@ -603,7 +607,7 @@
         
         UIButton *share=[UIButton buttonWithType:UIButtonTypeCustom];
         share.frame=CGRectMake(280, 150+share_height, 35,35 );
-        [share setImage:[UIImage imageNamed:@"share_FirstView@2X"] forState:UIControlStateNormal];
+        [share setImage:[UIImage imageNamed:@"shareFirstView@2X"] forState:UIControlStateNormal];
         [share addTarget:self action:@selector(Press_share) forControlEvents:UIControlEventTouchDown];
 
         [iv addSubview:share];
@@ -666,7 +670,7 @@
     topBarRed.image=[UIImage imageNamed:@"TitleRedBack"];
     [topBarWhite addSubview:topBarRed];
     UILabel *titleBigName=[[[UILabel alloc]initWithFrame:CGRectMake(10, 8-height_sum, 100, 50)]autorelease];
-    titleBigName.text=@"环球垂钓";
+    titleBigName.text=@"   阅钓";
     titleBigName.textColor=[UIColor whiteColor];
     titleBigName.backgroundColor=[UIColor clearColor];
     titleBigName.font =[UIFont boldSystemFontOfSize:22];
@@ -807,9 +811,64 @@
 }
 -(void)Press_Tag:(id)sender
 {
+    NSString *name;
+    NSString *fatherID;
+    NSString *isTopic;
+    NSString *isGallery;
+    NSLog(@"%d",app.targetCenter);
     UIButton *btn = (UIButton *)sender;
-   
-       NSLog(@"%d",btn.tag);
+    NSLog(@"%d",btn.tag);
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSArray *jsonObj =[parser objectWithString: app.saveName];
+    int i;
+    for(i=1;i<jsonObj.count;i++)
+    {
+        if([[[jsonObj  objectAtIndex:i] objectForKey:@"id"] integerValue]==btn.tag)
+        {
+            name= [[jsonObj  objectAtIndex:i] objectForKey:@"name"];
+            fatherID= [[jsonObj  objectAtIndex:i] objectForKey:@"pid"];
+            isGallery =[[jsonObj  objectAtIndex:i] objectForKey:@"is_gallery"];
+            isTopic =[[jsonObj  objectAtIndex:i] objectForKey:@"is_special_topic"];
+            break;
+        }
+    }
+    
+    if([isGallery integerValue]==0&& [isTopic integerValue]==0)
+    {
+        NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
+        newVC.hidesBottomBarWhenPushed = YES;
+        newVC.target=btn.tag;
+        newVC.NewsName=name;
+        [self.navigationController pushViewController :newVC animated:YES];
+
+    }
+    else if([isTopic integerValue]==1)
+    {
+        TopicViewController *newVC = [[[ TopicViewController alloc] initWithNibName:@"TopicViewController" bundle:nil]autorelease];
+        newVC.target=btn.tag;
+       
+        [self.navigationController pushViewController :newVC animated:YES];
+    }
+    else if([isGallery integerValue]==1)
+    {
+       BigFishViewController *newVC = [[[ BigFishViewController alloc] initWithNibName:@"BigFishViewController" bundle:nil]autorelease];
+        self.hidesBottomBarWhenPushed = YES;
+        newVC.BigFishName=name;
+        newVC.target=btn.tag;//游钓
+        app.targetCenter=btn.tag;
+        
+        [self.navigationController pushViewController :newVC animated:YES];
+    }
+
+    
+    
+    
+    
+
+    
+    
+    /*
+    
 //    for (UIView *subviews in [self.view subviews]) {
 //        if (subviews.tag==22) {
 //            [subviews removeFromSuperview];
@@ -839,7 +898,7 @@
         //self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController :newVC animated:YES];
 
-    }
+    }*/
 }
 - (void)dealloc {
     [labelText release];

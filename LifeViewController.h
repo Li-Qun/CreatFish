@@ -36,7 +36,7 @@
     int select;
     
     int isNation;
-
+    NSString *BigFishName;
 }
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
@@ -45,6 +45,6 @@
 @property (nonatomic, retain)IBOutlet iCarousel *carousel;
 @property (retain, nonatomic) IBOutlet UILabel *labelText;
 @property(readwrite,nonatomic)int target;
-
+@property(nonatomic,retain) NSString *BigFishName;
 
 @end

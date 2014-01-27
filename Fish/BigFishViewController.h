@@ -30,6 +30,8 @@
     int img_height;
     int lab_height;
     int select;
+    ///标题
+    NSString *BigFishName;
 }
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
@@ -37,5 +39,6 @@
 @property (nonatomic,assign) BOOL wrap;
 @property (nonatomic, retain)IBOutlet iCarousel *carousel;
 @property (retain, nonatomic) IBOutlet UILabel *labelText;
-@property(readwrite,nonatomic)int target;
+@property(nonatomic)int target;
+@property(nonatomic,retain) NSString *BigFishName;
 @end

@@ -17,6 +17,7 @@
 @end
 
 @implementation LifeViewController
+@synthesize BigFishName=BigFishName;
 @synthesize target=target;
 @synthesize carousel;
 @synthesize labelText=labelText;
@@ -402,9 +403,19 @@
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
     
-    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(135, littleHeinght+2, 40, 20)]autorelease];
-    wordView.image=[UIImage imageNamed:@"swimWordLabel"];
-    [topBarView addSubview:wordView];
+//    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(135, littleHeinght+2, 40, 20)]autorelease];
+//    wordView.image=[UIImage imageNamed:@"swimWordLabel"];
+//    [topBarView addSubview:wordView];
+    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
+    name.textColor=[UIColor whiteColor];
+    name.text=BigFishName;
+    name.textAlignment = UITextAlignmentCenter;
+    name.font =[UIFont boldSystemFontOfSize:21];
+    name.shadowColor = [UIColor grayColor];
+    name.shadowOffset = CGSizeMake(0.0,0.5);
+    name.backgroundColor=[UIColor clearColor];
+    [topBarView addSubview:name];
+
     
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     leftBtn.frame=CGRectMake(10, littleHeinght, 37, 30);

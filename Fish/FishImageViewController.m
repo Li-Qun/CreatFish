@@ -21,6 +21,7 @@
 @synthesize FishImageID=FishImageID;
 @synthesize klpImgArr;
 @synthesize klpScrollView1;
+@synthesize detailName=detailName;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -36,7 +37,76 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES];
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    CGSize size = rect.size;
+    CGFloat height = size.height;
+    
+    Fish_arr=[[[NSMutableArray alloc]init]retain];
+    shareImage=[[[NSString alloc]init]retain];
+    if(height==480)
+    {
+        isFive=NO;
+    }else isFive=YES;
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (version <7.0)
+        isSeven=NO;
+    else isSeven=YES;
+    
+    int bottom;
+    if(isSeven&&isFive)
+    {
+        heightTopbar=65;
+        littleHeinght=20;
+        bottom=405;
+    }
+    else if(isSeven&&!isFive)
+    {
+        heightTopbar=58;
+        littleHeinght=20;
+        bottom=370;
+    }else if(!isSeven&&isFive)//
+    {
+        heightTopbar=45;
+        littleHeinght=10;
+        bottom=405;
+    }else {
+        heightTopbar=45;
+        littleHeinght=10;
+        bottom=405;
+    }
+    
+    klpScrollView1.frame=CGRectMake(0, 81, 320,bottom);//klpScrollView1.frame=CGRectMake(0, 486, 320,bottom);
 
+    
+    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
+    topBarView.image=[UIImage imageNamed:@"topBarRed"];
+    [self.view addSubview:topBarView];
+    
+    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
+    name.textColor=[UIColor whiteColor];
+    name.text=detailName;
+    name.textAlignment = UITextAlignmentCenter;
+    name.font =[UIFont boldSystemFontOfSize:21];
+    name.shadowColor = [UIColor grayColor];
+    name.shadowOffset = CGSizeMake(0.0,0.5);
+    name.backgroundColor=[UIColor clearColor];
+    [topBarView addSubview:name];
+    
+    UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    leftBtn.frame=CGRectMake(10, littleHeinght, 37, 30);
+    leftBtn.tag=10;
+    [leftBtn setImage:[UIImage imageNamed:@"theGoBack"] forState:UIControlStateNormal];
+    [self.view addSubview:leftBtn];
+    [leftBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *rightBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    rightBtn.frame=CGRectMake(270, littleHeinght, 37, 30);
+    [rightBtn setImage:[UIImage imageNamed:@"BigFishListShare@2X"] forState:UIControlStateNormal];
+    [self.view addSubview:rightBtn];
+    [rightBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
+    rightBtn.tag=20;
+
+    
      NSLog(@"%@ %d",self.FishImageID,app.targetCenter);
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
@@ -184,67 +254,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    CGRect rect = [[UIScreen mainScreen] bounds];
-    CGSize size = rect.size;
-    CGFloat height = size.height;
-    
-    Fish_arr=[[[NSMutableArray alloc]init]retain];
-    shareImage=[[[NSString alloc]init]retain];
-    if(height==480)
-    {
-        isFive=NO;
-    }else isFive=YES;
-    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
-    if (version <7.0)
-        isSeven=NO;
-    else isSeven=YES;
-    
-    int bottom;
-    if(isSeven&&isFive)
-    {
-        heightTopbar=65;
-        littleHeinght=20;
-        bottom=405;
-    }
-    else if(isSeven&&!isFive)
-    {
-        heightTopbar=58;
-        littleHeinght=20;
-        bottom=370;
-    }else if(!isSeven&&isFive)//
-    {
-        heightTopbar=45;
-        littleHeinght=10;
-        bottom=405;
-    }else {
-        heightTopbar=45;
-        littleHeinght=10;
-        bottom=405;
-    }
-    
-    klpScrollView1.frame=CGRectMake(0, 486, 320,bottom);
-    
-    UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
-    topBarView.image=[UIImage imageNamed:@"topBarRed"];
-    [self.view addSubview:topBarView];
-    
-    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(128, littleHeinght+2, 50, 23)]autorelease];
-    wordView.image=[UIImage imageNamed:@"BigFishList"];
-    [topBarView addSubview:wordView];
-    
-    UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.frame=CGRectMake(10, littleHeinght, 37, 30);
-    leftBtn.tag=10;
-    [leftBtn setImage:[UIImage imageNamed:@"theGoBack"] forState:UIControlStateNormal];
-    [self.view addSubview:leftBtn];
-    [leftBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIButton *rightBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame=CGRectMake(270, littleHeinght, 37, 30);
-    [rightBtn setImage:[UIImage imageNamed:@"BigFishListShare@2X"] forState:UIControlStateNormal];
-    [self.view addSubview:rightBtn];
-    [rightBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
-    rightBtn.tag=20;
+   
+
 }
 -(void)SwimSwitch_BtnTag:(id)sender
 {
@@ -287,7 +298,7 @@
 -(void)createView//:(NSMutableArray *)firstPageImage
 {
     int bottom;
-    int width;
+    int width=0;
     if(isSeven&&isFive)
     {
         bottom=405;

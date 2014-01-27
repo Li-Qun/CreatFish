@@ -21,6 +21,7 @@
 @synthesize carousel;
 @synthesize labelText=labelText;
 @synthesize wrap;
+@synthesize BigFishName=BigFishName;
 @synthesize leftSwipeGestureRecognizer,rightSwipeGestureRecognizer;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,7 +49,15 @@
     CGSize size = rect.size;
     CGFloat height = size.height;
     
+    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+   // target=app.targetCenter;
+    BigFish_Description=   [[[NSMutableArray alloc]init]retain];
     
+    ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
+    NSString *str=[NSString stringWithFormat:@"%d",target];
+    
+    [contentRead setDelegate:self];//设置代理
+    [contentRead fetchList:str isPri:@"0" Out:@"0"];
     if(height==480)
     {
         isFive=NO;
@@ -81,9 +90,18 @@
     topBarView.image=[UIImage imageNamed:@"topBarRed"];//CGRectMake(135, littleHeinght+2, 40, 20)
     [self.view addSubview:topBarView];
     
-    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(128, littleHeinght+2, 50, 23)]autorelease];
-    wordView.image=[UIImage imageNamed:@"BigFishList"];
-    [topBarView addSubview:wordView];
+//    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(128, littleHeinght+2, 50, 23)]autorelease];
+//    wordView.image=[UIImage imageNamed:@"BigFishList"];
+//    [topBarView addSubview:wordView];
+    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
+    name.textColor=[UIColor whiteColor];
+    name.text=BigFishName;
+    name.textAlignment = UITextAlignmentCenter;
+    name.font =[UIFont boldSystemFontOfSize:21];
+    name.shadowColor = [UIColor grayColor];
+    name.shadowOffset = CGSizeMake(0.0,0.5);
+    name.backgroundColor=[UIColor clearColor];
+    [topBarView addSubview:name];
     
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     leftBtn.frame=CGRectMake(10, littleHeinght, 37, 30);
@@ -203,6 +221,7 @@
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
+    NSLog(@"%@",ID);
     
     if(isSeven&&isFive)
     {
@@ -312,15 +331,7 @@
 {//@"直线", @"圆圈", @"反向圆圈", @"圆桶", @"反向圆桶", @"封面展示", @"封面展示2", @"纸牌"
     [self.navigationController setNavigationBarHidden:YES];
     [super viewDidLoad];
-    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    target=app.targetCenter;
-    BigFish_Description=   [[[NSMutableArray alloc]init]retain];
-    
-    ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
-    NSString *str=[NSString stringWithFormat:@"%d",target];
-    NSLog(@"%d",target);
-    [contentRead setDelegate:self];//设置代理
-    [contentRead fetchList:str isPri:@"0" Out:@"0"];
+
     [super viewDidLoad];
     
 
@@ -525,6 +536,8 @@
      NSDictionary* dict = [BigFish_Description objectAtIndex:index];
     FishImageViewController *detail=[[[FishImageViewController alloc]initWithNibName:@"FishImageViewController" bundle:nil]autorelease];
     detail.FishImageID=[dict objectForKey:@"id"];
+    detail.detailName=BigFishName;
+    NSLog(@"%@",BigFishName);
         [self.navigationController pushViewController:detail animated:YES];
 
 }

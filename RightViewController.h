@@ -12,7 +12,7 @@
 {
     AppDelegate *app;
     int target_centerView;
-
+    NSString *strJson;
 }
 @property(nonatomic)int target_centerView;
 @end

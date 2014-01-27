@@ -126,7 +126,7 @@
   
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
-            
+            app.saveName=strJson;
             SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
             NSDictionary *jsonObj =[parser objectWithString: strJson];
             UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];
@@ -655,7 +655,7 @@
     [detail.arrIDListNew insertObject:@"10" atIndex:1 ];
     detail.momentID=[dict objectForKey:@"id"];
     [self.navigationController pushViewController:detail animated:YES];
-
+    
     
     
     

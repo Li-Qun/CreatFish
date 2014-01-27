@@ -253,7 +253,7 @@
             splashScreen3.image = [UIImage imageNamed:@"clearArrow@2X"];
             [self.window addSubview:splashScreen3];
             
-            [UIView animateWithDuration:6.0 animations:^{
+            [UIView animateWithDuration:4.0 animations:^{
                 CATransform3D transform = CATransform3DMakeTranslation(30, 0, 0);
                 splashScreen.layer.transform = transform;
                 splashScreen.alpha = 0.0;

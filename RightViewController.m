@@ -50,7 +50,7 @@
 //-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
  
-    NSString *strJson;
+    
     NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPaths=[array objectAtIndex:0];
     NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar7"];
@@ -86,6 +86,11 @@
             break;
         }
     }
+    sqlite3_finalize(stmt);
+    
+    //  最后，关闭数据库：
+    sqlite3_close(database);
+    app.saveName=strJson;
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSArray *jsonObj =[parser objectWithString: strJson];
     
@@ -146,16 +151,74 @@
 }
 -(void)PessSwitchRight_Tag:(id)sender
 {
+    NSString *name;
+    NSString *fatherID;
+    NSString *isTopic;
+    NSString *isGallery;
     NSLog(@"%d",app.targetCenter);
     UIButton *btn = (UIButton *)sender;
     NSLog(@"%d",btn.tag);
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSArray *jsonObj =[parser objectWithString: app.saveName];
+    NSLog(@"%@",jsonObj);
+    int i;
+    for(i=1;i<jsonObj.count;i++)
+    {
+        if([[[jsonObj  objectAtIndex:i] objectForKey:@"id"] integerValue]==btn.tag)
+        {
+            name= [[jsonObj  objectAtIndex:i] objectForKey:@"name"];
+            fatherID= [[jsonObj  objectAtIndex:i] objectForKey:@"pid"];
+           isGallery =[[jsonObj  objectAtIndex:i] objectForKey:@"is_gallery"];
+           isTopic =[[jsonObj  objectAtIndex:i] objectForKey:@"is_special_topic"];
+            break;
+        }
+    }
+    if([isGallery integerValue]==0&& [isTopic integerValue]==0)
+    {
+        [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
+            NewsController *apiVC = [[[NewsController alloc] init] autorelease];
+            apiVC.target=btn.tag;
+            apiVC.targetCentre=target_centerView;
+            apiVC.NewsName=name;
+            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
+            self.viewDeckController.centerController = navApiVC;
+            self.view.userInteractionEnabled = YES;
+        }];
+    }
+    else if([isTopic integerValue]==1)
+    {
+        [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
+            TopicViewController *apiVC = [[[TopicViewController alloc] init] autorelease];
+            apiVC.targetRight=btn.tag;
+            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
+            self.viewDeckController.centerController = navApiVC;
+            self.view.userInteractionEnabled = YES;
+        }];
+    }else if([isGallery integerValue]==1)
+    {
+        app.targetCenter=btn.tag;
+        [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
+            BigFishViewController *apiVC = [[[BigFishViewController alloc] init] autorelease];
+            apiVC.target=btn.tag;
+            apiVC.BigFishName=name;
+            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
+            self.viewDeckController.centerController = navApiVC;
+            self.view.userInteractionEnabled = YES;
+        }];
+    }
+    
+    
+    
+    /*
+    
+    
     if(btn.tag>=7&&btn.tag<9)
     {
         [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
             NewsController *apiVC = [[[NewsController alloc] init] autorelease];
             apiVC.target=btn.tag;
             apiVC.targetCentre=target_centerView;
-            apiVC.NewsName=@"资讯";
+            apiVC.NewsName=name;
             UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
             self.viewDeckController.centerController = navApiVC;
             self.view.userInteractionEnabled = YES;
@@ -168,6 +231,7 @@
         [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
             BigFishViewController *apiVC = [[[BigFishViewController alloc] init] autorelease];
             apiVC.target=9;
+            apiVC.BigFishName=name;
             UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
             self.viewDeckController.centerController = navApiVC;
             self.view.userInteractionEnabled = YES;
@@ -210,6 +274,7 @@
             self.view.userInteractionEnabled = YES;
         }];
     }
+     */
 }
  
 @end

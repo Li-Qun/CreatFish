@@ -26,10 +26,10 @@
     int height;
     BOOL Kind7;
     BOOL height5_flag;
-    
+    NSString *detailName;
 }
 @property(nonatomic,strong)NSString *FishImageID;
 @property (nonatomic,retain)NSMutableArray *klpImgArr;
 @property (retain, nonatomic) IBOutlet UIScrollView *klpScrollView1;
-
+@property (nonatomic,retain)NSString *detailName;
 @end
