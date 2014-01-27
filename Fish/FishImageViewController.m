@@ -304,6 +304,7 @@
     }
     
     klpScrollView1.frame=CGRectMake(0, 81, 320,bottom);
+    app.firstPageImage=Fish_arr;
     ///UIScrollerView
     //2.image
     index = 0;
@@ -337,7 +338,6 @@
         [iv setImage:[UIImage imageNamed:[dict objectForKey:@"image"]]];
         [self.klpScrollView1 addSubview:iv];
         iv = nil;
-        
         
     }
 
@@ -377,7 +377,7 @@
     }
     //进入详细阅读
     NSLog(@"touch index %d",touchIndex);
-    NSDictionary* dict = [Fish_arr objectAtIndex:touchIndex];
+    NSDictionary* dict = [app.firstPageImage objectAtIndex:touchIndex];
     
     shareImage=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];

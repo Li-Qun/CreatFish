@@ -49,7 +49,7 @@
 -(void)reBack:(NSString *)jsonString reLoad :(NSString *)ID;
 
 @end
-@interface ContentRead:NSObject<ASIHTTPRequestDelegate,FishDelegate>
+@interface ContentRead:NSObject<ASIHTTPRequestDelegate,FishDelegate,UIAlertViewDelegate>
 {
     //查询 - 列表 [content/read_lst]
     NSString *filter_category_id;
@@ -78,6 +78,7 @@
 -(void)Submmit:(NSString *)contact typeBack:(NSString *)feedback_category content:(NSString *)feedback_content;
 -(void)gallery:(NSString *)content_id;
 -(void)Content:(NSString *)current_category_id  Detail:(NSString*)content_id;
+-(void)mention:(int)succuess;
 @end
 
 

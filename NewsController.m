@@ -813,6 +813,7 @@
     NSString *str=[NSString stringWithFormat:@"%d",target];
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];
+    [contentRead fetchList:str isPri:@"1" Out:@"0"];
     [contentRead fetchList:str isPri:@"0" Out:@"0"];
     [tabView reloadData];
     [self removeFooterView];

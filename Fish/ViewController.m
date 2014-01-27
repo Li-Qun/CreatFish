@@ -16,7 +16,9 @@
 #import "StoreUpViewController.h"
 #import "Singleton.h"
 #import "IsRead.h"
-
+#import <ShareSDK/ShareSDK.h>
+#import "WeiboApi.h"
+#import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
 @interface ViewController ()
@@ -35,6 +37,7 @@
 {//视图即将可见时调用。默认情况下不执行任何操作
     
     [super viewWillAppear:animated];
+    textView.backgroundColor=[UIColor clearColor];
     [self.navigationController setNavigationBarHidden:YES ];//把后面的antimated=YES 去掉 就不会过渡出现问题了
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
@@ -282,7 +285,7 @@
             NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
             
             NSDictionary *data = [jsonObj1 objectForKey:@"data"];
-            NSString *str;
+            //NSString *str;
             NSMutableArray *firstPageImage= [[[NSMutableArray alloc] initWithCapacity:data.count]autorelease];
             for (int i =0; i <data.count; i++) {
                 
@@ -472,46 +475,53 @@
                 
                 
                 SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-                NSDictionary *jsonObj =[parser objectWithString: jsonString];
+               NSArray *jsonObj =[parser objectWithString: jsonString];
                 UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];
                 imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
                 imgToolView.tag=22;
                 UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)]autorelease];
                 
-                for(int i=0;i<5;i++)
+                int j=0;
+                for(int i=1;i<jsonObj.count;i++)
                 {
-                    UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
-                    NSString* name= [[jsonObj  objectAtIndex:i+1] objectForKey:@"name"];
-                    button.tag=[[[jsonObj  objectAtIndex:i+1] objectForKey:@"id"]integerValue];
-                    
-                    [arrName insertObject:name atIndex:i];
-                    
-                    button.frame=CGRectMake(10+i*60, 0, 30, 40);
-                    button.showsTouchWhenHighlighted = YES;
-                    [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
-                    UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
-                    label.text=name;
-                    label.font  = [UIFont fontWithName:@"Arial" size:15.0];
-                    label.backgroundColor=[UIColor clearColor];
-                    UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
-                    labelNum.text=[NSString stringWithFormat:@"%@", [[jsonObj  objectAtIndex:i+1] objectForKey:@"today_count"]];
-                    labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
-                    labelNum.textColor=[UIColor whiteColor];
-                    labelNum.backgroundColor=[UIColor clearColor];
-                    UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
-                    if([labelNum.text isEqual:@"0"])
-                        imgViewRed.image=[UIImage imageNamed:@"whiteBack.png"];
-                    else
-                        imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
-                    [imgViewRed addSubview:labelNum];
-                    [button addSubview:imgViewRed];
-                    [button addSubview:label];
-                    button.backgroundColor=[UIColor clearColor];
-                    [scrollView addSubview:button];
-                    [label release];
-                    
+                    if([[[jsonObj  objectAtIndex:i] objectForKey:@"pid"] integerValue]==0)
+                    {
+                        NSLog(@"%@",[[jsonObj  objectAtIndex:i] objectForKey:@"name"]);
+                        
+                        UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
+                        NSString* name= [[jsonObj  objectAtIndex:i] objectForKey:@"name"];
+                        button.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
+                        
+                        [arrName insertObject:name atIndex:j];
+                        
+                        button.frame=CGRectMake(10+j*60, 0, 30, 40);
+                        button.showsTouchWhenHighlighted = YES;
+                        [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
+                        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
+                        label.text=name;
+                        label.font  = [UIFont fontWithName:@"Arial" size:15.0];
+                        label.backgroundColor=[UIColor clearColor];
+                        UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
+                        labelNum.text=[NSString stringWithFormat:@"%@", [[jsonObj  objectAtIndex:i] objectForKey:@"today_count"]];
+                        labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
+                        labelNum.textColor=[UIColor whiteColor];
+                        labelNum.backgroundColor=[UIColor clearColor];
+                        UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
+                        if([labelNum.text isEqual:@"0"])
+                            imgViewRed.image=[UIImage imageNamed:@"whiteBack.png"];
+                        else
+                            imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
+                        [imgViewRed addSubview:labelNum];
+                        [button addSubview:imgViewRed];
+                        [button addSubview:label];
+                        button.backgroundColor=[UIColor clearColor];
+                        [scrollView addSubview:button];
+                        [label release];
+                        j++;
+                    }
                     
                 }
+                
                 scrollView.contentSize = CGSizeMake(640, 44);
                 [scrollView setShowsHorizontalScrollIndicator:NO];//隐藏横向滚动条
                 [imgToolView addSubview:scrollView];
@@ -528,9 +538,10 @@
 -(void)createView:(NSMutableArray *)firstPageImage
 {
     int bottom;
+    int share_height;
+    share_height=0;
     if(isSeven&&isFive)
     {
-        
         bottom=230;
     }
     else if(isSeven&&!isFive)
@@ -539,6 +550,7 @@
     }else if(!isSeven&&isFive)//
     {
         bottom=230;
+        share_height=10;
     }else {
         
         bottom=200;
@@ -588,6 +600,14 @@
                     success:^(UIImage *image) {NSLog(@"OK");}
                     failure:^(NSError *error) {NSLog(@"NO");}];
         [self.klpScrollView1 addSubview:iv];
+        
+        UIButton *share=[UIButton buttonWithType:UIButtonTypeCustom];
+        share.frame=CGRectMake(280, 150+share_height, 35,35 );
+        [share setImage:[UIImage imageNamed:@"share_FirstView@2X"] forState:UIControlStateNormal];
+        [share addTarget:self action:@selector(Press_share) forControlEvents:UIControlEventTouchDown];
+
+        [iv addSubview:share];
+        
         iv = nil;
         
     }
@@ -603,7 +623,7 @@
         iv = nil;
     }
     
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)]autorelease];
     [singleTap setNumberOfTapsRequired:1];
     
     [self.klpScrollView1 addGestureRecognizer:singleTap];
@@ -613,6 +633,10 @@
     ///UIScrollerView
     
 
+}
+-(void)share
+{
+    
 }
 -(void)theTopBar
 {
@@ -738,8 +762,33 @@
     NSInteger touchIndex = floor(loc.x / pageWith) ;
     if (touchIndex > app.firstPageImage.count) {
         return;
-    }
-    NSLog(@"touch index %d",touchIndex);
+    }//NSLog(@"touch index %d",touchIndex);
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
+    //构造分享内容
+    id<ISSContent> publishContent = [ShareSDK content: [ [arr objectAtIndex:touchIndex] objectForKey:@"description"]
+                                       defaultContent:@"分享我的阅钓心得"
+                                                image:[ShareSDK imageWithPath:imagePath]
+                                                title:@"ShareSDK"
+                                                  url:@"http://www.huiztech.com"
+                                          description:@"这条新闻值得分享一下"
+                                            mediaType:SSPublishContentMediaTypeNews];
+    
+    [ShareSDK showShareActionSheet:nil
+                         shareList:nil
+                           content:publishContent
+                     statusBarTips:YES
+                       authOptions:nil
+                      shareOptions: nil
+                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                if (state == SSResponseStateSuccess)
+                                {
+                                    NSLog(@"分享成功");
+                                }
+                                else if (state == SSResponseStateFail)
+                                {
+                                    NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode], [error errorDescription]);
+                                }
+                            }];
 }
 - (void)didReceiveMemoryWarning
 {

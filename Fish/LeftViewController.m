@@ -108,74 +108,83 @@
     [imageViewTitle addSubview:mainTitle];
 
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-    NSDictionary *jsonObj =[parser objectWithString: strJson];
-    for(int i=0;i<5;i++)
+    NSMutableArray *jsonObj =[parser objectWithString: strJson];
+    //首页
+    UIButton *firstBtn=[UIButton buttonWithType:UIButtonTypeCustom];
+    firstBtn.frame=CGRectMake(0, height+2, 320, 44);
+    [firstBtn setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
+    [myView addSubview:firstBtn ];
+    UILabel *firstPageName=[[[UILabel alloc]initWithFrame:CGRectMake(60, 0, 320, 44)]autorelease];
+    firstPageName.textColor=[UIColor whiteColor];
+    firstPageName.text=@"首页";
+    [firstBtn  addSubview:firstPageName];
+    UIImageView *pictureFistPage=[[[UIImageView alloc]initWithFrame:CGRectMake(10, 10,25 , 25)] autorelease];
+    pictureFistPage.image=[UIImage imageNamed:@"firstPage@2X.png"];
+    [firstBtn  addSubview:pictureFistPage];
+    firstBtn.tag=103;
+    [firstBtn addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
+    firstPageName.backgroundColor=[UIColor clearColor];
+    
+    int j=0;
+    for(int i=1;i<jsonObj.count;i++)
     {
-        
-        //首页
-        UIButton *firstBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-        firstBtn.frame=CGRectMake(0, height+2, 320, 44);
-        [firstBtn setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
-        [myView addSubview:firstBtn ];
-        UILabel *firstPageName=[[[UILabel alloc]initWithFrame:CGRectMake(60, 0, 320, 44)]autorelease];
-        firstPageName.textColor=[UIColor whiteColor];
-        firstPageName.text=@"首页";
-        [firstBtn  addSubview:firstPageName];
-        UIImageView *pictureFistPage=[[[UIImageView alloc]initWithFrame:CGRectMake(10, 10,25 , 25)] autorelease];
-        pictureFistPage.image=[UIImage imageNamed:@"firstPage@2X.png"];
-        [firstBtn  addSubview:pictureFistPage];
-        firstBtn.tag=103;
-        [firstBtn addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
-        firstPageName.backgroundColor=[UIColor clearColor];
-        //////创建动态按钮start
-            NSString *key=[NSString stringWithFormat:@"%d",i];
-            UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
-            OneButton.frame=CGRectMake(0, height+44+5+i*45, 320, 44);
-            [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
-            [myView addSubview:OneButton ];
-            UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(60, 0, 320, 44)]autorelease];
-            OneName.textColor=[UIColor whiteColor];
-            OneName.text=[[jsonObj  objectAtIndex:i+1] objectForKey:@"name"];
-            [OneButton addSubview:OneName];
-            [OneButton addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
-            UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(10, 10,25 , 25)] autorelease];
-            if(i==0)
-            {
-                pictureOneName.image=[UIImage imageNamed:@"News@2X.png"];
-                
-            }else if(i==1)
-            {
-                pictureOneName.image=[UIImage imageNamed:@"topic_Small@2X.png"];
-                
-            }else if (i==2)
-            {
-                pictureOneName.image=[UIImage imageNamed:@"swimFish_Small@2X.png"];
-            }else if (i==3)
-            {
-                pictureOneName.image=[UIImage imageNamed:@"Function_Small@2X.png"];
-            }else if (i==4)
-            {
-                pictureOneName.image=[UIImage imageNamed:@"bag_Small@2X.png"];
-            }
-            
-            [OneButton  addSubview:pictureOneName];
-            OneButton.tag=[[[jsonObj  objectAtIndex:i+1] objectForKey:@"id"]integerValue];
-            UIImageView *theRedNum=[[[UIImageView alloc]initWithFrame:CGRectMake(200, 10, 28, 22)]autorelease];
-            [OneButton addSubview:theRedNum];
-            UILabel *labelNum=[[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 22)]autorelease];
-            labelNum.text=[NSString stringWithFormat:@"%@", [[jsonObj  objectAtIndex:i+1] objectForKey:@"today_count"]];
-            labelNum.textColor=[UIColor whiteColor];
-            labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
-            [theRedNum addSubview:labelNum];
-            if([labelNum.text isEqualToString:@"0"])
-                theRedNum.image=[UIImage imageNamed:@"whiteBack.png"];
-            else  theRedNum.image=[UIImage imageNamed:@"redBack.png"];
-            
-            
-            labelNum.backgroundColor=[UIColor clearColor];
-            OneButton.backgroundColor=[UIColor clearColor];
-            OneName.backgroundColor=[UIColor clearColor];
-      }      /////动态创建按钮end
+         if([[[jsonObj  objectAtIndex:i] objectForKey:@"pid"] integerValue]==0)
+         {
+             //////创建动态按钮start
+             NSString *key=[NSString stringWithFormat:@"%d",i];
+             UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
+             OneButton.frame=CGRectMake(0, height+44+5+j*45, 320, 44);
+             [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
+             [myView addSubview:OneButton ];
+             UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(60, 0, 320, 44)]autorelease];
+             OneName.textColor=[UIColor whiteColor];
+             OneName.text=[[jsonObj  objectAtIndex:i] objectForKey:@"name"];
+             [OneButton addSubview:OneName];
+             [OneButton addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
+             UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(10, 10,25 , 25)] autorelease];
+             if(j==0)
+             {
+                 pictureOneName.image=[UIImage imageNamed:@"News@2X.png"];
+                 
+             }else if(j==1)
+             {
+                 pictureOneName.image=[UIImage imageNamed:@"topic_Small@2X.png"];
+                 
+             }else if (j==2)
+             {
+                 pictureOneName.image=[UIImage imageNamed:@"swimFish_Small@2X.png"];
+             }else if (j==3)
+             {
+                 pictureOneName.image=[UIImage imageNamed:@"Function_Small@2X.png"];
+             }else
+             {
+                 pictureOneName.image=[UIImage imageNamed:@"bag_Small@2X.png"];
+             }
+             
+             [OneButton  addSubview:pictureOneName];
+             OneButton.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
+             UIImageView *theRedNum=[[[UIImageView alloc]initWithFrame:CGRectMake(200, 10, 28, 22)]autorelease];
+             [OneButton addSubview:theRedNum];
+             UILabel *labelNum=[[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 22)]autorelease];
+             labelNum.text=[NSString stringWithFormat:@"%@", [[jsonObj  objectAtIndex:i] objectForKey:@"today_count"]];
+             labelNum.textColor=[UIColor whiteColor];
+             labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
+             [theRedNum addSubview:labelNum];
+             if([labelNum.text isEqualToString:@"0"])
+                 theRedNum.image=[UIImage imageNamed:@"whiteBack.png"];
+             else  theRedNum.image=[UIImage imageNamed:@"redBack.png"];
+             
+             
+             labelNum.backgroundColor=[UIColor clearColor];
+             OneButton.backgroundColor=[UIColor clearColor];
+             OneName.backgroundColor=[UIColor clearColor];
+             j++;
+              /////动态创建按钮end
+         }
+    }
+    
+    
+    
     //收藏&设置
     for(int i=0;i<2;i++)
     {

@@ -118,76 +118,88 @@
         
         lab_height=100;
     }
-    
-    NSString *strJson;
-    NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPaths=[array objectAtIndex:0];
-    NSString *str=[NSString stringWithFormat:@"BigFishView_DB%@",ID];
-    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
-    sqlite3 *database;
-    
-    if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-    {
-        NSLog(@"open success");
-    }
-    else {
-        NSLog(@"open failed");
-    }
-    char *errorMsg;
-    // 查找数据
-    NSString* sql = @"select * from picture";
-    sqlite3_stmt *stmt;
-    //查找数据
-    
-    if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-    {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //耗时的一些操作
+        NSString *strJson;
+        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths=[array objectAtIndex:0];
+        NSString *str=[NSString stringWithFormat:@"BigFishView_DB%@",ID];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+        sqlite3 *database;
         
-        while (sqlite3_step(stmt)==SQLITE_ROW) {
-            int i=sqlite3_column_int(stmt, 0)-1;
-            
-            
-            const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-            strJson= [NSString stringWithUTF8String: _pic];
-            NSLog(@"********%d",i);
-            
-            
-            
-        }
-        //设置索引标识
-        SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-        NSDictionary *jsonObj =[parser objectWithString:strJson];
-        total = [[jsonObj objectForKey:@"total"] intValue];
-        NSDictionary *data = [jsonObj objectForKey:@"data"];
-        for(int i=0;i<data.count;i++)
+        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
         {
-            [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
+            NSLog(@"open success");
         }
-    }
-    sqlite3_finalize(stmt);
+        else {
+            NSLog(@"open failed");
+        }
+        char *errorMsg;
+        // 查找数据
+        NSString* sql = @"select * from picture";
+        sqlite3_stmt *stmt;
+        //查找数据
+        
+        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+        {
+            
+            while (sqlite3_step(stmt)==SQLITE_ROW) {
+                int i=sqlite3_column_int(stmt, 0)-1;
+                
+                
+                const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                strJson= [NSString stringWithUTF8String: _pic];
+                
+            }
+           
+        }
+        sqlite3_finalize(stmt);
+        
+        //  最后，关闭数据库：
+        sqlite3_close(database);
+        
+        
+        
+        
+        
+        dispatch_async(dispatch_get_main_queue(), ^{//主线程
+            
+            
+            //设置索引标识
+            SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+            NSDictionary *jsonObj =[parser objectWithString:strJson];
+            total = [[jsonObj objectForKey:@"total"] intValue];
+            NSDictionary *data = [jsonObj objectForKey:@"data"];
+            for(int i=0;i<data.count;i++)
+            {
+                [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
+            }
+            carousel.delegate = self;
+            carousel.dataSource = self;
+            
+            carousel.type = iCarouselTypeCoverFlow;
+            for (UIView *view in carousel.visibleItemViews)
+            {
+                view.alpha = 1.0;
+            }
+            labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
+            labelText.textColor=[UIColor whiteColor];
+            labelText.backgroundColor=[UIColor clearColor];
+            labelText.font=[UIFont systemFontOfSize:14.0f];
+            labelText.numberOfLines = 0;
+            [labelText sizeToFit];
+            labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
+            
+            
+            
+            [UIView beginAnimations:nil context:nil];
+            carousel.type=5;
+            [UIView commitAnimations];
+            
+            
+        });
+    });
     
-    //  最后，关闭数据库：
-    sqlite3_close(database);
-    carousel.delegate = self;
-    carousel.dataSource = self;
-    
-    carousel.type = iCarouselTypeCoverFlow;
-    for (UIView *view in carousel.visibleItemViews)
-    {
-        view.alpha = 1.0;
-    }
-    labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
-    labelText.textColor=[UIColor whiteColor];
-    labelText.backgroundColor=[UIColor clearColor];
-    labelText.font=[UIFont systemFontOfSize:14.0f];
-    labelText.numberOfLines = 0;
-    [labelText sizeToFit];
-    labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
-    
-    
-    
-    [UIView beginAnimations:nil context:nil];
-    carousel.type=5;
-    [UIView commitAnimations];
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {
@@ -208,119 +220,92 @@
         
         lab_height=100;
     }
-
-    NSString *strJson;
-    NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPaths=[array objectAtIndex:0];
-    NSString *str=[NSString stringWithFormat:@"BigFishView_DB%@",ID];
-    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
-    sqlite3 *database;
-    
-    if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-    {
-        NSLog(@"open success");
-    }
-    else {
-        NSLog(@"open failed");
-    }
-    char *errorMsg;
-    NSString *insertSQLStr = [NSString stringWithFormat:
-                              @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
-    const char *insertSQL=[insertSQLStr UTF8String];
-    //插入数据 进行更新操作
-    if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
-        NSLog(@"insert operation is ok.");
-    }
-    else{
-        NSLog(@"insert error:%s",errorMsg);
-        sqlite3_free(errorMsg);
-    }
-    
-    // 查找数据
-    NSString* sql = @"select * from picture";
-    sqlite3_stmt *stmt;
-    //查找数据
-    
-    if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-    {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths=[array objectAtIndex:0];
+        NSString *str=[NSString stringWithFormat:@"BigFishView_DB%@",ID];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+        sqlite3 *database;
         
-        while (sqlite3_step(stmt)==SQLITE_ROW) {
-            int i=sqlite3_column_int(stmt, 0)-1;
-            
-            
-            const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-            strJson= [NSString stringWithUTF8String: _pic];
-            NSLog(@"********%d",i);
-            
-            
-            
-        }
-        //设置索引标识
-        SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-        NSDictionary *jsonObj =[parser objectWithString:strJson];
-        total = [[jsonObj objectForKey:@"total"] intValue];
-        NSDictionary *data = [jsonObj objectForKey:@"data"];
-        for(int i=0;i<data.count;i++)
+        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
         {
-            [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
+            NSLog(@"open success");
         }
-    }
-    // 删除所有数据 并进行更新数据库操作
-    //删除所有数据，条件为1>0永真
-    const char *deleteAllSql="delete from picture where 1>0";
-    //执行删除语句
-    if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
-        NSLog(@"删除所有数据成功");
-    }
-    else NSLog(@"delect failde!!!!");
-    
-    
-    sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
-    if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-    {
-        NSLog(@"create success");
-    }else{
-        NSLog(@"create error:%s",errorMsg);
-        sqlite3_free(errorMsg);
-    }
-    NSString *insertSQLStr1 = [NSString stringWithFormat:
-                               @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
-    const char *insertSQL1=[insertSQLStr1 UTF8String];
-    //插入数据 进行更新操作
-    if (sqlite3_exec(database, insertSQL1 , NULL, NULL, &errorMsg)==SQLITE_OK) {
-        NSLog(@"insert operation is ok.");
-    }
-    else{
-        NSLog(@"insert error:%s",errorMsg);
-        sqlite3_free(errorMsg);
-    }
-    sqlite3_finalize(stmt);
-    
-    //  最后，关闭数据库：
-    sqlite3_close(database);
-    
-    
-    carousel.delegate = self;
-    carousel.dataSource = self;
-    
-    carousel.type = iCarouselTypeCoverFlow;
-    for (UIView *view in carousel.visibleItemViews)
-    {
-        view.alpha = 1.0;
-    }
-    labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
-    labelText.textColor=[UIColor whiteColor];
-    labelText.backgroundColor=[UIColor clearColor];
-    labelText.font=[UIFont systemFontOfSize:14.0f];
-    labelText.numberOfLines = 0;
-    [labelText sizeToFit];
-    labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
-    
-    
-    
-    [UIView beginAnimations:nil context:nil];
-    carousel.type=5;
-    [UIView commitAnimations];
+        else {
+            NSLog(@"open failed");
+        }
+        char *errorMsg;
+        // 删除所有数据 并进行更新数据库操作
+        //删除所有数据，条件为1>0永真
+        const char *deleteAllSql="delete from picture where 1>0";
+        //执行删除语句
+        if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
+            NSLog(@"删除所有数据成功");
+        }
+        else NSLog(@"delect failde!!!!");
+        
+        NSString* sql ;
+        sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
+        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+        {
+            NSLog(@"create success");
+        }else{
+            NSLog(@"create error:%s",errorMsg);
+            sqlite3_free(errorMsg);
+        }
+        NSString *insertSQLStr1 = [NSString stringWithFormat:
+                                   @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
+        const char *insertSQL1=[insertSQLStr1 UTF8String];
+        //插入数据 进行更新操作
+        if (sqlite3_exec(database, insertSQL1 , NULL, NULL, &errorMsg)==SQLITE_OK) {
+            NSLog(@"insert operation is ok.");
+        }
+        else{
+            NSLog(@"insert error:%s",errorMsg);
+            sqlite3_free(errorMsg);
+        }
+        //  最后，关闭数据库：
+        sqlite3_close(database);
+        
+ 
+        
+        dispatch_async(dispatch_get_main_queue(), ^{//主线程
+            
+            
+            //设置索引标识
+            SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+            NSDictionary *jsonObj =[parser objectWithString:jsonString];
+            total = [[jsonObj objectForKey:@"total"] intValue];
+            NSArray *data = [jsonObj objectForKey:@"data"];
+            for(int i=0;i<data.count;i++)
+            {
+                [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
+            }
+
+            carousel.delegate = self;
+            carousel.dataSource = self;
+            
+            carousel.type = iCarouselTypeCoverFlow;
+            for (UIView *view in carousel.visibleItemViews)
+            {
+                view.alpha = 1.0;
+            }
+            labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
+            labelText.textColor=[UIColor whiteColor];
+            labelText.backgroundColor=[UIColor clearColor];
+            labelText.font=[UIFont systemFontOfSize:14.0f];
+            labelText.numberOfLines = 0;
+            [labelText sizeToFit];
+            labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
+            
+
+            [UIView beginAnimations:nil context:nil];
+            carousel.type=5;
+            [UIView commitAnimations];
+            
+            
+        });
+    });
 }
 
 - (void)viewDidLoad

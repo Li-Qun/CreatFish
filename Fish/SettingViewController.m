@@ -14,7 +14,7 @@
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import  "WeiboSDK.h"
 #import <Parse/Parse.h>
-
+#import "sqlite3.h"
 @interface SettingViewController ()
 
 @end
@@ -68,6 +68,172 @@
 }
 -(void)cleaAllCathce
 {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//资讯缓存上
+ 
+        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths=[array objectAtIndex:0];
+        NSString *str=[NSString stringWithFormat:@"News_dataBases"];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+        sqlite3 *database;
+        
+        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+        {
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        char *errorMsg;
+        
+        const char *deleteAllSql="delete from isReadList where 1>0";
+        //执行删除语句
+        if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
+            NSLog(@"删除所有数据成功");
+        }
+        else NSLog(@"delect failde!!!!");
+        deleteAllSql="delete from picture where 1>0";
+        //执行删除语句
+        if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
+            NSLog(@"删除所有数据成功");
+        }
+        else NSLog(@"delect failde!!!!");
+        sqlite3_close(database);//
+ //资讯缓存下
+        NSArray *array_listNew=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths_listNiew=[array_listNew objectAtIndex:0];
+        NSString *str_listNew=[NSString stringWithFormat:@"News_dataBases"];
+        NSString *databasePaths_NewList=[documentsPaths_listNiew stringByAppendingPathComponent:str_listNew];
+        sqlite3 *database_ListNew;
+        
+        if (sqlite3_open([databasePaths_NewList UTF8String], &database_ListNew)==SQLITE_OK)
+        {
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        char *errorMsg_listNew;
+        const char *deleteListNewAllSql="delete from picture where 1>0";
+        //执行删除语句
+        if(sqlite3_exec(database_ListNew, deleteListNewAllSql, NULL, NULL, &errorMsg_listNew)==SQLITE_OK){
+            NSLog(@"删除所有数据成功");
+        }
+        else NSLog(@"delect failde!!!!");
+        sqlite3_close(database_ListNew);//
+//阅读页面
+        NSArray *array_detailRead=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths_detailRead=[array_detailRead objectAtIndex:0];
+        NSString *str_detailRead=[NSString stringWithFormat:@"detailRead"];
+        NSString *databasePaths__detailRead=[documentsPaths_detailRead stringByAppendingPathComponent:str_detailRead];
+        sqlite3 *database_detailRead;
+        
+        if (sqlite3_open([databasePaths__detailRead UTF8String], &database_detailRead)==SQLITE_OK)
+        {
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        char *errorMsg_detailRead;
+        const char *deleteAllSql_detailRead="delete from detail where 1>0";
+        //执行删除语句
+        if(sqlite3_exec(database_detailRead, deleteAllSql_detailRead, NULL, NULL, &errorMsg_detailRead)==SQLITE_OK){
+            NSLog(@"删除所有数据成功");
+        }
+        else NSLog(@"delect failde!!!!");
+        deleteAllSql_detailRead="delete from detailIDD where 1>0";
+        //执行删除语句
+        if(sqlite3_exec(database_detailRead, deleteAllSql_detailRead, NULL, NULL, &errorMsg_detailRead)==SQLITE_OK){
+            NSLog(@"删除所有数据成功");
+        }
+        else NSLog(@"delect failde!!!!");
+        
+        sqlite3_close(database_detailRead);//
+////专题
+        NSArray *array_Topic=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths_Topic=[array_Topic objectAtIndex:0];
+        NSString *str_Topic=[NSString stringWithFormat:@"TopicViewC"];
+        NSString *databasePaths_Topic=[documentsPaths_Topic stringByAppendingPathComponent:str_Topic];
+        sqlite3 *database_Topic;
+        
+        if (sqlite3_open([databasePaths_Topic UTF8String], &database_Topic)==SQLITE_OK)
+        {
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        char *errorMsg_Topic;
+        const char *deleteAllSql_Topic="delete from picture where 1>0";
+        //执行删除语句
+        if(sqlite3_exec(database_Topic, deleteAllSql_Topic, NULL, NULL, &errorMsg_Topic)==SQLITE_OK){
+            NSLog(@"删除所有数据成功");
+        }
+        else NSLog(@"delect failde!!!!");
+        sqlite3_close(database_Topic);// 
+  
+///大鱼榜详细
+        NSArray *array_FishItem=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths_FishItem=[array_FishItem objectAtIndex:0];
+        NSString *str_FishItem=[NSString stringWithFormat:@"FishItem_Database"];
+        NSString *databasePaths_FishItem=[documentsPaths_FishItem stringByAppendingPathComponent:str_FishItem];
+
+        sqlite3 *database_FishItem;
+        
+        if (sqlite3_open([databasePaths_FishItem UTF8String], &database_FishItem)==SQLITE_OK)
+        {
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        char *errorMsg_FishItem;
+        const char *deleteAllSql_FishItem="delete from picture where 1>0";
+        //执行删除语句
+        if(sqlite3_exec(database_FishItem, deleteAllSql_FishItem, NULL, NULL, &errorMsg_FishItem)==SQLITE_OK){
+            NSLog(@"删除所有数据成功");
+        }
+        else NSLog(@"delect failde!!!!");
+        sqlite3_close(database_FishItem);//
+///游钓详细
+        NSArray *array_LifeItem=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths_LifeItem=[array_LifeItem objectAtIndex:0];
+        NSString *databasePaths_LifeItem=[documentsPaths_LifeItem stringByAppendingPathComponent:@"LifeItem_Database4"];
+        sqlite3 *database_LifeItem;
+        
+        if (sqlite3_open([databasePaths_LifeItem UTF8String], &database_LifeItem)==SQLITE_OK)
+        {
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        char *errorMsg_LifeItem;
+ 
+        const char *deleteAllSql_LifeItem="delete from picture where 1>0";
+        //执行删除语句
+        if(sqlite3_exec(database_LifeItem, deleteAllSql_LifeItem, NULL, NULL, &errorMsg_LifeItem)==SQLITE_OK){
+            NSLog(@"删除所有数据成功");
+        }
+        else NSLog(@"delect failde!!!!");
+        sqlite3_close(database_LifeItem);//*/
+ 
+        
+        dispatch_async(dispatch_get_main_queue(), ^{//主线程
+            
+            
+            UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
+                                                            message:@"清除缓存操作已成功"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles: nil]autorelease];
+            [alert show];
+            
+            
+            
+        });
+    });
     
 }
 -(void)shareToFriend
@@ -348,7 +514,7 @@
     btn2.frame=CGRectMake(62, 425, 42, 42);
     [btn2 setImage:[UIImage imageNamed:@"weixin.png"] forState:UIControlStateNormal];
     [btn2 addTarget:self action:@selector(pressBtn2) forControlEvents:UIControlEventTouchUpInside];
-    [myView addSubview: btn2];
+   // [myView addSubview: btn2];
     
     //分割线
     UIImageView *imgLineSeven=[[UIImageView alloc]initWithFrame:CGRectMake(0, 470, 320, 2)];

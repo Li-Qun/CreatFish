@@ -666,6 +666,7 @@ didFailWithError:(NSError *)error
     imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.view insertSubview:imgView atIndex:0];
     [imgView release];
+    [self buildTheTopBar];
 }
 //////查看web图片  end
 

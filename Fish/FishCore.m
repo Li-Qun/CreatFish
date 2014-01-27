@@ -63,13 +63,7 @@
     }
     
     if (!isExistenceNetwork) {
-//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];//<span style="font-family: Arial, Helvetica, sans-serif;">MBProgressHUD为第三方库，不需要可以省略或使用AlertView</span>
-//        hud.removeFromSuperViewOnHide =YES;
-//        hud.mode = MBProgressHUDModeText;
-//        hud.labelText = NSLocalizedString(@"当前网络不可用,进入离线状态,请检查网络连接", nil);
-//        hud.minSize = CGSizeMake(132.f, 108.0f);
-//        [hud hide:YES afterDelay:5];
-//        return NO;
+
     }
     return isExistenceNetwork;
 }
@@ -89,9 +83,12 @@
         }];
         [request setFailedBlock :^{
             // 请求响应失败，返回错误信息
+            NSLog(@"HTTP 响应码：%d",[request responseStatusCode]);
             NSError *error = [request error ];
 //            [delegate reBack:@"6" reLoad:@"0"];
             NSLog ( @"error:%@" ,[error userInfo ]);
+            
+            [self mention:[request responseStatusCode]];
         }];
         [request startAsynchronous ];
     }
@@ -123,8 +120,10 @@
        [request setFailedBlock :^{
            // 请求响应失败，返回错误信息
          //  [delegate reBack:flag reLoad:ID];
+           NSLog(@"HTTP 响应码：%d",[request responseStatusCode]);
            NSError *error = [request error ];
            NSLog ( @"error:%@" ,[error userInfo ]);
+             [self mention:[request responseStatusCode]];
        }];
        [request startAsynchronous ];//异步
 
@@ -155,6 +154,7 @@
 //            [delegate reBack:@"0" reLoad:content_id];
             NSError *error = [request error ];
             NSLog ( @"error:%@" ,[error userInfo ]);
+              [self mention:[request responseStatusCode]];
             
         }];
         [request startAsynchronous ];//异步
@@ -190,6 +190,7 @@
         [request setFailedBlock :^{
             NSError *error = [request error ];
             NSLog ( @"error:%@" ,[error userInfo ]);
+             [self mention:[request responseStatusCode]];
             
         }];
         [request startAsynchronous ];//异步
@@ -220,6 +221,7 @@
             // 请求响应失败，返回错误信息
             NSError *error = [request error ];
             NSLog ( @"error:%@" ,[error userInfo ]);
+             [self mention:[request responseStatusCode]];
             
         }];
         [request startAsynchronous ];//异步
@@ -248,6 +250,7 @@
           //  [delegate reBack:@"5" reLoad:@"0"];
             NSError *error = [request error ];
             NSLog ( @"error:%@" ,[error userInfo ]);
+             [self mention:[request responseStatusCode]];
         }];
         [request startAsynchronous ];
 
@@ -275,11 +278,34 @@
     [request setFailedBlock :^{
         NSError *error = [request error ];
         NSLog ( @"error:%@" ,[error userInfo ]);
+         [self mention:[request responseStatusCode]];
     }];
     [request startAsynchronous ];
 
 }
-
+-(void)mention:(int)succuess
+{
+    NSString *str;
+    if(succuess==0)
+        str=@"服务器无响应";
+    else  str=@"请查看服务器";
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
+                                                    message:str
+                                                   delegate:self
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles: @"确定",nil]autorelease];
+    [alert show];
+    
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIActivityIndicatorView *testActivityIndicator =[ [UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    testActivityIndicator.center = CGPointMake(100.0f, 100.0f);//只能设置中心，不能设置大小
+    
+    [self addSubview:testActivityIndicator];
+    testActivityIndicator.color = [UIColor redColor]; // 改变圈圈的颜色为红色； iOS5引入
+    [testActivityIndicator startAnimating]; // 开始旋转
+}
 -(void)requestFinished:(ASIHTTPRequest *)request
 {
     BOOL success = ([request responseStatusCode] == 200);
@@ -293,6 +319,7 @@
 
 -(void)requestFailed:(ASIHTTPRequest *)request
 {
+    NSLog(@"＊＊＊＊＊＊HTTP 响应码：%d",[request responseStatusCode]);
     NSError *error = [request error ];
     NSLog ( @"%@" ,error. userInfo );
 }

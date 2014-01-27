@@ -57,7 +57,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    
+    textView.backgroundColor=[UIColor clearColor];
 }
 -(void)buildToolBar
 {
@@ -504,7 +504,7 @@
     }
     else if (!height5_flag&&Kind7)
     {
-        heightScrollview=-20;
+        heightScrollview=0;
         clearImgHeight=0;
     }
     else {

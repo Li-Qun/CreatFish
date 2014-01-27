@@ -92,8 +92,6 @@
 		BB9D90B018684545000CB89C /* LifeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9D90AE18684545000CB89C /* LifeViewController.m */; };
 		BB9D90B118684545000CB89C /* LifeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB9D90AF18684545000CB89C /* LifeViewController.xib */; };
 		BB9EAED3185DEFE2005E2697 /* OptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9EAED2185DEFE2005E2697 /* OptionsViewController.m */; };
-		BBA0987118751A1B008C49E2 /* MagDetaiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA0986F18751A1B008C49E2 /* MagDetaiViewController.m */; };
-		BBA0987218751A1B008C49E2 /* MagDetaiViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBA0987018751A1B008C49E2 /* MagDetaiViewController.xib */; };
 		BBA0FFF7186F13B000E75116 /* skyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA0FFF6186F13B000E75116 /* skyCell.m */; };
 		BBA11CA9185ECA12000D39F8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA11CA8185ECA12000D39F8 /* SystemConfiguration.framework */; };
 		BBA11CAB185ECA1D000D39F8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA11CAA185ECA1D000D39F8 /* CFNetwork.framework */; };
@@ -199,6 +197,8 @@
 		BBA6989B186FE9DD00DE10AB /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA69893186FE9DD00DE10AB /* grayArrow@2x.png */; };
 		BBA6989C186FE9DD00DE10AB /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA69894186FE9DD00DE10AB /* whiteArrow.png */; };
 		BBA6989D186FE9DD00DE10AB /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA69895186FE9DD00DE10AB /* whiteArrow@2x.png */; };
+		BBAB9BC218962CC600F66100 /* share_FirstView.PNG in Resources */ = {isa = PBXBuildFile; fileRef = BBAB9BC018962CC600F66100 /* share_FirstView.PNG */; };
+		BBAB9BC318962CC600F66100 /* share_FirstView@2X.PNG in Resources */ = {isa = PBXBuildFile; fileRef = BBAB9BC118962CC600F66100 /* share_FirstView@2X.PNG */; };
 		BBAC873E18602E8B00A36D8A /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BBAC873D18602E8B00A36D8A /* JSONKit.m */; };
 		BBACDE7818713C20002F1BF5 /* LoadMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BBACDE7718713C20002F1BF5 /* LoadMoreCell.m */; };
 		BBACDE7A18713C41002F1BF5 /* LoadMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBACDE7918713C41002F1BF5 /* LoadMoreCell.xib */; };
@@ -435,9 +435,6 @@
 		BB9D90AF18684545000CB89C /* LifeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LifeViewController.xib; path = ../LifeViewController.xib; sourceTree = "<group>"; };
 		BB9EAED1185DEFE2005E2697 /* OptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsViewController.h; sourceTree = "<group>"; };
 		BB9EAED2185DEFE2005E2697 /* OptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsViewController.m; sourceTree = "<group>"; };
-		BBA0986E18751A1B008C49E2 /* MagDetaiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagDetaiViewController.h; sourceTree = "<group>"; };
-		BBA0986F18751A1B008C49E2 /* MagDetaiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagDetaiViewController.m; sourceTree = "<group>"; };
-		BBA0987018751A1B008C49E2 /* MagDetaiViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MagDetaiViewController.xib; sourceTree = "<group>"; };
 		BBA0FFF5186F13B000E75116 /* skyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = skyCell.h; sourceTree = "<group>"; };
 		BBA0FFF6186F13B000E75116 /* skyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = skyCell.m; sourceTree = "<group>"; };
 		BBA11CA8185ECA12000D39F8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -592,6 +589,8 @@
 		BBA69893186FE9DD00DE10AB /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
 		BBA69894186FE9DD00DE10AB /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
 		BBA69895186FE9DD00DE10AB /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
+		BBAB9BC018962CC600F66100 /* share_FirstView.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_FirstView.PNG; sourceTree = "<group>"; };
+		BBAB9BC118962CC600F66100 /* share_FirstView@2X.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_FirstView@2X.PNG"; sourceTree = "<group>"; };
 		BBAC873C18602E8B00A36D8A /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		BBAC873D18602E8B00A36D8A /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		BBACDE7618713C20002F1BF5 /* LoadMoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadMoreCell.h; sourceTree = "<group>"; };
@@ -1182,9 +1181,6 @@
 				BBACDE7618713C20002F1BF5 /* LoadMoreCell.h */,
 				BBACDE7718713C20002F1BF5 /* LoadMoreCell.m */,
 				BBACDE7918713C41002F1BF5 /* LoadMoreCell.xib */,
-				BBA0986E18751A1B008C49E2 /* MagDetaiViewController.h */,
-				BBA0986F18751A1B008C49E2 /* MagDetaiViewController.m */,
-				BBA0987018751A1B008C49E2 /* MagDetaiViewController.xib */,
 				BBD67E3E1876D6E800A6CD87 /* StoreUpViewController.h */,
 				BBD67E3F1876D6E800A6CD87 /* StoreUpViewController.m */,
 				BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */,
@@ -1375,6 +1371,8 @@
 		BBA5B7DF187ABF2C00D55899 /* firstView */ = {
 			isa = PBXGroup;
 			children = (
+				BBAB9BC018962CC600F66100 /* share_FirstView.PNG */,
+				BBAB9BC118962CC600F66100 /* share_FirstView@2X.PNG */,
 				BBD07911188E766A00325927 /* signble.png */,
 				BBD07912188E766A00325927 /* signble@2X.png */,
 				BBA492FF187D2F090089D35E /* TitleRedBack.png */,
@@ -1821,6 +1819,7 @@
 				BBD3189A188D0D6C00618A5A /* BigFishList.png in Resources */,
 				BBAF28EA187E99CF005A3FCB /* welcome.png in Resources */,
 				BB9921911895233F0093DC84 /* Resource.bundle in Resources */,
+				BBAB9BC218962CC600F66100 /* share_FirstView.PNG in Resources */,
 				BBD0E1E3187817D3000D1141 /* AdviceViewController.xib in Resources */,
 				BB9921A2189523400093DC84 /* ShareSDKiPadDefaultShareViewUI.bundle in Resources */,
 				BBD07929188EB1D400325927 /* swimFish_Small.png in Resources */,
@@ -1874,8 +1873,8 @@
 				BBA492FE187CF0BE0089D35E /* slideLeft_Back@2X.png in Resources */,
 				BBD07925188EB1D400325927 /* bag_Small.png in Resources */,
 				BBA18E791864277100EEEFC8 /* DetailViewController.xib in Resources */,
-				BBA0987218751A1B008C49E2 /* MagDetaiViewController.xib in Resources */,
 				BBD0791C188E910500325927 /* nation@2X.png in Resources */,
+				BBAB9BC318962CC600F66100 /* share_FirstView@2X.PNG in Resources */,
 				BBA5B7D5187A8EB600D55899 /* theLineSet.png in Resources */,
 				BBAF28CD187E451E005A3FCB /* saveImgHighted@2X.png in Resources */,
 				BB9921901895233F0093DC84 /* ShareSDKLocalizable.strings in Resources */,
@@ -2059,7 +2058,6 @@
 				BBA1CA0C187FF2010028E5BC /* LeftViewController.m in Sources */,
 				BBA11CD0185ECABC000D39F8 /* ASIInputStream.m in Sources */,
 				BBC95B4B1853303F00A10431 /* klpView.m in Sources */,
-				BBA0987118751A1B008C49E2 /* MagDetaiViewController.m in Sources */,
 				BBA11CCF185ECABC000D39F8 /* ASIHTTPRequest.m in Sources */,
 				BBA11CEF185EDAAF000D39F8 /* SBJsonStreamParser.m in Sources */,
 				BBA11CB4185ECA91000D39F8 /* Reachability.m in Sources */,

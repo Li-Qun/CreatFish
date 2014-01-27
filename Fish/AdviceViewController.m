@@ -73,15 +73,9 @@
 {
     textView.text=@"";
     callNumber.text=@"";
-    [self build_Tool];
- 
-}
-- (void)viewDidLoad
-{
-
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
-   int height_Momente = size.height;
+    int height_Momente = size.height;
     
     if(height_Momente==480)
     {
@@ -91,23 +85,26 @@
     if (version <7.0)
         isSeven=NO;
     else isSeven=YES;
-
- 
+    
+    int submmit_Height=0;
     if(isSeven&&isFive)
     {
-        
+        submmit_Height=10;
+
     }
     else if(isSeven&&!isFive)
     {
-        
+        submmit_Height=20 ;
     }else if(!isSeven&&isFive)//
     {
-        Height=20;
+        Height=0;
+        submmit_Height=10;
         
     }else {
         Height=20;
+        submmit_Height=20;
     }
-
+    
     UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 50-Height)]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
@@ -123,11 +120,11 @@
     nameAdvice.image=[UIImage imageNamed:@"adviceTheBigTitle"];
     [topBarView addSubview:nameAdvice];
     
-    textView.frame=CGRectMake(15, 300, 285, 200-Height);
+    textView.frame=CGRectMake(15, 300, 285,100);
     [super viewDidLoad];
     
     submmit=[UIButton buttonWithType:UIButtonTypeCustom];
-    submmit.frame=CGRectMake(15, 510-Height*5, 75, 25);
+    submmit.frame=CGRectMake(15,470-submmit_Height*3, 75, 25);
     [submmit setImage:[UIImage imageNamed:@"submmit.png"] forState:UIControlStateNormal];
     [submmit addTarget:self action:@selector(pressSubmmit) forControlEvents:UIControlEventTouchUpInside];
     UILabel *submmitName=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 72, 25)]autorelease];
@@ -151,6 +148,14 @@
     [self.view addSubview:submmit];
     content_Read=[[ContentRead alloc]init];
     content_Read.delegate=self;
+
+    [self build_Tool];
+ 
+}
+- (void)viewDidLoad
+{
+
+    
 }
 -(void)backSet
 {
@@ -278,7 +283,7 @@
     
     if ([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
-        textView.frame=CGRectMake(15, 300, 285, 200-Height);
+        textView.frame=CGRectMake(15, 300, 285, 100);
         [self.view addSubview:textView];
         textViewStyle = YES;
         return NO;
