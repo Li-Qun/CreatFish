@@ -76,7 +76,7 @@
     
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];//设置代理
-    app.targetCenter=target;
+    app.targetCenter=[NewsPid intValue];
     NSLog(@"%d %d",target,app.targetCenter);
     str=[NSString stringWithFormat:@"%d",target];
     NewsID=[str integerValue];
@@ -100,9 +100,7 @@
     self.navigationItem.hidesBackButton = YES;
     self.navigationController.toolbarHidden = YES;
     
-    // NSLog(@"target:======%d",target);
-    //  if(target<=4)  app.targetCenter=target;
-    //  if(target<1)app.targetCenter=1;
+ 
     
     app.targetCenter=target;
     NSLog(@"centre  %d",app.targetCenter);

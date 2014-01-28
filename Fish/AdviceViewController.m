@@ -37,7 +37,7 @@
     someWordsTitle.textColor=[UIColor whiteColor];
     [someWordsTitle setFont:[UIFont fontWithName:@"Helvetica-Bold" size:20]];//加粗
     ///
-    someWords.text=@"    感谢您使用路亚中国App,如果您在使用过程中遇到任何不便,或有意见及建议,欢迎您反馈给我们。";
+    someWords.text=@"    感谢您使用阅钓杂志App,如果您在使用过程中遇到任何不便,或有意见及建议,欢迎您反馈给我们。";
     someWords.font=[UIFont systemFontOfSize:14.0f];
     someWords.textColor=[UIColor whiteColor];
     //  someWords.lineBreakMode = UILineBreakModeWordWrap;
@@ -116,9 +116,16 @@
     [self.view addSubview:leftBtn];
     [leftBtn addTarget:self action:@selector(backSet) forControlEvents:UIControlEventTouchUpInside];
     
-    UIImageView *nameAdvice=[[[UIImageView alloc]initWithFrame:CGRectMake(120, 20-Height/2, 83, 21)]autorelease];
-    nameAdvice.image=[UIImage imageNamed:@"adviceTheBigTitle"];
-    [topBarView addSubview:nameAdvice];
+    UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(100, 20-Height/2, 120, 21)]autorelease];
+    name.textColor=[UIColor whiteColor];
+    name.text=@"意见反馈";
+    name.textAlignment = UITextAlignmentCenter;
+    name.font =[UIFont boldSystemFontOfSize:21];
+    name.shadowColor = [UIColor grayColor];
+    name.shadowOffset = CGSizeMake(0.0,0.5);
+    name.backgroundColor=[UIColor clearColor];
+    [topBarView addSubview:name];
+    
     
     textView.frame=CGRectMake(15, 300, 285,100);
     [super viewDidLoad];

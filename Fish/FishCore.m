@@ -18,21 +18,7 @@
 #import "Reachability.h"
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
-//@implementation FishSave
-//@synthesize tileArray=tileArray;
-//@end
-//
-//@implementation CategoryItem
-//@synthesize CategoryId=CategoryId;
-//@synthesize CategoryPid=CategoryPid;
-//@synthesize CategoryFlag=CategoryFlag;
-//@synthesize CategoryImage=CategoryImage;
-//@synthesize CategoryLevel=CategoryLevel;
-//@synthesize CategoryName=CategoryName;
-////查询 - 列表 [category/read_lst]
-//
-//
-//@end
+
 
 ///////////////////////////////////////////////////////////
 @implementation ContentRead

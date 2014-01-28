@@ -14,7 +14,6 @@
 #import "AppDelegate.h"
 
 #import "BigFishViewController.h"
-#import "LifeViewController.h"
 #import "StoreUpViewController.h"
 #import "SettingViewController.h"
 #import "NewsController.h"
@@ -22,7 +21,7 @@
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-#import "whole.h"
+
 @interface LeftViewController ()
 
 @end
@@ -287,6 +286,7 @@
                 NewsController *apiVC = [[[NewsController alloc] init] autorelease];
                 apiVC.NewsName=name;
                 apiVC.target=btn.tag;
+                apiVC.NewsPid=[NSString stringWithFormat:@"%d",btn.tag];
                 UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
                 self.viewDeckController.centerController = navApiVC;
                 self.view.userInteractionEnabled = YES;
@@ -311,6 +311,7 @@
                 BigFishViewController *apiVC = [[[BigFishViewController alloc] init] autorelease];
                 apiVC.target=btn.tag;
                 apiVC.BigFishName=name;
+                apiVC.BigFishPid=[NSString stringWithFormat:@"%d",btn.tag];
                 UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
                 self.viewDeckController.centerController = navApiVC;
                 self.view.userInteractionEnabled = YES;
@@ -318,76 +319,6 @@
         }
 
     }
-    
-
-    
- /*
-    if(btn.tag==2||btn.tag==5||btn.tag==6)
-    {
-        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-            NewsController *apiVC = [[[NewsController alloc] init] autorelease];
-            if(btn.tag==2)
-            apiVC.NewsName=@"资讯";
-            else if (btn.tag==5)apiVC.NewsName=@"攻略";
-            else apiVC.NewsName=@"装备";
-            apiVC.target=btn.tag;
-            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
-            self.viewDeckController.centerController = navApiVC;
-            self.view.userInteractionEnabled = YES;
-        }];
-        [self.navigationController setNavigationBarHidden:YES ];
-    }else if (btn.tag==3)
-    {
-        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-            TopicViewController *apiVC = [[[TopicViewController alloc] init] autorelease];
-            apiVC.target=3;
-            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
-            self.viewDeckController.centerController = navApiVC;
-            self.view.userInteractionEnabled = YES;
-        }];
-
-    }
-    else if(btn.tag==4)
-    {
-        
-        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-            LifeViewController *apiVC = [[[LifeViewController alloc] init] autorelease];
-            apiVC.target=4;
-            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
-            self.viewDeckController.centerController = navApiVC;
-            self.view.userInteractionEnabled = YES;
-        }];
-        //[self.navigationController setNavigationBarHidden:YES ];
-    }
-    if(btn.tag==101)//收藏
-    {
-        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-            StoreUpViewController *apiVC = [[[StoreUpViewController alloc] init] autorelease];
-            //  apiVC.title = @"XXXXXX";
-            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
-            self.viewDeckController.centerController = navApiVC;
-            self.view.userInteractionEnabled = YES;
-        }];
-
-    }
-    else if(btn.tag==102)//设置
-    {
-        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-            SettingViewController *apiVC = [[[SettingViewController alloc] init] autorelease];
-            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
-            self.viewDeckController.centerController = navApiVC;
-            self.view.userInteractionEnabled = YES;
-        }];
-        
-    }else if(btn.tag==103)//首页
-    {
-        [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-            ViewController *apiVC = [[[ViewController alloc] init] autorelease];
-            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
-            self.viewDeckController.centerController = navApiVC;
-            self.view.userInteractionEnabled = YES;
-        }];
-    }*/
 }
 - (void)didReceiveMemoryWarning
 {

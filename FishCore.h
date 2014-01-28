@@ -23,27 +23,6 @@
 @property (nonatomic, readonly) NSMutableArray *tileArray;
 @end
 
-
-//@interface CategoryItem : NSObject
-//{
-//    //类别目录 层级
-//    NSString *CategoryId;
-//    NSString *CategoryName;
-//    NSString *CategoryImage;
-//    NSString *CategoryLevel;
-//    NSString *CategoryFlag;
-//    NSString *CategoryPid;
-//}
-//@property(nonatomic,retain) NSString *CategoryId;
-//@property(nonatomic,retain) NSString *CategoryName;
-//@property(nonatomic,retain) NSString *CategoryImage;
-//@property(nonatomic,retain) NSString *CategoryLevel;
-//@property(nonatomic,retain) NSString *CategoryFlag;
-//@property(nonatomic,retain) NSString *CategoryPid;
-//
-//@end
-
-
 @protocol FishDelegate
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID :(NSString*)ID;
 -(void)reBack:(NSString *)jsonString reLoad :(NSString *)ID;

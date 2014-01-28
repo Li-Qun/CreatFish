@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "IIViewDeckController.h"
 #import "NewsController.h"
-#import "LifeViewController.h"
 #import "BigFishViewController.h"
 #import "TopicViewController.h"
 
@@ -22,7 +21,6 @@
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-#import "whole.h"
 @interface ViewController ()
 
 @end
@@ -171,7 +169,6 @@
                 else
                 {
                     app.saveName=strJson;
-                    [whole sharedInstance].wholeString=strJson ;
                     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                     NSDictionary *jsonObj =[parser objectWithString: strJson];
                     UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];
@@ -478,7 +475,6 @@
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 
                 app.saveName=jsonString;
-                [whole sharedInstance].wholeString=jsonString;
                 SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                NSArray *jsonObj =[parser objectWithString: jsonString];
                 UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];
@@ -839,6 +835,7 @@
         newVC.hidesBottomBarWhenPushed = YES;
         newVC.target=btn.tag;
         newVC.NewsName=name;
+        newVC.NewsPid=[NSString stringWithFormat:@"%d",btn.tag];
         [self.navigationController pushViewController :newVC animated:YES];
 
     }
@@ -855,50 +852,11 @@
         self.hidesBottomBarWhenPushed = YES;
         newVC.BigFishName=name;
         newVC.target=btn.tag;//游钓
+        newVC.BigFishPid=[NSString stringWithFormat:@"%d",btn.tag];
         app.targetCenter=btn.tag;
         
         [self.navigationController pushViewController :newVC animated:YES];
     }
-
-    
-    
-    
-    
-
-    
-    
-    /*
-    
-//    for (UIView *subviews in [self.view subviews]) {
-//        if (subviews.tag==22) {
-//            [subviews removeFromSuperview];
-//        }
-//    }//必须从self.view中移除，不能从gpsClickView中移除
-    if(btn.tag==2||btn.tag==5||btn.tag==6)
-    {
-        NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
-        newVC.hidesBottomBarWhenPushed = YES;
-        newVC.target=btn.tag;
-        newVC.NewsName=[arrName objectAtIndex:btn.tag-2];
-        [self.navigationController pushViewController :newVC animated:YES];
-    }
-    else if(btn.tag==4)
-    {
-        LifeViewController *newVC = [[[LifeViewController alloc] initWithNibName:@"LifeViewController" bundle:nil]autorelease];
-        self.hidesBottomBarWhenPushed = YES;
-
-        newVC.target=4;//游钓
-        [self.navigationController pushViewController :newVC animated:YES];
-
-    }
-    else if(btn.tag==3)//专题
-    {
-        TopicViewController *newVC = [[[ TopicViewController alloc] initWithNibName:@"TopicViewController" bundle:nil]autorelease];
-        newVC.target=3;
-        //self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController :newVC animated:YES];
-
-    }*/
 }
 - (void)dealloc {
     [labelText release];

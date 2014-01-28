@@ -505,7 +505,7 @@
     UIButton *btn1=[UIButton buttonWithType:UIButtonTypeCustom];
     btn1.backgroundColor=[UIColor clearColor];
     btn1.frame=CGRectMake(10, 425, 42, 42);
-    [btn1 setImage:[UIImage imageNamed:@"xinlang.png"] forState:UIControlStateNormal];
+    [btn1 setImage:[UIImage imageNamed:@"xinlang@2X.png"] forState:UIControlStateNormal];
     [btn1 addTarget:self action:@selector(pressBtn1) forControlEvents:UIControlEventTouchUpInside];
     [myView addSubview:btn1];
 

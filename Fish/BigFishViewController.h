@@ -32,6 +32,7 @@
     int select;
     ///标题
     NSString *BigFishName;
+    NSString *BigFishPid;
 }
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;
@@ -41,4 +42,5 @@
 @property (retain, nonatomic) IBOutlet UILabel *labelText;
 @property(nonatomic)int target;
 @property(nonatomic,retain) NSString *BigFishName;
+@property(nonatomic,retain) NSString *BigFishPid;
 @end

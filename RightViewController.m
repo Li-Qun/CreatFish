@@ -9,7 +9,7 @@
 #import "RightViewController.h"
 #import "NewsController.h"
 #import "TopicViewController.h"
-#import "LifeViewController.h"
+
 #import "BigFishViewController.h"
 #import "AppDelegate.h"
 #import <sqlite3.h>
@@ -101,7 +101,7 @@
     myView.backgroundColor=[UIColor clearColor];
     NSLog(@"==%d",app.targetCenter);
     NSLog(@"centre:%d",target_centerView );
-    if(app.targetCenter<7)
+   // if(app.targetCenter<7)
     target_centerView=app.targetCenter;
    // else target_centerView=app.targetCenter;
     
@@ -178,7 +178,7 @@
         [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
             NewsController *apiVC = [[[NewsController alloc] init] autorelease];
             apiVC.target=btn.tag;
-            apiVC.targetCentre=target_centerView;
+            apiVC.NewsPid=fatherID;
             apiVC.NewsName=name;
             UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
             self.viewDeckController.centerController = navApiVC;
@@ -201,6 +201,8 @@
             BigFishViewController *apiVC = [[[BigFishViewController alloc] init] autorelease];
             apiVC.target=btn.tag;
             apiVC.BigFishName=name;
+            apiVC.BigFishPid=fatherID;
+            app.targetCenter=[fatherID intValue];
             UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
             self.viewDeckController.centerController = navApiVC;
             self.view.userInteractionEnabled = YES;

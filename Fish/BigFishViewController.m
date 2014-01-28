@@ -22,6 +22,7 @@
 @synthesize labelText=labelText;
 @synthesize wrap;
 @synthesize BigFishName=BigFishName;
+@synthesize BigFishPid=BigFishPid;
 @synthesize leftSwipeGestureRecognizer,rightSwipeGestureRecognizer;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,7 +51,9 @@
     CGFloat height = size.height;
     
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-   // target=app.targetCenter;
+    
+    app.targetCenter=[BigFishPid intValue];
+    
     BigFish_Description=   [[[NSMutableArray alloc]init]retain];
     
     ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
@@ -385,7 +388,6 @@
     UIButton *btn = (UIButton *)sender;
     if(btn.tag==10)//zuo
     {
-        app.targetCenter=1;
         [self.viewDeckController toggleLeftViewAnimated:YES];
     }
     else [self.viewDeckController toggleRightViewAnimated:YES];

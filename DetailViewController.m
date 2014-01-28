@@ -181,6 +181,7 @@
     
     saveBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     saveBtn.frame=CGRectMake(230, littleHeinght, 26, 25);
+    
     [saveBtn setImage:[UIImage imageNamed:@"saveImgNormal@2X"] forState:UIControlStateNormal];
     [saveBtn addTarget:self action:@selector(SaveBook:) forControlEvents:UIControlEventTouchUpInside];
     [app.topBarView  addSubview:saveBtn];
@@ -543,7 +544,7 @@
     showWebView.scrollView.delegate=self;
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 
-    [showWebView stringByEvaluatingJavaScriptFromString:@"imageWidth(320);"];//设置网络图片统一宽度320
+    [showWebView stringByEvaluatingJavaScriptFromString:@"imageWidth(305);"];//设置网络图片统一宽度320
     [showWebView stringByEvaluatingJavaScriptFromString:@"init();"];
     //刷新设置
     [self createHeaderView];
@@ -600,18 +601,18 @@ didFailWithError:(NSError *)error
     showView.alpha = 0.9;
     showView.userInteractionEnabled = YES;
     [self.view addSubview:showView];
-    UIImageView * bottomBackBar=[[[UIImageView alloc]initWithFrame:CGRectMake(0, showView.frame.size.height-70, 320,70 )]autorelease];
+    UIImageView * bottomBackBar=[[[UIImageView alloc]initWithFrame:CGRectMake(0, showView.frame.size.height-80, 320,80 )]autorelease];
     bottomBackBar.image=[UIImage imageNamed:@"BottomBar_webImage"];
     [showView addSubview:bottomBackBar];
     UIButton *shareBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    shareBtn.frame=CGRectMake(280, 10, 20, 30);
-    [shareBtn setImage:[UIImage imageNamed:@"Share_webImage"] forState:UIControlStateNormal];
+    shareBtn.frame=CGRectMake(218, 10, 32, 31);
+    [shareBtn setImage:[UIImage imageNamed:@"Share_webImage@2X"] forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(shareThewebImage) forControlEvents:UIControlEventTouchUpInside];
     [bottomBackBar  addSubview:shareBtn];
     
     UIButton *isCloseBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    isCloseBtn.frame=CGRectMake(235, 12, 20, 30);
-    [isCloseBtn setImage:[UIImage imageNamed:@"Close_webImage"] forState:UIControlStateNormal];
+    isCloseBtn.frame=CGRectMake(275, 10, 25, 35);
+    [isCloseBtn setImage:[UIImage imageNamed:@"Close_webImage@2X"] forState:UIControlStateNormal];
     [isCloseBtn addTarget:self action:@selector(isCancelBtn) forControlEvents:UIControlEventTouchUpInside];
     [bottomBackBar addSubview:isCloseBtn];
     bottomBackBar.userInteractionEnabled=YES;
@@ -1069,7 +1070,8 @@ didFailWithError:(NSError *)error
    
     [self testFinishedLoadData];
 	 NSLog(@"刷新完成");
-    if(app.pre_Page.length!=0)
+    NSLog(@"%@  %@",app.pre_Page,app.fatherID);
+    if(app.pre_Page.length!=0&&app.fatherID!=0)
     {
        
          [self Pressleft];
@@ -1094,7 +1096,7 @@ didFailWithError:(NSError *)error
     }
     else
     {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"没有更多了，去返回查看其它精彩游钓资讯吧!", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"确定", nil) otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"没有更多了，去返回查看其它精彩阅钓资讯吧!", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"确定", nil) otherButtonTitles:nil] show];
         
     }
     
