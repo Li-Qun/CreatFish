@@ -811,9 +811,8 @@
     NSString *fatherID;
     NSString *isTopic;
     NSString *isGallery;
-    NSLog(@"%d",app.targetCenter);
     UIButton *btn = (UIButton *)sender;
-    NSLog(@"%d",btn.tag);
+   
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSArray *jsonObj =[parser objectWithString: app.saveName];
     int i;

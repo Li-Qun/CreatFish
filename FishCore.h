@@ -23,12 +23,16 @@
 @property (nonatomic, readonly) NSMutableArray *tileArray;
 @end
 
+
+
+
+
 @protocol FishDelegate
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID :(NSString*)ID;
 -(void)reBack:(NSString *)jsonString reLoad :(NSString *)ID;
 
 @end
-@interface ContentRead:NSObject<ASIHTTPRequestDelegate,FishDelegate,UIAlertViewDelegate>
+@interface ContentRead:NSObject<ASIHTTPRequestDelegate,FishDelegate >
 {
     //查询 - 列表 [content/read_lst]
     NSString *filter_category_id;

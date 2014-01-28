@@ -183,7 +183,6 @@
 {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //耗时的一些操作
         NSString *strJson;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
@@ -199,9 +198,9 @@
             NSLog(@"open failed");
         }
         
-       sqlite3_stmt *stmt;
-        BOOL flag=NO;
-       NSString* sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",ID];
+        sqlite3_stmt *stmt;
+        int flag=0;
+        NSString* sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",ID];
         //查找数据
         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
         {
@@ -210,7 +209,7 @@
                 
                 if(sqlite3_column_count(stmt)==0)
                 {
-                    flag=YES;
+                    flag=1;
                     break;
                 }
                 const unsigned char *_id=sqlite3_column_text(stmt, 0);
@@ -219,16 +218,21 @@
                 
             }
         }
+        sqlite3_finalize(stmt);
+        sqlite3_close(database);
+        
+ 
+        
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
-            if(flag)
+            if(flag==1)
             {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                 message:@"该缓存为空，请连接网络使用"
                                                                delegate:self
                                                       cancelButtonTitle:@"确定"
                                                       otherButtonTitles: nil];
-
+                
             }
             else
             {
@@ -242,13 +246,13 @@
                 }
                 [self createView];
             }
+  
+            
+            
+            
             
         });
     });
-    
-    /*
-   
-     */
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
 {

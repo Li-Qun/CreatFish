@@ -28,13 +28,13 @@
     
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     ContentRead *contentRead=[[[ContentRead alloc]init]autorelease];
-    contentRead.delegate=self;
-    [contentRead Category];
+   // contentRead.delegate=self;
+    //[contentRead Category];
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
-{
-    
-}
+//-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
+//{
+//    
+//}
 -(void)PessTheStoreBack
 {
     [self.viewDeckController toggleLeftViewAnimated:YES];

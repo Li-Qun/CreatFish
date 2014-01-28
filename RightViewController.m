@@ -40,15 +40,55 @@
     [self.view insertSubview:imgView atIndex:0];
     [imgView release];
 
-    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
-    contentRead.delegate=self;
-   // [contentRead Category];
-    [self buildTheBtn];
+   
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSArray *jsonObj =[parser objectWithString: app.saveName];
+    
+    UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
+    scrollView.backgroundColor=[UIColor clearColor];
+    scrollView.delegate=self;
+    UIView *myView=[[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
+    myView.backgroundColor=[UIColor clearColor];
+    NSLog(@"==%d",app.targetCenter);
+    NSLog(@"centre:%d",target_centerView );
+    // if(app.targetCenter<7)
+    target_centerView=app.targetCenter;
+    // else target_centerView=app.targetCenter;
+    
+    int i=0;
+    for(int j=0;j<jsonObj.count;j++)
+    {
+        if([ [NSString stringWithFormat:@"%d",target_centerView]isEqualToString:[[jsonObj  objectAtIndex:j] objectForKey:@"pid"]])
+        {
+            
+            //  NSLog(@"%@",[[jsonObj  objectAtIndex:j] objectForKey:@"name"]);
+            UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
+            OneButton.frame=CGRectMake(0, 20+i*45, 320, 44);
+            [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
+            [myView addSubview:OneButton ];
+            UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(145, 0, 320, 44)]autorelease];
+            OneName.textColor=[UIColor whiteColor];
+            OneName.text=[[jsonObj  objectAtIndex:j] objectForKey:@"name"];
+            [OneButton addSubview:OneName];
+            [OneButton addTarget:self action:@selector(PessSwitchRight_Tag:) forControlEvents:UIControlEventTouchUpInside];
+            UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(90, 10,25 , 25)] autorelease];
+            pictureOneName.image=[UIImage imageNamed:@"News@2X.png"];
+            [OneButton  addSubview:pictureOneName];
+            OneButton.tag=[ [[jsonObj  objectAtIndex:j] objectForKey:@"id"] integerValue];
+            OneName.backgroundColor=[UIColor clearColor];
+            OneButton.backgroundColor=[UIColor clearColor];
+            i++;
+        }
+        
+    }
+    [scrollView addSubview:myView];
+    scrollView.contentSize = myView.frame.size;
+    [self.view addSubview:scrollView];
+
+    
 }
 -(void)buildTheBtn
-//-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
-{
+ {
  
     
     NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -90,58 +130,14 @@
     
     //  最后，关闭数据库：
     sqlite3_close(database);
+     
     app.saveName=strJson;
-    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-    NSArray *jsonObj =[parser objectWithString: strJson];
-    
-    UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
-    scrollView.backgroundColor=[UIColor clearColor];
-    scrollView.delegate=self;
-    UIView *myView=[[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 568)]autorelease];
-    myView.backgroundColor=[UIColor clearColor];
-    NSLog(@"==%d",app.targetCenter);
-    NSLog(@"centre:%d",target_centerView );
-   // if(app.targetCenter<7)
-    target_centerView=app.targetCenter;
-   // else target_centerView=app.targetCenter;
-    
-    int i=0;
-    for(int j=0;j<jsonObj.count;j++)
-    {
-        if([ [NSString stringWithFormat:@"%d",target_centerView]isEqualToString:[[jsonObj  objectAtIndex:j] objectForKey:@"pid"]])
-        {
-            
-           //  NSLog(@"%@",[[jsonObj  objectAtIndex:j] objectForKey:@"name"]);
-            UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
-            OneButton.frame=CGRectMake(0, 20+i*45, 320, 44);
-            [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
-            [myView addSubview:OneButton ];
-            UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(145, 0, 320, 44)]autorelease];
-            OneName.textColor=[UIColor whiteColor];
-            OneName.text=[[jsonObj  objectAtIndex:j] objectForKey:@"name"];
-            [OneButton addSubview:OneName];
-            [OneButton addTarget:self action:@selector(PessSwitchRight_Tag:) forControlEvents:UIControlEventTouchUpInside];
-            UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(90, 10,25 , 25)] autorelease];
-            pictureOneName.image=[UIImage imageNamed:@"News@2X.png"];
-            [OneButton  addSubview:pictureOneName];
-            OneButton.tag=[ [[jsonObj  objectAtIndex:j] objectForKey:@"id"] integerValue];
-            OneName.backgroundColor=[UIColor clearColor];
-            OneButton.backgroundColor=[UIColor clearColor];
-            i++;
-        }
-    
-    }
-    [scrollView addSubview:myView];
-    scrollView.contentSize = myView.frame.size;
-    [self.view addSubview:scrollView];
-    
-    
-    
-    
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [self buildTheBtn];
 }
 
 - (void)didReceiveMemoryWarning

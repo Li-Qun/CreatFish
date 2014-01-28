@@ -43,24 +43,11 @@
     [labelText release];
     [super dealloc];
 }
--(void)viewWillAppear:(BOOL)animated
+-(void)buildTheNewTopBar
 {
-    [self.navigationController setNavigationBarHidden:YES];
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
     CGFloat height = size.height;
-    
-    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    app.targetCenter=[BigFishPid intValue];
-    
-    BigFish_Description=   [[[NSMutableArray alloc]init]retain];
-    
-    ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
-    NSString *str=[NSString stringWithFormat:@"%d",target];
-    
-    [contentRead setDelegate:self];//设置代理
-    [contentRead fetchList:str isPri:@"0" Out:@"0"];
     if(height==480)
     {
         isFive=NO;
@@ -93,9 +80,6 @@
     topBarView.image=[UIImage imageNamed:@"topBarRed"];//CGRectMake(135, littleHeinght+2, 40, 20)
     [self.view addSubview:topBarView];
     
-//    UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(128, littleHeinght+2, 50, 23)]autorelease];
-//    wordView.image=[UIImage imageNamed:@"BigFishList"];
-//    [topBarView addSubview:wordView];
     UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
     name.textColor=[UIColor whiteColor];
     name.text=BigFishName;
@@ -119,6 +103,26 @@
     [self.view addSubview:rightBtn];
     [rightBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
     rightBtn.tag=20;
+
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES];
+    [self buildTheNewTopBar];
+    
+    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    app.targetCenter=[BigFishPid intValue];
+    
+    BigFish_Description=   [[[NSMutableArray alloc]init]retain];
+    
+    ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
+    NSString *str=[NSString stringWithFormat:@"%d",target];
+    
+    [contentRead setDelegate:self];//设置代理
+    [contentRead fetchList:str isPri:@"0" Out:@"0"];
+    
+    
     
 }
 -(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID
@@ -187,6 +191,7 @@
             
             
             //设置索引标识
+            
             SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
             NSDictionary *jsonObj =[parser objectWithString:strJson];
             total = [[jsonObj objectForKey:@"total"] intValue];
@@ -334,10 +339,7 @@
 {//@"直线", @"圆圈", @"反向圆圈", @"圆桶", @"反向圆桶", @"封面展示", @"封面展示2", @"纸牌"
     [self.navigationController setNavigationBarHidden:YES];
     [super viewDidLoad];
-
-    [super viewDidLoad];
-    
-
+ 
     isOpenR=NO;isOpenL=NO;
     self.leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
     self.rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];

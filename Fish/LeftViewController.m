@@ -39,7 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self visitDataBase];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -50,7 +50,7 @@
     if (version <7.0)
         isSeven=NO;
     else isSeven=YES;
-    [self visitDataBase];
+    
     
 }
 -(void)visitDataBase
