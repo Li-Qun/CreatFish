@@ -69,9 +69,18 @@
         clearBack.image=[UIImage imageNamed:@"clearBack@2X"];
         [cellOne.imageView addSubview:clearBack];
         [clearBack addSubview:cellOne.label];
-        UIImageView *theArrow=[[[UIImageView alloc]initWithFrame:CGRectMake(300, 8,8,12)]autorelease];
+        UIImageView *theArrow=[[[UIImageView alloc]initWithFrame:CGRectMake(310, 8,8,12)]autorelease];
         theArrow.image=[UIImage imageNamed:@"theArrow"];
         [clearBack addSubview:theArrow];
+        
+        
+        //文字居中显示
+        
+        cellOne.numLabel.text=[NSString stringWithFormat:@"%d/%d",indexPath.row+1,dataPic.count];
+        cellOne.numLabel.textColor=[UIColor whiteColor];
+        cellOne.numLabel.backgroundColor=[UIColor clearColor];
+        cellOne.numLabel.textAlignment= UITextAlignmentCenter;
+        cellOne.numLabel.font=[UIFont boldSystemFontOfSize:14];
         
         
         

@@ -14,12 +14,19 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="211"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1zt-oo-Pld">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="moren.png" translatesAutoresizingMaskIntoConstraints="NO" id="1zt-oo-Pld">
                         <rect key="frame" x="-11" y="0.0" width="343" height="219"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGO-2J-1OK">
-                        <rect key="frame" x="0.0" y="143" width="320" height="31"/>
+                        <rect key="frame" x="0.0" y="143" width="257" height="31"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNF-ee-OI5">
+                        <rect key="frame" x="266" y="143" width="34" height="31"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -30,7 +37,11 @@
             <connections>
                 <outlet property="imageView" destination="1zt-oo-Pld" id="IZH-PS-AKT"/>
                 <outlet property="label" destination="iGO-2J-1OK" id="1h8-ug-HVU"/>
+                <outlet property="numLabel" destination="FNF-ee-OI5" id="PJn-YR-x44"/>
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="moren.png" width="300" height="300"/>
+    </resources>
 </document>

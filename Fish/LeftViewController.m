@@ -39,7 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self visitDataBase];
+     [self visitDataBase];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -132,7 +132,7 @@
                 if([[[jsonObj  objectAtIndex:i] objectForKey:@"pid"] integerValue]==0)
                 {
                     //////创建动态按钮start
-                    NSString *key=[NSString stringWithFormat:@"%d",i];
+                    //NSString *key=[NSString stringWithFormat:@"%d",i];
                     UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
                     OneButton.frame=CGRectMake(0, height+44+5+j*45, 320, 44);
                     [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];

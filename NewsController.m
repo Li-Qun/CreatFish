@@ -22,7 +22,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "InformationCell.h"
 #import "OneCell.h"
-#import "LoadMoreCell.h"
 #import "skyCell.h"
 #import "UIImageView+WebCache.h"
 #import "DetailViewController.h"
@@ -80,7 +79,7 @@
     str=[NSString stringWithFormat:@"%d",target];
     NewsID=[str integerValue];
     
-    [contentRead fetchList:str isPri:@"1" Out:@"0"];
+    [contentRead fetchList:[NSString stringWithFormat:@"%d",app.targetCenter] isPri:@"1" Out:@"0"];
     [contentRead fetchList:str isPri:@"0" Out:@"0"];
     
 }
@@ -349,7 +348,7 @@
              sqlite3_finalize(stmt);
              sqlite3_close(database);
              
-             
+              app.jsonStringOne=strJson;
              dispatch_async(dispatch_get_main_queue(), ^{//主线程
     
                  app.jsonStringOne=strJson;
@@ -371,7 +370,7 @@
     {
         
         SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-        NSDictionary *jsonObj =[parser objectWithString:  jsonString];
+        NSDictionary *jsonObj =[parser objectWithString: jsonString];
         
         NSDictionary *data = [jsonObj objectForKey:@"data"];
         if(data.count==0)
@@ -540,11 +539,12 @@
             }
             sqlite3_finalize(stmt);
             sqlite3_close(database);
-            
+            app.jsonStringOne=jsonString;
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 
                 
                   app.jsonStringOne=jsonString;
+                
             });
         });
     }
@@ -594,7 +594,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSLog(@"%d",total);
-    return (total+1);
+    return (arr.count+1);
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -830,7 +830,6 @@
     NSString *str=[NSString stringWithFormat:@"%d",target];
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];
-    [contentRead fetchList:str isPri:@"1" Out:@"0"];
     [contentRead fetchList:str isPri:@"0" Out:@"10"];
     [tabView reloadData];
     [self removeFooterView];

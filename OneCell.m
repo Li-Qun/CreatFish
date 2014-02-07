@@ -29,6 +29,7 @@
 - (void)dealloc {
     [ imageView release];
     [_label release];
+    [_numLabel release];
     [super dealloc];
 }
 @end

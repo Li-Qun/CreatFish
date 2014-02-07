@@ -320,7 +320,8 @@
                 [self.navigationController setNavigationBarHidden:YES];
                 
                 
-                [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+                NSURL *urlBai=[NSURL URLWithString:@"http://42.96.192.186"];
+                [showWebView loadHTMLString:jsString baseURL:   urlBai];
                 showWebView.delegate=self;
                 showWebView.scrollView.delegate=self;
                 
@@ -504,9 +505,11 @@
                         "</html>",  fontSize ,line_height,htmlText];
             
             [self.navigationController setNavigationBarHidden:YES];
+            app.jsonString=jsonString;
+ ///////////
             
-            
-            [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+            NSURL *urlBai=[NSURL URLWithString:@"http://42.96.192.186"];
+            [showWebView loadHTMLString:jsString baseURL:   urlBai];
             showWebView.delegate=self;
             showWebView.scrollView.delegate=self;
             
@@ -543,7 +546,8 @@
 {
     showWebView.scrollView.delegate=self;
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-
+    
+    
     [showWebView stringByEvaluatingJavaScriptFromString:@"imageWidth(305);"];//设置网络图片统一宽度320
     [showWebView stringByEvaluatingJavaScriptFromString:@"init();"];
     //刷新设置
@@ -628,8 +632,24 @@ didFailWithError:(NSError *)error
 {
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
     //构造分享内容
+    id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                         allowCallback:NO
+                                                         authViewStyle:SSAuthViewStyleFullScreenPopup
+                                                          viewDelegate:self
+                                               authManagerViewDelegate:self];
+    
+    id<ISSShareOptions> shareOptions = [ShareSDK defaultShareOptionsWithTitle:@"内容分享"
+                                                              oneKeyShareList:[NSArray defaultOneKeyShareList]
+                                                               qqButtonHidden:YES
+                                                        wxSessionButtonHidden:YES
+                                                       wxTimelineButtonHidden:YES
+                                                         showKeyboardOnAppear:NO
+                                                            shareViewDelegate:self
+                                                          friendsViewDelegate:self
+                                                        picViewerViewDelegate:nil];
+
     id<ISSContent> publishContent = [ShareSDK content:app.pic_URL
-                                       defaultContent:@"默认分享内容，没内容时显示"
+                                       defaultContent:@"分享我的阅钓心得"
                                                 image:[ShareSDK imageWithPath:imagePath]
                                                 title:@"ShareSDK"
                                                   url:@"http://www.huiztech.com"
@@ -640,8 +660,8 @@ didFailWithError:(NSError *)error
                          shareList:nil
                            content:publishContent
                      statusBarTips:YES
-                       authOptions:nil
-                      shareOptions: nil
+                       authOptions:authOptions
+                      shareOptions: shareOptions
                             result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
                                 if (state == SSResponseStateSuccess)
                                 {
@@ -749,10 +769,11 @@ didFailWithError:(NSError *)error
                 "</html>",  fontSize ,line_height, htmlText];
     
     
-    [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 
-    [showWebView loadHTMLString:jsString baseURL:nil];
+    NSURL *urlBai=[NSURL URLWithString:@"http://42.96.192.186"];
+    [showWebView loadHTMLString:jsString baseURL:   urlBai];
     [showWebView stringByEvaluatingJavaScriptFromString:jsString];
     
 
@@ -771,12 +792,11 @@ didFailWithError:(NSError *)error
                 "</html>",  fontSize ,line_height, htmlText];
     
     
-    [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     
-    // [self.view addSubview:showWebView];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    [showWebView loadHTMLString:jsString baseURL:nil];
+    NSURL *urlBai=[NSURL URLWithString:@"http://42.96.192.186"];
+    [showWebView loadHTMLString:jsString baseURL:   urlBai];
     [showWebView stringByEvaluatingJavaScriptFromString:jsString];
 }
 
@@ -794,12 +814,11 @@ didFailWithError:(NSError *)error
                 "</html>",  fontSize ,line_height, htmlText];
     
     
-    [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     
-    // [self.view addSubview:showWebView];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    [showWebView loadHTMLString:jsString baseURL:nil];
+    NSURL *urlBai=[NSURL URLWithString:@"http://42.96.192.186"];
+    [showWebView loadHTMLString:jsString baseURL:   urlBai];
     [showWebView stringByEvaluatingJavaScriptFromString:jsString];
     
 }
@@ -817,12 +836,11 @@ didFailWithError:(NSError *)error
                 "</html>",  fontSize ,line_height, htmlText];
     
     
-    [showWebView loadHTMLString:jsString  baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     
-    // [self.view addSubview:showWebView];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     
-    [showWebView loadHTMLString:jsString baseURL:nil];
+    NSURL *urlBai=[NSURL URLWithString:@"http://42.96.192.186"];
+    [showWebView loadHTMLString:jsString baseURL:   urlBai];
     [showWebView stringByEvaluatingJavaScriptFromString:jsString];
 
 }

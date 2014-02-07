@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "klpView.h"
 #import "AppDelegate.h"
-@interface ViewController : UIViewController<FishDelegate,
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKCoreService/ShareSDKCoreService.h>
+@interface ViewController : UIViewController<FishDelegate,ISSShareViewDelegate,
 UIScrollViewDelegate >
 {
     UIScrollView *scrollView;

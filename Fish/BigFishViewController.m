@@ -194,8 +194,9 @@
             
             SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
             NSDictionary *jsonObj =[parser objectWithString:strJson];
-            total = [[jsonObj objectForKey:@"total"] intValue];
+          //  total = [[jsonObj objectForKey:@"total"] intValue];
             NSDictionary *data = [jsonObj objectForKey:@"data"];
+            total=data.count;
             for(int i=0;i<data.count;i++)
             {
                 [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
@@ -302,8 +303,9 @@
             //设置索引标识
             SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
             NSDictionary *jsonObj =[parser objectWithString:jsonString];
-            total = [[jsonObj objectForKey:@"total"] intValue];
+           // total = [[jsonObj objectForKey:@"total"] intValue];
             NSArray *data = [jsonObj objectForKey:@"data"];
+            total=data.count;
             for(int i=0;i<data.count;i++)
             {
                 [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];

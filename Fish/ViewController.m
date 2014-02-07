@@ -543,9 +543,11 @@
     if(isSeven&&isFive)
     {
         bottom=230;
+        share_height=20;
     }
     else if(isSeven&&!isFive)
     {
+        share_height=20;
         bottom=230;
     }else if(!isSeven&&isFive)//
     {
@@ -569,6 +571,16 @@
     [textView setEditable:NO];
     textView.scrollEnabled=YES;
     textView.showsVerticalScrollIndicator=NO;
+    
+    UIButton *share=[UIButton buttonWithType:UIButtonTypeCustom];
+    share.frame=CGRectMake(280, 150+57+share_height, 35,35 );
+    [share setImage:[UIImage imageNamed:@"shareFirstView@2X"] forState:UIControlStateNormal];
+    [share addTarget:self action:@selector(Press_share) forControlEvents:UIControlEventTouchDown];
+    share.highlighted=NO;
+    [self.view  addSubview:share];
+    
+    
+    
     
     NSDate *date = [[[NSDate alloc]initWithTimeIntervalSince1970:[[ [arr objectAtIndex:0] objectForKey:@"create_time"]integerValue]
                      /1000.0]autorelease];
@@ -601,12 +613,12 @@
                     failure:^(NSError *error) {NSLog(@"NO");}];
         [self.klpScrollView1 addSubview:iv];
         
-        UIButton *share=[UIButton buttonWithType:UIButtonTypeCustom];
-        share.frame=CGRectMake(280, 150+share_height, 35,35 );
-        [share setImage:[UIImage imageNamed:@"shareFirstView@2X"] forState:UIControlStateNormal];
-        [share addTarget:self action:@selector(Press_share) forControlEvents:UIControlEventTouchDown];
-
-        [iv addSubview:share];
+//        UIButton *share=[UIButton buttonWithType:UIButtonTypeCustom];
+//        share.frame=CGRectMake(280, 150+share_height, 35,35 );
+//        [share setImage:[UIImage imageNamed:@"shareFirstView@2X"] forState:UIControlStateNormal];
+//        [share addTarget:self action:@selector(Press_share) forControlEvents:UIControlEventTouchDown];
+//
+//        [iv addSubview:share];
         
         iv = nil;
         
@@ -614,7 +626,9 @@
     [self.klpScrollView1 setContentSize:CGSizeMake(size.width * firstPageImage.count, 0)];//只可横向滚动～
     
     self.klpScrollView1.pagingEnabled = YES;
-    self.klpScrollView1.showsHorizontalScrollIndicator = NO;
+    self.klpScrollView1.showsHorizontalScrollIndicator = YES;
+    //self.klpScrollView1.indicatorStyle=
+    
     //往数组里添加成员
     for (int i=0; i<firstPageImage.count; i++) {
         UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(100*i + 5*i,0,size.height+height,70)]autorelease];
@@ -623,10 +637,10 @@
         iv = nil;
     }
     
-    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)]autorelease];
-    [singleTap setNumberOfTapsRequired:1];
-    
-    [self.klpScrollView1 addGestureRecognizer:singleTap];
+//    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)]autorelease];
+//    [singleTap setNumberOfTapsRequired:1];
+//    
+//    [self.klpScrollView1 addGestureRecognizer:singleTap];
     //[klpScrollView1 release];
     // [klpImgArr release];
     //  [app.firstPageImage release];
@@ -634,9 +648,57 @@
     
 
 }
--(void)share
+-(void)Press_share
 {
     
+    NSLog(@"选择分享图片序号：%d",index);
+    
+    id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                        allowCallback:NO
+                                                        authViewStyle:SSAuthViewStyleFullScreenPopup
+                                                         viewDelegate:self
+                                              authManagerViewDelegate:self];
+    
+    id<ISSShareOptions> shareOptions = [ShareSDK defaultShareOptionsWithTitle:@"首页分享"
+                                                              oneKeyShareList:[NSArray defaultOneKeyShareList]
+                                                               qqButtonHidden:YES
+                                                        wxSessionButtonHidden:YES
+                                                       wxTimelineButtonHidden:YES
+                                                         showKeyboardOnAppear:NO
+                                                            shareViewDelegate:self
+                                                          friendsViewDelegate:self
+                                                        picViewerViewDelegate:nil];
+    
+    
+    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
+    //构造分享内容
+    id<ISSContent> publishContent = [ShareSDK content: [ [arr objectAtIndex:index] objectForKey:@"description"]
+                                       defaultContent:@"分享我的阅钓心得"
+                                                image:[ShareSDK imageWithPath:imagePath]
+                                                title:@"ShareSDK"
+                                                  url:@"http://www.huiztech.com"
+                                          description:@"这条新闻值得分享一下"
+                                            mediaType:SSPublishContentMediaTypeNews];
+ 
+    
+    [ShareSDK showShareActionSheet:nil
+                         shareList:nil
+                           content:publishContent
+                     statusBarTips:YES
+                       authOptions:authOptions
+                      shareOptions: shareOptions
+                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                if (state == SSResponseStateSuccess)
+                                {
+                                    NSLog(@"分享成功");
+                                }
+                                else if (state == SSResponseStateFail)
+                                {
+                                    NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode], [error errorDescription]);
+                                }
+                            }];
+    
+
 }
 -(void)theTopBar
 {
@@ -745,10 +807,32 @@
         labelDay.backgroundColor=[UIColor clearColor];
         labelDay.font=[UIFont systemFontOfSize:15.0f];
         labelDay.numberOfLines = 0;
+        int share_height;
+        share_height=0;
+        if(isSeven&&isFive)
+        {
+            share_height=20;
+            
+        }
+        else if(isSeven&&!isFive)
+        {
+             share_height=20;
+        }else if(!isSeven&&isFive)
+        {
+            
+            share_height=10;
+        }else {
+            
+        }
         
-        
-        
-        
+
+        UIButton *share=[UIButton buttonWithType:UIButtonTypeCustom];
+        share.frame=CGRectMake(280, 150+57+share_height, 35,35 );
+        [share setImage:[UIImage imageNamed:@"shareFirstView@2X"] forState:UIControlStateNormal];
+        [share addTarget:self action:@selector(Press_share) forControlEvents:UIControlEventTouchDown];
+        share.highlighted=NO;
+        [self.view  addSubview:share];
+  
 	}else {
 		
 	}
@@ -762,33 +846,9 @@
     NSInteger touchIndex = floor(loc.x / pageWith) ;
     if (touchIndex > app.firstPageImage.count) {
         return;
-    }//NSLog(@"touch index %d",touchIndex);
-    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
-    //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content: [ [arr objectAtIndex:touchIndex] objectForKey:@"description"]
-                                       defaultContent:@"分享我的阅钓心得"
-                                                image:[ShareSDK imageWithPath:imagePath]
-                                                title:@"ShareSDK"
-                                                  url:@"http://www.huiztech.com"
-                                          description:@"这条新闻值得分享一下"
-                                            mediaType:SSPublishContentMediaTypeNews];
-    
-    [ShareSDK showShareActionSheet:nil
-                         shareList:nil
-                           content:publishContent
-                     statusBarTips:YES
-                       authOptions:nil
-                      shareOptions: nil
-                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                if (state == SSResponseStateSuccess)
-                                {
-                                    NSLog(@"分享成功");
-                                }
-                                else if (state == SSResponseStateFail)
-                                {
-                                    NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode], [error errorDescription]);
-                                }
-                            }];
+    }
+    NSLog(@"touch index %d",touchIndex);
+  
 }
 - (void)didReceiveMemoryWarning
 {

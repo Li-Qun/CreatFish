@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "klpView.h"
-@interface FishImageViewController : UIViewController<FishDelegate,UIScrollViewDelegate>
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKCoreService/ShareSDKCoreService.h>
+@interface FishImageViewController : UIViewController<FishDelegate,ISSShareViewDelegate,UIScrollViewDelegate>
 {
     AppDelegate *app;
     BOOL isSeven;

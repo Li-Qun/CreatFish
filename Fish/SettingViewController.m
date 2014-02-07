@@ -26,12 +26,20 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [self.navigationController setToolbarHidden:YES];
+        
+        
+        
     }
     return self;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    
+    [self.navigationController setNavigationBarHidden:YES];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"leftBackBoard@2X.png"]];
+    imgView.frame = self.view.bounds;
+    imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.view insertSubview:imgView atIndex:0];
+    [imgView release];
 }
 
 -(void)Press_set
@@ -240,6 +248,22 @@
 {
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
     //构造分享内容
+    id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                         allowCallback:NO
+                                                         authViewStyle:SSAuthViewStyleFullScreenPopup
+                                                          viewDelegate:self
+                                               authManagerViewDelegate:self];
+    
+    id<ISSShareOptions> shareOptions = [ShareSDK defaultShareOptionsWithTitle:@"内容分享"
+                                                              oneKeyShareList:[NSArray defaultOneKeyShareList]
+                                                               qqButtonHidden:YES
+                                                        wxSessionButtonHidden:YES
+                                                       wxTimelineButtonHidden:YES
+                                                         showKeyboardOnAppear:NO
+                                                            shareViewDelegate:self
+                                                          friendsViewDelegate:self
+                                                        picViewerViewDelegate:nil];
+
     id<ISSContent> publishContent = [ShareSDK content:@"快快@你的好友,推荐阅钓app,说一说你使用阅钓心得吧～"
                                        defaultContent:@"默认分享内容，没内容时显示"
                                                 image:[ShareSDK imageWithPath:imagePath]
@@ -251,8 +275,8 @@
                          shareList:nil
                            content:publishContent
                      statusBarTips:YES
-                       authOptions:nil
-                      shareOptions: nil
+                       authOptions:authOptions
+                      shareOptions: shareOptions
                             result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
                                 if (state == SSResponseStateSuccess)
                                 {
@@ -359,14 +383,15 @@
     [self.navigationController setNavigationBarHidden:YES];
     self.view.backgroundColor=[UIColor whiteColor];
     ScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320,568)];
-    ScrollView.backgroundColor=[UIColor blackColor];
+    ScrollView.backgroundColor=[UIColor clearColor];
     ScrollView.delegate=self;
     myView=[[UIView alloc]init];
-    myView.backgroundColor=[UIColor blackColor];
+    myView.backgroundColor=[UIColor clearColor];
 
     
     UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 55)]autorelease];
-    topBarView.image=[UIImage imageNamed:@"set_Nav@2x.png"];
+    //topBarView.image=[UIImage imageNamed:@"set_Nav@2x.png"];LeftTitle@2X
+    topBarView.image=[UIImage imageNamed:@"LeftTitle@2X"];
     [myView addSubview:topBarView];
     
     UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(120, 15, 100, 30)];
@@ -393,7 +418,8 @@
     [imgLineOne release];
     //通用设置
     UIImageView *imageView=[[UIImageView alloc]initWithFrame:CGRectMake(0, 57, 320, 34)];//0 61 320 34
-    imageView.image=[UIImage imageNamed:@"labelNormal_Set"];
+  //  imageView.image=[UIImage imageNamed:@"labelNormal_Set"];
+    imageView.image=[UIImage imageNamed:@"selectOne@2X"];
     [myView addSubview:imageView];
     
     UILabel *labelNormal_Set=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 34)];
@@ -411,7 +437,7 @@
     [myView addSubview:readed];
     UILabel *allRead=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
     allRead.backgroundColor=[UIColor clearColor];
-    allRead.text=@"  全部标记为已读";
+    allRead.text=@"    全部标记为已读";
     allRead.textColor=[UIColor whiteColor];
     [readed addSubview:allRead];
     [readed addTarget:self action:@selector(Press_allRead) forControlEvents:UIControlEventTouchDown];
@@ -429,7 +455,7 @@
     UILabel *clearAll=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 50)]autorelease];
     clearAll.textColor=[UIColor whiteColor];
     clearAll.backgroundColor=[UIColor clearColor];
-    clearAll.text=@"  清除所有缓存";
+    clearAll.text=@"    清除所有缓存";
     [clear addSubview:clearAll];
     [clear addTarget:self action:@selector(cleaAllCathce) forControlEvents:UIControlEventTouchDown];
     [myView addSubview:clear];
@@ -440,7 +466,8 @@
     [imgLineThree release];
     //关于
     UIImageView *about=[[[UIImageView alloc]initWithFrame:CGRectMake(0,195, 320, 34)]autorelease];
-    about.image=[UIImage imageNamed:@"labelNormal_Set"];
+   // about.image=[UIImage imageNamed:@"labelNormal_Set"];//selectOne@2X
+    about.image=[UIImage imageNamed:@"selectOne@2X"];
     [myView addSubview:about];
     UILabel *aboutLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 34)]autorelease];
     aboutLabel.backgroundColor=[UIColor clearColor];
@@ -455,7 +482,7 @@
     UILabel *adviceLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 50)]autorelease];
     adviceLabel.textColor=[UIColor whiteColor];
     adviceLabel.backgroundColor=[UIColor clearColor];
-    adviceLabel.text=@"  意见反馈";
+    adviceLabel.text=@"    意见反馈";
     [advice addTarget:self action:@selector(Press_set) forControlEvents:UIControlEventTouchDown];
     [advice addSubview:adviceLabel];
     [myView addSubview:advice];
@@ -472,7 +499,7 @@
     [share addTarget:self action:@selector(shareToFriend) forControlEvents:UIControlEventTouchDown];
     UILabel *shareLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 50)]autorelease];
     shareLabel.backgroundColor=[UIColor clearColor];
-    shareLabel.text=@"  向朋友推荐本应用";
+    shareLabel.text=@"    向朋友推荐本应用";
     shareLabel.textColor=[UIColor whiteColor];
     [share addSubview:shareLabel];
     [myView addSubview:share];
@@ -485,7 +512,7 @@
     UILabel *Kind=[[[UILabel alloc]initWithFrame:CGRectMake(0, 334, 320, 50)]autorelease];
     Kind.textColor=[UIColor whiteColor];
     Kind.backgroundColor=[UIColor clearColor];
-    Kind.text=@"  程序版本    1.0";
+    Kind.text=@"    程序版本    1.0";
     [myView addSubview:Kind];
     //分割线
     UIImageView *imgLineSix=[[UIImageView alloc]initWithFrame:CGRectMake(0, 384, 320, 2)];
@@ -494,7 +521,8 @@
     [imgLineSix release];
     //特别推荐
     UIImageView *honored=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 386, 320, 34)]autorelease];
-    honored.image=[UIImage imageNamed:@"labelNormal_Set"];
+    //honored.image=[UIImage imageNamed:@"labelNormal_Set"];
+    honored.image=[UIImage imageNamed:@"selectOne@2X"];
     [myView addSubview:honored];
     UILabel *honoredLabel=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, 34)]autorelease];
     honoredLabel.backgroundColor=[UIColor clearColor];
@@ -528,7 +556,7 @@
     [imgLineEight release];
     
     myView.frame=CGRectMake(0, 0, 320,1000);
-    myView.backgroundColor=[UIColor blackColor];
+    myView.backgroundColor=[UIColor clearColor];
     ScrollView.contentSize = myView.frame.size;
     [ScrollView addSubview:myView];
     [self.view addSubview:ScrollView];

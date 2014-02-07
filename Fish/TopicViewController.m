@@ -70,7 +70,7 @@
         buttonHeight=5+height_Momente-44-height;
     }else if(height5_flag&&!Kind7)
     {
-        heightTooBar=height_Momente-44;
+        heightTooBar=height_Momente-44-20;
         buttonHeight=5+height_Momente-44-20;
     }
     else if (!height5_flag&&Kind7)
@@ -79,7 +79,7 @@
         buttonHeight=5+height_Momente-44 ;
     }
     else {
-        heightTooBar=height_Momente-height-44 ;
+        heightTooBar=height_Momente-height-44;
         buttonHeight=5+height_Momente-44-height;
     }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -423,7 +423,7 @@
         clearImgHeight=20;
     }
     
-    self.klpScrollView1.frame=CGRectMake(0,heightScrollview, 320, 203);
+    //self.klpScrollView1.frame=CGRectMake(0,heightScrollview, 320, 203);
 
     ///UIScrollerView
     //1.labelText// frame=CGRectMake(10,211,300,146);
@@ -468,9 +468,21 @@
         clearBack.image=[UIImage imageNamed:@"clearBack@2X"];
         [iv addSubview:clearBack];
         [clearBack addSubview:label];
-        UIImageView *theArrow=[[[UIImageView alloc]initWithFrame:CGRectMake(300, 8,8,12)]autorelease];
+        UIImageView *theArrow=[[[UIImageView alloc]initWithFrame:CGRectMake(301, 8,8,12)]autorelease];
         theArrow.image=[UIImage imageNamed:@"theArrow"];
         [clearBack addSubview:theArrow];
+        
+        
+        
+        UILabel *numlable=[[[UILabel alloc]initWithFrame:CGRectMake(270, 4, 30, 20)]autorelease];
+        numlable.backgroundColor=[UIColor clearColor];
+        numlable.textColor=[UIColor whiteColor];
+        //文字居中显示
+        
+        numlable.textAlignment= UITextAlignmentCenter;
+        numlable.text=[NSString stringWithFormat:@"%d/%d",i+1,arr.count];
+        numlable.font=[UIFont boldSystemFontOfSize:14];
+        [clearBack addSubview:numlable];
         
         [self.klpScrollView1 addSubview:iv];
         iv = nil;
@@ -478,7 +490,7 @@
                 [iv setImage:[UIImage imageNamed:[dict objectForKey:@"image"]]];
                [self.klpScrollView1 addSubview:iv];
               iv = nil;
-
+        
         
     }
     [self.klpScrollView1 setContentSize:CGSizeMake(size.width * arr.count, 0)];//只可横向滚动～
@@ -494,10 +506,10 @@
         iv = nil;
     }
     
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-    [singleTap setNumberOfTapsRequired:1];
-    
-    [self.klpScrollView1 addGestureRecognizer:singleTap];
+//    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+//    [singleTap setNumberOfTapsRequired:1];
+//    
+//    [self.klpScrollView1 addGestureRecognizer:singleTap];
     //[klpScrollView1 release];
     // [klpImgArr release];
     //  [app.firstPageImage release];
@@ -519,46 +531,41 @@
 	}
 }
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    //	NSLog(@"scrollViewWillBeginDragging");
-	if (scrollView == self.klpScrollView1) {
-        
-	}else {
-		
-	}
+    
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-	//NSLog(@"scrollViewDidEndDecelerating");
-	if (scrollView == self.klpScrollView1) {
-		klp.frame = ((UIImageView*)[self.klpImgArr objectAtIndex:index]).frame;
-		[klp setAlpha:0];
-		[UIView animateWithDuration:0.2f animations:^(void){
-			[klp setAlpha:.85f];
-		}];
-        
-         NSDictionary* dict = [arr objectAtIndex:index];
-        labelText.text=[dict objectForKey:@"description"];
-        textView.text=[ dict objectForKey:@"description"];
-        textView.backgroundColor=[UIColor clearColor];
-        textView.font=[UIFont systemFontOfSize:14.0f];
-        [textView setEditable:NO];
-        textView.scrollEnabled=YES;
-        
-	}else {
-		
-	}
+	 
+	klp.frame = ((UIImageView*)[self.klpImgArr objectAtIndex:index]).frame;
+    [klp setAlpha:0];
+    [UIView animateWithDuration:0.2f animations:^(void){
+        [klp setAlpha:.85f];
+    }];
+    
+    NSDictionary* dict = [arr objectAtIndex:index];
+    labelText.text=[dict objectForKey:@"description"];
+    textView.text=[ dict objectForKey:@"description"];
+    textView.backgroundColor=[UIColor clearColor];
+    textView.font=[UIFont systemFontOfSize:14.0f];
+    [textView setEditable:NO];
+    textView.scrollEnabled=YES;
+    NSLog(@"滑动到%d",index);
+    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap1:)]autorelease];
+    [singleTap setNumberOfTapsRequired:1];
+    
+    [self.view addGestureRecognizer:singleTap];
+
 }
 
 #pragma mark 手势
-- (void) handleSingleTap:(UITapGestureRecognizer *) gestureRecognizer{
+- (void) handleSingleTap1:(UITapGestureRecognizer *) gestureRecognizer{
 	CGFloat pageWith = 320;
     
     CGPoint loc = [gestureRecognizer locationInView:self.klpScrollView1];
     NSInteger touchIndex = floor(loc.x / pageWith) ;
-    if (touchIndex > app.firstPageImage.count) {
+    if (touchIndex > arr.count) {
         return;
     }
     //进入详细阅读
-    NSLog(@"touch index %d",touchIndex);
     NSDictionary* dict = [arr objectAtIndex:touchIndex];
  
     DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
@@ -566,11 +573,7 @@
     [detail.arrIDListNew insertObject:@"10" atIndex:1 ];
     detail.momentID=[dict objectForKey:@"id"];
     [self.navigationController pushViewController:detail animated:YES];
-    
-    
-    
-    
-    
+
 }
 - (void)didReceiveMemoryWarning
 {

@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "WeiboSDK.h"
-@interface SettingViewController : UIViewController<UIScrollViewDelegate,UIScrollViewAccessibilityDelegate,FishDelegate,WeiboSDKJSONDelegate
+@interface SettingViewController : UIViewController<UIScrollViewDelegate,UIScrollViewAccessibilityDelegate,FishDelegate,WeiboSDKJSONDelegate,ISSShareViewDelegate
 >
 {
     UINavigationBar *navBar;

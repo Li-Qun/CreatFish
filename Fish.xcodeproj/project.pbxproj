@@ -217,8 +217,8 @@
 		BBAB9BDE1896839500F66100 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAB9BDB1896839500F66100 /* Default@2x.png */; };
 		BBAB9BDF1896839500F66100 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAB9BDC1896839500F66100 /* Default-568h@2x.png */; };
 		BBAC873E18602E8B00A36D8A /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = BBAC873D18602E8B00A36D8A /* JSONKit.m */; };
-		BBACDE7818713C20002F1BF5 /* LoadMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BBACDE7718713C20002F1BF5 /* LoadMoreCell.m */; };
-		BBACDE7A18713C41002F1BF5 /* LoadMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBACDE7918713C41002F1BF5 /* LoadMoreCell.xib */; };
+		BBACEFD618A4BF620031C6AE /* moren.png in Resources */ = {isa = PBXBuildFile; fileRef = BBACEFD518A4BF620031C6AE /* moren.png */; };
+		BBACEFD818A4EA940031C6AE /* leftBackBoard@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBACEFD718A4EA940031C6AE /* leftBackBoard@2X.png */; };
 		BBAF28C9187E451E005A3FCB /* AaImg@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28C0187E451E005A3FCB /* AaImg@2X.png */; };
 		BBAF28CA187E451E005A3FCB /* BackImg.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28C1187E451E005A3FCB /* BackImg.png */; };
 		BBAF28CB187E451E005A3FCB /* BackImg@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28C2187E451E005A3FCB /* BackImg@2X.png */; };
@@ -234,8 +234,6 @@
 		BBAF28D9187E4F10005A3FCB /* readBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28D7187E4F10005A3FCB /* readBack@2X.png */; };
 		BBAF28DD187E62D2005A3FCB /* SwimFish.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28DB187E62D2005A3FCB /* SwimFish.png */; };
 		BBAF28DE187E62D2005A3FCB /* SwimFish@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28DC187E62D2005A3FCB /* SwimFish@2X.png */; };
-		BBAF28E1187E8606005A3FCB /* swimWordLabel.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28DF187E8606005A3FCB /* swimWordLabel.png */; };
-		BBAF28E2187E8606005A3FCB /* swimWordLabel@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28E0187E8606005A3FCB /* swimWordLabel@2X.png */; };
 		BBAF28EA187E99CF005A3FCB /* welcome.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28E8187E99CF005A3FCB /* welcome.png */; };
 		BBAF28EB187E99CF005A3FCB /* welcome@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28E9187E99CF005A3FCB /* welcome@2X.png */; };
 		BBAF28F0187E9A75005A3FCB /* clearArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28EC187E9A75005A3FCB /* clearArrow.png */; };
@@ -278,10 +276,6 @@
 		BBD067C7189012F300DBC8B9 /* FishCore.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD067C6189012F300DBC8B9 /* FishCore.m */; };
 		BBD07913188E766A00325927 /* signble.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07911188E766A00325927 /* signble.png */; };
 		BBD07914188E766A00325927 /* signble@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07912188E766A00325927 /* signble@2X.png */; };
-		BBD07919188E910500325927 /* aboard.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07915188E910500325927 /* aboard.png */; };
-		BBD0791A188E910500325927 /* aboard@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07916188E910500325927 /* aboard@2X.png */; };
-		BBD0791B188E910500325927 /* nation.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07917188E910500325927 /* nation.png */; };
-		BBD0791C188E910500325927 /* nation@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD07918188E910500325927 /* nation@2X.png */; };
 		BBD07925188EB1D400325927 /* bag_Small.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD0791D188EB1D400325927 /* bag_Small.png */; };
 		BBD07926188EB1D400325927 /* bag_Small@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD0791E188EB1D400325927 /* bag_Small@2X.png */; };
 		BBD07927188EB1D400325927 /* Function_Small.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD0791F188EB1D400325927 /* Function_Small.png */; };
@@ -631,9 +625,8 @@
 		BBAB9BDC1896839500F66100 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		BBAC873C18602E8B00A36D8A /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		BBAC873D18602E8B00A36D8A /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
-		BBACDE7618713C20002F1BF5 /* LoadMoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadMoreCell.h; sourceTree = "<group>"; };
-		BBACDE7718713C20002F1BF5 /* LoadMoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadMoreCell.m; sourceTree = "<group>"; };
-		BBACDE7918713C41002F1BF5 /* LoadMoreCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadMoreCell.xib; sourceTree = "<group>"; };
+		BBACEFD518A4BF620031C6AE /* moren.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moren.png; sourceTree = "<group>"; };
+		BBACEFD718A4EA940031C6AE /* leftBackBoard@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leftBackBoard@2X.png"; sourceTree = "<group>"; };
 		BBAF28C0187E451E005A3FCB /* AaImg@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AaImg@2X.png"; sourceTree = "<group>"; };
 		BBAF28C1187E451E005A3FCB /* BackImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackImg.png; sourceTree = "<group>"; };
 		BBAF28C2187E451E005A3FCB /* BackImg@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackImg@2X.png"; sourceTree = "<group>"; };
@@ -649,8 +642,6 @@
 		BBAF28D7187E4F10005A3FCB /* readBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "readBack@2X.png"; sourceTree = "<group>"; };
 		BBAF28DB187E62D2005A3FCB /* SwimFish.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwimFish.png; sourceTree = "<group>"; };
 		BBAF28DC187E62D2005A3FCB /* SwimFish@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SwimFish@2X.png"; sourceTree = "<group>"; };
-		BBAF28DF187E8606005A3FCB /* swimWordLabel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swimWordLabel.png; sourceTree = "<group>"; };
-		BBAF28E0187E8606005A3FCB /* swimWordLabel@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swimWordLabel@2X.png"; sourceTree = "<group>"; };
 		BBAF28E8187E99CF005A3FCB /* welcome.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = welcome.png; sourceTree = "<group>"; };
 		BBAF28E9187E99CF005A3FCB /* welcome@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome@2X.png"; sourceTree = "<group>"; };
 		BBAF28EC187E9A75005A3FCB /* clearArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clearArrow.png; sourceTree = "<group>"; };
@@ -705,10 +696,6 @@
 		BBD067C6189012F300DBC8B9 /* FishCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FishCore.m; sourceTree = "<group>"; };
 		BBD07911188E766A00325927 /* signble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = signble.png; sourceTree = "<group>"; };
 		BBD07912188E766A00325927 /* signble@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signble@2X.png"; sourceTree = "<group>"; };
-		BBD07915188E910500325927 /* aboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aboard.png; sourceTree = "<group>"; };
-		BBD07916188E910500325927 /* aboard@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "aboard@2X.png"; sourceTree = "<group>"; };
-		BBD07917188E910500325927 /* nation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nation.png; sourceTree = "<group>"; };
-		BBD07918188E910500325927 /* nation@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nation@2X.png"; sourceTree = "<group>"; };
 		BBD0791D188EB1D400325927 /* bag_Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bag_Small.png; sourceTree = "<group>"; };
 		BBD0791E188EB1D400325927 /* bag_Small@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bag_Small@2X.png"; sourceTree = "<group>"; };
 		BBD0791F188EB1D400325927 /* Function_Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Function_Small.png; sourceTree = "<group>"; };
@@ -1213,9 +1200,6 @@
 				BB31A489186ED7F600F23782 /* OneCell.h */,
 				BB31A48A186ED7F600F23782 /* OneCell.m */,
 				BB31A48C186ED80D00F23782 /* OneCell.xib */,
-				BBACDE7618713C20002F1BF5 /* LoadMoreCell.h */,
-				BBACDE7718713C20002F1BF5 /* LoadMoreCell.m */,
-				BBACDE7918713C41002F1BF5 /* LoadMoreCell.xib */,
 				BBD67E3E1876D6E800A6CD87 /* StoreUpViewController.h */,
 				BBD67E3F1876D6E800A6CD87 /* StoreUpViewController.m */,
 				BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */,
@@ -1576,12 +1560,6 @@
 		BBAF28DA187E62A9005A3FCB /* swimFish */ = {
 			isa = PBXGroup;
 			children = (
-				BBD07915188E910500325927 /* aboard.png */,
-				BBD07916188E910500325927 /* aboard@2X.png */,
-				BBD07917188E910500325927 /* nation.png */,
-				BBD07918188E910500325927 /* nation@2X.png */,
-				BBAF28DF187E8606005A3FCB /* swimWordLabel.png */,
-				BBAF28E0187E8606005A3FCB /* swimWordLabel@2X.png */,
 				BBAF28DB187E62D2005A3FCB /* SwimFish.png */,
 				BBAF28DC187E62D2005A3FCB /* SwimFish@2X.png */,
 			);
@@ -1643,6 +1621,7 @@
 		BBB2CF14187BF00D00C8F210 /* slideLeft */ = {
 			isa = PBXGroup;
 			children = (
+				BBACEFD718A4EA940031C6AE /* leftBackBoard@2X.png */,
 				BBD0791D188EB1D400325927 /* bag_Small.png */,
 				BBD0791E188EB1D400325927 /* bag_Small@2X.png */,
 				BBD0791F188EB1D400325927 /* Function_Small.png */,
@@ -1705,6 +1684,7 @@
 		BBD0E1D4187808E6000D1141 /* Beauty */ = {
 			isa = PBXGroup;
 			children = (
+				BBACEFD518A4BF620031C6AE /* moren.png */,
 				BBAF28E8187E99CF005A3FCB /* welcome.png */,
 				BBAF28E9187E99CF005A3FCB /* welcome@2X.png */,
 				BBAF28EC187E9A75005A3FCB /* clearArrow.png */,
@@ -1941,7 +1921,6 @@
 				BBAF28D4187E45F9005A3FCB /* topViewBarWhite.png in Resources */,
 				BBAF28C9187E451E005A3FCB /* AaImg@2X.png in Resources */,
 				BBA4726A18976127000E4EFF /* redBack.png in Resources */,
-				BBACDE7A18713C41002F1BF5 /* LoadMoreCell.xib in Resources */,
 				BB9921941895233F0093DC84 /* GooglePlus.bundle in Resources */,
 				BBA492F9187CEE8E0089D35E /* Set.png in Resources */,
 				BBA49310187D48BE0089D35E /* LeftBtn@2X.png in Resources */,
@@ -1960,7 +1939,6 @@
 				BBD0E1E718781B95000D1141 /* advice_nav_red.png in Resources */,
 				BBDBE948184DD064009FA292 /* LeftViewController.xib in Resources */,
 				BB9921A4189523400093DC84 /* ShareSDKiPadSimpleShareViewUI.bundle in Resources */,
-				BBD0791A188E910500325927 /* aboard@2X.png in Resources */,
 				BBD067C2188F78CF00DBC8B9 /* Close_webImage.png in Resources */,
 				BBA49303187D2F090089D35E /* TitleRedBack.png in Resources */,
 				BBD07927188EB1D400325927 /* Function_Small.png in Resources */,
@@ -1973,7 +1951,6 @@
 				BBA492FE187CF0BE0089D35E /* slideLeft_Back@2X.png in Resources */,
 				BBD07925188EB1D400325927 /* bag_Small.png in Resources */,
 				BBA18E791864277100EEEFC8 /* DetailViewController.xib in Resources */,
-				BBD0791C188E910500325927 /* nation@2X.png in Resources */,
 				BBAB9BC318962CC600F66100 /* shareFirstView@2X.png in Resources */,
 				BBA5B7D5187A8EB600D55899 /* theLineSet.png in Resources */,
 				BBAF28CD187E451E005A3FCB /* saveImgHighted@2X.png in Resources */,
@@ -1984,7 +1961,6 @@
 				BBAB9BD31896813400F66100 /* 80X80.png in Resources */,
 				BBD07926188EB1D400325927 /* bag_Small@2X.png in Resources */,
 				BBD318A2188D3F5F00618A5A /* imageLabel.png in Resources */,
-				BBD07919188E910500325927 /* aboard.png in Resources */,
 				BBA49306187D2F090089D35E /* TitleWhiteBack@2X.png in Resources */,
 				BBA1CA0A187FF06C0028E5BC /* theGoBack@2X.png in Resources */,
 				BBA4931F187D6DF30089D35E /* theArrow.png in Resources */,
@@ -1992,12 +1968,14 @@
 				BBAF28F0187E9A75005A3FCB /* clearArrow.png in Resources */,
 				BBA352AB18792A2900A8239C /* TypeSelect@2X.png in Resources */,
 				BBAF28CA187E451E005A3FCB /* BackImg.png in Resources */,
+				BBACEFD818A4EA940031C6AE /* leftBackBoard@2X.png in Resources */,
 				BBAF984218852EB3002DDA7A /* RennSDK.bundle in Resources */,
 				BBB2CF18187BF01C00C8F210 /* LeftTitle@2X.png in Resources */,
 				BBA69896186FE9DD00DE10AB /* blackArrow.png in Resources */,
 				BBD0E1D918780909000D1141 /* SettingViewController.xib in Resources */,
 				BBAB9BDF1896839500F66100 /* Default-568h@2x.png in Resources */,
 				BBB2CF17187BF01C00C8F210 /* LeftTitle.png in Resources */,
+				BBACEFD618A4BF620031C6AE /* moren.png in Resources */,
 				BBA5B7E3187ABF4A00D55899 /* toolBar@2X.png in Resources */,
 				BBA49305187D2F090089D35E /* TitleWhiteBack.png in Resources */,
 				BBAF28CE187E451E005A3FCB /* saveImgNormal.png in Resources */,
@@ -2010,7 +1988,6 @@
 				BBDA38DA188A6FAD006A90F9 /* TopicViewController.xib in Resources */,
 				BBD0E1DD18781444000D1141 /* set_Nav.png in Resources */,
 				BBD31897188D0CCD00618A5A /* FishImageViewController.xib in Resources */,
-				BBD0791B188E910500325927 /* nation.png in Resources */,
 				BBD067C0188F78CF00DBC8B9 /* BottomBar_webImage.png in Resources */,
 				BB9921A9189523400093DC84 /* ShareSDKiPhoneSimpleShareViewUI.bundle in Resources */,
 				BBD067C4188F78CF00DBC8B9 /* Share_webImage.png in Resources */,
@@ -2051,8 +2028,6 @@
 				BBA352A818792A2900A8239C /* TypeNormal.png in Resources */,
 				BB99219A189523400093DC84 /* RennSDK.bundle in Resources */,
 				BBA5B7D9187AB21F00D55899 /* xinlang.png in Resources */,
-				BBAF28E1187E8606005A3FCB /* swimWordLabel.png in Resources */,
-				BBAF28E2187E8606005A3FCB /* swimWordLabel@2X.png in Resources */,
 				BBA69898186FE9DD00DE10AB /* blueArrow.png in Resources */,
 				BBD067C3188F78CF00DBC8B9 /* Close_webImage@2X.png in Resources */,
 				9006F350184D59250091B69F /* ViewController.xib in Resources */,
@@ -2158,7 +2133,6 @@
 				BBA4732C189792D4000E4EFF /* CJSONSerialization.m in Sources */,
 				BBA478831857215E00E64289 /* CustomURLCache.m in Sources */,
 				BBA11CCB185ECABC000D39F8 /* ASIDataCompressor.m in Sources */,
-				BBACDE7818713C20002F1BF5 /* LoadMoreCell.m in Sources */,
 				BBA4732A189792D4000E4EFF /* CFilteringJSONSerializer.m in Sources */,
 				BBA47898185721A000E64289 /* MKAnnotationView+WebCache.m in Sources */,
 				BBA4732E189792D4000E4EFF /* CDataScanner_Extensions.m in Sources */,

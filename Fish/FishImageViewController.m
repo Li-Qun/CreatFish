@@ -390,9 +390,26 @@
     NSLog(@"touch index %d",touchIndex);
     NSDictionary* dict = [app.firstPageImage objectAtIndex:touchIndex];
     
-    shareImage=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
+    shareImage=[NSString stringWithFormat:@"http://42.96.192.186/%@",[dict objectForKey:@"image"]];
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
     
+    
+    
+    id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                         allowCallback:NO
+                                                         authViewStyle:SSAuthViewStyleFullScreenPopup
+                                                          viewDelegate:self
+                                               authManagerViewDelegate:self];
+    
+    id<ISSShareOptions> shareOptions = [ShareSDK defaultShareOptionsWithTitle:@"内容分享"
+                                                              oneKeyShareList:[NSArray defaultOneKeyShareList]
+                                                               qqButtonHidden:YES
+                                                        wxSessionButtonHidden:YES
+                                                       wxTimelineButtonHidden:YES
+                                                         showKeyboardOnAppear:NO
+                                                            shareViewDelegate:self
+                                                          friendsViewDelegate:self
+                                                        picViewerViewDelegate:nil];
     //构造分享内容
     id<ISSContent> publishContent = [ShareSDK content:shareImage
                                        defaultContent:@"分享一下你的心情吧"
@@ -402,12 +419,13 @@
                                           description:@"这是一条测试信息"
                                             mediaType:SSPublishContentMediaTypeNews];
     
+    
     [ShareSDK showShareActionSheet:nil
                          shareList:nil
                            content:publishContent
                      statusBarTips:YES
-                       authOptions:nil
-                      shareOptions: nil
+                       authOptions:authOptions
+                      shareOptions: shareOptions
                             result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
                                 if (state == SSResponseStateSuccess)
                                 {
@@ -417,8 +435,7 @@
                                 {
                                     NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode], [error errorDescription]);
                                 }
-                            }];
-}
+                            }];}
 
 #pragma mark-- UIScrollViewDelegate
 
