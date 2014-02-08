@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-@interface RightViewController : UIViewController<FishDelegate>
+@interface RightViewController : UIViewController<FishDelegate,UIScrollViewDelegate>
 {
     AppDelegate *app;
     int target_centerView;

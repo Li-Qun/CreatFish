@@ -39,11 +39,11 @@
     [self.navigationController setNavigationBarHidden:YES];
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
-    CGFloat height = size.height;
+    CGFloat height1 = size.height;
     
     Fish_arr=[[[NSMutableArray alloc]init]retain];
     shareImage=[[[NSString alloc]init]retain];
-    if(height==480)
+    if(height1==480)
     {
         isFive=NO;
     }else isFive=YES;
@@ -152,7 +152,7 @@
             
             const unsigned char *_id= sqlite3_column_text(stmt, 0);
             strJson= [NSString stringWithUTF8String: _id];
-            const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+            //const unsigned char *_pic= sqlite3_column_text(stmt, 1);
             //strJson= [NSString stringWithUTF8String: _pic];
             break;
         }
@@ -160,7 +160,7 @@
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString: strJson];
     
-    NSDictionary *data = [jsonObj objectForKey:@"data"];
+    NSArray *data = [jsonObj objectForKey:@"data"];
     NSMutableArray *arr=[[[NSMutableArray alloc]init]autorelease];
     for (int i =0; i <data.count; i++) {
         [arr insertObject:[data objectAtIndex:i] atIndex: i];
@@ -174,7 +174,7 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //耗时的一些操作
-        NSString *strJson;
+        //NSString *strJson;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
         NSString *str=[NSString stringWithFormat:@"FishItem_Database"];
@@ -241,7 +241,7 @@
             SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
             NSDictionary *jsonObj =[parser objectWithString:jsonString];
             
-            NSDictionary *data = [jsonObj objectForKey:@"data"];
+            NSArray *data = [jsonObj objectForKey:@"data"];
             
             for (int i =0; i <data.count; i++) {
                 
@@ -267,6 +267,21 @@
     {
         NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
         //构造分享内容
+        id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                             allowCallback:NO
+                                                             authViewStyle:SSAuthViewStyleFullScreenPopup
+                                                              viewDelegate:self
+                                                   authManagerViewDelegate:self];
+        
+        id<ISSShareOptions> shareOptions = [ShareSDK defaultShareOptionsWithTitle:@"内容分享"
+                                                                  oneKeyShareList:[NSArray defaultOneKeyShareList]
+                                                                   qqButtonHidden:YES
+                                                            wxSessionButtonHidden:YES
+                                                           wxTimelineButtonHidden:YES
+                                                             showKeyboardOnAppear:NO
+                                                                shareViewDelegate:self
+                                                              friendsViewDelegate:self
+                                                            picViewerViewDelegate:nil];
         id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
                                            defaultContent:@"分享一下你的心情吧"
                                                     image:[ShareSDK imageWithPath:imagePath]
@@ -279,8 +294,8 @@
                              shareList:nil
                                content:publishContent
                          statusBarTips:YES
-                           authOptions:nil
-                          shareOptions: nil
+                           authOptions:authOptions
+                          shareOptions: shareOptions
                                 result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
                                     if (state == SSResponseStateSuccess)
                                     {

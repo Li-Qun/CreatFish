@@ -27,14 +27,10 @@
 {
     
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    ContentRead *contentRead=[[[ContentRead alloc]init]autorelease];
-   // contentRead.delegate=self;
-    //[contentRead Category];
+    
 }
-//-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
-//{
-//    
-//}
+
+
 -(void)PessTheStoreBack
 {
     [self.viewDeckController toggleLeftViewAnimated:YES];
@@ -46,7 +42,7 @@
 
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
-    CGFloat width = size.width;
+    
     heightStore = size.height;
     if( heightStore==480)
     {
@@ -113,41 +109,7 @@
 -(void)buildTheLongTime
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //耗时的一些操作
-//        NSString * strJsonID;
-//        NSArray *array1=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//        NSString *documentsPaths1=[array1 objectAtIndex:0];
-//        NSString *databasePaths1=[documentsPaths1 stringByAppendingPathComponent:[NSString stringWithFormat:@"detailRead"]];
-//        
-//        sqlite3 *database1;
-//        
-//        if (sqlite3_open([databasePaths1 UTF8String], &database1)==SQLITE_OK)
-//        {
-//            NSLog(@"open success");
-//        }
-//        else {
-//            NSLog(@"open failed");
-//        }
-//        char *errorMsg;
-//        sqlite3_stmt *stmt1;
-//        // 查找数据
-//        NSString* sql =[NSString stringWithFormat: @"select pic from detailIDD"];
-//        
-//        //查找数据
-//        int OK=0;
-//        if(sqlite3_prepare_v2(database1, [sql UTF8String], -1, &stmt1, nil)==SQLITE_OK)
-//        {
-//            while (sqlite3_step(stmt1)==SQLITE_ROW) {
-//                const unsigned char *_id=sqlite3_column_text(stmt1, 0);
-//                // const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-//                NSString *str= [NSString stringWithUTF8String:_id];
-//                [[Singleton sharedInstance].single_Data insertObject:str atIndex:app.saveNum++] ;
-//                
-//            }
-//        }
-//        sqlite3_finalize(stmt1);//  最后，关闭数据库：
-//        sqlite3_close(database1);//创建数据库end
-//        
+       
         
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
@@ -216,7 +178,7 @@
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString: [[Singleton sharedInstance].single_Data objectAtIndex:indexPath.row]];
 
-     NSMutableDictionary* dict =jsonObj;
+     NSDictionary* dict =jsonObj;
     detail.momentID=[dict objectForKey:@"id"];
      detail.yOrigin=cellFrameInSuperview.origin.y;
     [self.navigationController pushViewController:detail animated:YES];

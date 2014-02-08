@@ -10,8 +10,8 @@
 #import "klpView.h"
 @interface TopicViewController : UIViewController<UIScrollViewDelegate,FishDelegate,UITextViewDelegate>
 {
-    UIScrollView *scrollView;
-    UIImageView *imgToolView;
+   // UIScrollView *scrollView;
+   //UIImageView *imgToolView;
     CGFloat height_Momente;
     int height;
     BOOL Kind7;

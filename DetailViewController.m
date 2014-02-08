@@ -65,7 +65,7 @@
         
         CGRect rect = [[UIScreen mainScreen] bounds];
         CGSize size = rect.size;
-        CGFloat width = size.width;
+        
         totalHeight = size.height;
 
         if(totalHeight==480)
@@ -286,6 +286,7 @@
                                                                delegate:self
                                                       cancelButtonTitle:@"确定"
                                                       otherButtonTitles: nil];
+                [alert release];
                 
             }
             else
@@ -333,7 +334,7 @@
                 
                 arrIDList=[[NSMutableArray alloc]init];
                 
-                [self.view addSubview:showWebView];
+               // [self.view addSubview:showWebView];
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
                 
                 //showWebView.
@@ -349,7 +350,7 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //耗时的一些操作
-        NSString * strJson;
+       // NSString * strJson;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
         NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"detailRead"]];
@@ -458,7 +459,7 @@
             NSDateFormatter* formatter = [[[NSDateFormatter alloc]init]autorelease];
             [formatter  setDateFormat:@"20YY-MM-dd"];
             date = [formatter stringFromDate:[NSDate date]];
-            if(1)//[string isEqualToString:date]
+            if([string isEqualToString:date])
             {
                 char *Sql = "insert into 'isReadList' ('ID')values (?);";
                 if (sqlite3_prepare_v2(database1, Sql, -1, &stmt1, nil) == SQLITE_OK) {
@@ -521,7 +522,7 @@
             
             arrIDList=[[NSMutableArray alloc]init];
             
-            [self.view addSubview:showWebView];
+          //  [self.view addSubview:showWebView];
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             
             //showWebView.
@@ -550,6 +551,7 @@
     
     [showWebView stringByEvaluatingJavaScriptFromString:@"imageWidth(305);"];//设置网络图片统一宽度320
     [showWebView stringByEvaluatingJavaScriptFromString:@"init();"];
+    [self.view addSubview:showWebView];
     //刷新设置
     [self createHeaderView];
 	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
@@ -628,7 +630,7 @@ didFailWithError:(NSError *)error
 //    
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
--(SEL)shareThewebImage
+-(void)shareThewebImage
 {
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
     //构造分享内容
@@ -697,7 +699,9 @@ didFailWithError:(NSError *)error
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 //////存储网页图片start
+/*
 -(void)storePic:(id )url
 {
     //  CustomURLCache *mainUrl=(CustomURLCache *)[NSURLCache sharedURLCache];
@@ -730,8 +734,9 @@ didFailWithError:(NSError *)error
     UIImageView *imageView = (UIImageView *)[self.view viewWithTag:app.pic_URL];
     imageView.image = [UIImage imageWithData:data];
     [self.view addSubview:imageView];
-}
+}//*/
 //////存储网页图片end
+
 //菜单按钮响应start
 - (void)viewWillLayoutSubviews
 {
@@ -849,6 +854,21 @@ didFailWithError:(NSError *)error
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
     
     //构造分享内容
+    id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                         allowCallback:NO
+                                                         authViewStyle:SSAuthViewStyleFullScreenPopup
+                                                          viewDelegate:self
+                                               authManagerViewDelegate:self];
+    
+    id<ISSShareOptions> shareOptions = [ShareSDK defaultShareOptionsWithTitle:@"内容分享"
+                                                              oneKeyShareList:[NSArray defaultOneKeyShareList]
+                                                               qqButtonHidden:YES
+                                                        wxSessionButtonHidden:YES
+                                                       wxTimelineButtonHidden:YES
+                                                         showKeyboardOnAppear:NO
+                                                            shareViewDelegate:self
+                                                          friendsViewDelegate:self
+                                                        picViewerViewDelegate:nil];
     id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
                                        defaultContent:@"默认分享内容，没内容时显示"
                                                 image:[ShareSDK imageWithPath:imagePath]
@@ -861,8 +881,8 @@ didFailWithError:(NSError *)error
                          shareList:nil
                            content:publishContent
                      statusBarTips:YES
-                       authOptions:nil
-                      shareOptions: nil
+                       authOptions:authOptions
+                      shareOptions: shareOptions
                             result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
                                 if (state == SSResponseStateSuccess)
                                 {
@@ -895,7 +915,7 @@ didFailWithError:(NSError *)error
 ////////////
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             //耗时的一些操作
-            NSString * strJsonID;
+            //NSString * strJsonID;
             NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsPaths=[array objectAtIndex:0];
             NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"detailRead"]];
@@ -1192,7 +1212,7 @@ didFailWithError:(NSError *)error
     
     [contentRead Content:[NSString stringWithFormat:app.fatherID ] Detail:app.next_Page];
     
-    [showWebView reload];
+   // [showWebView reload];
     
     
     [self buildTheTopBar];
@@ -1214,7 +1234,7 @@ didFailWithError:(NSError *)error
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];//设置代理
     [contentRead Content:[NSString stringWithFormat:app.fatherID ] Detail:app.pre_Page];
-    [showWebView reload];
+   // [showWebView reload];
     
     [self buildTheTopBar];
     app.topBarView.userInteractionEnabled = YES;//使添加的按钮可选

@@ -18,7 +18,7 @@
 #import "SDWebImageDownloader.h"
 #import "EGORefreshTableHeaderView.h"
 #import "EGORefreshTableFooterView.h"
-@interface DetailViewController : UIViewController<UIWebViewDelegate ,UIGestureRecognizerDelegate,UIGestureRecognizerDelegate,SDWebImageManagerDelegate,SDWebImageDownloaderDelegate ,EGORefreshTableDelegate,UIScrollViewDelegate, UIAlertViewDelegate,UIScrollViewDelegate,FishDelegate>
+@interface DetailViewController : UIViewController<UIWebViewDelegate ,UIGestureRecognizerDelegate,UIGestureRecognizerDelegate,SDWebImageManagerDelegate,SDWebImageDownloaderDelegate ,EGORefreshTableDelegate,UIScrollViewDelegate, UIAlertViewDelegate,UIScrollViewDelegate,FishDelegate,ISSShareViewDelegate>
 {
     
     UIWebView *showWebView;

@@ -9,7 +9,6 @@
 #import "LeftViewController.h"
 #import "RightViewController.h"
 #import "ViewController.h"
-#import "TopViewController.h"
 
 #import "FishCore.h"
 #import <ShareSDK/ShareSDK.h>
@@ -59,6 +58,7 @@
 @synthesize topBarView;
 @synthesize isRead=isRead;
 @synthesize isRead_arr=isRead_arr;
+
 -(void)build
 {
    // AppDelegate * app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -165,11 +165,11 @@
         sql= @"select ID from isReadList";
         sqlite3_stmt *stmt;
         //查找数据
-        BOOL flag=NO;
+        
         isRead_arr=[[NSMutableArray  alloc]init];
         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
         {
-            int i=0;
+            
             while (sqlite3_step(stmt)==SQLITE_ROW) {
                 if(sqlite3_column_count(stmt)==0)
                 break;
@@ -183,7 +183,7 @@
         sqlite3_close(database);
 //打开判断可读数据库end
 //打开 判断收藏数据库start
-        NSString * strJsonID;
+        
         NSArray *array1=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths1=[array1 objectAtIndex:0];
         NSString *databasePaths1=[documentsPaths1 stringByAppendingPathComponent:[NSString stringWithFormat:@"detailRead"]];
@@ -197,7 +197,7 @@
         else {
             NSLog(@"open failed");
         }
-        char *error_Msg;
+        
         sqlite3_stmt *stmt1;
         // 查找数据
         NSString* Sql =[NSString stringWithFormat: @"select pic from detailIDD"];
@@ -246,7 +246,7 @@
             
             CGRect rect = [[UIScreen mainScreen] bounds];
             CGSize size = rect.size;
-            CGFloat width = size.width;
+            
             CGFloat height = size.height;
             if(height==480)height_First=100;
             

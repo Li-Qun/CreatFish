@@ -159,7 +159,7 @@
         else {
             NSLog(@"open failed");
         }
-        char *errorMsg;
+        
         // 查找数据
         NSString* sql = @"select * from picture";
         sqlite3_stmt *stmt;
@@ -169,7 +169,7 @@
         {
             
             while (sqlite3_step(stmt)==SQLITE_ROW) {
-                int i=sqlite3_column_int(stmt, 0)-1;
+              //  int i=sqlite3_column_int(stmt, 0)-1;
                 
                 
                 const unsigned char *_pic= sqlite3_column_text(stmt, 1);
@@ -183,10 +183,7 @@
         //  最后，关闭数据库：
         sqlite3_close(database);
         
-        
-        
-        
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
             
@@ -195,7 +192,7 @@
             SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
             NSDictionary *jsonObj =[parser objectWithString:strJson];
           //  total = [[jsonObj objectForKey:@"total"] intValue];
-            NSDictionary *data = [jsonObj objectForKey:@"data"];
+           NSArray *data = [jsonObj objectForKey:@"data"];
             total=data.count;
             for(int i=0;i<data.count;i++)
             {
@@ -404,7 +401,7 @@
     return  total;
 }
 
-- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index
+- (UIView *)carousel:(iCarousel *)carousel1 viewForItemAtIndex:(NSUInteger)index1
 {
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
@@ -440,7 +437,7 @@
     
     carousel.frame=CGRectMake(24, 30+img_height, 220, 289);
     view1 = [[[UIImageView alloc] init ] autorelease];
-    NSDictionary* dict = [BigFish_Description objectAtIndex:(index)];
+    NSDictionary* dict = [BigFish_Description objectAtIndex:(index1)];
     NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
     UIImageView *ImageView=[[[UIImageView alloc]initWithFrame:carousel.frame ]autorelease];
     [ImageView  setImageWithURL:[NSURL URLWithString: imgURL]
@@ -459,7 +456,7 @@
     [self.view  reloadInputViews];
     return view1;
 }
-- (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel {
+- (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel1 {
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
     CGFloat height = size.height;
@@ -491,7 +488,7 @@
         
     }
 
-    if(index>=0&&index<carousel.indexesForVisibleItems.count)
+    if(index>=0&&index<carousel1.indexesForVisibleItems.count)
     {
         
     }
@@ -536,10 +533,10 @@
     
     return CATransform3DTranslate(transform, 0.0, 0.0, offset * carousel.itemWidth);
 }
-- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index;
+- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index1;
 {
-    NSLog(@"%d",index);
-     NSDictionary* dict = [BigFish_Description objectAtIndex:index];
+    NSLog(@"%d",index1);
+     NSDictionary* dict = [BigFish_Description objectAtIndex:index1];
     FishImageViewController *detail=[[[FishImageViewController alloc]initWithNibName:@"FishImageViewController" bundle:nil]autorelease];
     detail.FishImageID=[dict objectForKey:@"id"];
     detail.detailName=BigFishName;

@@ -14,7 +14,7 @@
 @interface ViewController : UIViewController<FishDelegate,ISSShareViewDelegate,
 UIScrollViewDelegate >
 {
-    UIScrollView *scrollView;
+   // UIScrollView *scrollView;
 	klpView *klp;
 	int index;
    // CategoryItem *categoryItem;

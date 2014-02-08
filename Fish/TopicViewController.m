@@ -128,7 +128,7 @@
             
             app.saveName=strJson;
             SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-            NSDictionary *jsonObj =[parser objectWithString: strJson];
+            NSArray *jsonObj =[parser objectWithString: strJson];
             UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];
             imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
             imgToolView.tag=22;
@@ -232,13 +232,14 @@
                                                                delegate:self
                                                       cancelButtonTitle:@"确定"
                                                       otherButtonTitles: nil];
+                [alert release];
                 
             }
             else
             {
                 SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                 NSDictionary *jsonObj =[parser objectWithString: strJson];
-                NSDictionary *data = [jsonObj objectForKey:@"data"];
+                NSArray *data = [jsonObj objectForKey:@"data"];
                 
                 for (int i =0; i <data.count; i++) {
                     
@@ -348,8 +349,8 @@
         targetRight=0;
     }
     [super viewDidLoad];
-    scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)]autorelease];
-    imgToolView=[[[UIImageView alloc]init]autorelease];
+ //   scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)]autorelease];
+   // imgToolView=[[[UIImageView alloc]init]autorelease];
     [self buildToolBar];
         arr=[[[NSMutableArray alloc]init]retain];
     
@@ -370,7 +371,7 @@
 - (void)handleSwipes:(UISwipeGestureRecognizer *)sender
 {
     NSLog(@"3======:%d",target);
-    if (sender.direction == UISwipeGestureRecognizerDirectionRight&&sender.view!=scrollView)//na
+    if (sender.direction == UISwipeGestureRecognizerDirectionRight&&sender.view!=klpScrollView1)//na
     {
         if(!isOpenL&&!isOpenR)
         {
@@ -384,7 +385,7 @@
         }
             
     }
-    if (sender.direction == UISwipeGestureRecognizerDirectionLeft&&sender.view!=scrollView) {//bie
+    if (sender.direction == UISwipeGestureRecognizerDirectionLeft&&sender.view!=klpScrollView1) {//bie
         
         if(!isOpenR&&!isOpenL)
         {

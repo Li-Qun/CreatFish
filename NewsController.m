@@ -78,9 +78,9 @@
     NSLog(@"%d %d",target,app.targetCenter);
     str=[NSString stringWithFormat:@"%d",target];
     NewsID=[str integerValue];
-    
     [contentRead fetchList:[NSString stringWithFormat:@"%d",app.targetCenter] isPri:@"1" Out:@"0"];
-    [contentRead fetchList:str isPri:@"0" Out:@"0"];
+ //  [contentRead fetchList:[NSString stringWithFormat:@"%d",app.targetCenter] isPri:@"1" Out:@"0"];
+//    [contentRead fetchList:str isPri:@"0" Out:@"0"];
     
 }
 - (void)viewDidLoad
@@ -100,9 +100,14 @@
     
  
     
-    app.targetCenter=target;
+   // app.targetCenter=target;
     NSLog(@"centre  %d",app.targetCenter);
-   
+    str=[NSString stringWithFormat:@"%d",target];
+    
+    ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
+    [contentRead setDelegate:self];//设置代理
+    
+    [contentRead fetchList:str isPri:@"0" Out:@"0"];
     
     tabView=[[[UITableView alloc]init]retain];
     tabView.showsHorizontalScrollIndicator=NO;
@@ -176,12 +181,13 @@
         littleHeinght=10;
         labelName=12;
     }
-    tabView.frame=CGRectMake(0, heightTopbar, 320, height_Momente);
+    
     
     
     UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
+    
     UIImageView *wordView=[[[UIImageView alloc]initWithFrame:CGRectMake(105, littleHeinght/2, 90, 23)]autorelease];
     wordView.image=[UIImage imageNamed:@"word"];
     // [topBarView addSubview:wordView];
@@ -209,10 +215,11 @@
     [rightBtn addTarget:self action:@selector(PessSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
     rightBtn.tag=20;
     
+    tabView.frame=CGRectMake(0, heightTopbar, 320, height_Momente);
+    
 }
 -(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID
 {
-     NSString *strJson;
      if([jsonString isEqualToString:@"0"])
      {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -221,8 +228,8 @@
              NSString *strJson;
              NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
              NSString *documentsPaths=[array objectAtIndex:0];
-             NSString *str=[NSString stringWithFormat:@"News_dataBases"];
-             NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+             //NSString *str=[NSString stringWithFormat:@"News_dataBases"];
+             NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"News_dataBases"];
              sqlite3 *database;
              
              if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
@@ -259,7 +266,7 @@
                      }
                      const unsigned char *_id= sqlite3_column_text(stmt, 0);
                      strJson= [NSString stringWithUTF8String: _id];
-                     const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                   //  const unsigned char *_pic= sqlite3_column_text(stmt, 1);
                      //strJson= [NSString stringWithUTF8String: _pic];
                      break;
                  }
@@ -276,6 +283,7 @@
                                                                     delegate:self
                                                            cancelButtonTitle:@"确定"
                                                            otherButtonTitles: nil];
+                     [alert release];
                      
                  }
                  else
@@ -283,7 +291,7 @@
                      SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
                      NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
                      
-                     NSDictionary *data = [jsonObj1 objectForKey:@"data"];
+                     NSArray *data = [jsonObj1 objectForKey:@"data"];
                      total += [[jsonObj1 objectForKey:@"total"] intValue];
                      NSLog(@"total : %d",total);
                      newSumCount=arr.count;
@@ -307,8 +315,8 @@
              NSString *strJson;
              NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
              NSString *documentsPaths=[array objectAtIndex:0];
-             NSString *str=[NSString stringWithFormat:@"NewsTop_dataBases"];
-             NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+             NSString *str1=[NSString stringWithFormat:@"NewsTop_dataBases"];
+             NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str1];
              sqlite3 *database;
              
              if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
@@ -340,7 +348,7 @@
                      
                      const unsigned char *_id= sqlite3_column_text(stmt, 0);
                      strJson= [NSString stringWithUTF8String: _id];
-                     const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                    // const unsigned char *_pic= sqlite3_column_text(stmt, 1);
                      //strJson= [NSString stringWithUTF8String: _pic];
                      break;
                  }
@@ -364,7 +372,6 @@
     app.jsonString=jsonString;
 
     isFistLevel=[flag intValue];
-     NSString *strJson;
     
     if(isFistLevel==0)
     {
@@ -389,11 +396,11 @@
                 //耗时的一些操作
                 
                 
-                NSString *strJson;
+               // NSString *strJson;
                 NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                 NSString *documentsPaths=[array objectAtIndex:0];
-                NSString *str=[NSString stringWithFormat:@"News_dataBases"];
-                NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+                NSString *str1=[NSString stringWithFormat:@"News_dataBases"];
+                NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str1];
                 sqlite3 *database;
                 
                 if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
@@ -456,7 +463,7 @@
                     SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
                     NSDictionary *jsonObj1 =[parser1 objectWithString:  jsonString];
                     
-                    NSDictionary *data = [jsonObj1 objectForKey:@"data"];
+                    NSArray *data = [jsonObj1 objectForKey:@"data"];
                     total += [[jsonObj1 objectForKey:@"total"] intValue];
                     NSLog(@"total : %d",total);
                     newSumCount=arr.count;
@@ -478,11 +485,11 @@
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             //耗时的一些操作
-            NSString *strJson;
+          //  NSString *strJson;
             NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsPaths=[array objectAtIndex:0];
-            NSString *str=[NSString stringWithFormat:@"NewsTop_dataBases"];
-            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+            NSString *str2=[NSString stringWithFormat:@"NewsTop_dataBases"];
+            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str2];
             sqlite3 *database;
             
             if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
@@ -552,17 +559,28 @@
 }
 -(void)build_TableView
 {
+//   // [self createHeaderView];
+//    
+//    [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
+//    [_refreshHeaderView refreshLastUpdatedDate];
+//    [self.view addSubview:tabView];
+//    tabView.delegate=self;
+//    tabView.dataSource=self;//设置双重代理 很重要
+//    [tabView setBackgroundColor:[UIColor clearColor]];
+//    [tabView setSeparatorStyle:UITableViewCellSeparatorStyleNone];//hidden the lines
+//    
+//    [tabView reloadData];
+//    //[tabView release];
     [self createHeaderView];
     [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
     [_refreshHeaderView refreshLastUpdatedDate];
- 
+    
     tabView.delegate=self;
     tabView.dataSource=self;//设置双重代理 很重要
     [tabView setBackgroundColor:[UIColor clearColor]];
     [tabView setSeparatorStyle:UITableViewCellSeparatorStyleNone];//hidden the lines
     [self.view addSubview:tabView];
-    [tabView reloadData];
-    //[tabView release];
+  //  [tabView reloadData];
 
 }
 -(void)PessSwitch_BtnTag:(id)sender
@@ -827,10 +845,10 @@
 //加载调用的方法
 -(void)getNextPageView
 {
-    NSString *str=[NSString stringWithFormat:@"%d",target];
+    NSString *str1=[NSString stringWithFormat:@"%d",target];
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];
-    [contentRead fetchList:str isPri:@"0" Out:@"10"];
+    [contentRead fetchList:str1 isPri:@"0" Out:@"10"];
     [tabView reloadData];
     [self removeFooterView];
     [self testFinishedLoadData];

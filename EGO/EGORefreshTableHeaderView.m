@@ -129,7 +129,7 @@
 	switch (aState) {
 		case EGOOPullRefreshPulling:
 			
-			_statusLabel.text = NSLocalizedString(@"松开即可刷新", @"松开即可刷新");
+			_statusLabel.text = NSLocalizedString(@"松开即可加载", @"松开即可加载");
 			[CATransaction begin];//(@"松开即可刷新...", @"松开即可加载更多...");
 			[CATransaction setAnimationDuration:FLIP_ANIMATION_DURATION];
 			_arrowImage.transform = CATransform3DMakeRotation((M_PI / 180.0) * 180.0f, 0.0f, 0.0f, 1.0f);
@@ -145,7 +145,7 @@
 				[CATransaction commit];
 			}
 			
-			_statusLabel.text = NSLocalizedString(@"下来即可刷新", @"下来即可刷新");
+			_statusLabel.text = NSLocalizedString(@"下来即可加载", @"下来即可加载");
 			[_activityView stopAnimating];
 			[CATransaction begin];
 			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions]; 

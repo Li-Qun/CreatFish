@@ -41,7 +41,7 @@
     [self.navigationController setNavigationBarHidden:YES ];//把后面的antimated=YES 去掉 就不会过渡出现问题了
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
-    CGFloat width = size.width;
+
     height_Momente = size.height;
     if(height_Momente==480){
         height=20;
@@ -165,12 +165,13 @@
                                                                    delegate:self
                                                           cancelButtonTitle:@"确定"
                                                           otherButtonTitles: nil];
+                    [alert release];
                 }
                 else
                 {
                     app.saveName=strJson;
                     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-                    NSDictionary *jsonObj =[parser objectWithString: strJson];
+                    NSArray *jsonObj =[parser objectWithString: strJson];
                     UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];
                     imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
                     imgToolView.tag=22;
@@ -285,7 +286,7 @@
             SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
             NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
             
-            NSDictionary *data = [jsonObj1 objectForKey:@"data"];
+            NSArray *data = [jsonObj1 objectForKey:@"data"];
             //NSString *str;
             NSMutableArray *firstPageImage= [[[NSMutableArray alloc] initWithCapacity:data.count]autorelease];
             for (int i =0; i <data.count; i++) {
@@ -303,6 +304,7 @@
                                                                    delegate:self
                                                           cancelButtonTitle:@"确定"
                                                           otherButtonTitles: nil];
+                    [alert release];
                     
                 }else
 
@@ -397,8 +399,8 @@
                 SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
                 NSDictionary *jsonObj1 =[parser1 objectWithString:  jsonString];
                 
-                NSDictionary *data = [jsonObj1 objectForKey:@"data"];
-                NSString *str;
+                NSArray *data = [jsonObj1 objectForKey:@"data"];
+                
                 NSMutableArray *firstPageImage= [[[NSMutableArray alloc] initWithCapacity:data.count]autorelease];
                 for (int i =0; i <data.count; i++) {
                     
@@ -747,13 +749,10 @@
     [super viewDidLoad];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     self.view.backgroundColor=[UIColor whiteColor];
-    scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+   // scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
     arr=[[[NSMutableArray alloc]init]retain];
 }
--(id)translateDate:(id)date
-{
-    
-}
+
 #pragma mark-- UIScrollViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{\
 	//NSLog(@"scrollViewDidScroll");

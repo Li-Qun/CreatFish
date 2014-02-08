@@ -284,7 +284,7 @@
 }
 #pragma mark - UITextView Delegate Methods
 
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+-(BOOL)textView:(UITextView *)textView1 shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 
 {
     
@@ -297,7 +297,7 @@
     }
     return YES;
 }
--(void)textViewDidBeginEditing:(UITextView *)textView
+-(void)textViewDidBeginEditing:(UITextView *)textView1
 {
     if (textViewStyle)
     {
