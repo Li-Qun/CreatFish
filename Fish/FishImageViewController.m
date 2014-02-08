@@ -97,13 +97,13 @@
     leftBtn.tag=10;
     [leftBtn setImage:[UIImage imageNamed:@"theGoBack"] forState:UIControlStateNormal];
     [self.view addSubview:leftBtn];
-    [leftBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
+    [leftBtn addTarget:self action:@selector(FishItemSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *rightBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     rightBtn.frame=CGRectMake(270, littleHeinght, 37, 30);
     [rightBtn setImage:[UIImage imageNamed:@"BigFishListShare@2X"] forState:UIControlStateNormal];
     [self.view addSubview:rightBtn];
-    [rightBtn addTarget:self action:@selector(SwimSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn addTarget:self action:@selector(FishItemSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
     rightBtn.tag=20;
 
     
@@ -170,86 +170,104 @@
     [self createView];
 
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID Offent:(NSString *)Out
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //耗时的一些操作
-        //NSString *strJson;
-        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *str=[NSString stringWithFormat:@"FishItem_Database"];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
-        sqlite3 *database;
-        
-        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-        {
-            NSLog(@"open success");
-        }
-        else {
-            NSLog(@"open failed");
-        }
-        
-        char *errorMsg;
-        NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)"; //创建表
-        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-        {
-            NSLog(@"create success");
-        }else{
-            NSLog(@"create error:%s",errorMsg);
-            sqlite3_free(errorMsg);
-        }
-        sql =[NSString stringWithFormat:@"select ID from picture where ID='%@'",ID];
-        sqlite3_stmt *stmt;
-        //查找数据
-        BOOL OK=NO;
-        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-        {
+   
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString:jsonString];
+    NSArray *data = [jsonObj objectForKey:@"data"];
+    if(data.count==0)
+    {
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
+                                                         message:@"暂无加载内容～"
+                                                        delegate:self
+                                               cancelButtonTitle:nil
+                                               otherButtonTitles: @"确定",nil]autorelease];
+        [alert show];
+    }
+    else
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            //耗时的一些操作
+            //NSString *strJson;
+            NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsPaths=[array objectAtIndex:0];
+            NSString *str=[NSString stringWithFormat:@"FishItem_Database"];
+            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+            sqlite3 *database;
             
-            while (sqlite3_step(stmt)==SQLITE_ROW) {
-                
-                
-                const unsigned char *_id= sqlite3_column_text(stmt, 0);
-                NSString *Id= [NSString stringWithUTF8String: _id];
-//                const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-//                // strJson= [NSString stringWithUTF8String: _pic];
-                if([ID isEqualToString:Id])
-                {
-                    OK=YES;
-                    break;
-                }
+            if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+            {
+                NSLog(@"open success");
             }
-        }
-        if(!OK)
-        {
-            NSString *insertSQLStr = [NSString stringWithFormat:
-                                      @"INSERT INTO 'picture' ('ID','pic' ) VALUES ('%@','%@')", ID,jsonString];
-            const char *insertSQL=[insertSQLStr UTF8String];
-            //插入数据 进行更新操作
-            if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
-                NSLog(@"insert operation is ok.");
+            else {
+                NSLog(@"open failed");
             }
-            else{
-                NSLog(@"insert error:%s",errorMsg);
+            
+            char *errorMsg;
+            NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)"; //创建表
+            if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+            {
+                NSLog(@"create success");
+            }else{
+                NSLog(@"create error:%s",errorMsg);
                 sqlite3_free(errorMsg);
             }
-        }
-        //  最后，关闭数据库：
-        sqlite3_close(database);
-        
-        dispatch_async(dispatch_get_main_queue(), ^{//主线程
-            
-            SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-            NSDictionary *jsonObj =[parser objectWithString:jsonString];
-            
-            NSArray *data = [jsonObj objectForKey:@"data"];
-            
-            for (int i =0; i <data.count; i++) {
+            sql =[NSString stringWithFormat:@"select ID from picture where ID='%@'",ID];
+            sqlite3_stmt *stmt;
+            //查找数据
+            BOOL OK=NO;
+            if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+            {
                 
-                [Fish_arr  insertObject:[data objectAtIndex:i] atIndex: i];
+                while (sqlite3_step(stmt)==SQLITE_ROW) {
+                    
+                    
+                    const unsigned char *_id= sqlite3_column_text(stmt, 0);
+                    NSString *Id= [NSString stringWithUTF8String: _id];
+                    //                const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                    //                // strJson= [NSString stringWithUTF8String: _pic];
+                    if([ID isEqualToString:Id])
+                    {
+                        OK=YES;
+                        break;
+                    }
+                }
             }
-            [self createView];
+            if(!OK)
+            {
+                NSString *insertSQLStr = [NSString stringWithFormat:
+                                          @"INSERT INTO 'picture' ('ID','pic' ) VALUES ('%@','%@')", ID,jsonString];
+                const char *insertSQL=[insertSQLStr UTF8String];
+                //插入数据 进行更新操作
+                if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
+                    NSLog(@"insert operation is ok.");
+                }
+                else{
+                    NSLog(@"insert error:%s",errorMsg);
+                    sqlite3_free(errorMsg);
+                }
+            }
+            //  最后，关闭数据库：
+            sqlite3_close(database);
+            
+            dispatch_async(dispatch_get_main_queue(), ^{//主线程
+                
+                SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+                NSDictionary *jsonObj =[parser objectWithString:jsonString];
+                
+                NSArray *data = [jsonObj objectForKey:@"data"];
+                
+                for (int i =0; i <data.count; i++) {
+                    
+                    [Fish_arr  insertObject:[data objectAtIndex:i] atIndex: i];
+                }
+                [self createView];
+            });
         });
-    });
+
+    }
+    
 }
 - (void)viewDidLoad
 {
@@ -257,7 +275,7 @@
    
 
 }
--(void)SwimSwitch_BtnTag:(id)sender
+-(void)FishItemSwitch_BtnTag:(id)sender
 {
     
     UIButton *btn = (UIButton *)sender;

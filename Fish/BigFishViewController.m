@@ -8,7 +8,7 @@
 
 #import "BigFishViewController.h"
 #import "FishImageViewController.h"
-
+#import "MBProgressHUD.h"
 #import <sqlite3.h>
 
 #define ITEM_SPACING 200
@@ -29,6 +29,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         wrap = YES;
+        
         UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SwimFish@2X.png"]];
         imgView.frame = self.view.bounds;
         imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -116,14 +117,15 @@
     
     BigFish_Description=   [[[NSMutableArray alloc]init]retain];
     
-    ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
-    NSString *str=[NSString stringWithFormat:@"%d",target];
-    
-    [contentRead setDelegate:self];//设置代理
-    [contentRead fetchList:str isPri:@"0" Out:@"0"];
-    
-    
-    
+    if(!isFirstOpen)
+    {
+        ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
+        NSString *str=[NSString stringWithFormat:@"%d",target];
+        
+        [contentRead setDelegate:self];//设置代理
+        [contentRead fetchList:str isPri:@"0" Out:@"0"];
+        isFirstOpen=YES;
+    }
 }
 -(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID
 {
@@ -193,7 +195,7 @@
             NSDictionary *jsonObj =[parser objectWithString:strJson];
           //  total = [[jsonObj objectForKey:@"total"] intValue];
            NSArray *data = [jsonObj objectForKey:@"data"];
-            total=data.count;
+            total+=data.count;
             for(int i=0;i<data.count;i++)
             {
                 [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
@@ -225,7 +227,7 @@
     });
     
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID Offent:(NSString *)Out
 {
     NSLog(@"%@",ID);
     
@@ -245,100 +247,127 @@
         
         lab_height=100;
     }
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *str=[NSString stringWithFormat:@"BigFishView_DB%@",ID];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
-        sqlite3 *database;
+    
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString:jsonString];
+    NSArray *data = [jsonObj objectForKey:@"data"];
+    if(data.count==0)
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
+                                                         message:@"暂无加载内容～"
+                                                        delegate:self
+                                               cancelButtonTitle:nil
+                                               otherButtonTitles: @"确定",nil]autorelease];
+        [alert show];
         
-        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-        {
-            NSLog(@"open success");
-        }
-        else {
-            NSLog(@"open failed");
-        }
-        char *errorMsg;
-        // 删除所有数据 并进行更新数据库操作
-        //删除所有数据，条件为1>0永真
-        const char *deleteAllSql="delete from picture where 1>0";
-        //执行删除语句
-        if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
-            NSLog(@"删除所有数据成功");
-        }
-        else NSLog(@"delect failde!!!!");
-        
-        NSString* sql ;
-        sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
-        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-        {
-            NSLog(@"create success");
-        }else{
-            NSLog(@"create error:%s",errorMsg);
-            sqlite3_free(errorMsg);
-        }
-        NSString *insertSQLStr1 = [NSString stringWithFormat:
-                                   @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
-        const char *insertSQL1=[insertSQLStr1 UTF8String];
-        //插入数据 进行更新操作
-        if (sqlite3_exec(database, insertSQL1 , NULL, NULL, &errorMsg)==SQLITE_OK) {
-            NSLog(@"insert operation is ok.");
-        }
-        else{
-            NSLog(@"insert error:%s",errorMsg);
-            sqlite3_free(errorMsg);
-        }
-        //  最后，关闭数据库：
-        sqlite3_close(database);
-        
- 
-        
-        dispatch_async(dispatch_get_main_queue(), ^{//主线程
+    }
+    else
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsPaths=[array objectAtIndex:0];
+            NSString *str=[NSString stringWithFormat:@"BigFishView_DB%@",ID];
+            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+            sqlite3 *database;
             
-            
-            //设置索引标识
-            SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-            NSDictionary *jsonObj =[parser objectWithString:jsonString];
-           // total = [[jsonObj objectForKey:@"total"] intValue];
-            NSArray *data = [jsonObj objectForKey:@"data"];
-            total=data.count;
-            for(int i=0;i<data.count;i++)
+            if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
             {
-                [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
+                NSLog(@"open success");
             }
-
-            carousel.delegate = self;
-            carousel.dataSource = self;
+            else {
+                NSLog(@"open failed");
+            }
+            char *errorMsg;
+            // 删除所有数据 并进行更新数据库操作
+            //删除所有数据，条件为1>0永真
+            const char *deleteAllSql="delete from picture where 1>0";
+            //执行删除语句
+            if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
+                NSLog(@"删除所有数据成功");
+            }
+            else NSLog(@"delect failde!!!!");
             
-            carousel.type = iCarouselTypeCoverFlow;
-            for (UIView *view in carousel.visibleItemViews)
+            NSString* sql ;
+            sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
+            if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
             {
-                view.alpha = 1.0;
+                NSLog(@"create success");
+            }else{
+                NSLog(@"create error:%s",errorMsg);
+                sqlite3_free(errorMsg);
             }
-            labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
-            labelText.textColor=[UIColor whiteColor];
-            labelText.backgroundColor=[UIColor clearColor];
-            labelText.font=[UIFont systemFontOfSize:14.0f];
-            labelText.numberOfLines = 0;
-            [labelText sizeToFit];
-            labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
+            NSString *insertSQLStr1 = [NSString stringWithFormat:
+                                       @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
+            const char *insertSQL1=[insertSQLStr1 UTF8String];
+            //插入数据 进行更新操作
+            if (sqlite3_exec(database, insertSQL1 , NULL, NULL, &errorMsg)==SQLITE_OK) {
+                NSLog(@"insert operation is ok.");
+            }
+            else{
+                NSLog(@"insert error:%s",errorMsg);
+                sqlite3_free(errorMsg);
+            }
+            //  最后，关闭数据库：
+            sqlite3_close(database);
             
-
-            [UIView beginAnimations:nil context:nil];
-            carousel.type=5;
-            [UIView commitAnimations];
             
             
+            dispatch_async(dispatch_get_main_queue(), ^{//主线程
+                
+                
+                //设置索引标识
+                SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+                NSDictionary *jsonObj =[parser objectWithString:jsonString];
+                // total = [[jsonObj objectForKey:@"total"] intValue];
+                NSArray *data = [jsonObj objectForKey:@"data"];
+                total+=data.count;
+                
+                
+                for(int i=0;i<data.count;i++)
+                {
+                    [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
+                }
+                app.BigFish_Description=BigFish_Description;
+                
+                carousel.delegate = self;
+                [self.carousel reloadData];
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                carousel.dataSource = self;
+                
+                carousel.type = iCarouselTypeCoverFlow;
+                for (UIView *view in carousel.visibleItemViews)
+                {
+                    view.alpha = 1.0;
+                }
+                labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
+                labelText.textColor=[UIColor whiteColor];
+                labelText.backgroundColor=[UIColor clearColor];
+                labelText.font=[UIFont systemFontOfSize:14.0f];
+                labelText.numberOfLines = 0;
+                [labelText sizeToFit];
+                labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
+                
+                
+                [UIView beginAnimations:nil context:nil];
+                carousel.type=5;
+                [UIView commitAnimations];
+                
+            });
         });
-    });
-}
 
+    }
+    
+    
+}
 - (void)viewDidLoad
-{//@"直线", @"圆圈", @"反向圆圈", @"圆桶", @"反向圆桶", @"封面展示", @"封面展示2", @"纸牌"
+{//@"直线"0, @"圆圈"1, @"反向圆圈"2, @"圆桶"3, @"反向圆桶"4, @"封面展示5", @"封面展示2"6, @"纸牌"7
     [self.navigationController setNavigationBarHidden:YES];
     [super viewDidLoad];
- 
+    isFirstOpen=NO;
+    
+    
+    
     isOpenR=NO;isOpenL=NO;
     self.leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
     self.rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
@@ -398,11 +427,12 @@
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    return  total;
+    return  total+1;
 }
 
 - (UIView *)carousel:(iCarousel *)carousel1 viewForItemAtIndex:(NSUInteger)index1
 {
+    
     CGRect rect = [[UIScreen mainScreen] bounds];
     CGSize size = rect.size;
     CGFloat height = size.height;
@@ -435,75 +465,95 @@
         lab_height=100;
     }
     
-    carousel.frame=CGRectMake(24, 30+img_height, 220, 289);
-    view1 = [[[UIImageView alloc] init ] autorelease];
-    NSDictionary* dict = [BigFish_Description objectAtIndex:(index1)];
-    NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
-    UIImageView *ImageView=[[[UIImageView alloc]initWithFrame:carousel.frame ]autorelease];
-    [ImageView  setImageWithURL:[NSURL URLWithString: imgURL]
-               placeholderImage:[UIImage imageNamed:@"placeholder.png"]
-                        success:^(UIImage *image) {NSLog(@"OK");}
-                        failure:^(NSError *error) {NSLog(@"NO");}];
-    [view1 addSubview:ImageView];
-    view1.frame =CGRectMake(0, 0, 220, 289); //CGRectMake(0, -littleHeinght*6, 280, 400-littleHeinght*6);
-    view1.layer.shadowColor = [UIColor blackColor].CGColor;
-    view1.layer.shadowOpacity = 1.0;
-    view1.layer.shadowRadius = 5.0;
-    view1.layer.shadowOffset = CGSizeMake(1, 1);
-    view1.clipsToBounds = NO;
-    labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
-    
-    [self.view  reloadInputViews];
-    return view1;
-}
-- (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel1 {
-    CGRect rect = [[UIScreen mainScreen] bounds];
-    CGSize size = rect.size;
-    CGFloat height = size.height;
-    
-    
-    if(height==480)
+    carousel1.frame=CGRectMake(24, 30+img_height, 220, 289);
+    UIView* view = [[[UIImageView alloc] init ] autorelease];
+    if(index1==total)
     {
-        isFive=NO;
-    }else isFive=YES;
-    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
-    if (version <7.0)
-        isSeven=NO;
-    else isSeven=YES;
-    
-    
-    if(isSeven&&isFive)
-    {
-        img_height=20;
-        lab_height=80;
-    }
-    else if(isSeven&&!isFive)
-    {
-        lab_height=100;
-    }else if(!isSeven&&isFive)//
-    {
-        img_height=20;
-        lab_height=20;
-    }else {
-        
-    }
-
-    if(index>=0&&index<carousel1.indexesForVisibleItems.count)
-    {
-        
+        UIImageView *imageView_LoadMore=[[[UIImageView alloc]initWithFrame:carousel1.frame]autorelease];
+        imageView_LoadMore.image=[UIImage imageNamed:@"moren.png"];
+        [view addSubview:imageView_LoadMore];
     }
     else
     {
-        index=0;
+        NSDictionary* dict = [app.BigFish_Description objectAtIndex:(index1)];
+        NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
+        UIImageView *ImageView=[[[UIImageView alloc]initWithFrame:carousel1.frame ]autorelease];
+        [ImageView  setImageWithURL:[NSURL URLWithString: imgURL]
+                   placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                            success:^(UIImage *image) {NSLog(@"OK");}
+                            failure:^(NSError *error) {NSLog(@"NO");}];
+        [view addSubview:ImageView];
+        
     }
-    labelText.text=[[BigFish_Description objectAtIndex:index] objectForKey:@"description"];
-    index++;
-    labelText.textColor=[UIColor whiteColor];
-    labelText.backgroundColor=[UIColor clearColor];
-    labelText.font=[UIFont systemFontOfSize:14.0f];
-    labelText.numberOfLines = 0;
-    [labelText sizeToFit];
-     labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
+    view.frame =CGRectMake(0, 0, 220, 289); //CGRectMake(0, -littleHeinght*6, 280, 400-littleHeinght*6);
+    view.layer.shadowColor = [UIColor blackColor].CGColor;
+    view.layer.shadowOpacity = 1.0;
+    view.layer.shadowRadius = 5.0;
+    view.layer.shadowOffset = CGSizeMake(1, 1);
+    view.clipsToBounds = NO;
+    labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
+    
+    [self.view  reloadInputViews];
+    
+    return view;
+}
+- (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel1 {
+    
+    NSLog(@"%f",carousel1.scrollOffset);
+    index=carousel1.scrollOffset/200;
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    CGSize size = rect.size;
+    CGFloat height = size.height;
+    
+    
+    if(height==480)
+    {
+        isFive=NO;
+    }else isFive=YES;
+    float version = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (version <7.0)
+        isSeven=NO;
+    else isSeven=YES;
+    
+    
+    if(isSeven&&isFive)
+    {
+        img_height=20;
+        lab_height=80;
+    }
+    else if(isSeven&&!isFive)
+    {
+        lab_height=100;
+    }else if(!isSeven&&isFive)//
+    {
+        img_height=20;
+        lab_height=20;
+    }else {
+        
+    }
+  
+    if(index>=0&&index<carousel1.indexesForVisibleItems.count-1)
+    {
+        labelText.text=[[app.BigFish_Description objectAtIndex:index] objectForKey:@"description"];
+        labelText.textColor=[UIColor whiteColor];
+        labelText.backgroundColor=[UIColor clearColor];
+        labelText.font=[UIFont systemFontOfSize:14.0f];
+        labelText.numberOfLines = 0;
+        [labelText sizeToFit];
+        labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
+    }
+    else
+    {
+        labelText.text=@"点击默认图片加载更多...";
+        labelText.textColor=[UIColor whiteColor];
+        labelText.backgroundColor=[UIColor clearColor];
+        labelText.font=[UIFont systemFontOfSize:18.0f];
+        labelText.numberOfLines = 0;
+        [labelText sizeToFit];
+        labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
+    }
+    
+    
 }
 
 - (NSUInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel
@@ -513,7 +563,7 @@
 
 - (NSUInteger)numberOfVisibleItemsInCarousel:(iCarousel *)carousel
 {
-    return total;
+    return total+1;
 }
 
 - (CGFloat)carouselItemWidth:(iCarousel *)carousel
@@ -526,23 +576,40 @@
     view.alpha = 1.0 - fminf(fmaxf(offset, 0.0), 1.0);
     
     CATransform3D transform = CATransform3DIdentity;
-    transform.m34 = self.carousel.perspective;
+    transform.m34 = _carousel.perspective;
     transform = CATransform3DRotate(transform, M_PI / 8.0, 0, 1.0, 0);
     
     
     
-    return CATransform3DTranslate(transform, 0.0, 0.0, offset * carousel.itemWidth);
+    return CATransform3DTranslate(transform, 0.0, 0.0, offset * _carousel.itemWidth);
 }
-- (void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index1;
+ 
+- (void)carousel:(iCarousel *)carousel1 didSelectItemAtIndex:(NSInteger)index1;
 {
-    NSLog(@"%d",index1);
-     NSDictionary* dict = [BigFish_Description objectAtIndex:index1];
-    FishImageViewController *detail=[[[FishImageViewController alloc]initWithNibName:@"FishImageViewController" bundle:nil]autorelease];
-    detail.FishImageID=[dict objectForKey:@"id"];
-    detail.detailName=BigFishName;
-    NSLog(@"%@",BigFishName);
+    NSLog(@"选中第%d张游钓/大鱼榜图片",index1);
+    if(index1==total)
+    {
+        NSLog(@"点击加载更多...");
+        ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
+        NSString *str=[NSString stringWithFormat:@"%d",target];
+        
+        [contentRead setDelegate:self];//设置代理
+        [contentRead fetchList:str isPri:@"0" Out:@"10"];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
+        hud.labelText = @"正在加载图片~~";//加载提示语言
+    }
+    else
+    {
+        
+      //  NSLog(@"XX");
+        NSDictionary* dict = [app.BigFish_Description objectAtIndex:index1];
+        FishImageViewController *detail=[[[FishImageViewController alloc]initWithNibName:@"FishImageViewController" bundle:nil]autorelease];
+        detail.FishImageID=[dict objectForKey:@"id"];
+        detail.detailName=BigFishName;
+        NSLog(@"%@",BigFishName);
         [self.navigationController pushViewController:detail animated:YES];
-
+    }
 }
 - (BOOL)carouselShouldWrap:(iCarousel *)carousel
 {

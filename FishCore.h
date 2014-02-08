@@ -28,7 +28,7 @@
 
 
 @protocol FishDelegate
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID :(NSString*)ID;
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID :(NSString*)ID Offent:(NSString*)Out;
 -(void)reBack:(NSString *)jsonString reLoad :(NSString *)ID;
 
 @end

@@ -315,7 +315,7 @@
     }
 
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID Offent:(NSString *)Out
 {
     float heightTooBar;
     float buttonHeight;

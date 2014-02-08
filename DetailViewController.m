@@ -345,7 +345,7 @@
     });
 
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID Offent:(NSString *)Out
 {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -459,7 +459,7 @@
             NSDateFormatter* formatter = [[[NSDateFormatter alloc]init]autorelease];
             [formatter  setDateFormat:@"20YY-MM-dd"];
             date = [formatter stringFromDate:[NSDate date]];
-            if([string isEqualToString:date])
+            if([string isEqualToString:date])///是今天的日期并且id不在数据库里 是未读  插入数据库 
             {
                 char *Sql = "insert into 'isReadList' ('ID')values (?);";
                 if (sqlite3_prepare_v2(database1, Sql, -1, &stmt1, nil) == SQLITE_OK) {

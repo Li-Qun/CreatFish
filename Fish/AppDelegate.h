@@ -50,6 +50,8 @@ typedef enum
     //设置
     BOOL isRead;//全部标记为已读；
     NSMutableArray *isRead_arr;
+    //游钓
+    NSMutableArray *BigFish_Description;
  
     
 }
@@ -96,6 +98,8 @@ typedef enum
 @property (nonatomic,retain)NSMutableArray *isRead_arr;
 @property(nonatomic)int isReadCount;
 //分享好友
+//游钓
+@property (nonatomic,retain)NSMutableArray *BigFish_Description;
 
 @end
 

@@ -292,7 +292,8 @@
                      NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
                      
                      NSArray *data = [jsonObj1 objectForKey:@"data"];
-                     total += [[jsonObj1 objectForKey:@"total"] intValue];
+                     total += data.count;
+                     NSLog(@"资讯条目数量 : %d",total);
                      NSLog(@"total : %d",total);
                      newSumCount=arr.count;
                      for (int i =0; i <data.count; i++) {
@@ -366,7 +367,7 @@
      }
 
 }
--(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID
+-(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID Offent:(NSString *)Out
 {
    
     app.jsonString=jsonString;
@@ -464,8 +465,8 @@
                     NSDictionary *jsonObj1 =[parser1 objectWithString:  jsonString];
                     
                     NSArray *data = [jsonObj1 objectForKey:@"data"];
-                    total += [[jsonObj1 objectForKey:@"total"] intValue];
-                    NSLog(@"total : %d",total);
+                    total += data.count;
+                    NSLog(@"资讯条目数量 : %d",total);
                     newSumCount=arr.count;
                     for (int i =0; i <data.count; i++) {
                         
@@ -559,18 +560,7 @@
 }
 -(void)build_TableView
 {
-//   // [self createHeaderView];
-//    
-//    [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
-//    [_refreshHeaderView refreshLastUpdatedDate];
-//    [self.view addSubview:tabView];
-//    tabView.delegate=self;
-//    tabView.dataSource=self;//设置双重代理 很重要
-//    [tabView setBackgroundColor:[UIColor clearColor]];
-//    [tabView setSeparatorStyle:UITableViewCellSeparatorStyleNone];//hidden the lines
-//    
-//    [tabView reloadData];
-//    //[tabView release];
+
     [self createHeaderView];
     [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
     [_refreshHeaderView refreshLastUpdatedDate];
@@ -612,7 +602,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSLog(@"%d",total);
-    return (arr.count+1);
+    return (total+1);
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

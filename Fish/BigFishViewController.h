@@ -12,6 +12,7 @@
 #import "iCarousel.h"
 @interface BigFishViewController : UIViewController<UIScrollViewDelegate,FishDelegate,iCarouselDataSource,iCarouselDelegate>
 {
+    BOOL isFirstOpen;
     AppDelegate *app;
     BOOL isSeven;
     BOOL isFive;

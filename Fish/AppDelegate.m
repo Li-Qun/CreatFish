@@ -58,6 +58,7 @@
 @synthesize topBarView;
 @synthesize isRead=isRead;
 @synthesize isRead_arr=isRead_arr;
+@synthesize BigFish_Description=BigFish_Description;
 
 -(void)build
 {
@@ -68,6 +69,7 @@
     saveDataName=[[NSMutableArray  alloc]init];
     saveDataImage=[[NSMutableArray  alloc]init];
     firstPageImage=[[NSMutableArray  alloc]init];
+    BigFish_Description=[[NSMutableArray  alloc]init];
     
     next_Page=@"11";
     pre_Page=@"11";
@@ -87,7 +89,7 @@
     [saveDataImage release];
     [firstPageImage release];
     [isRead_arr release];
-    
+    [BigFish_Description release];
     [super dealloc];
 }
 -(void)setShare
