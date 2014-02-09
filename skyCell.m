@@ -2,6 +2,8 @@
 #import "skyCell.h"
 #import "AppDelegate.h"
 #import "OneCell.h"
+#import "DetailViewController.h"
+#import "NewsController.h"
 
 @implementation skyCell
 @synthesize dataLabel=dataLabel;
@@ -9,6 +11,7 @@
 @synthesize jsonObjCell=jsonObjCell;
 @synthesize dataArray1;
 @synthesize lblHead;
+@synthesize delegate;
 - (void)dealloc
 {
     [dataArray1 release];
@@ -62,8 +65,8 @@
         
         [cellOne.imageView setImageWithURL:[NSURL URLWithString: [dataPic objectAtIndex:indexPath.row]]
            placeholderImage:[UIImage imageNamed:@"placeholder.png"]
-                    success:^(UIImage *image) {NSLog(@"OK!!");}
-                    failure:^(NSError *error) {NSLog(@"NO");}];
+                    success:^(UIImage *image) {NSLog(@"资讯置顶图片显示成功OK");}
+                    failure:^(NSError *error) {NSLog(@"资讯置顶图片显示失败NO");}];
         
         UIImageView *clearBack=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 143, 340, 31)]autorelease];
         clearBack.image=[UIImage imageNamed:@"clearBack@2X"];
@@ -86,7 +89,7 @@
         
         cellOne.label.backgroundColor=[UIColor clearColor];
         
-        cellOne.label.text=[NSString stringWithFormat:[dataLabel objectAtIndex:indexPath.row]];
+        cellOne.label.text= [dataLabel objectAtIndex:indexPath.row];
  
         cellOne.transform=CGAffineTransformMakeRotation(M_PI/2);
         cellOne.label.textColor=[UIColor whiteColor];
@@ -99,13 +102,31 @@
 {
     return 320;
 }
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"第一行点击%d",[indexPath row]);
+    
+    
+    NewsController *new=[[[NewsController alloc]init]autorelease];
+    new.Delegate =self;
+    [new theFirstCell_Transport:[[jsonObj objectAtIndex:indexPath.row]objectForKey:@"id"]];
+    
+    
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+    // Configure the view for the selected state
+}
+-(void)action
+{
+    
+    NSLog(@"XXXX%@",app.next_Page);
+    [delegate translate:@"2"];
+}
+//-(void)translate:(NSString *)ID_Num
 //{
-//    NSLog(@"点击%d",[indexPath row]);
-//}
-//- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-//{
-//    [super setSelected:selected animated:animated];
-//    // Configure the view for the selected state
+//   
 //}
 @end

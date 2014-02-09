@@ -11,6 +11,7 @@
 #import "NewsController.h"
 #import "BigFishViewController.h"
 #import "TopicViewController.h"
+#import  "DetailViewController.h"
 
 #import "AppDelegate.h"
 #import "StoreUpViewController.h"
@@ -69,6 +70,7 @@
     [contentRead fetchList:@"1" isPri:@"0" Out:@"0"];
     [contentRead Category];
 }
+
 -(void)_init
 {
     arrName=[[[NSMutableArray alloc]init]retain];
@@ -77,8 +79,23 @@
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [app build];
    //通过KEY找到value
-    [self BuildFirstPage];
+    if(isFirstOpen)
+    {
+        [self BuildFirstPage];
+        isFirstOpen=NO;
+    }
+    
 }
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    self.view.backgroundColor=[UIColor whiteColor];
+    // scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    arr=[[[NSMutableArray alloc]init]retain];
+    isFirstOpen=YES;
+}
+
 -(void)reBack:(NSString *)jsonString reLoad :(NSString *)ID
 {
      
@@ -744,14 +761,6 @@
     smallTitle.backgroundColor=[UIColor clearColor];
    // [self.view addSubview:smallTitle];
 }
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    self.view.backgroundColor=[UIColor whiteColor];
-   // scrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
-    arr=[[[NSMutableArray alloc]init]retain];
-}
 
 #pragma mark-- UIScrollViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{\
@@ -775,7 +784,8 @@
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
 	//NSLog(@"scrollViewDidEndDecelerating");
-	if (scrollView == self.klpScrollView1) {
+	if (scrollView == self.klpScrollView1)
+    {
 		klp.frame = ((UIImageView*)[self.klpImgArr objectAtIndex:index]).frame;
 		[klp setAlpha:0];
 		[UIView animateWithDuration:0.2f animations:^(void){
@@ -831,6 +841,12 @@
         [share addTarget:self action:@selector(Press_share) forControlEvents:UIControlEventTouchDown];
         share.highlighted=NO;
         [self.view  addSubview:share];
+        
+        NSLog(@"首页滑动到%d",index);
+        UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap1:)]autorelease];
+        [singleTap setNumberOfTapsRequired:1];
+        
+        [self.klpScrollView1 addGestureRecognizer:singleTap];
   
 	}else {
 		
@@ -838,15 +854,24 @@
 }
 
 #pragma mark 手势
-- (void) handleSingleTap:(UITapGestureRecognizer *) gestureRecognizer{
+- (void) handleSingleTap1:(UITapGestureRecognizer *) gestureRecognizer{
 	CGFloat pageWith = 320;
     
     CGPoint loc = [gestureRecognizer locationInView:self.klpScrollView1];
     NSInteger touchIndex = floor(loc.x / pageWith) ;
-    if (touchIndex > app.firstPageImage.count) {
+    if (touchIndex > arr.count) {
         return;
     }
-    NSLog(@"touch index %d",touchIndex);
+    NSLog(@"首页touch index %d",touchIndex);
+    //进入详细阅读
+    NSDictionary* dict = [arr objectAtIndex:touchIndex];
+    
+    DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
+//    [detail.arrIDListNew insertObject:@"9" atIndex:0 ];
+//    [detail.arrIDListNew insertObject:@"10" atIndex:1 ];
+    detail.momentID=[dict objectForKey:@"id"];
+     detail.fatherID=@"0";
+    [self.navigationController pushViewController:detail animated:YES];
   
 }
 - (void)didReceiveMemoryWarning

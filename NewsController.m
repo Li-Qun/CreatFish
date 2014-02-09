@@ -33,7 +33,7 @@
 @end
 
 @implementation NewsController
-@synthesize delegate=delegate;
+@synthesize Delegate;
 @synthesize arr=arr;
 @synthesize arrPic=arrPic;
 @synthesize arrLabel=arrLabel;
@@ -79,10 +79,20 @@
     str=[NSString stringWithFormat:@"%d",target];
     NewsID=[str integerValue];
     [contentRead fetchList:[NSString stringWithFormat:@"%d",app.targetCenter] isPri:@"1" Out:@"0"];
- //  [contentRead fetchList:[NSString stringWithFormat:@"%d",app.targetCenter] isPri:@"1" Out:@"0"];
-//    [contentRead fetchList:str isPri:@"0" Out:@"0"];
     
+
 }
+//-(void)translate:(NSString *)ID_Num
+//{
+//    DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
+//    detail.momentID=ID_Num;
+//    [self.navigationController pushViewController:detail animated:YES];
+//}
+//-(void)make_Sure_theCenter:(NSString *)ID_Num
+//{
+//    
+//}
+ 
 - (void)viewDidLoad
 {
     self.view.backgroundColor=[UIColor whiteColor];
@@ -181,8 +191,6 @@
         littleHeinght=10;
         labelName=12;
     }
-    
-    
     
     UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
@@ -556,7 +564,7 @@
             });
         });
     }
-    
+ 
 }
 -(void)build_TableView
 {
@@ -569,9 +577,9 @@
     tabView.dataSource=self;//设置双重代理 很重要
     [tabView setBackgroundColor:[UIColor clearColor]];
     [tabView setSeparatorStyle:UITableViewCellSeparatorStyleNone];//hidden the lines
+     [tabView reloadData];
     [self.view addSubview:tabView];
-  //  [tabView reloadData];
-
+   
 }
 -(void)PessSwitch_BtnTag:(id)sender
 {
@@ -624,7 +632,12 @@
         }
         else{
             
-        }return cellSky;
+        }
+        UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap1:)]autorelease];
+        [singleTap setNumberOfTapsRequired:1];
+        
+        [cellSky  addGestureRecognizer:singleTap];
+        return cellSky;
     }
     else
     {
@@ -661,7 +674,6 @@
         cell.labelForID.font=[UIFont systemFontOfSize:12.0f];
         cell.labelForID.textColor=[UIColor grayColor];
         
-        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
         //#import "UIImageView+WebCache.h" 加载网络图片方法start
@@ -682,8 +694,8 @@
     {
         CGRect cellFrameInTableView = [tableView rectForRowAtIndexPath:indexPath];
         CGRect cellFrameInSuperview = [tableView convertRect:cellFrameInTableView toView:[tableView superview]];
-    DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
-    //  ReadingViewController *detail=[[[ReadingViewController alloc]initWithNibName:@"ReadingViewController" bundle:nil]autorelease];
+        DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
+    
         NSMutableDictionary* dict = [self.arr objectAtIndex:indexPath.row-1];
         //  detail.dictForData=dict;
         detail.arrIDListNew=arrID;
@@ -695,6 +707,41 @@
         [self.navigationController pushViewController:detail animated:YES];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    else
+    {
+        NSLog(@"%@",app.next_Page);
+    }
+}
+#pragma mark 手势
+- (void) handleSingleTap1:(UITapGestureRecognizer *) gestureRecognizer{
+/*	CGFloat pageWith = 320;
+    skyCell *cellSky=[[[skyCell alloc]init]autorelease];
+    CGPoint loc = [gestureRecognizer locationInView:cellSky ]  ;
+    NSInteger touchIndex = floor(loc.x / pageWith) ;
+    if (touchIndex > arr.count) {
+        return;
+    }
+    //进入详细阅读
+    NSDictionary* dict = [arr objectAtIndex:touchIndex];
+    
+    DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
+    [detail.arrIDListNew insertObject:@"9" atIndex:0 ];
+    [detail.arrIDListNew insertObject:@"10" atIndex:1 ];
+    detail.momentID=[dict objectForKey:@"id"];
+    [self.navigationController pushViewController:detail animated:YES];
+    
+//    skyCell *sky=[[[skyCell alloc]init]autorelease];
+//    sky.delegate=self;
+//    [sky action];
+    */
+}
+-(void)theFirstCell_Transport:(NSString *)ID_Num
+{
+    DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
+    detail.momentID= ID_Num;
+    detail.fatherID=@"0";
+    [self.navigationController pushViewController:detail animated:YES];
+    
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView;//滑动隐藏toolbar
@@ -703,6 +750,9 @@
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView;//不滑动 显示toolbar
 {
+    NSLog(@"XXX");
+    
+     //   NSLog(@"%f",scrollView.center.y);
     
 }
 ///ScrollView end
@@ -838,7 +888,8 @@
     NSString *str1=[NSString stringWithFormat:@"%d",target];
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];
-    [contentRead fetchList:str1 isPri:@"0" Out:@"10"];
+    NSString *str2=[NSString stringWithFormat:@"%d",total];//更改加载更多的方式 计数器 （int）total为偏移量
+    [contentRead fetchList:str1 isPri:@"0" Out:str2];
     [tabView reloadData];
     [self removeFooterView];
     [self testFinishedLoadData];

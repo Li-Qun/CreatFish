@@ -1,8 +1,15 @@
 
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "AppDelegate.h"
-@interface skyCell : UITableViewCell<UITableViewDataSource,UITableViewDelegate>
+ 
+@protocol skyDelegate
+@optional
+-(void)translate:(NSString *)ID_Num;
+
+@end
+@interface skyCell : UITableViewCell<  UITableViewDataSource,UITableViewDelegate ,UIScrollViewDelegate>
 {
     UITableView *table;
     NSInteger porsection;
@@ -12,7 +19,9 @@
     NSMutableArray* dataPic;
     NSMutableArray* dataLabel;
     AppDelegate *app;
-    NSDictionary *jsonObj;
+   NSArray *jsonObj;
+    id<skyDelegate>delegate;
+    int i;
 }
 @property (nonatomic, retain) NSMutableArray* dataArray1;
 @property (nonatomic, retain) NSMutableArray* dataPic;
@@ -20,4 +29,6 @@
 
 @property(nonatomic,copy)NSString *lblHead;
 @property(nonatomic,retain) NSDictionary *jsonObjCell;
+@property(assign,nonatomic)id<skyDelegate> delegate;
+-(void)action;
 @end

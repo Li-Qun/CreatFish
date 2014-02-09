@@ -14,6 +14,7 @@
 @interface ViewController : UIViewController<FishDelegate,ISSShareViewDelegate,
 UIScrollViewDelegate >
 {
+    BOOL isFirstOpen;
    // UIScrollView *scrollView;
 	klpView *klp;
 	int index;

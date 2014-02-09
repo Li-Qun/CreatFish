@@ -145,108 +145,116 @@
         
         lab_height=100;
     }
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //耗时的一些操作
-        NSString *strJson;
-        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *str=[NSString stringWithFormat:@"BigFishView_DB%@",ID];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
-        sqlite3 *database;
+    NSLog(@"%@",ID);
+    
+    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    NSDictionary *jsonObj =[parser objectWithString:jsonString];
+    NSArray *data = [jsonObj objectForKey:@"data"];
+    if(data.count==0)
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
+                                                         message:@"暂无加载内容～"
+                                                        delegate:self
+                                               cancelButtonTitle:nil
+                                               otherButtonTitles: @"确定",nil]autorelease];
+        [alert show];
         
-        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-        {
-            NSLog(@"open success");
-        }
-        else {
-            NSLog(@"open failed");
-        }
-        
-        // 查找数据
-        NSString* sql = @"select * from picture";
-        sqlite3_stmt *stmt;
-        //查找数据
-        
-        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-        {
+    }
+    else
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            //耗时的一些操作
+            NSString *strJson;
+            NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsPaths=[array objectAtIndex:0];
+            NSString *str=[NSString stringWithFormat:@"BigFishView_DB%@",ID];
+            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+            sqlite3 *database;
             
-            while (sqlite3_step(stmt)==SQLITE_ROW) {
-              //  int i=sqlite3_column_int(stmt, 0)-1;
+            if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+            {
+                NSLog(@"open success");
+            }
+            else {
+                NSLog(@"open failed");
+            }
+            
+            // 查找数据
+            NSString* sql = @"select * from picture";
+            sqlite3_stmt *stmt;
+            //查找数据
+            
+            if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+            {
                 
-                
-                const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-                strJson= [NSString stringWithUTF8String: _pic];
+                while (sqlite3_step(stmt)==SQLITE_ROW) {
+                    //  int i=sqlite3_column_int(stmt, 0)-1;
+                    
+                    
+                    const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                    strJson= [NSString stringWithUTF8String: _pic];
+                    
+                }
                 
             }
-           
-        }
-        sqlite3_finalize(stmt);
-        
-        //  最后，关闭数据库：
-        sqlite3_close(database);
-        
+            sqlite3_finalize(stmt);
+            
+            //  最后，关闭数据库：
+            sqlite3_close(database);
+            
+            
+            dispatch_async(dispatch_get_main_queue(), ^{//主线程
+                
+                
+                //设置索引标识
+                
+                SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+                NSDictionary *jsonObj =[parser objectWithString:strJson];
+                //  total = [[jsonObj objectForKey:@"total"] intValue];
+                NSArray *data = [jsonObj objectForKey:@"data"];
+                total+=data.count;
+                for(int i=0;i<data.count;i++)
+                {
+                    [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
+                }
+                app.BigFish_Description=BigFish_Description;
+                
+                carousel.delegate = self;
+                [self.carousel reloadData];
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                carousel.dataSource = self;
+                
+                carousel.type = iCarouselTypeCoverFlow;
+                for (UIView *view in carousel.visibleItemViews)
+                {
+                    view.alpha = 1.0;
+                }
 
-        dispatch_async(dispatch_get_main_queue(), ^{//主线程
-            
-            
-            //设置索引标识
-            
-            SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-            NSDictionary *jsonObj =[parser objectWithString:strJson];
-          //  total = [[jsonObj objectForKey:@"total"] intValue];
-           NSArray *data = [jsonObj objectForKey:@"data"];
-            total+=data.count;
-            for(int i=0;i<data.count;i++)
-            {
-                [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
-            }
-            carousel.delegate = self;
-            carousel.dataSource = self;
-            
-            carousel.type = iCarouselTypeCoverFlow;
-            for (UIView *view in carousel.visibleItemViews)
-            {
-                view.alpha = 1.0;
-            }
-            labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
-            labelText.textColor=[UIColor whiteColor];
-            labelText.backgroundColor=[UIColor clearColor];
-            labelText.font=[UIFont systemFontOfSize:14.0f];
-            labelText.numberOfLines = 0;
-            [labelText sizeToFit];
-            labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
-            
-            
-            
-            [UIView beginAnimations:nil context:nil];
-            carousel.type=5;
-            [UIView commitAnimations];
-            
-            
+                labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
+                labelText.textColor=[UIColor whiteColor];
+                labelText.backgroundColor=[UIColor clearColor];
+                labelText.font=[UIFont systemFontOfSize:14.0f];
+                labelText.numberOfLines = 0;
+                [labelText sizeToFit];
+                labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
+                
+                
+                
+                [UIView beginAnimations:nil context:nil];
+                carousel.type=5;
+                [UIView commitAnimations];
+                
+                
+            });
         });
-    });
+
+    }
     
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID Offent:(NSString *)Out
 {
     NSLog(@"%@",ID);
-    
-    if(isSeven&&isFive)
-    {
-        img_height=20;
-        lab_height=80;
-    }
-    else if(isSeven&&!isFive)
-    {
-        lab_height=100;
-    }else if(!isSeven&&isFive)//
-    {
-        img_height=20;
-        lab_height=20;
-    }else {
-        
-        lab_height=100;
-    }
     
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString:jsonString];
@@ -340,6 +348,23 @@
                 {
                     view.alpha = 1.0;
                 }
+                if(isSeven&&isFive)
+                {
+                    img_height=20;
+                    lab_height=80;
+                }
+                else if(isSeven&&!isFive)
+                {
+                    lab_height=100;
+                }else if(!isSeven&&isFive)//
+                {
+                    img_height=20;
+                    lab_height=20;
+                }else {
+                    img_height=20;
+                    lab_height=100;
+                }
+
                 labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
                 labelText.textColor=[UIColor whiteColor];
                 labelText.backgroundColor=[UIColor clearColor];
@@ -529,7 +554,9 @@
         img_height=20;
         lab_height=20;
     }else {
-        
+        img_height=20;
+        lab_height=100;
+
     }
   
     if(index>=0&&index<carousel1.indexesForVisibleItems.count-1)
@@ -594,7 +621,10 @@
         NSString *str=[NSString stringWithFormat:@"%d",target];
         
         [contentRead setDelegate:self];//设置代理
-        [contentRead fetchList:str isPri:@"0" Out:@"10"];
+        NSString *str1=[NSString stringWithFormat:@"%d",total];
+        
+        [contentRead fetchList:str isPri:@"0" Out:str1];
+        
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeIndeterminate;
         hud.labelText = @"正在加载图片~~";//加载提示语言

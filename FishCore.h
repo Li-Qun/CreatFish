@@ -28,6 +28,7 @@
 
 
 @protocol FishDelegate
+@optional
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID :(NSString*)ID Offent:(NSString*)Out;
 -(void)reBack:(NSString *)jsonString reLoad :(NSString *)ID;
 
@@ -51,6 +52,7 @@
 @property(nonatomic,retain)NSString *content;
 //@property(nonatomic,retain)CategoryItem *categoryItem;
 @property(assign,nonatomic)id<FishDelegate> delegate;
+
 -(void)fetchList: (NSString  * )ID isPri:(NSString*)flag  Out:(NSString *) Offset;
 //-(void)Magazine:(NSString*)ID isPri:(NSString *)flag WeeklyId:(NSString *) Id Out:(NSString *)Offset;
 //-(void)Magazine:(NSString *)ID Out:(NSString *)Offent;

@@ -1200,17 +1200,19 @@ didFailWithError:(NSError *)error
 
 -(void)PressGo
 {
-    app.momentID=app.fatherID;
+    if(app.fatherID.length==0)
+        app.fatherID=@"0";
+    
     [UIView beginAnimations:@"animationID" context:nil];
 	[UIView setAnimationDuration:0.8f];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 	[UIView setAnimationRepeatAutoreverses:NO];
-   // NSLog(@"Fa %d    next:%@  pre： %@",FatherID,app.next_Page,app.pre_Page);
+    NSLog(@"Fa %@    next:%@  pre： %@",app.fatherID,app.next_Page,app.pre_Page);
     
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];//设置代理
     
-    [contentRead Content:[NSString stringWithFormat:app.fatherID ] Detail:app.next_Page];
+    [contentRead Content:app.fatherID Detail:app.next_Page];
     
    // [showWebView reload];
     
@@ -1223,17 +1225,19 @@ didFailWithError:(NSError *)error
 }
 -(void)Pressleft
 {
-    app.momentID=app.fatherID;
+    if(app.fatherID.length==0)
+        app.fatherID=@"0";
+    
     [UIView beginAnimations:@"animationID" context:nil];
 	[UIView setAnimationDuration:0.8f];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 	[UIView setAnimationRepeatAutoreverses:NO];
     
-  //  NSLog(@"Fa %d    next:%@  pre： %@",FatherID,app.next_Page,app.pre_Page);
+     NSLog(@"Fa %@    next:%@  pre： %@",app.fatherID,app.next_Page,app.pre_Page);
     
     ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
     [contentRead setDelegate:self];//设置代理
-    [contentRead Content:[NSString stringWithFormat:app.fatherID ] Detail:app.pre_Page];
+    [contentRead Content:app.fatherID Detail:app.pre_Page];
    // [showWebView reload];
     
     [self buildTheTopBar];

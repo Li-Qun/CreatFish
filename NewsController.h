@@ -5,20 +5,21 @@
 //  Created by DAWEI FAN on 18/12/2013.
 //  Copyright (c) 2013 liqun. All rights reserved.
 //
-
+#import <Foundation/Foundation.h>
 #import "ViewController.h"
 #import "FishCore.h"
 #import "klpView.h"
 #import "AppDelegate.h"
 #import "EGORefreshTableHeaderView.h"
 #import "EGORefreshTableFooterView.h"
+#import "skyCell.h"
 
-
-@protocol myDelegate
-//-(void)make_Sure_theCenter:(int) center;
+@protocol myNewDelegate
+@optional
+-(void)make_Sure_theCenter:(NSString *)ID_Num;
 
 @end
-@interface NewsController : UIViewController<UITableViewDataSource,UITableViewDelegate,FishDelegate,myDelegate,UIScrollViewDelegate,UIScrollViewAccessibilityDelegate,EGORefreshTableDelegate >
+@interface NewsController : UIViewController<UITableViewDataSource,UITableViewDelegate,FishDelegate,UIScrollViewDelegate,UIScrollViewAccessibilityDelegate,EGORefreshTableDelegate>
 {
     int total;
     int targetNumber;//哪一层级的标引
@@ -28,7 +29,7 @@
     NSMutableArray *arrLabel;
     NSMutableArray *arrID;
     klpView *klpPic;
-    id<myDelegate>delegate;
+    id<myNewDelegate>Delegate;
     //单元属性
     NSString *NewsId;
     NSString *NewsName;
@@ -68,7 +69,7 @@
 @property(nonatomic,retain)NSMutableArray *arrPic;
 @property(nonatomic,retain)NSMutableArray *arrLabel;
 @property(nonatomic,retain)NSMutableArray *arrID;
-@property(assign,nonatomic)id<myDelegate> delegate;
+@property(assign,nonatomic)id<myNewDelegate> Delegate;
 @property(nonatomic,retain)NSString *NewsId;
 @property(nonatomic,retain)NSString *NewsName;
 @property(nonatomic,retain)NSString *NewsImage;
@@ -77,6 +78,7 @@
 @property(nonatomic,retain)NSString *NewsFlag;
 @property(readwrite,nonatomic)int target;
 @property(readwrite,nonatomic)int targetCentre;
-- (void)reloadTableViewDataSource;
-- (void)doneLoadingTableViewData;
+//- (void)reloadTableViewDataSource;
+//- (void)doneLoadingTableViewData;
+-(void)theFirstCell_Transport:(NSString *)ID_Num;
 @end

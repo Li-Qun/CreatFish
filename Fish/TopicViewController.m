@@ -535,26 +535,29 @@
     
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-	 
-	klp.frame = ((UIImageView*)[self.klpImgArr objectAtIndex:index]).frame;
-    [klp setAlpha:0];
-    [UIView animateWithDuration:0.2f animations:^(void){
-        [klp setAlpha:.85f];
-    }];
-    
-    NSDictionary* dict = [arr objectAtIndex:index];
-    labelText.text=[dict objectForKey:@"description"];
-    textView.text=[ dict objectForKey:@"description"];
-    textView.backgroundColor=[UIColor clearColor];
-    textView.font=[UIFont systemFontOfSize:14.0f];
-    [textView setEditable:NO];
-    textView.scrollEnabled=YES;
-    NSLog(@"滑动到%d",index);
-    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap1:)]autorelease];
-    [singleTap setNumberOfTapsRequired:1];
-    
-    [self.view addGestureRecognizer:singleTap];
+	 if(scrollView ==self.klpScrollView1)
+     {
+         klp.frame = ((UIImageView*)[self.klpImgArr objectAtIndex:index]).frame;
+         [klp setAlpha:0];
+         [UIView animateWithDuration:0.2f animations:^(void){
+             [klp setAlpha:.85f];
+         }];
+         
+         NSDictionary* dict = [arr objectAtIndex:index];
+         labelText.text=[dict objectForKey:@"description"];
+         textView.text=[ dict objectForKey:@"description"];
+         textView.backgroundColor=[UIColor clearColor];
+         textView.font=[UIFont systemFontOfSize:14.0f];
+         [textView setEditable:NO];
+         textView.scrollEnabled=YES;
+         NSLog(@"滑动到%d",index);
+         UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap1:)]autorelease];
+         [singleTap setNumberOfTapsRequired:1];
+         
+         [self.klpScrollView1 addGestureRecognizer:singleTap];
 
+     }
+	
 }
 
 #pragma mark 手势

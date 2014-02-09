@@ -116,59 +116,74 @@
 }
 -(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID
 {
-    NSString *strJson;
-    NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPaths=[array objectAtIndex:0];
-    NSString *str=[NSString stringWithFormat:@"FishItem_Database"];
-    NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
-    sqlite3 *database;
-    
-    if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-    {
-        NSLog(@"open success");
-    }
-    else {
-        NSLog(@"open failed");
-    }
-    
-    char *errorMsg;
-    NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)"; //创建表
-    if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-    {
-        NSLog(@"create success");
-    }else{
-        NSLog(@"create error:%s",errorMsg);
-        sqlite3_free(errorMsg);
-    }
-    sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",ID];
-    sqlite3_stmt *stmt;
-    //查找数据
-    
-    if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-    {
-        
-        while (sqlite3_step(stmt)==SQLITE_ROW) {
-            
-            
-            const unsigned char *_id= sqlite3_column_text(stmt, 0);
-            strJson= [NSString stringWithUTF8String: _id];
-            //const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-            //strJson= [NSString stringWithUTF8String: _pic];
-            break;
-        }
-    }
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-    NSDictionary *jsonObj =[parser objectWithString: strJson];
-    
+    NSDictionary *jsonObj =[parser objectWithString:jsonString];
     NSArray *data = [jsonObj objectForKey:@"data"];
-    NSMutableArray *arr=[[[NSMutableArray alloc]init]autorelease];
-    for (int i =0; i <data.count; i++) {
-        [arr insertObject:[data objectAtIndex:i] atIndex: i];
-        //[Fish_arr insertObject:[data objectAtIndex:i] atIndex: i];
+    if(data.count==0)
+    {
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
+                                                         message:@"暂无加载内容～"
+                                                        delegate:self
+                                               cancelButtonTitle:nil
+                                               otherButtonTitles: @"确定",nil]autorelease];
+        [alert show];
     }
-    Fish_arr=arr;
-    [self createView];
+    else
+    {
+        NSString *strJson;
+        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths=[array objectAtIndex:0];
+        NSString *str=[NSString stringWithFormat:@"FishItem_Database"];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+        sqlite3 *database;
+        
+        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+        {
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        
+        char *errorMsg;
+        NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)"; //创建表
+        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+        {
+            NSLog(@"create success");
+        }else{
+            NSLog(@"create error:%s",errorMsg);
+            sqlite3_free(errorMsg);
+        }
+        sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",ID];
+        sqlite3_stmt *stmt;
+        //查找数据
+        
+        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+        {
+            
+            while (sqlite3_step(stmt)==SQLITE_ROW) {
+                
+                const unsigned char *_id= sqlite3_column_text(stmt, 0);
+                strJson= [NSString stringWithUTF8String: _id];
+                //const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                //strJson= [NSString stringWithUTF8String: _pic];
+                break;
+            }
+        }
+        SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+        NSDictionary *jsonObj =[parser objectWithString: strJson];
+        
+        NSArray *data = [jsonObj objectForKey:@"data"];
+        NSMutableArray *arr=[[[NSMutableArray alloc]init]autorelease];
+        for (int i =0; i <data.count; i++) {
+            [arr insertObject:[data objectAtIndex:i] atIndex: i];
+            //[Fish_arr insertObject:[data objectAtIndex:i] atIndex: i];
+        }
+        Fish_arr=arr;
+        [self createView];
 
+    }
+   
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID Offent:(NSString *)Out
 {
