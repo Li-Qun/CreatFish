@@ -13,6 +13,7 @@
     AppDelegate *app;
     ContentRead *contentRead;
     BOOL isSeven;
+    BOOL isFirstOpen;
    // NSArray *arrName;
 }
 @end

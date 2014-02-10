@@ -146,67 +146,65 @@
         lab_height=100;
     }
     NSLog(@"%@",ID);
-    
-    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-    NSDictionary *jsonObj =[parser objectWithString:jsonString];
-    NSArray *data = [jsonObj objectForKey:@"data"];
-    if(data.count==0)
-    {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
-                                                         message:@"暂无加载内容～"
-                                                        delegate:self
-                                               cancelButtonTitle:nil
-                                               otherButtonTitles: @"确定",nil]autorelease];
-        [alert show];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //耗时的一些操作
+        NSString *strJson;
+        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths=[array objectAtIndex:0];
+        NSString *str=[NSString stringWithFormat:@"BigFishView_DataBase"];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+        sqlite3 *database;
         
-    }
-    else
-    {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            //耗时的一些操作
-            NSString *strJson;
-            NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *documentsPaths=[array objectAtIndex:0];
-            NSString *str=[NSString stringWithFormat:@"BigFishView_DB%@",ID];
-            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
-            sqlite3 *database;
+        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+        {
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        
+        // 查找数据
+        NSString* sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",ID];
+        sqlite3_stmt *stmt;
+        //查找数据
+        BOOL flag=NO;
+        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+        {
             
-            if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-            {
-                NSLog(@"open success");
-            }
-            else {
-                NSLog(@"open failed");
-            }
-            
-            // 查找数据
-            NSString* sql = @"select * from picture";
-            sqlite3_stmt *stmt;
-            //查找数据
-            
-            if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-            {
+            while (sqlite3_step(stmt)==SQLITE_ROW) {
+                //  int i=sqlite3_column_int(stmt, 0)-1;
                 
-                while (sqlite3_step(stmt)==SQLITE_ROW) {
-                    //  int i=sqlite3_column_int(stmt, 0)-1;
-                    
-                    
-                    const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-                    strJson= [NSString stringWithUTF8String: _pic];
-                    
+                if(sqlite3_column_count(stmt)==0)
+                {
+                    flag=YES;
+                    break;
                 }
+                const unsigned char *_pic= sqlite3_column_text(stmt, 0);
+                strJson= [NSString stringWithUTF8String: _pic];
                 
             }
-            sqlite3_finalize(stmt);
             
-            //  最后，关闭数据库：
-            sqlite3_close(database);
+        }
+        sqlite3_finalize(stmt);
+        
+        //  最后，关闭数据库：
+        sqlite3_close(database);
+        
+        
+        dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
-            
-            dispatch_async(dispatch_get_main_queue(), ^{//主线程
-                
-                
+            if(flag)
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                message:@"该缓存为空，请连接网络使用"
+                                                               delegate:self
+                                                      cancelButtonTitle:@"确定"
+                                                      otherButtonTitles: nil];
+                [alert show];
+                [alert release];
+            }
+            else
+            {
                 //设置索引标识
                 
                 SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
@@ -230,7 +228,7 @@
                 {
                     view.alpha = 1.0;
                 }
-
+                
                 labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
                 labelText.textColor=[UIColor whiteColor];
                 labelText.backgroundColor=[UIColor clearColor];
@@ -244,12 +242,15 @@
                 [UIView beginAnimations:nil context:nil];
                 carousel.type=5;
                 [UIView commitAnimations];
-                
-                
-            });
+            }
+           
+            
+            
         });
+    });
+    
 
-    }
+ 
     
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID Offent:(NSString *)Out
@@ -275,7 +276,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsPaths=[array objectAtIndex:0];
-            NSString *str=[NSString stringWithFormat:@"BigFishView_DB%@",ID];
+            NSString *str=[NSString stringWithFormat:@"BigFishView_DataBase"];
             NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
             sqlite3 *database;
             
@@ -289,15 +290,16 @@
             char *errorMsg;
             // 删除所有数据 并进行更新数据库操作
             //删除所有数据，条件为1>0永真
-            const char *deleteAllSql="delete from picture where 1>0";
-            //执行删除语句
-            if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
-                NSLog(@"删除所有数据成功");
-            }
-            else NSLog(@"delect failde!!!!");
+//            const char *deleteAllSql="delete from picture where 1>0";
+//            //执行删除语句
+//            if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
+//                NSLog(@"删除所有数据成功");
+//            }
+//            else NSLog(@"delect failde!!!!");
             
             NSString* sql ;
-            sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
+            sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)";
+            //创建表
             if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
             {
                 NSLog(@"create success");
@@ -305,17 +307,42 @@
                 NSLog(@"create error:%s",errorMsg);
                 sqlite3_free(errorMsg);
             }
-            NSString *insertSQLStr1 = [NSString stringWithFormat:
-                                       @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
-            const char *insertSQL1=[insertSQLStr1 UTF8String];
-            //插入数据 进行更新操作
-            if (sqlite3_exec(database, insertSQL1 , NULL, NULL, &errorMsg)==SQLITE_OK) {
-                NSLog(@"insert operation is ok.");
+             //查找数据
+            sql=[NSString stringWithFormat:@"select ID from picture where ID='%@'",ID];
+            sqlite3_stmt *stmt;
+            //查找数据
+            BOOL OK=NO;
+            if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+            {
+                
+                while (sqlite3_step(stmt)==SQLITE_ROW) {
+                    
+                    
+                    const unsigned char *_id= sqlite3_column_text(stmt, 0);
+                    NSString *Id= [NSString stringWithUTF8String: _id];
+                    if([ID isEqualToString:Id])
+                    {
+                        OK=YES;
+                        break;
+                    }
+                }
             }
-            else{
-                NSLog(@"insert error:%s",errorMsg);
-                sqlite3_free(errorMsg);
+            if(!OK)
+            {
+                NSString *insertSQLStr1 =[NSString stringWithFormat:
+                                          @"INSERT INTO 'picture' ('ID','pic' ) VALUES ('%@','%@')", ID,jsonString];
+                const char *insertSQL1=[insertSQLStr1 UTF8String];
+                //插入数据 进行更新操作
+                if (sqlite3_exec(database, insertSQL1 , NULL, NULL, &errorMsg)==SQLITE_OK) {
+                    NSLog(@"insert operation is ok.");
+                }
+                else{
+                    NSLog(@"insert error:%s",errorMsg);
+                    sqlite3_free(errorMsg);
+                }
             }
+
+            sqlite3_finalize(stmt);
             //  最后，关闭数据库：
             sqlite3_close(database);
             

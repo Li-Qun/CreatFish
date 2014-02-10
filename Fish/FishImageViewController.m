@@ -116,20 +116,8 @@
 }
 -(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID
 {
-    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-    NSDictionary *jsonObj =[parser objectWithString:jsonString];
-    NSArray *data = [jsonObj objectForKey:@"data"];
-    if(data.count==0)
-    {
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
-                                                         message:@"暂无加载内容～"
-                                                        delegate:self
-                                               cancelButtonTitle:nil
-                                               otherButtonTitles: @"确定",nil]autorelease];
-        [alert show];
-    }
-    else
-    {
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *strJson;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
@@ -154,6 +142,7 @@
             NSLog(@"create error:%s",errorMsg);
             sqlite3_free(errorMsg);
         }
+        BOOL flag=NO;
         sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",ID];
         sqlite3_stmt *stmt;
         //查找数据
@@ -163,6 +152,11 @@
             
             while (sqlite3_step(stmt)==SQLITE_ROW) {
                 
+                if(sqlite3_column_count(stmt)==0)
+                {
+                    flag=YES;
+                    break;
+                }
                 const unsigned char *_id= sqlite3_column_text(stmt, 0);
                 strJson= [NSString stringWithUTF8String: _id];
                 //const unsigned char *_pic= sqlite3_column_text(stmt, 1);
@@ -170,20 +164,38 @@
                 break;
             }
         }
-        SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-        NSDictionary *jsonObj =[parser objectWithString: strJson];
-        
-        NSArray *data = [jsonObj objectForKey:@"data"];
-        NSMutableArray *arr=[[[NSMutableArray alloc]init]autorelease];
-        for (int i =0; i <data.count; i++) {
-            [arr insertObject:[data objectAtIndex:i] atIndex: i];
-            //[Fish_arr insertObject:[data objectAtIndex:i] atIndex: i];
-        }
-        Fish_arr=arr;
-        [self createView];
+        sqlite3_finalize(stmt);
+        sqlite3_close(database);
 
-    }
-   
+        dispatch_async(dispatch_get_main_queue(), ^{//主线程
+            if(flag)
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                message:@"该缓存为空，请连接网络使用"
+                                                               delegate:self
+                                                      cancelButtonTitle:@"确定"
+                                                      otherButtonTitles: nil];
+                [alert show];
+                [alert release];
+
+            }
+            else
+            {
+                SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+                NSDictionary *jsonObj =[parser objectWithString: strJson];
+                
+                NSArray *data = [jsonObj objectForKey:@"data"];
+                NSMutableArray *arr=[[[NSMutableArray alloc]init]autorelease];
+                for (int i =0; i <data.count; i++) {
+                    [arr insertObject:[data objectAtIndex:i] atIndex: i];
+                    //[Fish_arr insertObject:[data objectAtIndex:i] atIndex: i];
+                }
+                Fish_arr=arr;
+                [self createView];
+            }
+            
+        });
+    });
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID Offent:(NSString *)Out
 {

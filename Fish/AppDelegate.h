@@ -52,6 +52,8 @@ typedef enum
     NSMutableArray *isRead_arr;
     //游钓
     NSMutableArray *BigFish_Description;
+    //toolbar 原始 js串
+    NSString *toolbar_js;
  
     
 }
@@ -100,7 +102,8 @@ typedef enum
 //分享好友
 //游钓
 @property (nonatomic,retain)NSMutableArray *BigFish_Description;
-
+//tool_bar
+@property(nonatomic,retain)NSString *toolbar_js;
 @end
 
 

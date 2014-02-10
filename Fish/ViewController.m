@@ -495,6 +495,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 
                 app.saveName=jsonString;
+                app.toolbar_js=jsonString;
                 SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                NSArray *jsonObj =[parser objectWithString: jsonString];
                 UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];

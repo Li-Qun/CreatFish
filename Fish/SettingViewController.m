@@ -150,12 +150,13 @@
             NSLog(@"删除所有数据成功");
         }
         else NSLog(@"delect failde!!!!");
-        deleteAllSql_detailRead="delete from detailIDD where 1>0";
+        
+        const char *deleteAllSql_detailRead1="delete from detailIDD where 1>0";
         //执行删除语句
-        if(sqlite3_exec(database_detailRead, deleteAllSql_detailRead, NULL, NULL, &errorMsg_detailRead)==SQLITE_OK){
+        if(sqlite3_exec(database_detailRead, deleteAllSql_detailRead1, NULL, NULL, &errorMsg_detailRead)==SQLITE_OK){
             NSLog(@"删除所有数据成功");
         }
-        else NSLog(@"delect failde!!!!");
+        else NSLog(@"delect failde!!!!%s",errorMsg_detailRead);
         
         sqlite3_close(database_detailRead);//
 ////专题
@@ -180,7 +181,9 @@
         }
         else NSLog(@"delect failde!!!!");
         sqlite3_close(database_Topic);// 
-  
+
+        
+        
 ///大鱼榜详细
         NSArray *array_FishItem=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths_FishItem=[array_FishItem objectAtIndex:0];
@@ -204,10 +207,10 @@
         }
         else NSLog(@"delect failde!!!!");
         sqlite3_close(database_FishItem);//
-///游钓详细
+//////大鱼榜
         NSArray *array_LifeItem=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths_LifeItem=[array_LifeItem objectAtIndex:0];
-        NSString *databasePaths_LifeItem=[documentsPaths_LifeItem stringByAppendingPathComponent:@"LifeItem_Database4"];
+        NSString *databasePaths_LifeItem=[documentsPaths_LifeItem stringByAppendingPathComponent:@"BigFishView_DataBase"];
         sqlite3 *database_LifeItem;
         
         if (sqlite3_open([databasePaths_LifeItem UTF8String], &database_LifeItem)==SQLITE_OK)
@@ -224,7 +227,7 @@
         if(sqlite3_exec(database_LifeItem, deleteAllSql_LifeItem, NULL, NULL, &errorMsg_LifeItem)==SQLITE_OK){
             NSLog(@"删除所有数据成功");
         }
-        else NSLog(@"delect failde!!!!");
+        else NSLog(@"delect failde!!!!%s",errorMsg_LifeItem);
         sqlite3_close(database_LifeItem);//*/
  
         
@@ -242,7 +245,6 @@
             
         });
     });
-    
 }
 -(void)shareToFriend
 {
