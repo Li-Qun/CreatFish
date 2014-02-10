@@ -8,6 +8,7 @@
 
 #import "RightViewController.h"
 #import "NewsController.h"
+#import "BookViewController.h"
 #import "TopicViewController.h"
 
 #import "BigFishViewController.h"
@@ -172,7 +173,14 @@
     if([isGallery integerValue]==0&& [isTopic integerValue]==0)
     {
         [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
-            NewsController *apiVC = [[[NewsController alloc] init] autorelease];
+//            NewsController *apiVC = [[[NewsController alloc] init] autorelease];
+//            apiVC.target=btn.tag;
+//            apiVC.NewsPid=fatherID;
+//            apiVC.NewsName=name;
+//            UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
+//            self.viewDeckController.centerController = navApiVC;
+//            self.view.userInteractionEnabled = YES;
+            BookViewController *apiVC = [[[BookViewController alloc] init] autorelease];
             apiVC.target=btn.tag;
             apiVC.NewsPid=fatherID;
             apiVC.NewsName=name;

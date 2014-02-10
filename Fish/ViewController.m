@@ -12,6 +12,7 @@
 #import "BigFishViewController.h"
 #import "TopicViewController.h"
 #import  "DetailViewController.h"
+#include "BookViewController.h"
 
 #import "AppDelegate.h"
 #import "StoreUpViewController.h"
@@ -914,12 +915,20 @@
     
     if([isGallery integerValue]==0&& [isTopic integerValue]==0)
     {
-        NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
+//        NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
+//        newVC.hidesBottomBarWhenPushed = YES;
+//        newVC.target=btn.tag;
+//        newVC.NewsName=name;
+//        newVC.NewsPid=[NSString stringWithFormat:@"%d",btn.tag];
+//        [self.navigationController pushViewController :newVC animated:YES];
+        
+        BookViewController *newVC = [[[BookViewController alloc] initWithNibName:@"BookViewController" bundle:nil]autorelease];
         newVC.hidesBottomBarWhenPushed = YES;
         newVC.target=btn.tag;
         newVC.NewsName=name;
         newVC.NewsPid=[NSString stringWithFormat:@"%d",btn.tag];
         [self.navigationController pushViewController :newVC animated:YES];
+        
 
     }
     else if([isTopic integerValue]==1)

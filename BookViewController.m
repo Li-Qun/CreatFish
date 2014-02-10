@@ -1,12 +1,13 @@
 //
-//  NewsController.m
+//  BookViewController.m
 //  Fish
 //
-//  Created by DAWEI FAN on 18/12/2013.
-//  Copyright (c) 2013 liqun. All rights reserved.
+//  Created by DAWEI FAN on 10/02/2014.
+//  Copyright (c) 2014 liqun. All rights reserved.
 //
 
-#import "NewsController.h"
+#import "BookViewController.h"
+
 #import "FishCore.h"
 #import "IsRead.h"
 
@@ -23,17 +24,17 @@
 #import "InformationCell.h"
 #import "OneCell.h"
 #import "skyCell.h"
-
+#import "NewCell.h"
 #import "UIImageView+WebCache.h"
 #import "DetailViewController.h"
 #import "IIViewDeckController.h"
 #import "RightViewController.h"
 #import "sqlite3.h"
-@interface NewsController ()
+@interface BookViewController ()
 
 @end
 
-@implementation NewsController
+@implementation BookViewController
 @synthesize Delegate;
 @synthesize arr=arr;
 @synthesize arrPic=arrPic;
@@ -81,7 +82,7 @@
     NewsID=[str integerValue];
     [contentRead fetchList:[NSString stringWithFormat:@"%d",app.targetCenter] isPri:@"1" Out:@"0"];
     
-
+    
 }
 //-(void)translate:(NSString *)ID_Num
 //{
@@ -91,9 +92,9 @@
 //}
 //-(void)make_Sure_theCenter:(NSString *)ID_Num
 //{
-//    
+//
 //}
- 
+
 - (void)viewDidLoad
 {
     self.view.backgroundColor=[UIColor whiteColor];
@@ -104,14 +105,15 @@
     arrPic=[[[NSMutableArray alloc]init]retain];
     arrLabel=[[[NSMutableArray alloc]init]retain];
     arrID=[[[NSMutableArray alloc]init]retain];
+    arrTopId=[[[NSMutableArray alloc]init]retain];
     
     [self.navigationController setNavigationBarHidden:YES];
     self.navigationItem.hidesBackButton = YES;
     self.navigationController.toolbarHidden = YES;
     
- 
     
-   // app.targetCenter=target;
+    
+    // app.targetCenter=target;
     NSLog(@"centre  %d",app.targetCenter);
     str=[NSString stringWithFormat:@"%d",target];
     
@@ -121,10 +123,11 @@
     [contentRead fetchList:str isPri:@"0" Out:@"0"];
     
     tabView=[[[UITableView alloc]init]retain];
+    scrollView_Book = [[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 178)]retain];
     tabView.showsHorizontalScrollIndicator=NO;
     tabView.showsVerticalScrollIndicator=NO;
-
-   
+    
+    
     [super viewDidLoad];
     //  [arr release];
     isOpenR=NO;isOpenL=NO;
@@ -138,32 +141,40 @@
 }
 - (void)handleSwipes:(UISwipeGestureRecognizer *)sender
 {
-    if (sender.direction == UISwipeGestureRecognizerDirectionRight)//na
+    if(sender.view ==scrollView_Book)
     {
-        if(!isOpenL&&!isOpenR)
-        {
-            [self.viewDeckController toggleLeftViewAnimated:YES];
-            isOpenL=YES;
-        }
-        if(!isOpenL&&isOpenR)
-        {
-            [self.viewDeckController toggleRightViewAnimated:YES];
-            isOpenR=NO;
-        }
         
     }
-    if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {//bie
-        
-        if(!isOpenR&&!isOpenL)
+    else
+    {
+        if (sender.direction == UISwipeGestureRecognizerDirectionRight)//na
         {
-            [self.viewDeckController toggleRightViewAnimated:YES];
-            isOpenR=YES;
+            if(!isOpenL&&!isOpenR)
+            {
+                [self.viewDeckController toggleLeftViewAnimated:YES];
+                isOpenL=YES;
+            }
+            if(!isOpenL&&isOpenR)
+            {
+                [self.viewDeckController toggleRightViewAnimated:YES];
+                isOpenR=NO;
+            }
+            
         }
-        if(isOpenL&&!isOpenR)
-        {
-            [self.viewDeckController toggleLeftViewAnimated:YES];
-            isOpenL=NO;
+        if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {//bie
+            
+            if(!isOpenR&&!isOpenL)
+            {
+                [self.viewDeckController toggleRightViewAnimated:YES];
+                isOpenR=YES;
+            }
+            if(isOpenL&&!isOpenR)
+            {
+                [self.viewDeckController toggleLeftViewAnimated:YES];
+                isOpenL=NO;
+            }
         }
+
     }
 }
 -(void)buildTheTopBar
@@ -229,158 +240,158 @@
 }
 -(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID
 {
-     if([jsonString isEqualToString:@"0"])
-     {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-             //耗时的一些操作
-             
-             NSString *strJson;
-             NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-             NSString *documentsPaths=[array objectAtIndex:0];
-             //NSString *str=[NSString stringWithFormat:@"News_dataBases"];
-             NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"News_dataBases"];
-             sqlite3 *database;
-             
-             if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-             {
-                 NSLog(@"open success");
-             }
-             else {
-                 NSLog(@"open failed");
-             }
-             
-             char *errorMsg;
-             NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)"; //创建表
-             if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-             {
-                 NSLog(@"create success");
-             }else{
-                 NSLog(@"create error:%s",errorMsg);
-                 sqlite3_free(errorMsg);
-             }
-             sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",ID];
-             sqlite3_stmt *stmt;
-             //查找数据
+    if([jsonString isEqualToString:@"0"])
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            //耗时的一些操作
+            
+            NSString *strJson;
+            NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsPaths=[array objectAtIndex:0];
+            //NSString *str=[NSString stringWithFormat:@"News_dataBases"];
+            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"News_dataBases"];
+            sqlite3 *database;
+            
+            if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+            {
+                NSLog(@"open success");
+            }
+            else {
+                NSLog(@"open failed");
+            }
+            
+            char *errorMsg;
+            NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)"; //创建表
+            if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+            {
+                NSLog(@"create success");
+            }else{
+                NSLog(@"create error:%s",errorMsg);
+                sqlite3_free(errorMsg);
+            }
+            sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",ID];
+            sqlite3_stmt *stmt;
+            //查找数据
             BOOL flag=NO;
-
-             if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-             {
-                 
-                 while (sqlite3_step(stmt)==SQLITE_ROW) {
-                     
-                     if(sqlite3_column_count(stmt)==0)
-                     {
-                         flag=YES;
-                         break;
-                     }
-                     const unsigned char *_id= sqlite3_column_text(stmt, 0);
-                     strJson= [NSString stringWithUTF8String: _id];
-                   //  const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-                     //strJson= [NSString stringWithUTF8String: _pic];
-                     break;
-                 }
-             }
+            
+            if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+            {
+                
+                while (sqlite3_step(stmt)==SQLITE_ROW) {
+                    
+                    if(sqlite3_column_count(stmt)==0)
+                    {
+                        flag=YES;
+                        break;
+                    }
+                    const unsigned char *_id= sqlite3_column_text(stmt, 0);
+                    strJson= [NSString stringWithUTF8String: _id];
+                    //  const unsigned char *_pic= sqlite3_column_text(stmt, 1);
+                    //strJson= [NSString stringWithUTF8String: _pic];
+                    break;
+                }
+            }
             sqlite3_finalize(stmt);
             sqlite3_close(database);
-             
-             
-             dispatch_async(dispatch_get_main_queue(), ^{//主线程
-                 if(flag)
-                 {
-                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
-                                                                     message:@"该缓存为空，请连接网络使用"
-                                                                    delegate:self
-                                                           cancelButtonTitle:@"确定"
-                                                           otherButtonTitles: nil];
-                     [alert release];
-                     
-                 }
-                 else
-                 {
-                     SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
-                     NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
-                     
-                     NSArray *data = [jsonObj1 objectForKey:@"data"];
-                     total += data.count;
-                     NSLog(@"资讯条目数量 : %d",total);
-                     NSLog(@"total : %d",total);
-                     newSumCount=arr.count;
-                     for (int i =0; i <data.count; i++) {
-                         
-                         [arr insertObject:[data objectAtIndex:i] atIndex: newSumCount];
-                         newSumCount++;
-                     }
-                     [self build_TableView];
-                 }
-             });
-         });
-     }
-     else{
-         
-         [self buildTheTopBar];
-         
-         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-             //耗时的一些操作
-             
-             NSString *strJson;
-             NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-             NSString *documentsPaths=[array objectAtIndex:0];
-             NSString *str1=[NSString stringWithFormat:@"NewsTop_dataBases"];
-             NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str1];
-             sqlite3 *database;
-             
-             if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-             {
-                 NSLog(@"open success");
-             }
-             else {
-                 NSLog(@"open failed");
-             }
-             
-             char *errorMsg;
-             NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)"; //创建表
-             if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-             {
-                 NSLog(@"create success");
-             }else{
-                 NSLog(@"create error:%s",errorMsg);
-                 sqlite3_free(errorMsg);
-             }
-             sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",ID];
-             sqlite3_stmt *stmt;
-             //查找数据
-             
-             if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-             {
-                 
-                 while (sqlite3_step(stmt)==SQLITE_ROW) {
-                     
-                     
-                     const unsigned char *_id= sqlite3_column_text(stmt, 0);
-                     strJson= [NSString stringWithUTF8String: _id];
+            
+            
+            dispatch_async(dispatch_get_main_queue(), ^{//主线程
+                if(flag)
+                {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                    message:@"该缓存为空，请连接网络使用"
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"确定"
+                                                          otherButtonTitles: nil];
+                    [alert release];
+                    
+                }
+                else
+                {
+                    SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
+                    NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
+                    
+                    NSArray *data = [jsonObj1 objectForKey:@"data"];
+                    total += data.count;
+                    NSLog(@"资讯条目数量 : %d",total);
+                    NSLog(@"total : %d",total);
+                    newSumCount=arr.count;
+                    for (int i =0; i <data.count; i++) {
+                        
+                        [arr insertObject:[data objectAtIndex:i] atIndex: newSumCount];
+                        newSumCount++;
+                    }
+                    [self build_TableView];
+                }
+            });
+        });
+    }
+    else{
+        
+        [self buildTheTopBar];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            //耗时的一些操作
+            
+            NSString *strJson;
+            NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsPaths=[array objectAtIndex:0];
+            NSString *str1=[NSString stringWithFormat:@"NewsTop_dataBases"];
+            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str1];
+            sqlite3 *database;
+            
+            if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+            {
+                NSLog(@"open success");
+            }
+            else {
+                NSLog(@"open failed");
+            }
+            
+            char *errorMsg;
+            NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)"; //创建表
+            if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+            {
+                NSLog(@"create success");
+            }else{
+                NSLog(@"create error:%s",errorMsg);
+                sqlite3_free(errorMsg);
+            }
+            sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",ID];
+            sqlite3_stmt *stmt;
+            //查找数据
+            
+            if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+            {
+                
+                while (sqlite3_step(stmt)==SQLITE_ROW) {
+                    
+                    
+                    const unsigned char *_id= sqlite3_column_text(stmt, 0);
+                    strJson= [NSString stringWithUTF8String: _id];
                     // const unsigned char *_pic= sqlite3_column_text(stmt, 1);
-                     //strJson= [NSString stringWithUTF8String: _pic];
-                     break;
-                 }
-             }
-             sqlite3_finalize(stmt);
-             sqlite3_close(database);
-             
-              app.jsonStringOne=strJson;
-             dispatch_async(dispatch_get_main_queue(), ^{//主线程
+                    //strJson= [NSString stringWithUTF8String: _pic];
+                    break;
+                }
+            }
+            sqlite3_finalize(stmt);
+            sqlite3_close(database);
+            
+            app.jsonStringOne=strJson;
+            dispatch_async(dispatch_get_main_queue(), ^{//主线程
+                
+                app.jsonStringOne=strJson;
+                
+            });
+        });
+    }
     
-                 app.jsonStringOne=strJson;
-             
-             });
-         });
-     }
-
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID Offent:(NSString *)Out
 {
-   
+    
     app.jsonString=jsonString;
-
+    
     isFistLevel=[flag intValue];
     
     if(isFistLevel==0)
@@ -398,7 +409,7 @@
                                                    cancelButtonTitle:nil
                                                    otherButtonTitles: @"确定",nil]autorelease];
             [alert show];
-
+            
         }
         else
         {
@@ -406,7 +417,7 @@
                 //耗时的一些操作
                 
                 
-               // NSString *strJson;
+                // NSString *strJson;
                 NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                 NSString *documentsPaths=[array objectAtIndex:0];
                 NSString *str1=[NSString stringWithFormat:@"News_dataBases"];
@@ -485,7 +496,7 @@
                     [self build_TableView];
                 });
             });
-
+            
         }
         
     }
@@ -495,7 +506,7 @@
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             //耗时的一些操作
-          //  NSString *strJson;
+            //  NSString *strJson;
             NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsPaths=[array objectAtIndex:0];
             NSString *str2=[NSString stringWithFormat:@"NewsTop_dataBases"];
@@ -560,16 +571,16 @@
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 
                 
-                  app.jsonStringOne=jsonString;
+                app.jsonStringOne=jsonString;
                 
             });
         });
     }
- 
+    
 }
 -(void)build_TableView
 {
-
+    
     [self createHeaderView];
     [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
     [_refreshHeaderView refreshLastUpdatedDate];
@@ -578,9 +589,9 @@
     tabView.dataSource=self;//设置双重代理 很重要
     [tabView setBackgroundColor:[UIColor clearColor]];
     [tabView setSeparatorStyle:UITableViewCellSeparatorStyleNone];//hidden the lines
-     [tabView reloadData];
+    [tabView reloadData];
     [self.view addSubview:tabView];
-   
+    
 }
 -(void)PessSwitch_BtnTag:(id)sender
 {
@@ -588,7 +599,7 @@
     if(btn.tag==10)
     {
         [self.viewDeckController toggleLeftViewAnimated:YES];
-       
+        
     }
     else
     {
@@ -624,22 +635,72 @@
     
     if(indexPath.row==0)
     {
+    
+        NewCell *cellOne=(NewCell*)[tableView dequeueReusableCellWithIdentifier:@"NewCell"];
+        static NSString *cellIdentifiter = @"Cellidentifiter";
         
-        static NSString *identity = @"cell";
-        skyCell *cellSky = (skyCell *)[tableView dequeueReusableCellWithIdentifier:identity];
-        if(cellSky==nil)
+        if(cellOne==nil)
         {
-            cellSky = [[[skyCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity]autorelease];
-        }
-        else{
+            cellOne= [[NewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifiter];
+            NSMutableArray* dataPic;
+            NSMutableArray* dataLabel;
+            NSMutableArray *dataTitle;
+            dataPic=[[[NSMutableArray alloc]init]autorelease];
+            dataLabel=[[[NSMutableArray alloc]init]autorelease];
+            SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+            NSArray *jsonObj =[parser objectWithString:app.jsonStringOne];
+            for(int i=0;i<jsonObj.count ;i++)
+            {
+                [dataPic insertObject:[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[[jsonObj objectAtIndex:i] objectForKey:@"image"]] atIndex:i];
+                [dataLabel insertObject: [[jsonObj objectAtIndex:i]objectForKey:@"name"] atIndex:i];
+                [arrTopId insertObject:  [[jsonObj objectAtIndex:i]objectForKey:@"id"]  atIndex:i];
+            }
             
+            scrollView_Book.contentSize = CGSizeMake(320*dataPic.count, 0);
+            scrollView_Book.delegate=self;
+            for(int i=0;i<dataPic.count;i++)
+            {
+                UIImageView *imageView=[[[UIImageView alloc]initWithFrame:CGRectMake(320*i, 0, 320,  178)]autorelease];
+                imageView.tag = i+1;
+                [imageView setImageWithURL:[NSURL URLWithString: [dataPic objectAtIndex:i]]
+                                  placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                                           success:^(UIImage *image) {NSLog(@"资讯置顶图片显示成功OK");}
+                                           failure:^(NSError *error) {NSLog(@"资讯置顶图片显示失败NO");}];
+                
+                
+                
+                UIImageView *clearBack=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 143, 320,30)]autorelease];
+                clearBack.image=[UIImage imageNamed:@"clearBack@2X"];
+                [imageView addSubview:clearBack];
+                UIImageView *arrow=[[UIImageView alloc]initWithFrame:CGRectMake(300, 10, 9, 11)];
+                arrow.image=[UIImage imageNamed:@"theArrow"];
+                [clearBack addSubview:arrow];
+                UILabel *title_label=[[[UILabel alloc]initWithFrame:CGRectMake(2, 0, 299, 30)]autorelease];
+                title_label.text=[dataLabel objectAtIndex:i];
+                
+                title_label.textColor=[UIColor whiteColor];
+                title_label.backgroundColor=[UIColor clearColor];
+                title_label.font=[UIFont boldSystemFontOfSize:14];
+                
+                [clearBack addSubview:title_label];
+                
+                UILabel *num_label=[[UILabel alloc]initWithFrame:CGRectMake(270, 0, 41,30)];
+                num_label.text=[NSString stringWithFormat:@"%d/%d",i+1,dataPic.count];
+                num_label.textColor=[UIColor whiteColor];
+                num_label.backgroundColor=[UIColor clearColor];
+                num_label.font=[UIFont boldSystemFontOfSize:14];
+                [clearBack addSubview:num_label];
+                [scrollView_Book addSubview:imageView];
+                
+            }
+            UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap1:)]autorelease];
+            [singleTap setNumberOfTapsRequired:1];
+            
+            [scrollView_Book  addGestureRecognizer:singleTap];
+            [cellOne addSubview:scrollView_Book];
         }
-         cellSky .selectionStyle = UITableViewCellSelectionStyleNone;
-//        UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap1:)]autorelease];
-//        [singleTap setNumberOfTapsRequired:1];
-//        
-//        [cellSky  addGestureRecognizer:singleTap];
-        return cellSky;
+        
+        return cellOne;
     }
     else
     {
@@ -654,19 +715,19 @@
         cell.labelForCategory_id.text=[dict objectForKey:@"category_id"];
         
         cell.labelForName.text=[dict objectForKey:@"name"];
-
+        
         if(app.isRead)
         {
             for(int i=0;i<app.isReadCount;i++)
             {
-                 if([[dict objectForKey:@"id"]isEqualToString: [[IsRead sharedInstance].single_isRead_Data objectAtIndex:i]  ])
-                 {
-                      cell.labelForName.textColor =[UIColor blackColor ];
-                 }
+                if([[dict objectForKey:@"id"]isEqualToString: [[IsRead sharedInstance].single_isRead_Data objectAtIndex:i]  ])
+                {
+                    cell.labelForName.textColor =[UIColor blackColor ];
+                }
             }
         }
         else{
-             cell.labelForName.textColor =[UIColor redColor ];
+            cell.labelForName.textColor =[UIColor redColor ];
         }
         
         cell.labelForName.font=[UIFont systemFontOfSize:15.0f];
@@ -686,7 +747,7 @@
         
         
         //#import "UIImageView+WebCache.h" 加载网络图片方法end
-
+        
         return cell;
     }
 }
@@ -697,7 +758,7 @@
         CGRect cellFrameInTableView = [tableView rectForRowAtIndexPath:indexPath];
         CGRect cellFrameInSuperview = [tableView convertRect:cellFrameInTableView toView:[tableView superview]];
         DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
-    
+        
         NSMutableDictionary* dict = [self.arr objectAtIndex:indexPath.row-1];
         //  detail.dictForData=dict;
         detail.arrIDListNew=arrID;
@@ -705,7 +766,7 @@
         detail.momentID=[dict objectForKey:@"id"];
         NSLog(@"NewsID :  %d",NewsID);
         detail.fatherID=[NSString stringWithFormat:@"%d",NewsID];
- 
+        
         [self.navigationController pushViewController:detail animated:YES];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
@@ -714,30 +775,7 @@
         NSLog(@"%@",app.next_Page);
     }
 }
-#pragma mark 手势
-- (void) handleSingleTap1:(UITapGestureRecognizer *) gestureRecognizer{
-/*	CGFloat pageWith = 320;
-    skyCell *cellSky=[[[skyCell alloc]init]autorelease];
-    CGPoint loc = [gestureRecognizer locationInView:cellSky ]  ;
-    NSInteger touchIndex = floor(loc.x / pageWith) ;
-    if (touchIndex > arr.count) {
-        return;
-    }
-    //进入详细阅读
-    NSDictionary* dict = [arr objectAtIndex:touchIndex];
-    
-    DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
-    [detail.arrIDListNew insertObject:@"9" atIndex:0 ];
-    [detail.arrIDListNew insertObject:@"10" atIndex:1 ];
-    detail.momentID=[dict objectForKey:@"id"];
-    [self.navigationController pushViewController:detail animated:YES];
-    
-//    skyCell *sky=[[[skyCell alloc]init]autorelease];
-//    sky.delegate=self;
-//    [sky action];
-    */
-    NSLog(@"XXXXX");
-}
+
 -(void)theFirstCell_Transport:(NSString *)ID_Num
 {
     DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
@@ -754,15 +792,38 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView;//不滑动 显示toolbar
 {
     NSLog(@"g滚动");
-    
-     //   NSLog(@"%f",scrollView.center.y);
-    
+    if (scrollView == scrollView_Book)
+    {
+		CGFloat pageWidth = scrollView.frame.size.width;
+		page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+        NSLog(@"page   :%d",page);
+        UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap1:)]autorelease];
+        [singleTap setNumberOfTapsRequired:1];
+        
+        [scrollView_Book  addGestureRecognizer:singleTap];
+
+	}
+}
+#pragma mark 手势
+- (void) handleSingleTap1:(UITapGestureRecognizer *) gestureRecognizer{
+    if(arrTopId.count==0)
+    {
+        
+    }
+    else
+    {
+        DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
+        
+        detail.momentID=[arrTopId objectAtIndex:page];
+        detail.fatherID=@"0";
+        [self.navigationController pushViewController:detail animated:YES];
+    }
 }
 ///ScrollView end
 -(void)pressLeftSlide
 {
     [self.viewDeckController toggleLeftViewAnimated:YES];
-  
+    
 }
 -(void)pressRightSlide
 {
@@ -902,26 +963,42 @@
 #pragma mark UIScrollViewDelegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (_refreshHeaderView)
+    if(scrollView==scrollView_Book)
     {
-        [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+        
     }
-    
-    if (_refreshFooterView)
+    else
     {
-        [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
+        if (_refreshHeaderView)
+        {
+            [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+        }
+        
+        if (_refreshFooterView)
+        {
+            [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
+        }
+
     }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    if (_refreshHeaderView)
+    if(scrollView==scrollView_Book)
     {
-        [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+        
     }
-    
-    if (_refreshFooterView)
+    else
     {
-        [_refreshFooterView egoRefreshScrollViewDidEndDragging:scrollView];
+        if (_refreshHeaderView)
+        {
+            [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+        }
+        
+        if (_refreshFooterView)
+        {
+            [_refreshFooterView egoRefreshScrollViewDidEndDragging:scrollView];
+        }
+
     }
 }
 

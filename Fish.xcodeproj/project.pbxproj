@@ -318,6 +318,10 @@
 		BBDBE948184DD064009FA292 /* LeftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBDBE946184DD064009FA292 /* LeftViewController.xib */; };
 		BBDBE94C184DD6CB009FA292 /* RightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDBE94A184DD6CB009FA292 /* RightViewController.m */; };
 		BBDBE94D184DD6CB009FA292 /* RightViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBDBE94B184DD6CB009FA292 /* RightViewController.xib */; };
+		BBDCDB9A18A8729D0059E7AE /* BookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDCDB9818A8729D0059E7AE /* BookViewController.m */; };
+		BBDCDB9B18A8729D0059E7AE /* BookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBDCDB9918A8729D0059E7AE /* BookViewController.xib */; };
+		BBDCDBA018A878230059E7AE /* NewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDCDB9F18A878230059E7AE /* NewCell.m */; };
+		BBDCDBA218A878380059E7AE /* NewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBDCDBA118A878380059E7AE /* NewCell.xib */; };
 		BBE61232188BAA3F00DCCB52 /* topicBack.png in Resources */ = {isa = PBXBuildFile; fileRef = BBE61230188BAA3F00DCCB52 /* topicBack.png */; };
 		BBE61233188BAA3F00DCCB52 /* topicBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBE61231188BAA3F00DCCB52 /* topicBack@2X.png */; };
 		BBEB52C31867169B00527C90 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBEB52C21867169B00527C90 /* ViewController.m */; };
@@ -756,6 +760,12 @@
 		BBDBE949184DD6CB009FA292 /* RightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RightViewController.h; path = ../RightViewController.h; sourceTree = "<group>"; };
 		BBDBE94A184DD6CB009FA292 /* RightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RightViewController.m; path = ../RightViewController.m; sourceTree = "<group>"; };
 		BBDBE94B184DD6CB009FA292 /* RightViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RightViewController.xib; path = ../RightViewController.xib; sourceTree = "<group>"; };
+		BBDCDB9718A8729D0059E7AE /* BookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookViewController.h; sourceTree = "<group>"; };
+		BBDCDB9818A8729D0059E7AE /* BookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookViewController.m; sourceTree = "<group>"; };
+		BBDCDB9918A8729D0059E7AE /* BookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookViewController.xib; sourceTree = "<group>"; };
+		BBDCDB9E18A878230059E7AE /* NewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCell.h; sourceTree = "<group>"; };
+		BBDCDB9F18A878230059E7AE /* NewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCell.m; sourceTree = "<group>"; };
+		BBDCDBA118A878380059E7AE /* NewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCell.xib; sourceTree = "<group>"; };
 		BBE61230188BAA3F00DCCB52 /* topicBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topicBack.png; sourceTree = "<group>"; };
 		BBE61231188BAA3F00DCCB52 /* topicBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topicBack@2X.png"; sourceTree = "<group>"; };
 		BBEB52C21867169B00527C90 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
@@ -1187,6 +1197,9 @@
 				BBB79BC718614840007DCEEA /* NewsController.h */,
 				BBB79BC818614840007DCEEA /* NewsController.m */,
 				BBB79BC918614840007DCEEA /* NewsController.xib */,
+				BBDCDB9718A8729D0059E7AE /* BookViewController.h */,
+				BBDCDB9818A8729D0059E7AE /* BookViewController.m */,
+				BBDCDB9918A8729D0059E7AE /* BookViewController.xib */,
 				BBC499E5186301CE00D5672C /* DetailViewController.h */,
 				BBC4401D1870185A006FF280 /* DetailViewController.m */,
 				BBA18E781864277100EEEFC8 /* DetailViewController.xib */,
@@ -1199,6 +1212,9 @@
 				BBD67E3E1876D6E800A6CD87 /* StoreUpViewController.h */,
 				BBD67E3F1876D6E800A6CD87 /* StoreUpViewController.m */,
 				BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */,
+				BBDCDB9E18A878230059E7AE /* NewCell.h */,
+				BBDCDB9F18A878230059E7AE /* NewCell.m */,
+				BBDCDBA118A878380059E7AE /* NewCell.xib */,
 			);
 			name = FormalVC;
 			path = ..;
@@ -1901,6 +1917,7 @@
 				BBA352A918792A2900A8239C /* TypeNormal@2X.png in Resources */,
 				BBE61233188BAA3F00DCCB52 /* topicBack@2X.png in Resources */,
 				BBA6989A186FE9DD00DE10AB /* grayArrow.png in Resources */,
+				BBDCDBA218A878380059E7AE /* NewCell.xib in Resources */,
 				BBA5B7D1187A875000D55899 /* labelNormal_Set.png in Resources */,
 				BBA49317187D54230089D35E /* word.png in Resources */,
 				BBAB9BDE1896839500F66100 /* Default@2x.png in Resources */,
@@ -1919,6 +1936,7 @@
 				BBA492F9187CEE8E0089D35E /* Set.png in Resources */,
 				BBA49310187D48BE0089D35E /* LeftBtn@2X.png in Resources */,
 				BBAB9BDD1896839500F66100 /* Default.png in Resources */,
+				BBDCDB9B18A8729D0059E7AE /* BookViewController.xib in Resources */,
 				BBD07928188EB1D400325927 /* Function_Small@2X.png in Resources */,
 				BBA492FD187CF0BE0089D35E /* slideLeft_Back.png in Resources */,
 				BBAF28D1187E451E005A3FCB /* shareImg@2X.png in Resources */,
@@ -2075,11 +2093,13 @@
 				BBA4789C185721A000E64289 /* SDWebImageManager.m in Sources */,
 				BBB79BD518618C5A007DCEEA /* InformationCell.m in Sources */,
 				BBA478821857215E00E64289 /* Util.m in Sources */,
+				BBDCDB9A18A8729D0059E7AE /* BookViewController.m in Sources */,
 				BBA11CEE185EDAAF000D39F8 /* SBJsonParser.m in Sources */,
 				BB7846301859A38B00260712 /* TileView.m in Sources */,
 				BBEB52C31867169B00527C90 /* ViewController.m in Sources */,
 				BBA11CCC185ECABC000D39F8 /* ASIDataDecompressor.m in Sources */,
 				BBD52A89185D470500575349 /* UIGestureRecognizer+GMGridViewAdditions.m in Sources */,
+				BBDCDBA018A878230059E7AE /* NewCell.m in Sources */,
 				BBC4401E1870185A006FF280 /* DetailViewController.m in Sources */,
 				BBD52A94185D471D00575349 /* GMGridViewCell.m in Sources */,
 				BBB79BCA18614840007DCEEA /* NewsController.m in Sources */,

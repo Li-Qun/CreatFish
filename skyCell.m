@@ -82,7 +82,6 @@
         cellOne.numLabel.text=[NSString stringWithFormat:@"%d/%d",indexPath.row+1,dataPic.count];
         cellOne.numLabel.textColor=[UIColor whiteColor];
         cellOne.numLabel.backgroundColor=[UIColor clearColor];
-        cellOne.numLabel.textAlignment= UITextAlignmentCenter;
         cellOne.numLabel.font=[UIFont boldSystemFontOfSize:14];
         
         
@@ -105,11 +104,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"第一行点击%d",[indexPath row]);
-    
-    
-    NewsController *new=[[[NewsController alloc]init]autorelease];
-    new.Delegate =self;
-    [new theFirstCell_Transport:[[jsonObj objectAtIndex:indexPath.row]objectForKey:@"id"]];
+
+    app.next_Page=@"3";
+//    NewsController *new=[[[NewsController alloc]init]autorelease];
+//    new.Delegate =self;
+//    [new theFirstCell_Transport:[[jsonObj objectAtIndex:indexPath.row]objectForKey:@"id"]];
     
     
 }

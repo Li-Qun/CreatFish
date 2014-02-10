@@ -10,6 +10,7 @@
 #import "LeftViewController.h"
 #import "IIViewDeckController.h"
 #import "NewsController.h"
+#import "BookViewController.h"
 #import "ViewController.h"
 #import "AppDelegate.h"
 
@@ -280,13 +281,21 @@
         if([isGallery integerValue]==0&& [isTopic integerValue]==0)
         {
             [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {
-                NewsController *apiVC = [[[NewsController alloc] init] autorelease];
+//                NewsController *apiVC = [[[NewsController alloc] init] autorelease];
+//                apiVC.NewsName=name;
+//                apiVC.target=btn.tag;
+//                apiVC.NewsPid=[NSString stringWithFormat:@"%d",btn.tag];
+//                UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
+//                self.viewDeckController.centerController = navApiVC;
+//                self.view.userInteractionEnabled = YES;
+                BookViewController *apiVC = [[[BookViewController alloc] init] autorelease];
                 apiVC.NewsName=name;
                 apiVC.target=btn.tag;
                 apiVC.NewsPid=[NSString stringWithFormat:@"%d",btn.tag];
                 UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
                 self.viewDeckController.centerController = navApiVC;
                 self.view.userInteractionEnabled = YES;
+
             }];
 
             
