@@ -15,7 +15,7 @@
     int targetNum;
     NSArray *oldArray ;
     UIButton *view_btn;
-    FishSave *fishSave;
+  //  FishSave *fishSave;
 }
 @property(strong,nonatomic)UILabel *label;
 @property(strong,nonatomic)UIImage *img;

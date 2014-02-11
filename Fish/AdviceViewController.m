@@ -188,7 +188,7 @@
 //    textView.text=@"dnjfsdnkadsmlka";
 //    [content_Read Submmit:callNumber.text typeBack:labelType.text content:textView.text];
  }
--(void)reBack:(NSString *)jsonString reLoad :(NSString *)ID
+-(void)reBack:(NSString *)jsonString reLoad :(NSString *)ID Offent:(NSString *)Out
 {
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString: jsonString];

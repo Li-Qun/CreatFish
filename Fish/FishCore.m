@@ -79,7 +79,7 @@
         [request startAsynchronous ];
     }
     else{
-          [delegate reBack:@"6" reLoad:@"0"];
+          [delegate reBack:@"6" reLoad:@"0" Offent:@"0"];
     }
 }
 //content/read_lst
@@ -117,7 +117,7 @@
    }
    else{
        
-        [delegate reBack:flag reLoad:ID];
+        [delegate reBack:flag reLoad:ID Offent:Offset];
    }
 }
 //【画廊】查询 - 列表 [gallery/read_lst]
@@ -147,7 +147,7 @@
     }
     else
     {
-        [delegate reBack:@"0" reLoad:content_id];
+        [delegate reBack:@"0" reLoad:content_id Offent:@"0"];
 
     }
    
@@ -180,41 +180,41 @@
     }
     else
     {
-        [delegate reBack:@"5" reLoad:content_id];
+        [delegate reBack:@"5" reLoad:content_id Offent:@"0"];
     }
     
 }
-//查询 - 详细 [content/read_dtl
--(void)ContentDetail:(NSString*) content_id
-{
-    if([self isConnectionAvailable])
-    {
-        NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/content/read_dtl" ];
-        __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
-        [request setRequestMethod:@"POST"];
-        [request setPostValue:content_id forKey:@"content_id"];
-        
-        [request setDelegate:self];
-        [request setCompletionBlock :^{
-            // 请求响应结束，返回 responseString
-            NSString * jsonString  =  [request responseString];
-            [delegate reBack :jsonString];
-        }];
-        [request setFailedBlock :^{
-            // 请求响应失败，返回错误信息
-            NSError *error = [request error ];
-            NSLog ( @"error:%@" ,[error userInfo ]);
-             [self mention ];
-            
-        }];
-        [request startAsynchronous ];//异步
-    }
-    else
-    {
-        [delegate reBack:content_id reLoad:content_id];
-    }
-    
-}
+////查询 - 详细 [content/read_dtl
+//-(void)ContentDetail:(NSString*) content_id
+//{
+//    if([self isConnectionAvailable])
+//    {
+//        NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/content/read_dtl" ];
+//        __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
+//        [request setRequestMethod:@"POST"];
+//        [request setPostValue:content_id forKey:@"content_id"];
+//        
+//        [request setDelegate:self];
+//        [request setCompletionBlock :^{
+//            // 请求响应结束，返回 responseString
+//            NSString * jsonString  =  [request responseString];
+//            [delegate reBack :jsonString];
+//        }];
+//        [request setFailedBlock :^{
+//            // 请求响应失败，返回错误信息
+//            NSError *error = [request error ];
+//            NSLog ( @"error:%@" ,[error userInfo ]);
+//             [self mention ];
+//            
+//        }];
+//        [request startAsynchronous ];//异步
+//    }
+//    else
+//    {
+//        [delegate reBack:content_id reLoad:content_id];
+//    }
+//    
+//}
 //setting/read_lst查询 - 列表
 -(void)ContentSetting
 {
@@ -240,7 +240,7 @@
     }
     else
     {
-        [delegate reBack:@"5" reLoad:@"0"];
+        [delegate reBack:@"5" reLoad:@"0" Offent:@"0"];
     }
 }
 //【反馈】添加 [feedback/create]
@@ -256,7 +256,7 @@
     NSLog(@"%d",[request responseStatusCode]);
     [request setCompletionBlock :^{
         NSString * string =  [request responseString];
-        [delegate reBack:string reLoad:@"0"];
+        [delegate reBack:string reLoad:@"0" Offent:@"0"];
     }];
     [request setFailedBlock :^{
         NSError *error = [request error ];

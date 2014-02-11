@@ -127,7 +127,7 @@
         isFirstOpen=YES;
     }
 }
--(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID
+-(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID Offent:(NSString *)Out
 {
     if(isSeven&&isFive)
     {

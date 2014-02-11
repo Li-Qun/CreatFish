@@ -15,13 +15,13 @@
 
 #include "JSON.h"
 
-@interface FishSave : NSObject
-{
-    //收藏模块
-    NSMutableArray *tileArray;
-}
-@property (nonatomic, readonly) NSMutableArray *tileArray;
-@end
+//@interface FishSave : NSObject
+//{
+//    //收藏模块
+//    NSMutableArray *tileArray;
+//}
+//@property (nonatomic, readonly) NSMutableArray *tileArray;
+//@end
 
 
 
@@ -30,7 +30,7 @@
 @protocol FishDelegate
 @optional
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID :(NSString*)ID Offent:(NSString*)Out;
--(void)reBack:(NSString *)jsonString reLoad :(NSString *)ID;
+-(void)reBack:(NSString *)jsonString reLoad :(NSString *)ID Offent:(NSString *)Out;
 
 @end
 @interface ContentRead:NSObject<ASIHTTPRequestDelegate,FishDelegate >

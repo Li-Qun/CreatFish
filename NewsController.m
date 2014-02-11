@@ -227,7 +227,7 @@
     tabView.frame=CGRectMake(0, heightTopbar, 320, height_Momente);
     
 }
--(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID
+-(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID Offent:(NSString *)Out
 {
      if([jsonString isEqualToString:@"0"])
      {
