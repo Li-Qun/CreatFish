@@ -151,7 +151,7 @@
         NSString *strJson;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *str=[NSString stringWithFormat:@"BigFishView_DataBase"];
+        NSString *str=[NSString stringWithFormat:@"BigFishViewController_DataBase"];
         NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
         sqlite3 *database;
         
@@ -162,12 +162,26 @@
         else {
             NSLog(@"open failed");
         }
-        
-        // 查找数据
-        NSString* sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",ID];
-        sqlite3_stmt *stmt;
-        //查找数据
         BOOL flag=NO;
+        //初始查询该条记录是否存在 不存在 提示 存在 读取并 加载
+        NSString* sql =[NSString stringWithFormat:@"select  count(*) from picture where ID='%@' and Offent='%@'",ID,Out];
+        sqlite3_stmt *stmt;
+        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+        {
+            while (sqlite3_step(stmt)==SQLITE_ROW) {
+                
+                const unsigned char *_id= sqlite3_column_text(stmt, 0);
+                strJson= [NSString stringWithUTF8String: _id];
+                if([strJson isEqualToString:@"0"])//count ==0 记录不存在
+                {
+                    flag=YES;
+                }
+            }
+        }
+        
+        sql =[NSString stringWithFormat:@"select pic from picture where ID='%@' and Offent='%@'",ID,Out];
+ 
+        //查找数据
         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
         {
             
@@ -195,6 +209,7 @@
             
             if(flag)
             {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                 message:@"该缓存为空，请连接网络使用"
                                                                delegate:self
@@ -276,7 +291,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsPaths=[array objectAtIndex:0];
-            NSString *str=[NSString stringWithFormat:@"BigFishView_DataBase"];
+            NSString *str=[NSString stringWithFormat:@"BigFishViewController_DataBase"];
             NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
             sqlite3 *database;
             
@@ -298,7 +313,7 @@
 //            else NSLog(@"delect failde!!!!");
             
             NSString* sql ;
-            sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,pic TEXT)";
+            sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,Offent TEXT,pic TEXT)";
             //创建表
             if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
             {
@@ -308,10 +323,11 @@
                 sqlite3_free(errorMsg);
             }
              //查找数据
-            sql=[NSString stringWithFormat:@"select ID from picture where ID='%@'",ID];
+            sql=[NSString stringWithFormat:@"select ID from picture where ID='%@'and Offent='%@'",ID,Out];
             sqlite3_stmt *stmt;
             //查找数据
             BOOL OK=NO;
+  
             if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
             {
                 
@@ -330,7 +346,7 @@
             if(!OK)
             {
                 NSString *insertSQLStr1 =[NSString stringWithFormat:
-                                          @"INSERT INTO 'picture' ('ID','pic' ) VALUES ('%@','%@')", ID,jsonString];
+                                          @"INSERT INTO 'picture' ('ID','Offent','pic' ) VALUES ('%@','%@','%@')", ID,Out,jsonString];
                 const char *insertSQL1=[insertSQLStr1 UTF8String];
                 //插入数据 进行更新操作
                 if (sqlite3_exec(database, insertSQL1 , NULL, NULL, &errorMsg)==SQLITE_OK) {
@@ -341,7 +357,6 @@
                     sqlite3_free(errorMsg);
                 }
             }
-
             sqlite3_finalize(stmt);
             //  最后，关闭数据库：
             sqlite3_close(database);
@@ -632,9 +647,6 @@
     CATransform3D transform = CATransform3DIdentity;
     transform.m34 = _carousel.perspective;
     transform = CATransform3DRotate(transform, M_PI / 8.0, 0, 1.0, 0);
-    
-    
-    
     return CATransform3DTranslate(transform, 0.0, 0.0, offset * _carousel.itemWidth);
 }
  
@@ -644,6 +656,9 @@
     if(index1==total)
     {
         NSLog(@"点击加载更多...");
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
+        hud.labelText = @"正在加载图片~~";//加载提示语言
         ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
         NSString *str=[NSString stringWithFormat:@"%d",target];
         
@@ -652,9 +667,7 @@
         
         [contentRead fetchList:str isPri:@"0" Out:str1];
         
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeIndeterminate;
-        hud.labelText = @"正在加载图片~~";//加载提示语言
+        
     }
     else
     {

@@ -305,6 +305,7 @@
                 
                 if(flag)
                 {
+                    [MBProgressHUD hideHUDForView:tabView animated:YES];
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                     message:@"该缓存为空，请连接网络使用"
                                                                    delegate:self
@@ -314,7 +315,7 @@
                     [alert release];
                     
                 }
-                else
+                else if(!flag)
                 {
                     SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
                     NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
@@ -329,6 +330,7 @@
                         [arr insertObject:[data objectAtIndex:i] atIndex: newSumCount];
                         newSumCount++;
                     }
+                    [MBProgressHUD hideHUDForView:tabView animated:YES];
                     [self build_TableView];
                 }
             });
@@ -410,6 +412,7 @@
         NSDictionary *data = [jsonObj objectForKey:@"data"];
         if(data.count==0)
         {
+            [MBProgressHUD hideHUDForView:tabView animated:YES];
             UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
                                                              message:@"没有更多阅钓信息了～"
                                                             delegate:self
@@ -500,6 +503,7 @@
                         [arr insertObject:[data objectAtIndex:i] atIndex: newSumCount];
                         newSumCount++;
                     }
+                    [MBProgressHUD hideHUDForView:tabView animated:YES];
                     [self build_TableView];
                 });
             });
@@ -767,8 +771,6 @@
         DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
         
         NSMutableDictionary* dict = [self.arr objectAtIndex:indexPath.row-1];
-        //  detail.dictForData=dict;
-        detail.arrIDListNew=arrID;
         detail.yOrigin=cellFrameInSuperview.origin.y;
         detail.momentID=[dict objectForKey:@"id"];
         NSLog(@"NewsID :  %d",NewsID);
@@ -940,7 +942,12 @@
     }else if(aRefreshPos == EGORefreshFooter)
     {
         // pull up to load more data
-        [self performSelector:@selector(getNextPageView) withObject:nil afterDelay:2.0];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:tabView animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
+        hud.labelText = @"正在加载更多~~";//加载提示语言
+        [hud show:YES];
+
+        [self performSelector:@selector(getNextPageView) withObject:nil afterDelay:1.0];
     }
     
     // overide, the actual loading data operation is done in the subclass

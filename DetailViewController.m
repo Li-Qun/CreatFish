@@ -33,13 +33,11 @@
 @implementation DetailViewController
 
 @synthesize showWebView=showWebView;
-//@synthesize dictForData=dictForData;
 @synthesize Data=Data;
 @synthesize tableView=tableView;
 @synthesize jsString=jsString;
 @synthesize htmlText=htmlText;
-@synthesize arrIDList=arrIDList;
-@synthesize arrIDListNew=arrIDListNew;
+
 @synthesize page_num=page_num;
 @synthesize page_label=page_label;
 @synthesize htmlTextTotals=htmlTextTotals;
@@ -48,9 +46,6 @@
 @synthesize pre_Page=pre_Page;
 @synthesize next_Page=next_Page;
 @synthesize leftSwipeGestureRecognizer,rightSwipeGestureRecognizer;
-//@synthesize detailImage=detailImage;
-//@synthesize detailName=detailName;
-//@synthesize detailID=detailID;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -227,15 +222,15 @@
 {
     
 }
+
 -(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID Offent:(NSString *)Out
 {
-  
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //耗时的一些操作
         NSString * strJson;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"detailRead"]];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"abc"]];
         
         sqlite3 *database;
         
@@ -255,24 +250,40 @@
             NSLog(@"create error:%s",errorMsg);
             sqlite3_free(errorMsg);
         }
+        BOOL flag=NO;
+        sqlite3_stmt *stmtq;
+        sql=[NSString stringWithFormat:@"select count (*) from detail where ID='%@'",ID];
+        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmtq,nil)==SQLITE_OK)
+        {
+            while (sqlite3_step(stmtq)==SQLITE_ROW) {
+                
+                const unsigned char *_id= sqlite3_column_text(stmtq, 0);
+                strJson= [NSString stringWithUTF8String: _id];
+                if([strJson isEqualToString:@"0"])//count ==0 记录不存在
+                {
+                    flag=YES;
+                }
+            }
+
+        }
+        sqlite3_finalize(stmtq);
         sqlite3_stmt *stmt;
-         BOOL flag=NO;
         sql =[NSString stringWithFormat:@"select pic from detail where ID='%@'",ID];
         //查找数据
         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
         {
             
-              while (sqlite3_step(stmt)==SQLITE_ROW) {
-                  if(sqlite3_column_count(stmt)==0)
-                  {
-                      flag=YES;
-                      break;
-                  }
+            while (sqlite3_step(stmt)==SQLITE_ROW) {
+                if(sqlite3_column_count(stmt)==0)
+                {
+                    flag=YES;
+                    break;
+                }
                 const unsigned char *_id=sqlite3_column_text(stmt, 0);
-               strJson=[NSString stringWithUTF8String:_id];
-                  break;
-                  
-              }
+                strJson=[NSString stringWithUTF8String:_id];
+                break;
+                
+            }
             
         }
         sqlite3_finalize(stmt);//  最后，关闭数据库：
@@ -283,9 +294,10 @@
             {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                 message:@"该缓存为空，请连接网络使用"
-                                                               delegate:self
+                                                               delegate:nil
                                                       cancelButtonTitle:@"确定"
                                                       otherButtonTitles: nil];
+                [alert show];
                 [alert release];
                 
             }
@@ -332,18 +344,15 @@
                 //UIWebView
                 //[receiveStr release];
                 
-                arrIDList=[[NSMutableArray alloc]init];
-                
-               // [self.view addSubview:showWebView];
                 [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
                 
                 //showWebView.
-
+                
             }
             
         });
     });
-
+ 
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID Offent:(NSString *)Out
 {
@@ -353,7 +362,7 @@
        // NSString * strJson;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"detailRead"]];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"abc"]];
         
         sqlite3 *database;
         
@@ -365,7 +374,7 @@
             NSLog(@"open failed");
         }
         char *errorMsg;
-        NSString* sql=@"CREATE TABLE IF NOT EXISTS detail (ID TEXT,pic TEXT)";         //创建表
+        NSString* sql=@"CREATE TABLE IF NOT EXISTS detail(ID TEXT,pic TEXT)";         //创建表
         if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
         {
             NSLog(@"create success");
@@ -375,21 +384,18 @@
         }
         sqlite3_stmt *stmt;
         // 查找数据
-        sql =  [ NSString stringWithFormat: @"select ID from detail  where ID=%@",app.saveId];
+        sql =  [ NSString stringWithFormat: @"select pic from detail where ID='%@'",ID];
         
         //查找数据
         int flag=0;
         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
         {
-            
+            NSLog(@"%d",sqlite3_step(stmt));
             while (sqlite3_step(stmt)==SQLITE_ROW) {
-                const unsigned char *_id=sqlite3_column_text(stmt, 0);
-                if([[NSString stringWithUTF8String:_id] isEqualToString:app.saveId])
-                {
-                    flag=1;
-                    break;
-                }
-            }
+                flag=1;
+                break;
+               // const unsigned char *_id=sqlite3_column_text(stmt, 0);
+             }
         }
         if(flag==0)
         {
@@ -520,16 +526,10 @@
             //UIWebView
             //[receiveStr release];
             
-            arrIDList=[[NSMutableArray alloc]init];
-            
           //  [self.view addSubview:showWebView];
             [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
             
             //showWebView.
-            
-            
-            
-            
         });
     });
 }
@@ -547,7 +547,6 @@
 {
     showWebView.scrollView.delegate=self;
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    
     
     [showWebView stringByEvaluatingJavaScriptFromString:@"imageWidth(305);"];//设置网络图片统一宽度320
     [showWebView stringByEvaluatingJavaScriptFromString:@"init();"];

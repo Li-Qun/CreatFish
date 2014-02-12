@@ -232,6 +232,7 @@
                                                                delegate:self
                                                       cancelButtonTitle:@"确定"
                                                       otherButtonTitles: nil];
+                [alert show];
                 [alert release];
                 
             }
@@ -573,8 +574,7 @@
     NSDictionary* dict = [arr objectAtIndex:touchIndex];
  
     DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
-    [detail.arrIDListNew insertObject:@"9" atIndex:0 ];
-    [detail.arrIDListNew insertObject:@"10" atIndex:1 ];
+ 
     detail.momentID=[dict objectForKey:@"id"];
     [self.navigationController pushViewController:detail animated:YES];
 

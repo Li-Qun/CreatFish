@@ -150,7 +150,7 @@
         
         if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
         {
-            NSLog(@"open success");
+            NSLog(@"后台打开可读数据库");
         }
         else {
             NSLog(@"open failed");
@@ -165,7 +165,7 @@
             NSLog(@"create error:%s",errorMsg);
             sqlite3_free(errorMsg);
         }
-        sql= @"select ID from isReadList";
+         sql= @"select ID from isReadList";
         sqlite3_stmt *stmt;
         //查找数据
         
@@ -177,6 +177,7 @@
                 if(sqlite3_column_count(stmt)==0)
                 break;
                 const unsigned char *_id= sqlite3_column_text(stmt, 0);
+                if(_id==NULL)break;//字符串为空
                 strID= [NSString stringWithUTF8String: _id];
                 [[IsRead sharedInstance].single_isRead_Data insertObject:strID atIndex:isReadCount++] ;
                 
@@ -195,7 +196,7 @@
         
         if (sqlite3_open([databasePaths1 UTF8String], &database1)==SQLITE_OK)
         {
-            NSLog(@"open success");
+            NSLog(@"后台大卡收藏数据库");
         }
         else {
             NSLog(@"open failed");
@@ -214,6 +215,7 @@
                     break;
                 }
                 const unsigned char *_id=sqlite3_column_text(stmt1, 0);
+                if(_id==NULL)break;//字符串为空
                 // const unsigned char *_pic= sqlite3_column_text(stmt, 1);
                 NSString *str= [NSString stringWithUTF8String:_id];
                 [[Singleton sharedInstance].single_Data insertObject:str atIndex:saveNum++] ;

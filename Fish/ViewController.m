@@ -183,6 +183,7 @@
                                                                    delegate:self
                                                           cancelButtonTitle:@"确定"
                                                           otherButtonTitles: nil];
+                    [alert show];
                     [alert release];
                 }
                 else
@@ -355,8 +356,6 @@
         heightTooBar=height_Momente-height-44;
         buttonHeight=5+height_Momente-44-height;
     }
-    
-    
     if([ID isEqualToString:@"1"])
     {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -869,8 +868,6 @@
     NSDictionary* dict = [arr objectAtIndex:touchIndex];
     
     DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
-//    [detail.arrIDListNew insertObject:@"9" atIndex:0 ];
-//    [detail.arrIDListNew insertObject:@"10" atIndex:1 ];
     detail.momentID=[dict objectForKey:@"id"];
      detail.fatherID=@"0";
     [self.navigationController pushViewController:detail animated:YES];

@@ -25,8 +25,6 @@
     UIImageView *topBarView;
     CGFloat height_Mag;//获取webView 高度
     NSMutableDictionary *Data;
-    NSMutableArray *arrIDList;
-    NSMutableArray *arrIDListNew;
     int moment;
     UILabel *page_num;
     NSString *page_label;
@@ -75,10 +73,9 @@
 @property (retain, nonatomic) IBOutlet UIView *tableView;
 @property (retain,nonatomic)UIWebView *showWebView;
 @property (readwrite, nonatomic) int yOrigin;
-//@property (retain, nonatomic) NSMutableDictionary *dictForData;
+
 @property (retain, nonatomic) NSMutableDictionary *Data;
-@property (retain, nonatomic) NSMutableArray *arrIDList;
-@property (retain, nonatomic)NSMutableArray *arrIDListNew;
+
 @property (nonatomic,retain)NSString *htmlText;
 
 @property (nonatomic,retain)NSMutableString *htmlTextTotals;

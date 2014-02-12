@@ -168,7 +168,7 @@
         [request setDelegate:self];
         [request setCompletionBlock :^{
             NSString * jsonString  =  [request responseString];
-            [delegate getJsonString:jsonString isPri:@"0" isID:content_id Offent:@"0"];
+            [delegate getJsonString:jsonString isPri:@"0" isID:content_id Offent:current_category_id];
             // [delegate reBack :jsonString];
         }];
         [request setFailedBlock :^{
@@ -180,7 +180,7 @@
     }
     else
     {
-        [delegate reBack:@"5" reLoad:content_id Offent:@"0"];
+        [delegate reBack:@"5" reLoad:content_id Offent:current_category_id];
     }
     
 }

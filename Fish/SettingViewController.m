@@ -81,7 +81,7 @@
  
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *str=[NSString stringWithFormat:@"News_dataBases"];
+        NSString *str=[NSString stringWithFormat:@"NewsTop_dataBases"];
         NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
         sqlite3 *database;
         
@@ -110,7 +110,7 @@
  //资讯缓存下
         NSArray *array_listNew=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths_listNiew=[array_listNew objectAtIndex:0];
-        NSString *str_listNew=[NSString stringWithFormat:@"News_dataBases"];
+        NSString *str_listNew=[NSString stringWithFormat:@"NewsViewController"];
         NSString *databasePaths_NewList=[documentsPaths_listNiew stringByAppendingPathComponent:str_listNew];
         sqlite3 *database_ListNew;
         
@@ -210,7 +210,7 @@
 //////大鱼榜
         NSArray *array_LifeItem=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths_LifeItem=[array_LifeItem objectAtIndex:0];
-        NSString *databasePaths_LifeItem=[documentsPaths_LifeItem stringByAppendingPathComponent:@"BigFishView_DataBase"];
+        NSString *databasePaths_LifeItem=[documentsPaths_LifeItem stringByAppendingPathComponent:@"BigFishViewController_DataBase"];
         sqlite3 *database_LifeItem;
         
         if (sqlite3_open([databasePaths_LifeItem UTF8String], &database_LifeItem)==SQLITE_OK)

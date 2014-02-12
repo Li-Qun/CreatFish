@@ -234,7 +234,6 @@
 		BBAF28DD187E62D2005A3FCB /* SwimFish.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28DB187E62D2005A3FCB /* SwimFish.png */; };
 		BBAF28DE187E62D2005A3FCB /* SwimFish@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28DC187E62D2005A3FCB /* SwimFish@2X.png */; };
 		BBAF28EA187E99CF005A3FCB /* welcome.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28E8187E99CF005A3FCB /* welcome.png */; };
-		BBAF28EB187E99CF005A3FCB /* welcome@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28E9187E99CF005A3FCB /* welcome@2X.png */; };
 		BBAF28F0187E9A75005A3FCB /* clearArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28EC187E9A75005A3FCB /* clearArrow.png */; };
 		BBAF28F1187E9A75005A3FCB /* clearArrow@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28ED187E9A75005A3FCB /* clearArrow@2X.png */; };
 		BBAF28F2187E9A75005A3FCB /* clearbar.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28EE187E9A75005A3FCB /* clearbar.png */; };
@@ -309,6 +308,7 @@
 		BBD52A95185D471D00575349 /* GMGridViewLayoutStrategies.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD52A92185D471D00575349 /* GMGridViewLayoutStrategies.m */; };
 		BBD67E411876D6E800A6CD87 /* StoreUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD67E3F1876D6E800A6CD87 /* StoreUpViewController.m */; };
 		BBD67E421876D6E800A6CD87 /* StoreUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */; };
+		BBD7EDB318A9E53C0045DE94 /* welcome@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD7EDB218A9E53C0045DE94 /* welcome@2X.png */; };
 		BBD81B87186C2EFF000DBEEE /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD81B86186C2EFF000DBEEE /* iCarousel.m */; };
 		BBDA38D9188A6FAD006A90F9 /* TopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDA38D7188A6FAD006A90F9 /* TopicViewController.m */; };
 		BBDA38DA188A6FAD006A90F9 /* TopicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBDA38D8188A6FAD006A90F9 /* TopicViewController.xib */; };
@@ -643,7 +643,6 @@
 		BBAF28DB187E62D2005A3FCB /* SwimFish.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwimFish.png; sourceTree = "<group>"; };
 		BBAF28DC187E62D2005A3FCB /* SwimFish@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SwimFish@2X.png"; sourceTree = "<group>"; };
 		BBAF28E8187E99CF005A3FCB /* welcome.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = welcome.png; sourceTree = "<group>"; };
-		BBAF28E9187E99CF005A3FCB /* welcome@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome@2X.png"; sourceTree = "<group>"; };
 		BBAF28EC187E9A75005A3FCB /* clearArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clearArrow.png; sourceTree = "<group>"; };
 		BBAF28ED187E9A75005A3FCB /* clearArrow@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clearArrow@2X.png"; sourceTree = "<group>"; };
 		BBAF28EE187E9A75005A3FCB /* clearbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clearbar.png; sourceTree = "<group>"; };
@@ -745,6 +744,7 @@
 		BBD67E3E1876D6E800A6CD87 /* StoreUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreUpViewController.h; sourceTree = "<group>"; };
 		BBD67E3F1876D6E800A6CD87 /* StoreUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreUpViewController.m; sourceTree = "<group>"; };
 		BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreUpViewController.xib; sourceTree = "<group>"; };
+		BBD7EDB218A9E53C0045DE94 /* welcome@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "welcome@2X.png"; sourceTree = "<group>"; };
 		BBD81B85186C2EFF000DBEEE /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		BBD81B86186C2EFF000DBEEE /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		BBDA38D6188A6FAD006A90F9 /* TopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicViewController.h; sourceTree = "<group>"; };
@@ -1699,7 +1699,7 @@
 			children = (
 				BBACEFD518A4BF620031C6AE /* moren.png */,
 				BBAF28E8187E99CF005A3FCB /* welcome.png */,
-				BBAF28E9187E99CF005A3FCB /* welcome@2X.png */,
+				BBD7EDB218A9E53C0045DE94 /* welcome@2X.png */,
 				BBAF28EC187E9A75005A3FCB /* clearArrow.png */,
 				BBAF28ED187E9A75005A3FCB /* clearArrow@2X.png */,
 				BBAF28EE187E9A75005A3FCB /* clearbar.png */,
@@ -1929,6 +1929,7 @@
 				BBA49318187D54230089D35E /* word@2X.png in Resources */,
 				BBAF28D9187E4F10005A3FCB /* readBack@2X.png in Resources */,
 				BBA5B7DE187AB3ED00D55899 /* wixin.png in Resources */,
+				BBD7EDB318A9E53C0045DE94 /* welcome@2X.png in Resources */,
 				BBAF28D4187E45F9005A3FCB /* topViewBarWhite.png in Resources */,
 				BBAF28C9187E451E005A3FCB /* AaImg@2X.png in Resources */,
 				BBA4726A18976127000E4EFF /* redBack.png in Resources */,
@@ -1995,7 +1996,6 @@
 				BBA49305187D2F090089D35E /* TitleWhiteBack.png in Resources */,
 				BBAF28CE187E451E005A3FCB /* saveImgNormal.png in Resources */,
 				BBB2CF20187BFAA600C8F210 /* firstPage@2X.png in Resources */,
-				BBAF28EB187E99CF005A3FCB /* welcome@2X.png in Resources */,
 				BBD067C5188F78CF00DBC8B9 /* Share_webImage@2X.png in Resources */,
 				BBA5B7D6187A8EB600D55899 /* theLineSet@2X.png in Resources */,
 				BBD31892188CCA6500618A5A /* BigFishViewController.xib in Resources */,

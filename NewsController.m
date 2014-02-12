@@ -292,6 +292,7 @@
                                                                     delegate:self
                                                            cancelButtonTitle:@"确定"
                                                            otherButtonTitles: nil];
+                     [alert show];
                      [alert release];
                      
                  }
@@ -699,8 +700,7 @@
         DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
     
         NSMutableDictionary* dict = [self.arr objectAtIndex:indexPath.row-1];
-        //  detail.dictForData=dict;
-        detail.arrIDListNew=arrID;
+ 
         detail.yOrigin=cellFrameInSuperview.origin.y;
         detail.momentID=[dict objectForKey:@"id"];
         NSLog(@"NewsID :  %d",NewsID);
@@ -727,8 +727,7 @@
     NSDictionary* dict = [arr objectAtIndex:touchIndex];
     
     DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
-    [detail.arrIDListNew insertObject:@"9" atIndex:0 ];
-    [detail.arrIDListNew insertObject:@"10" atIndex:1 ];
+ 
     detail.momentID=[dict objectForKey:@"id"];
     [self.navigationController pushViewController:detail animated:YES];
     
