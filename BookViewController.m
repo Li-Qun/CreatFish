@@ -30,6 +30,7 @@
 #import "IIViewDeckController.h"
 #import "RightViewController.h"
 #import "sqlite3.h"
+#import "BaiduMobStat.h"
 @interface BookViewController ()
 
 @end
@@ -56,6 +57,17 @@
         
     }
     return self;
+}
+//百度页面统计
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSString *cName=[NSString stringWithFormat:@"Book&%@",NewsName];
+    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+   NSString *cName=[NSString stringWithFormat:@"Book&%@",NewsName];
+    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -308,7 +320,7 @@
                     [MBProgressHUD hideHUDForView:tabView animated:YES];
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                     message:@"该缓存为空，请连接网络使用"
-                                                                   delegate:self
+                                                                   delegate:nil
                                                           cancelButtonTitle:@"确定"
                                                           otherButtonTitles: nil];
                     [alert show];
@@ -415,7 +427,7 @@
             [MBProgressHUD hideHUDForView:tabView animated:YES];
             UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
                                                              message:@"没有更多阅钓信息了～"
-                                                            delegate:self
+                                                            delegate:nil
                                                    cancelButtonTitle:nil
                                                    otherButtonTitles: @"确定",nil]autorelease];
             [alert show];

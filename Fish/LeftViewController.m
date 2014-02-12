@@ -22,7 +22,7 @@
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-
+#import "BaiduMobStat.h"
 @interface LeftViewController ()
 
 @end
@@ -37,6 +37,18 @@
     }
     return self;
 }
+//百度页面统计
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSString *cName=@"Left&左侧边栏";
+    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    NSString *cName=@"Left&左侧边栏";
+    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

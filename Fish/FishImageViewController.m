@@ -13,6 +13,7 @@
 #import "WeiboApi.h"
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import <sqlite3.h>
+#import "BaiduMobStat.h"
 @interface FishImageViewController ()
 
 @end
@@ -34,6 +35,18 @@
     }
     return self;
 }
+//百度页面统计
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSString *cName=[NSString stringWithFormat:@"FishItem&%@",detailName];
+    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+     NSString *cName=[NSString stringWithFormat:@"FishItem&%@",detailName];
+    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES];
@@ -172,7 +185,7 @@
             {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                 message:@"该缓存为空，请连接网络使用"
-                                                               delegate:self
+                                                               delegate:nil
                                                       cancelButtonTitle:@"确定"
                                                       otherButtonTitles: nil];
                 [alert show];
@@ -207,7 +220,7 @@
     {
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
                                                          message:@"暂无加载内容～"
-                                                        delegate:self
+                                                        delegate:nil
                                                cancelButtonTitle:nil
                                                otherButtonTitles: @"确定",nil]autorelease];
         [alert show];

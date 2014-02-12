@@ -8,6 +8,7 @@
 
 #import "AdviceViewController.h"
 #import "FishCore.h"
+#import "BaiduMobStat.h"
 @interface AdviceViewController ()
 
 @end
@@ -30,6 +31,17 @@
         [imgView release];
     }
     return self;
+}
+//百度页面统计
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSString *cName=@"AdviceVC&建议";
+    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    NSString *cName=@"AdviceVC&建议";
+    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 -(void)build_Tool
 {
@@ -164,6 +176,7 @@
 
     
 }
+
 -(void)backSet
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -197,7 +210,7 @@
     {
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"反馈提交成功"
                                                         message:@""
-                                                       delegate:self
+                                                       delegate:nil
                                               cancelButtonTitle:@"确定"
                                               otherButtonTitles: nil]autorelease];
         [alert show];

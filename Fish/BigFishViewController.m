@@ -10,6 +10,7 @@
 #import "FishImageViewController.h"
 #import "MBProgressHUD.h"
 #import <sqlite3.h>
+#import "BaiduMobStat.h"
 
 #define ITEM_SPACING 200
 @interface BigFishViewController ()
@@ -37,6 +38,17 @@
         [imgView release];
     }
     return self;
+}
+//百度页面统计
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSString *cName=[NSString stringWithFormat:@"BigFish&%@",BigFishName];
+    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    NSString *cName=[NSString stringWithFormat:@"BigFish&%@",BigFishName];
+    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 - (void)dealloc
 {
@@ -212,7 +224,7 @@
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                 message:@"该缓存为空，请连接网络使用"
-                                                               delegate:self
+                                                               delegate:nil
                                                       cancelButtonTitle:@"确定"
                                                       otherButtonTitles: nil];
                 [alert show];
@@ -280,7 +292,7 @@
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
                                                          message:@"暂无加载内容～"
-                                                        delegate:self
+                                                        delegate:nil
                                                cancelButtonTitle:nil
                                                otherButtonTitles: @"确定",nil]autorelease];
         [alert show];

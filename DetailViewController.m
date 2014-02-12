@@ -26,6 +26,7 @@
 #import "WeiboApi.h"
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import "sqlite3.h"
+#import "BaiduMobStat.h"
 @interface DetailViewController ()
 
 @end
@@ -73,6 +74,17 @@
         else isSeven=YES;
     }
     return self;
+}
+//百度页面统计
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSString *cName=[NSString stringWithFormat:@"detail&阅读"];
+    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    NSString *cName=[NSString stringWithFormat:@"detail&阅读"];
+    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 - (void)viewWillAppear:(BOOL)animated
 {//视图即将可见时调用。默认情况下不执行任何操作

@@ -15,6 +15,7 @@
 #import  "WeiboSDK.h"
 #import <Parse/Parse.h>
 #import "sqlite3.h"
+#import "BaiduMobStat.h"
 @interface SettingViewController ()
 
 @end
@@ -32,6 +33,17 @@
     }
     return self;
 }
+//百度页面统计
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSString *cName=@"Setting&设置";
+    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    NSString *cName=@"Setting&设置";
+    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES];
@@ -41,7 +53,6 @@
     [self.view insertSubview:imgView atIndex:0];
     [imgView release];
 }
-
 -(void)Press_set
 {
     AdviceViewController *newVC = [[[AdviceViewController alloc] initWithNibName:@"AdviceViewController" bundle:nil]autorelease];
@@ -236,7 +247,7 @@
             
             UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
                                                             message:@"清除缓存操作已成功"
-                                                           delegate:self
+                                                           delegate:nil
                                                   cancelButtonTitle:@"确定"
                                                   otherButtonTitles: nil]autorelease];
             [alert show];

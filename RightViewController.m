@@ -14,6 +14,7 @@
 #import "BigFishViewController.h"
 #import "AppDelegate.h"
 #import <sqlite3.h>
+#import "BaiduMobStat.h"
 @interface RightViewController ()
 
 @end
@@ -26,6 +27,17 @@
     if (self) {
            }
     return self;
+}
+//百度页面统计
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSString *cName=@"Right&右侧边栏 ";
+    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    NSString *cName=@"Right&右侧边栏 ";
+    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -140,7 +152,6 @@
      app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [self buildTheBtn];
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

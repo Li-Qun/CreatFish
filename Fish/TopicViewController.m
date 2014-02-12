@@ -13,6 +13,7 @@
 
 #import "IIViewDeckController.h"
 #import <sqlite3.h>
+#import "BaiduMobStat.h"
 @interface TopicViewController ()
 
 @end
@@ -55,6 +56,18 @@
             }
     return self;
 }
+//百度页面统计
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSString *cName=[NSString stringWithFormat:@"Topic&%@",topicName];
+    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+     NSString *cName=[NSString stringWithFormat:@"Topic&%@",topicName];
+    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     textView.backgroundColor=[UIColor clearColor];
@@ -229,7 +242,7 @@
             {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                 message:@"该缓存为空，请连接网络使用"
-                                                               delegate:self
+                                                               delegate:nil
                                                       cancelButtonTitle:@"确定"
                                                       otherButtonTitles: nil];
                 [alert show];

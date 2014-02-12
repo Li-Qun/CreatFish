@@ -126,7 +126,7 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //耗时的一些操作
-    //打开百度移动统计start
+    //打开百度移动统计start事件统计
         BaiduMobStat* statTracker = [BaiduMobStat defaultStat];
         statTracker.enableExceptionLog = YES; // 是否允许截获并发送崩溃信息，请设置YES或者NO
         //statTracker.channelId = @"ReplaceMeWithYourChannel";//设置您的app的发布渠道
@@ -138,7 +138,7 @@
         statTracker.enableDebugOn = YES; //打开sdk调试接口，会有log打印
         [statTracker startWithAppId:@"856f2f81b0"];//设置您在mtj网站上添加的app的appkey 。
         
-    //打开百度移动统计end
+    //打开百度移动统计end事件统计
         
         //打开判断可读数据库
         NSString *strID;
@@ -196,7 +196,7 @@
         
         if (sqlite3_open([databasePaths1 UTF8String], &database1)==SQLITE_OK)
         {
-            NSLog(@"后台大卡收藏数据库");
+            NSLog(@"后台打开收藏数据库");
         }
         else {
             NSLog(@"open failed");
@@ -264,13 +264,11 @@
             splashScreen.image = [UIImage imageNamed:@"welcome@2X"];
             [self.window addSubview:splashScreen];
             
-            UIImageView *splashScreen2 = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 400-height_First, 270, 80)]autorelease];
-            splashScreen2.image = [UIImage imageNamed:@"clearbar@2X"];
+            UIImageView *splashScreen2 = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 400-height_First, 320, 80)]autorelease];
+            splashScreen2.image = [UIImage imageNamed:@"welcome_title"];
             [self.window addSubview:splashScreen2];
             
-            UIImageView *splashScreen3 = [[[UIImageView alloc] initWithFrame:CGRectMake(280, 400-height_First,40, 80)]autorelease];
-            splashScreen3.image = [UIImage imageNamed:@"clearArrow@2X"];
-            [self.window addSubview:splashScreen3];
+             
             
             [UIView animateWithDuration:4.0 animations:^{
                 CATransform3D transform = CATransform3DMakeTranslation(30, 0, 0);
@@ -279,7 +277,7 @@
             } completion:^(BOOL finished) {
                 [splashScreen removeFromSuperview];
                 [splashScreen2 removeFromSuperview];
-                [splashScreen3 removeFromSuperview];
+              
             }];
  
             

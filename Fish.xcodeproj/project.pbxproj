@@ -234,10 +234,6 @@
 		BBAF28DD187E62D2005A3FCB /* SwimFish.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28DB187E62D2005A3FCB /* SwimFish.png */; };
 		BBAF28DE187E62D2005A3FCB /* SwimFish@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28DC187E62D2005A3FCB /* SwimFish@2X.png */; };
 		BBAF28EA187E99CF005A3FCB /* welcome.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28E8187E99CF005A3FCB /* welcome.png */; };
-		BBAF28F0187E9A75005A3FCB /* clearArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28EC187E9A75005A3FCB /* clearArrow.png */; };
-		BBAF28F1187E9A75005A3FCB /* clearArrow@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28ED187E9A75005A3FCB /* clearArrow@2X.png */; };
-		BBAF28F2187E9A75005A3FCB /* clearbar.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28EE187E9A75005A3FCB /* clearbar.png */; };
-		BBAF28F3187E9A75005A3FCB /* clearbar@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBAF28EF187E9A75005A3FCB /* clearbar@2X.png */; };
 		BBAF983E18852EB3002DDA7A /* libSinaWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAF982718852EB2002DDA7A /* libSinaWeiboSDK.a */; };
 		BBAF983F18852EB3002DDA7A /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BBAF982818852EB2002DDA7A /* WeiboSDK.bundle */; };
 		BBAF984218852EB3002DDA7A /* RennSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BBAF982F18852EB2002DDA7A /* RennSDK.bundle */; };
@@ -312,6 +308,7 @@
 		BBD81B87186C2EFF000DBEEE /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD81B86186C2EFF000DBEEE /* iCarousel.m */; };
 		BBDA38D9188A6FAD006A90F9 /* TopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDA38D7188A6FAD006A90F9 /* TopicViewController.m */; };
 		BBDA38DA188A6FAD006A90F9 /* TopicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBDA38D8188A6FAD006A90F9 /* TopicViewController.xib */; };
+		BBDBB6A718AB4F5400D1FA7E /* welcome_title.png in Resources */ = {isa = PBXBuildFile; fileRef = BBDBB6A618AB4F5400D1FA7E /* welcome_title.png */; };
 		BBDBE93C184DCF39009FA292 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBDBE93B184DCF39009FA292 /* QuartzCore.framework */; };
 		BBDBE942184DCF71009FA292 /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDBE93F184DCF71009FA292 /* IIViewDeckController.m */; };
 		BBDBE943184DCF71009FA292 /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDBE941184DCF71009FA292 /* IIWrapController.m */; };
@@ -643,10 +640,6 @@
 		BBAF28DB187E62D2005A3FCB /* SwimFish.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SwimFish.png; sourceTree = "<group>"; };
 		BBAF28DC187E62D2005A3FCB /* SwimFish@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SwimFish@2X.png"; sourceTree = "<group>"; };
 		BBAF28E8187E99CF005A3FCB /* welcome.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = welcome.png; sourceTree = "<group>"; };
-		BBAF28EC187E9A75005A3FCB /* clearArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clearArrow.png; sourceTree = "<group>"; };
-		BBAF28ED187E9A75005A3FCB /* clearArrow@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clearArrow@2X.png"; sourceTree = "<group>"; };
-		BBAF28EE187E9A75005A3FCB /* clearbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clearbar.png; sourceTree = "<group>"; };
-		BBAF28EF187E9A75005A3FCB /* clearbar@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clearbar@2X.png"; sourceTree = "<group>"; };
 		BBAF982718852EB2002DDA7A /* libSinaWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSinaWeiboSDK.a; sourceTree = "<group>"; };
 		BBAF982818852EB2002DDA7A /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
 		BBAF982918852EB2002DDA7A /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
@@ -750,6 +743,7 @@
 		BBDA38D6188A6FAD006A90F9 /* TopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicViewController.h; sourceTree = "<group>"; };
 		BBDA38D7188A6FAD006A90F9 /* TopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicViewController.m; sourceTree = "<group>"; };
 		BBDA38D8188A6FAD006A90F9 /* TopicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicViewController.xib; sourceTree = "<group>"; };
+		BBDBB6A618AB4F5400D1FA7E /* welcome_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = welcome_title.png; sourceTree = "<group>"; };
 		BBDBE93B184DCF39009FA292 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BBDBE93E184DCF71009FA292 /* IIViewDeckController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IIViewDeckController.h; sourceTree = "<group>"; };
 		BBDBE93F184DCF71009FA292 /* IIViewDeckController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IIViewDeckController.m; sourceTree = "<group>"; };
@@ -1700,10 +1694,7 @@
 				BBACEFD518A4BF620031C6AE /* moren.png */,
 				BBAF28E8187E99CF005A3FCB /* welcome.png */,
 				BBD7EDB218A9E53C0045DE94 /* welcome@2X.png */,
-				BBAF28EC187E9A75005A3FCB /* clearArrow.png */,
-				BBAF28ED187E9A75005A3FCB /* clearArrow@2X.png */,
-				BBAF28EE187E9A75005A3FCB /* clearbar.png */,
-				BBAF28EF187E9A75005A3FCB /* clearbar@2X.png */,
+				BBDBB6A618AB4F5400D1FA7E /* welcome_title.png */,
 				BBAB9BC51896813400F66100 /* FishFace */,
 				BBE6122F188BAA2400DCCB52 /* Topic */,
 				BBAF28DA187E62A9005A3FCB /* swimFish */,
@@ -1904,7 +1895,6 @@
 				BBAF28DD187E62D2005A3FCB /* SwimFish.png in Resources */,
 				BBD3189F188D10B300618A5A /* BigFishListShare@2X.png in Resources */,
 				BBB2CF1F187BFAA600C8F210 /* firstPage.png in Resources */,
-				BBAF28F3187E9A75005A3FCB /* clearbar@2X.png in Resources */,
 				BB31A48D186ED80D00F23782 /* OneCell.xib in Resources */,
 				BBAF28EA187E99CF005A3FCB /* welcome.png in Resources */,
 				BB9921911895233F0093DC84 /* Resource.bundle in Resources */,
@@ -1968,6 +1958,7 @@
 				BBD07925188EB1D400325927 /* bag_Small.png in Resources */,
 				BBA18E791864277100EEEFC8 /* DetailViewController.xib in Resources */,
 				BBAB9BC318962CC600F66100 /* shareFirstView@2X.png in Resources */,
+				BBDBB6A718AB4F5400D1FA7E /* welcome_title.png in Resources */,
 				BBA5B7D5187A8EB600D55899 /* theLineSet.png in Resources */,
 				BBAF28CD187E451E005A3FCB /* saveImgHighted@2X.png in Resources */,
 				BB9921901895233F0093DC84 /* ShareSDKLocalizable.strings in Resources */,
@@ -1980,7 +1971,6 @@
 				BBA1CA0A187FF06C0028E5BC /* theGoBack@2X.png in Resources */,
 				BBA4931F187D6DF30089D35E /* theArrow.png in Resources */,
 				BBD318A3188D3F5F00618A5A /* imageLabel@2X.png in Resources */,
-				BBAF28F0187E9A75005A3FCB /* clearArrow.png in Resources */,
 				BBA352AB18792A2900A8239C /* TypeSelect@2X.png in Resources */,
 				BBAF28CA187E451E005A3FCB /* BackImg.png in Resources */,
 				BBACEFD818A4EA940031C6AE /* leftBackBoard@2X.png in Resources */,
@@ -2021,7 +2011,6 @@
 				BBA49311187D48BE0089D35E /* RightBtn.png in Resources */,
 				BBAF28D8187E4F10005A3FCB /* readBack.png in Resources */,
 				BB9921A7189523400093DC84 /* ShareSDKiPhoneDefaultShareViewUI.bundle in Resources */,
-				BBAF28F1187E9A75005A3FCB /* clearArrow@2X.png in Resources */,
 				BBAF28CF187E451E005A3FCB /* saveImgNormal@2X.png in Resources */,
 				BBD067C1188F78CF00DBC8B9 /* BottomBar_webImage@2X.png in Resources */,
 				BBAF983F18852EB3002DDA7A /* WeiboSDK.bundle in Resources */,
@@ -2032,7 +2021,6 @@
 				BBA5B7E2187ABF4A00D55899 /* toolBar.png in Resources */,
 				BBA352AA18792A2900A8239C /* TypeSelect.png in Resources */,
 				BBA49314187D48BE0089D35E /* topBarRed@2X.png in Resources */,
-				BBAF28F2187E9A75005A3FCB /* clearbar.png in Resources */,
 				BBA352AE1879568800A8239C /* advice_back.png in Resources */,
 				BBA492FA187CEE8E0089D35E /* Set@2X.png in Resources */,
 				BBA1CA10187FF6F60028E5BC /* selectedNow@2X.png in Resources */,

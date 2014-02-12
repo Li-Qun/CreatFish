@@ -11,6 +11,7 @@
 #import "InformationCell.h"
 #import "DetailViewController.h"
 #import "sqlite3.h"
+#import "BaiduMobStat.h"
 @interface StoreUpViewController ()
 
 @end
@@ -22,6 +23,17 @@
     if (self) {
     }
     return self;
+}
+//百度页面统计
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSString *cName=[NSString stringWithFormat:@"StoreUp&收藏"];
+    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+   NSString *cName=[NSString stringWithFormat:@"StoreUp&收藏"];
+    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 -(void)viewWillAppear:(BOOL)animated
 {

@@ -23,6 +23,7 @@
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
+#import "BaiduMobStat.h"
 @interface ViewController ()
 
 @end
@@ -35,6 +36,20 @@
 @synthesize labelText=labelText;
 @synthesize textView=textView;
 @synthesize labelDay=labelDay;
+
+
+//百度页面统计
+-(void)viewDidAppear:(BOOL)animated
+{
+    NSString *cName=@"View&首页";
+    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    NSString *cName=@"View&首页";
+    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {//视图即将可见时调用。默认情况下不执行任何操作
     
@@ -180,7 +195,7 @@
                 {
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                     message:@"该缓存为空，请连接网络使用"
-                                                                   delegate:self
+                                                                   delegate:nil
                                                           cancelButtonTitle:@"确定"
                                                           otherButtonTitles: nil];
                     [alert show];
@@ -320,7 +335,7 @@
                 {
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                     message:@"该缓存为空，请连接网络使用"
-                                                                   delegate:self
+                                                                   delegate:nil
                                                           cancelButtonTitle:@"确定"
                                                           otherButtonTitles: nil];
                     [alert release];
