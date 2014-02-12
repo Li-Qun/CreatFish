@@ -275,23 +275,37 @@
             
         });
     });
+}
+- (BOOL) isBlankString:(NSString *)string {//判断字符串是否为空 方法
     
-
- 
+    if (string == nil || string == NULL) {
+        
+        return YES;
+        
+    }
+    
+    if ([string isKindOfClass:[NSNull class]]) {
+        
+        return YES;
+        
+    }
+    
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        
+        return YES;
+        
+    }
+    
+    return NO;
     
 }
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID Offent:(NSString *)Out
 {
-    NSLog(@"%@",ID);
     
-    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-    NSDictionary *jsonObj =[parser objectWithString:jsonString];
-    NSArray *data = [jsonObj objectForKey:@"data"];
-    if(data.count==0)
+    if([self isBlankString:jsonString])
     {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
-                                                         message:@"暂无加载内容～"
+                                                         message:@"网络不佳，请重新操作试试看～"
                                                         delegate:nil
                                                cancelButtonTitle:nil
                                                otherButtonTitles: @"确定",nil]autorelease];
@@ -300,144 +314,160 @@
     }
     else
     {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *documentsPaths=[array objectAtIndex:0];
-            NSString *str=[NSString stringWithFormat:@"BigFishViewController_DataBase"];
-            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
-            sqlite3 *database;
+        SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+        NSDictionary *jsonObj =[parser objectWithString:jsonString];
+        NSArray *data = [jsonObj objectForKey:@"data"];
+        if(data.count==0)
+        {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
+                                                             message:@"暂无加载内容～"
+                                                            delegate:nil
+                                                   cancelButtonTitle:nil
+                                                   otherButtonTitles: @"确定",nil]autorelease];
+            [alert show];
             
-            if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-            {
-                NSLog(@"open success");
-            }
-            else {
-                NSLog(@"open failed");
-            }
-            char *errorMsg;
-            // 删除所有数据 并进行更新数据库操作
-            //删除所有数据，条件为1>0永真
-//            const char *deleteAllSql="delete from picture where 1>0";
-//            //执行删除语句
-//            if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
-//                NSLog(@"删除所有数据成功");
-//            }
-//            else NSLog(@"delect failde!!!!");
-            
-            NSString* sql ;
-            sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,Offent TEXT,pic TEXT)";
-            //创建表
-            if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-            {
-                NSLog(@"create success");
-            }else{
-                NSLog(@"create error:%s",errorMsg);
-                sqlite3_free(errorMsg);
-            }
-             //查找数据
-            sql=[NSString stringWithFormat:@"select ID from picture where ID='%@'and Offent='%@'",ID,Out];
-            sqlite3_stmt *stmt;
-            //查找数据
-            BOOL OK=NO;
-  
-            if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-            {
+        }
+        else
+        {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString *documentsPaths=[array objectAtIndex:0];
+                NSString *str=[NSString stringWithFormat:@"BigFishViewController_DataBase"];
+                NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
+                sqlite3 *database;
                 
-                while (sqlite3_step(stmt)==SQLITE_ROW) {
-                    
-                    
-                    const unsigned char *_id= sqlite3_column_text(stmt, 0);
-                    NSString *Id= [NSString stringWithUTF8String: _id];
-                    if([ID isEqualToString:Id])
-                    {
-                        OK=YES;
-                        break;
-                    }
+                if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+                {
+                    NSLog(@"open success");
                 }
-            }
-            if(!OK)
-            {
-                NSString *insertSQLStr1 =[NSString stringWithFormat:
-                                          @"INSERT INTO 'picture' ('ID','Offent','pic' ) VALUES ('%@','%@','%@')", ID,Out,jsonString];
-                const char *insertSQL1=[insertSQLStr1 UTF8String];
-                //插入数据 进行更新操作
-                if (sqlite3_exec(database, insertSQL1 , NULL, NULL, &errorMsg)==SQLITE_OK) {
-                    NSLog(@"insert operation is ok.");
+                else {
+                    NSLog(@"open failed");
                 }
-                else{
-                    NSLog(@"insert error:%s",errorMsg);
+                char *errorMsg;
+                // 删除所有数据 并进行更新数据库操作
+                //删除所有数据，条件为1>0永真
+                //            const char *deleteAllSql="delete from picture where 1>0";
+                //            //执行删除语句
+                //            if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
+                //                NSLog(@"删除所有数据成功");
+                //            }
+                //            else NSLog(@"delect failde!!!!");
+                
+                NSString* sql ;
+                sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,Offent TEXT,pic TEXT)";
+                //创建表
+                if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+                {
+                    NSLog(@"create success");
+                }else{
+                    NSLog(@"create error:%s",errorMsg);
                     sqlite3_free(errorMsg);
                 }
-            }
-            sqlite3_finalize(stmt);
-            //  最后，关闭数据库：
-            sqlite3_close(database);
-            
-            
-            
-            dispatch_async(dispatch_get_main_queue(), ^{//主线程
+                //查找数据
+                sql=[NSString stringWithFormat:@"select ID from picture where ID='%@'and Offent='%@'",ID,Out];
+                sqlite3_stmt *stmt;
+                //查找数据
+                BOOL OK=NO;
                 
-                
-                //设置索引标识
-                SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-                NSDictionary *jsonObj =[parser objectWithString:jsonString];
-                // total = [[jsonObj objectForKey:@"total"] intValue];
-                NSArray *data = [jsonObj objectForKey:@"data"];
-                total+=data.count;
-                
-                
-                for(int i=0;i<data.count;i++)
+                if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
                 {
-                    [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
+                    
+                    while (sqlite3_step(stmt)==SQLITE_ROW) {
+                        
+                        
+                        const unsigned char *_id= sqlite3_column_text(stmt, 0);
+                        NSString *Id= [NSString stringWithUTF8String: _id];
+                        if([ID isEqualToString:Id])
+                        {
+                            OK=YES;
+                            break;
+                        }
+                    }
                 }
-                app.BigFish_Description=BigFish_Description;
-                
-                carousel.delegate = self;
-                [self.carousel reloadData];
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-                carousel.dataSource = self;
-                
-                carousel.type = iCarouselTypeCoverFlow;
-                for (UIView *view in carousel.visibleItemViews)
+                if(!OK)
                 {
-                    view.alpha = 1.0;
+                    NSString *insertSQLStr1 =[NSString stringWithFormat:
+                                              @"INSERT INTO 'picture' ('ID','Offent','pic' ) VALUES ('%@','%@','%@')", ID,Out,jsonString];
+                    const char *insertSQL1=[insertSQLStr1 UTF8String];
+                    //插入数据 进行更新操作
+                    if (sqlite3_exec(database, insertSQL1 , NULL, NULL, &errorMsg)==SQLITE_OK) {
+                        NSLog(@"insert operation is ok.");
+                    }
+                    else{
+                        NSLog(@"insert error:%s",errorMsg);
+                        sqlite3_free(errorMsg);
+                    }
                 }
-                if(isSeven&&isFive)
-                {
-                    img_height=20;
-                    lab_height=80;
-                }
-                else if(isSeven&&!isFive)
-                {
-                    lab_height=100;
-                }else if(!isSeven&&isFive)//
-                {
-                    img_height=20;
-                    lab_height=20;
-                }else {
-                    img_height=20;
-                    lab_height=100;
-                }
-
-                labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
-                labelText.textColor=[UIColor whiteColor];
-                labelText.backgroundColor=[UIColor clearColor];
-                labelText.font=[UIFont systemFontOfSize:14.0f];
-                labelText.numberOfLines = 0;
-                [labelText sizeToFit];
-                labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
+                sqlite3_finalize(stmt);
+                //  最后，关闭数据库：
+                sqlite3_close(database);
                 
                 
-                [UIView beginAnimations:nil context:nil];
-                carousel.type=5;
-                [UIView commitAnimations];
                 
+                dispatch_async(dispatch_get_main_queue(), ^{//主线程
+                    
+                    
+                    //设置索引标识
+                    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+                    NSDictionary *jsonObj =[parser objectWithString:jsonString];
+                    // total = [[jsonObj objectForKey:@"total"] intValue];
+                    NSArray *data = [jsonObj objectForKey:@"data"];
+                    total+=data.count;
+                    
+                    
+                    for(int i=0;i<data.count;i++)
+                    {
+                        [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
+                    }
+                    app.BigFish_Description=BigFish_Description;
+                    
+                    carousel.delegate = self;
+                    [self.carousel reloadData];
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    carousel.dataSource = self;
+                    
+                    carousel.type = iCarouselTypeCoverFlow;
+                    for (UIView *view in carousel.visibleItemViews)
+                    {
+                        view.alpha = 1.0;
+                    }
+                    if(isSeven&&isFive)
+                    {
+                        img_height=20;
+                        lab_height=80;
+                    }
+                    else if(isSeven&&!isFive)
+                    {
+                        lab_height=100;
+                    }else if(!isSeven&&isFive)//
+                    {
+                        img_height=20;
+                        lab_height=20;
+                    }else {
+                        img_height=20;
+                        lab_height=100;
+                    }
+                    
+                    labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
+                    labelText.textColor=[UIColor whiteColor];
+                    labelText.backgroundColor=[UIColor clearColor];
+                    labelText.font=[UIFont systemFontOfSize:14.0f];
+                    labelText.numberOfLines = 0;
+                    [labelText sizeToFit];
+                    labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
+                    
+                    
+                    [UIView beginAnimations:nil context:nil];
+                    carousel.type=5;
+                    [UIView commitAnimations];
+                    
+                });
             });
-        });
-
+            
+        }
+   
     }
-    
-    
 }
 - (void)viewDidLoad
 {//@"直线"0, @"圆圈"1, @"反向圆圈"2, @"圆桶"3, @"反向圆桶"4, @"封面展示5", @"封面展示2"6, @"纸牌"7

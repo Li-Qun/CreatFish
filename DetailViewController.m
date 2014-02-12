@@ -366,184 +366,220 @@
     });
  
 }
+- (BOOL) isBlankString:(NSString *)string {//判断字符串是否为空 方法
+    
+    if (string == nil || string == NULL) {
+        
+        return YES;
+        
+    }
+    
+    if ([string isKindOfClass:[NSNull class]]) {
+        
+        return YES;
+        
+    }
+    
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        
+        return YES;
+        
+    }
+    
+    return NO;
+    
+}
 -(void)getJsonString:(NSString *)jsonString isPri:(NSString *)flag isID:(NSString *)ID Offent:(NSString *)Out
 {
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        //耗时的一些操作
-       // NSString * strJson;
-        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"abc"]];
+    if([self isBlankString:jsonString])
+    {
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
+                                                         message:@"网络不佳，请重新操作试试看～"
+                                                        delegate:nil
+                                               cancelButtonTitle:nil
+                                               otherButtonTitles: @"确定",nil]autorelease];
+        [alert show];
         
-        sqlite3 *database;
-        
-        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-        {
-            NSLog(@"open success");
-        }
-        else {
-            NSLog(@"open failed");
-        }
-        char *errorMsg;
-        NSString* sql=@"CREATE TABLE IF NOT EXISTS detail(ID TEXT,pic TEXT)";         //创建表
-        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-        {
-            NSLog(@"create success");
-        }else{
-            NSLog(@"create error:%s",errorMsg);
-            sqlite3_free(errorMsg);
-        }
-        sqlite3_stmt *stmt;
-        // 查找数据
-        sql =  [ NSString stringWithFormat: @"select pic from detail where ID='%@'",ID];
-        
-        //查找数据
-        int flag=0;
-        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-        {
-            NSLog(@"%d",sqlite3_step(stmt));
-            while (sqlite3_step(stmt)==SQLITE_ROW) {
-                flag=1;
-                break;
-               // const unsigned char *_id=sqlite3_column_text(stmt, 0);
-             }
-        }
-        if(flag==0)
-        {
-            char *Sql = "insert into 'detail' ('ID','pic')values (?,?);";
-            if (sqlite3_prepare_v2(database, Sql, -1, &stmt, nil) == SQLITE_OK) {
-                sqlite3_bind_text(stmt, 1,[ID   UTF8String], -1, NULL);
-                sqlite3_bind_text(stmt, 2,[jsonString   UTF8String], -1, NULL);
-            }
-            if (sqlite3_step(stmt) != SQLITE_DONE)
-                NSLog(@"Something is Wrong!");
-        }
-        
-        
-        sqlite3_finalize(stmt);//  最后，关闭数据库：
-        sqlite3_close(database);//创建数据库end
-        
-        //建立是否已读数据库
-        NSString *strID;
-        NSArray *array1=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsPaths1=[array1 objectAtIndex:0];
-        NSString *str=[NSString stringWithFormat:@"News_dataBases"];
-        NSString *databasePaths1=[documentsPaths1 stringByAppendingPathComponent:str];
-        sqlite3 *database1;
-        
-        if (sqlite3_open([databasePaths1 UTF8String], &database1)==SQLITE_OK)
-        {
-            NSLog(@"open success");
-        }
-        else {
-            NSLog(@"open failed");
-        }
-        
-        char *errorMsg1;
-        NSString *sql1=@"CREATE TABLE IF NOT EXISTS isReadList (ID TEXT)"; //创建表
-        if (sqlite3_exec(database1, [sql1 UTF8String], NULL, NULL, &errorMsg1)==SQLITE_OK )
-        {
-            NSLog(@"create success");
-        }else{
-            NSLog(@"create error:%s",errorMsg1);
-            sqlite3_free(errorMsg1);
-        }
-        sql1= @"select ID from isReadList";
-        sqlite3_stmt *stmt1;
-        //查找数据
-        SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
-        NSDictionary *jsonObj1 =[parser1 objectWithString:jsonString];
-        int OK;
-        if(sqlite3_prepare_v2(database1, [sql1 UTF8String], -1, &stmt1, nil)==SQLITE_OK)
-        {
-            OK=0;
-            while (sqlite3_step(stmt1)==SQLITE_ROW) {
-                
-                
-                const unsigned char *_id1= sqlite3_column_text(stmt1, 0);
-                strID= [NSString stringWithUTF8String: _id1];
-                if([strID isEqualToString: ID ])
-                {
-                    OK=1;
-                    break;
-                }
-            }
-        }
-        if(OK==0)
-        {
-            NSString *string=[jsonObj1 objectForKey:@"create_time"];
-            NSString* date;
-            NSDateFormatter* formatter = [[[NSDateFormatter alloc]init]autorelease];
-            [formatter  setDateFormat:@"20YY-MM-dd"];
-            date = [formatter stringFromDate:[NSDate date]];
-            if([string isEqualToString:date])///是今天的日期并且id不在数据库里 是未读  插入数据库 
+    }
+    else
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            //耗时的一些操作
+            // NSString * strJson;
+            NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsPaths=[array objectAtIndex:0];
+            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"abc"]];
+            
+            sqlite3 *database;
+            
+            if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
             {
-                char *Sql = "insert into 'isReadList' ('ID')values (?);";
-                if (sqlite3_prepare_v2(database1, Sql, -1, &stmt1, nil) == SQLITE_OK) {
-                    sqlite3_bind_text(stmt1, 1,[ID  UTF8String], -1, NULL);
-                    [[IsRead sharedInstance].single_isRead_Data insertObject: ID atIndex:app.isReadCount++] ;
+                NSLog(@"open success");
+            }
+            else {
+                NSLog(@"open failed");
+            }
+            char *errorMsg;
+            NSString* sql=@"CREATE TABLE IF NOT EXISTS detail(ID TEXT,pic TEXT)";         //创建表
+            if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+            {
+                NSLog(@"create success");
+            }else{
+                NSLog(@"create error:%s",errorMsg);
+                sqlite3_free(errorMsg);
+            }
+            sqlite3_stmt *stmt;
+            // 查找数据
+            sql =  [ NSString stringWithFormat: @"select pic from detail where ID='%@'",ID];
+            
+            //查找数据
+            int flag=0;
+            if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+            {
+                NSLog(@"%d",sqlite3_step(stmt));
+                while (sqlite3_step(stmt)==SQLITE_ROW) {
+                    flag=1;
+                    break;
+                    // const unsigned char *_id=sqlite3_column_text(stmt, 0);
                 }
-                if (sqlite3_step(stmt1) != SQLITE_DONE)
+            }
+            if(flag==0)
+            {
+                char *Sql = "insert into 'detail' ('ID','pic')values (?,?);";
+                if (sqlite3_prepare_v2(database, Sql, -1, &stmt, nil) == SQLITE_OK) {
+                    sqlite3_bind_text(stmt, 1,[ID   UTF8String], -1, NULL);
+                    sqlite3_bind_text(stmt, 2,[jsonString   UTF8String], -1, NULL);
+                }
+                if (sqlite3_step(stmt) != SQLITE_DONE)
                     NSLog(@"Something is Wrong!");
             }
-        }
-        sqlite3_finalize(stmt1);
-        sqlite3_close(database1);
-        
-        
-        //建立是否已读数据库
-        dispatch_async(dispatch_get_main_queue(), ^{//主线程
-            
-            [self buildTheTopBar];
-            SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-            NSDictionary *jsonObj =[parser objectWithString:jsonString];
             
             
+            sqlite3_finalize(stmt);//  最后，关闭数据库：
+            sqlite3_close(database);//创建数据库end
             
-            //moment=[[jsonObj objectForKey:@"id"]intValue];
+            //建立是否已读数据库
+            NSString *strID;
+            NSArray *array1=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsPaths1=[array1 objectAtIndex:0];
+            NSString *str=[NSString stringWithFormat:@"News_dataBases"];
+            NSString *databasePaths1=[documentsPaths1 stringByAppendingPathComponent:str];
+            sqlite3 *database1;
             
-            htmlText=[[[NSString alloc]init]retain];
-            app.saveId=[jsonObj objectForKey:@"id"];
-            app.saveImage=jsonString;
+            if (sqlite3_open([databasePaths1 UTF8String], &database1)==SQLITE_OK)
+            {
+                NSLog(@"open success");
+            }
+            else {
+                NSLog(@"open failed");
+            }
             
-            htmlText=[jsonObj objectForKey:@"content"];
-            app.next_Page=[jsonObj objectForKey:@"next_id"];
-            app.pre_Page=[jsonObj objectForKey:@"prev_id"];
-            NSLog(@"next:%@  pre:%@",app.next_Page,app.pre_Page);
-            //[htmlTextTotals appendFormat:[NSString stringWithFormat: htmlText]];
-            //<body style="background-color: transparent">//设置网页背景透明
+            char *errorMsg1;
+            NSString *sql1=@"CREATE TABLE IF NOT EXISTS isReadList (ID TEXT)"; //创建表
+            if (sqlite3_exec(database1, [sql1 UTF8String], NULL, NULL, &errorMsg1)==SQLITE_OK )
+            {
+                NSLog(@"create success");
+            }else{
+                NSLog(@"create error:%s",errorMsg1);
+                sqlite3_free(errorMsg1);
+            }
+            sql1= @"select ID from isReadList";
+            sqlite3_stmt *stmt1;
+            //查找数据
+            SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
+            NSDictionary *jsonObj1 =[parser1 objectWithString:jsonString];
+            int OK;
+            if(sqlite3_prepare_v2(database1, [sql1 UTF8String], -1, &stmt1, nil)==SQLITE_OK)
+            {
+                OK=0;
+                while (sqlite3_step(stmt1)==SQLITE_ROW) {
+                    
+                    
+                    const unsigned char *_id1= sqlite3_column_text(stmt1, 0);
+                    strID= [NSString stringWithUTF8String: _id1];
+                    if([strID isEqualToString: ID ])
+                    {
+                        OK=1;
+                        break;
+                    }
+                }
+            }
+            if(OK==0)
+            {
+                NSString *string=[jsonObj1 objectForKey:@"create_time"];
+                NSString* date;
+                NSDateFormatter* formatter = [[[NSDateFormatter alloc]init]autorelease];
+                [formatter  setDateFormat:@"20YY-MM-dd"];
+                date = [formatter stringFromDate:[NSDate date]];
+                if([string isEqualToString:date])///是今天的日期并且id不在数据库里 是未读  插入数据库
+                {
+                    char *Sql = "insert into 'isReadList' ('ID')values (?);";
+                    if (sqlite3_prepare_v2(database1, Sql, -1, &stmt1, nil) == SQLITE_OK) {
+                        sqlite3_bind_text(stmt1, 1,[ID  UTF8String], -1, NULL);
+                        [[IsRead sharedInstance].single_isRead_Data insertObject: ID atIndex:app.isReadCount++] ;
+                    }
+                    if (sqlite3_step(stmt1) != SQLITE_DONE)
+                        NSLog(@"Something is Wrong!");
+                }
+            }
+            sqlite3_finalize(stmt1);
+            sqlite3_close(database1);
             
-            jsString = [NSString stringWithFormat:@"<html> \n"
-                        "<head> \n"
-                        "<style type=\"text/css\"> \n"
-                        "body {font-size:%fpx; line-height:%fpx;background-color: transparent;}\n"
-                        "</style> \n"
-                        "</head> \n"
-                        "<body>%@</body> \n"
-                        "</html>",  fontSize ,line_height,htmlText];
             
-            [self.navigationController setNavigationBarHidden:YES];
-            app.jsonString=jsonString;
- ///////////
-            
-            NSURL *urlBai=[NSURL URLWithString:@"http://42.96.192.186"];
-            [showWebView loadHTMLString:jsString baseURL:   urlBai];
-            showWebView.delegate=self;
-            showWebView.scrollView.delegate=self;
-            
-            self.view.backgroundColor=[UIColor clearColor];
-            
-            [showWebView setUserInteractionEnabled: YES ];
-            //UIWebView
-            //[receiveStr release];
-            
-          //  [self.view addSubview:showWebView];
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-            
-            //showWebView.
+            //建立是否已读数据库
+            dispatch_async(dispatch_get_main_queue(), ^{//主线程
+                
+                [self buildTheTopBar];
+                SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+                NSDictionary *jsonObj =[parser objectWithString:jsonString];
+                
+                
+                
+                //moment=[[jsonObj objectForKey:@"id"]intValue];
+                
+                htmlText=[[[NSString alloc]init]retain];
+                app.saveId=[jsonObj objectForKey:@"id"];
+                app.saveImage=jsonString;
+                
+                htmlText=[jsonObj objectForKey:@"content"];
+                app.next_Page=[jsonObj objectForKey:@"next_id"];
+                app.pre_Page=[jsonObj objectForKey:@"prev_id"];
+                NSLog(@"next:%@  pre:%@",app.next_Page,app.pre_Page);
+                //[htmlTextTotals appendFormat:[NSString stringWithFormat: htmlText]];
+                //<body style="background-color: transparent">//设置网页背景透明
+                
+                jsString = [NSString stringWithFormat:@"<html> \n"
+                            "<head> \n"
+                            "<style type=\"text/css\"> \n"
+                            "body {font-size:%fpx; line-height:%fpx;background-color: transparent;}\n"
+                            "</style> \n"
+                            "</head> \n"
+                            "<body>%@</body> \n"
+                            "</html>",  fontSize ,line_height,htmlText];
+                
+                [self.navigationController setNavigationBarHidden:YES];
+                app.jsonString=jsonString;
+                ///////////
+                
+                NSURL *urlBai=[NSURL URLWithString:@"http://42.96.192.186"];
+                [showWebView loadHTMLString:jsString baseURL:   urlBai];
+                showWebView.delegate=self;
+                showWebView.scrollView.delegate=self;
+                
+                self.view.backgroundColor=[UIColor clearColor];
+                
+                [showWebView setUserInteractionEnabled: YES ];
+                //UIWebView
+                //[receiveStr release];
+                
+                //  [self.view addSubview:showWebView];
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+                
+                //showWebView.
+            });
         });
-    });
+    }
 }
 #pragma mark - webview
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {

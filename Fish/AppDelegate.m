@@ -261,7 +261,7 @@
             [self.window makeKeyAndVisible];
             
             UIImageView *splashScreen = [[[UIImageView alloc] initWithFrame:CGRectMake(-40, 0, 360, height)]autorelease];
-            splashScreen.image = [UIImage imageNamed:@"welcome@2X"];
+            splashScreen.image = [UIImage imageNamed:@"moveFirstImage.jpg"];
             [self.window addSubview:splashScreen];
             
             UIImageView *splashScreen2 = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 400-height_First, 320, 80)]autorelease];

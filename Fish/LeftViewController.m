@@ -65,13 +65,13 @@
     else isSeven=YES;
     if(isFirstOpen)
     {
-        [self visitDataBase];
         isFirstOpen=NO;
+        [self visitDataBase];
     }
 }
 -(void)visitDataBase
 {
-   /*
+   
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *strJson;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -235,11 +235,10 @@
             
         });
     });
-   // */
     
     //创建数据库end
     
-    
+   /*
  
     int height;
     if(isSeven) height=60;
@@ -366,7 +365,7 @@
     [scrollView addSubview:myView];
     scrollView.contentSize = myView.frame.size;
     [self.view addSubview:scrollView];
-    
+    */
 
 }
 -(void)PessSwitch_Tag:(id)sender
