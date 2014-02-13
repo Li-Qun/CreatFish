@@ -106,9 +106,12 @@
     [topBarView addSubview:name];
     
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.frame=CGRectMake(10, littleHeinght, 37, 30);
+    UIImageView *backView=[[[UIImageView alloc]initWithFrame:CGRectMake(10,15, 25, 27)]autorelease];
+    backView.image=[UIImage imageNamed:@"theGoBack@2X"];
+    
+    leftBtn.frame=CGRectMake(10, littleHeinght, 13, 23);
     leftBtn.tag=10;
-    [leftBtn setImage:[UIImage imageNamed:@"theGoBack"] forState:UIControlStateNormal];
+    [leftBtn setImage:backView.image forState:UIControlStateNormal];
     [self.view addSubview:leftBtn];
     [leftBtn addTarget:self action:@selector(FishItemSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
     

@@ -242,7 +242,7 @@
         NSString * strJson;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"abc"]];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"detailRead"]];
         
         sqlite3 *database;
         
@@ -254,7 +254,7 @@
             NSLog(@"open failed");
         }
         char *errorMsg;
-        NSString* sql=@"CREATE TABLE IF NOT EXISTS detail (ID TEXT,pic TEXT)";         //创建表
+        NSString* sql=@"CREATE TABLE IF NOT EXISTS detailWebView_ID (ID TEXT,pic TEXT)";         //创建表
         if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
         {
             NSLog(@"create success");
@@ -264,7 +264,7 @@
         }
         BOOL flag=NO;
         sqlite3_stmt *stmtq;
-        sql=[NSString stringWithFormat:@"select count (*) from detail where ID='%@'",ID];
+        sql=[NSString stringWithFormat:@"select count (*) from detailWebView_ID where ID='%@'",ID];
         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmtq,nil)==SQLITE_OK)
         {
             while (sqlite3_step(stmtq)==SQLITE_ROW) {
@@ -280,7 +280,7 @@
         }
         sqlite3_finalize(stmtq);
         sqlite3_stmt *stmt;
-        sql =[NSString stringWithFormat:@"select pic from detail where ID='%@'",ID];
+        sql =[NSString stringWithFormat:@"select pic from detailWebView_ID where ID='%@'",ID];
         //查找数据
         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
         {
@@ -325,7 +325,7 @@
                 
                 htmlText=[[[NSString alloc]init]retain];
                 app.saveId=[jsonObj objectForKey:@"id"];
-                app.saveImage=jsonString;
+                app.saveImage=strJson;
                 htmlText=[jsonObj objectForKey:@"content"];
                 app.next_Page=[jsonObj objectForKey:@"next_id"];
                 app.pre_Page=[jsonObj objectForKey:@"prev_id"];
@@ -409,7 +409,7 @@
             // NSString * strJson;
             NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsPaths=[array objectAtIndex:0];
-            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"abc"]];
+            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:[NSString stringWithFormat:@"detailRead"]];
             
             sqlite3 *database;
             
@@ -421,7 +421,7 @@
                 NSLog(@"open failed");
             }
             char *errorMsg;
-            NSString* sql=@"CREATE TABLE IF NOT EXISTS detail(ID TEXT,pic TEXT)";         //创建表
+            NSString* sql=@"CREATE TABLE IF NOT EXISTS detailWebView_ID(ID TEXT,pic TEXT)";         //创建表
             if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
             {
                 NSLog(@"create success");
@@ -431,7 +431,7 @@
             }
             sqlite3_stmt *stmt;
             // 查找数据
-            sql =  [ NSString stringWithFormat: @"select pic from detail where ID='%@'",ID];
+            sql =  [ NSString stringWithFormat: @"select pic from detailWebView_ID where ID='%@'",ID];
             
             //查找数据
             int flag=0;
@@ -446,7 +446,7 @@
             }
             if(flag==0)
             {
-                char *Sql = "insert into 'detail' ('ID','pic')values (?,?);";
+                char *Sql = "insert into 'detailWebView_ID' ('ID','pic')values (?,?);";
                 if (sqlite3_prepare_v2(database, Sql, -1, &stmt, nil) == SQLITE_OK) {
                     sqlite3_bind_text(stmt, 1,[ID   UTF8String], -1, NULL);
                     sqlite3_bind_text(stmt, 2,[jsonString   UTF8String], -1, NULL);
@@ -507,12 +507,20 @@
             }
             if(OK==0)
             {
-                NSString *string=[jsonObj1 objectForKey:@"create_time"];
-                NSString* date;
+                NSString *date_Create=[jsonObj1 objectForKey:@"create_time"];
+                NSString* date_Today;
                 NSDateFormatter* formatter = [[[NSDateFormatter alloc]init]autorelease];
                 [formatter  setDateFormat:@"20YY-MM-dd"];
-                date = [formatter stringFromDate:[NSDate date]];
-                if([string isEqualToString:date])///是今天的日期并且id不在数据库里 是未读  插入数据库
+                date_Today = [formatter stringFromDate:[NSDate date]];
+                
+                NSDate *date_Created= [[[NSDate alloc]initWithTimeIntervalSince1970:[ date_Create integerValue]]autorelease];
+                
+                
+                date_Create =[formatter stringFromDate:date_Created];
+                
+                
+                NSLog(@"今天日期%@    创建日期%@",date_Today ,date_Create);
+                if([ date_Create isEqualToString:date_Today])///是今天的日期并且id不在数据库里 是未读  插入数据库
                 {
                     char *Sql = "insert into 'isReadList' ('ID')values (?);";
                     if (sqlite3_prepare_v2(database1, Sql, -1, &stmt1, nil) == SQLITE_OK) {
@@ -521,6 +529,11 @@
                     }
                     if (sqlite3_step(stmt1) != SQLITE_DONE)
                         NSLog(@"Something is Wrong!");
+                    NSLog(@"插入已读数据库");
+                }
+                else
+                {
+                    
                 }
             }
             sqlite3_finalize(stmt1);

@@ -260,7 +260,7 @@
             NSString *strJson;
             NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsPaths=[array objectAtIndex:0];
-            //NSString *str=[NSString stringWithFormat:@"News_dataBases"];
+         
             NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"NewsViewController"];
             sqlite3 *database;
             
@@ -775,7 +775,8 @@
         cell.labelForCategory_id.text=[dict objectForKey:@"category_id"];
         
         cell.labelForName.text=[dict objectForKey:@"name"];
-        
+         cell.labelForName.textColor =[UIColor redColor ];
+        NSLog(@"%d",[IsRead sharedInstance].single_isRead_Data.count);
         if(app.isRead)
         {
             for(int i=0;i<app.isReadCount;i++)
@@ -786,10 +787,6 @@
                 }
             }
         }
-        else{
-            cell.labelForName.textColor =[UIColor redColor ];
-        }
-        
         cell.labelForName.font=[UIFont systemFontOfSize:15.0f];
         
         

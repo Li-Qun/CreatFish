@@ -140,7 +140,7 @@
         
     //打开百度移动统计end事件统计
         
-        //打开判断可读数据库
+//打开判断可读数据库
         NSString *strID;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
@@ -156,15 +156,15 @@
             NSLog(@"open failed");
         }
         
-        char *errorMsg;
+        //char *errorMsg;
         NSString *sql=@"CREATE TABLE IF NOT EXISTS isReadList(ID TEXT)"; //创建表
-        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
-        {
-            NSLog(@"create success");
-        }else{
-            NSLog(@"create error:%s",errorMsg);
-            sqlite3_free(errorMsg);
-        }
+//        if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+//        {
+//            NSLog(@"create success");
+//        }else{
+//            NSLog(@"create error:%s",errorMsg);
+//            sqlite3_free(errorMsg);
+//        }
          sql= @"select ID from isReadList";
         sqlite3_stmt *stmt;
         //查找数据

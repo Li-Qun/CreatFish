@@ -122,9 +122,12 @@
     [self.view addSubview:topBarView];
     
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.frame=CGRectMake(10, 20-Height/2-2, 25, 27);
+    UIImageView *backView=[[[UIImageView alloc]initWithFrame:CGRectMake(10,15, 25, 27)]autorelease];
+    backView.image=[UIImage imageNamed:@"theGoBack@2X"];
+ 
+    leftBtn.frame=CGRectMake(10, 20-Height/2-2, 13, 23);
     leftBtn.tag=10;
-    [leftBtn setImage:[UIImage imageNamed:@"theGoBack"] forState:UIControlStateNormal];
+    [leftBtn setImage:backView.image forState:UIControlStateNormal];
     [self.view addSubview:leftBtn];
     [leftBtn addTarget:self action:@selector(backSet) forControlEvents:UIControlEventTouchUpInside];
     
@@ -205,23 +208,13 @@
 {
     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
     NSDictionary *jsonObj =[parser objectWithString: jsonString];
-    NSLog(@"%@",[jsonObj objectForKey:@"msg"]);
     if([[jsonObj objectForKey:@"msg"] isEqualToString:@"反馈提交成功"])
     {
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"反馈提交成功"
-                                                        message:@""
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:[jsonObj objectForKey:@"msg"]
+                                                        message:nil
                                                        delegate:nil
                                               cancelButtonTitle:@"确定"
                                               otherButtonTitles: nil]autorelease];
-        [alert show];
-    }
-    else
-    {
-        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"反馈提交失败"
-                                                         message:@"请稍后再试"
-                                                        delegate:self
-                                               cancelButtonTitle:@"确定"
-                                               otherButtonTitles: nil]autorelease];
         [alert show];
     }
 }

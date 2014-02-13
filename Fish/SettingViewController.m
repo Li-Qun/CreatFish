@@ -9,6 +9,8 @@
 #import "SettingViewController.h"
 #import "AdviceViewController.h"
 #import "ViewController.h"
+#import "Singleton.h"
+
 #import <ShareSDK/ShareSDK.h>
 #import "WeiboApi.h"
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
@@ -140,7 +142,7 @@
         }
         else NSLog(@"delect failde!!!!");
         sqlite3_close(database_ListNew);//
-//阅读页面
+//阅读页面  webView_ID/收藏
         NSArray *array_detailRead=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths_detailRead=[array_detailRead objectAtIndex:0];
         NSString *str_detailRead=[NSString stringWithFormat:@"detailRead"];
@@ -155,13 +157,17 @@
             NSLog(@"open failed");
         }
         char *errorMsg_detailRead;
-        const char *deleteAllSql_detailRead="delete from detail where 1>0";
+        const char *deleteAllSql_detailRead="delete from detailWebView_ID where 1>0";
         //执行删除语句
         if(sqlite3_exec(database_detailRead, deleteAllSql_detailRead, NULL, NULL, &errorMsg_detailRead)==SQLITE_OK){
             NSLog(@"删除所有数据成功");
         }
         else NSLog(@"delect failde!!!!");
-        
+///删除 收藏
+        AppDelegate * app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        app.saveNum=0;
+        if([Singleton sharedInstance].single_Data.count!=0)
+        [[Singleton sharedInstance].single_Data removeAllObjects];//清空数组
         const char *deleteAllSql_detailRead1="delete from detailIDD where 1>0";
         //执行删除语句
         if(sqlite3_exec(database_detailRead, deleteAllSql_detailRead1, NULL, NULL, &errorMsg_detailRead)==SQLITE_OK){
@@ -240,8 +246,40 @@
         }
         else NSLog(@"delect failde!!!!%s",errorMsg_LifeItem);
         sqlite3_close(database_LifeItem);//*/
- 
+///删除是否已读News_dataBases
+        if(app.isRead_arr.count!=0)
+        [app.isRead_arr removeAllObjects];
+        app.isReadCount=0;
+        NSArray *array_isRead=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPaths_isRead=[array_isRead objectAtIndex:0];
+        NSString *str_isRead=[NSString stringWithFormat:@"News_dataBases"];
+        NSString *databasePaths_isRead=[documentsPaths_isRead stringByAppendingPathComponent:str_isRead];
+        sqlite3 *database_isRead;
         
+        if (sqlite3_open([databasePaths_isRead UTF8String], &database_isRead)==SQLITE_OK)
+        {
+            NSLog(@"open success");
+        }
+        else {
+            NSLog(@"open failed");
+        }
+        char *errorMsg_isRead;
+        
+        const char *deleteAllSql_isRead="delete from isReadList where 1>0";
+        //执行删除语句
+        if(sqlite3_exec(database_isRead, deleteAllSql_isRead, NULL, NULL, &errorMsg_isRead)==SQLITE_OK){
+            NSLog(@"删除所有数据成功");
+        }
+        else NSLog(@"delect failde!!!!");
+        deleteAllSql_detailRead="delete from picture where 1>0";
+        //执行删除语句
+        
+        if(sqlite3_exec(database_isRead, deleteAllSql_isRead, NULL, NULL, &errorMsg_isRead)==SQLITE_OK){
+            NSLog(@"删除所有数据成功");
+        }
+        else NSLog(@"delect failde!!!!");
+        sqlite3_close(database_isRead);//
+ 
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
             
@@ -416,14 +454,14 @@
     
     
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.frame=CGRectMake(10,15, 25, 27);
+    UIImageView *backView=[[[UIImageView alloc]initWithFrame:CGRectMake(10,15, 25, 27)]autorelease];
+    backView.image=[UIImage imageNamed:@"theGoBack@2X"];
+    leftBtn.frame=CGRectMake(14,17,13, 23);
     leftBtn.tag=10;
-    [leftBtn setImage:[UIImage imageNamed:@"theGoBack"] forState:UIControlStateNormal];
+    [leftBtn setImage:backView.image forState:UIControlStateNormal];
     [myView addSubview:leftBtn];
     [leftBtn addTarget:self action:@selector(Back) forControlEvents:UIControlEventTouchUpInside];
  
-
-    
     //分割线
     UIImageView *imgLineOne=[[UIImageView alloc]initWithFrame:CGRectMake(0, 55, 320, 2)];
     imgLineOne.image=[UIImage imageNamed:@"theLineSet.png"];

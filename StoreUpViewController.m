@@ -114,8 +114,15 @@
     tableView_Store.separatorStyle = NO;
    
     
-    
-    [self buildTheLongTime];
+    if([Singleton sharedInstance].single_Data.count==0)
+    {
+        NSLog(@"暂无收藏内容");
+    }
+    else
+    {
+         [self buildTheLongTime];
+    }
+   
     
 }
 -(void)buildTheLongTime

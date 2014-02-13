@@ -658,7 +658,7 @@
     
     
     NSDate *date = [[[NSDate alloc]initWithTimeIntervalSince1970:[[ [arr objectAtIndex:0] objectForKey:@"create_time"]integerValue]
-                     /1000.0]autorelease];
+                      ]autorelease];
     
     NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
     dateFormatter.dateFormat = @"yyyy-MM-dd";
@@ -861,8 +861,7 @@
         textView.scrollEnabled=YES;
         textView.showsVerticalScrollIndicator=NO;
         
-        NSDate *date = [[[NSDate alloc]initWithTimeIntervalSince1970:[[ [arr objectAtIndex:index] objectForKey:@"create_time"]integerValue]
-/1000.0]autorelease];
+        NSDate *date = [[[NSDate alloc]initWithTimeIntervalSince1970:[[ [arr objectAtIndex:index] objectForKey:@"create_time"]integerValue]]autorelease];
         
         NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
         dateFormatter.dateFormat = @"yyyy-MM-dd";
