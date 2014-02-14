@@ -127,8 +127,6 @@
     
     app.targetCenter=[BigFishPid intValue];
     
-    BigFish_Description=   [[[NSMutableArray alloc]init]retain];
-    
     if(!isFirstOpen)
     {
         ContentRead* contentRead =[[[ContentRead alloc]init]autorelease];
@@ -219,7 +217,7 @@
         
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
-            if(flag)
+            if(flag||[self isBlankString:strJson])
             {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
@@ -236,14 +234,15 @@
                 
                 SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                 NSDictionary *jsonObj =[parser objectWithString:strJson];
-                //  total = [[jsonObj objectForKey:@"total"] intValue];
+              
                 NSArray *data = [jsonObj objectForKey:@"data"];
+                sum=app.BigFish_Description.count;
                 total+=data.count;
                 for(int i=0;i<data.count;i++)
                 {
-                    [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
+                    [app.BigFish_Description insertObject:[data objectAtIndex:i] atIndex: sum++];
                 }
-                app.BigFish_Description=BigFish_Description;
+               
                 
                 carousel.delegate = self;
                 [self.carousel reloadData];
@@ -256,7 +255,7 @@
                     view.alpha = 1.0;
                 }
                 
-                labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
+                labelText.text=[[app.BigFish_Description objectAtIndex:0] objectForKey:@"description"];
                 labelText.textColor=[UIColor whiteColor];
                 labelText.backgroundColor=[UIColor clearColor];
                 labelText.font=[UIFont systemFontOfSize:14.0f];
@@ -411,16 +410,15 @@
                     //设置索引标识
                     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                     NSDictionary *jsonObj =[parser objectWithString:jsonString];
-                    // total = [[jsonObj objectForKey:@"total"] intValue];
+                   
                     NSArray *data = [jsonObj objectForKey:@"data"];
+                    sum=app.BigFish_Description.count;
                     total+=data.count;
-                    
-                    
                     for(int i=0;i<data.count;i++)
                     {
-                        [BigFish_Description insertObject:[data objectAtIndex:i] atIndex: i];
+                        [app.BigFish_Description insertObject:[data objectAtIndex:i] atIndex: sum++];
                     }
-                    app.BigFish_Description=BigFish_Description;
+ 
                     
                     carousel.delegate = self;
                     [self.carousel reloadData];
@@ -449,7 +447,7 @@
                         lab_height=100;
                     }
                     
-                    labelText.text=[[BigFish_Description objectAtIndex:0] objectForKey:@"description"];
+                    labelText.text=[[app.BigFish_Description objectAtIndex:0] objectForKey:@"description"];
                     labelText.textColor=[UIColor whiteColor];
                     labelText.backgroundColor=[UIColor clearColor];
                     labelText.font=[UIFont systemFontOfSize:14.0f];
@@ -713,8 +711,6 @@
     }
     else
     {
-        
-      //  NSLog(@"XX");
         NSDictionary* dict = [app.BigFish_Description objectAtIndex:index1];
         FishImageViewController *detail=[[[FishImageViewController alloc]initWithNibName:@"FishImageViewController" bundle:nil]autorelease];
         detail.FishImageID=[dict objectForKey:@"id"];

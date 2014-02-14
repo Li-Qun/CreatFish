@@ -68,11 +68,12 @@
     // else target_centerView=app.targetCenter;
     
     int i=0;
+    BOOL flag=NO;
     for(int j=0;j<jsonObj.count;j++)
     {
         if([ [NSString stringWithFormat:@"%d",target_centerView]isEqualToString:[[jsonObj  objectAtIndex:j] objectForKey:@"pid"]])
         {
-            
+            flag=YES;
             //  NSLog(@"%@",[[jsonObj  objectAtIndex:j] objectForKey:@"name"]);
             UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
             OneButton.frame=CGRectMake(0, 20+i*45, 320, 44);
@@ -91,7 +92,15 @@
             OneButton.backgroundColor=[UIColor clearColor];
             i++;
         }
-        
+    }
+    if(!flag)
+    {
+        UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"暂无子分类哦 >_<"
+                                                         message:nil
+                                                        delegate:nil
+                                               cancelButtonTitle:@"确定"
+                                               otherButtonTitles: nil]autorelease];
+        [alert show];
     }
     [scrollView addSubview:myView];
     scrollView.contentSize = myView.frame.size;
@@ -183,7 +192,6 @@
     if([isGallery integerValue]==0&& [isTopic integerValue]==0)
     {
         [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
-
             BookViewController *apiVC = [[[BookViewController alloc] init] autorelease];
             apiVC.target=btn.tag;
             apiVC.NewsPid=fatherID;

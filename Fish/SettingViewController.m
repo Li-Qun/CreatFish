@@ -366,13 +366,13 @@
                                            [newUser setObject:[userInfo icon] forKey:@"icon"];
                                            [newUser saveInBackground];
                                            
-                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"欢迎注册" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"欢迎注册" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
                                            [alertView show];
                                            [alertView release];
                                        }
                                        else
                                        {
-                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"欢迎回来" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"欢迎回来" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
                                            [alertView show];
                                            [alertView release];
                                        }
@@ -403,13 +403,13 @@
                                            [newUser setObject:[userInfo icon] forKey:@"icon"];
                                            [newUser saveInBackground];
                                            
-                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"欢迎注册" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"欢迎注册" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
                                            [alertView show];
                                            [alertView release];
                                        }
                                        else
                                        {
-                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"欢迎回来" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                                           UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"欢迎回来" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
                                            [alertView show];
                                            [alertView release];
                                        }
@@ -456,7 +456,7 @@
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     UIImageView *backView=[[[UIImageView alloc]initWithFrame:CGRectMake(10,15, 25, 27)]autorelease];
     backView.image=[UIImage imageNamed:@"theGoBack@2X"];
-    leftBtn.frame=CGRectMake(14,17,13, 23);
+    leftBtn.frame=CGRectMake(14,17,22, 25);
     leftBtn.tag=10;
     [leftBtn setImage:backView.image forState:UIControlStateNormal];
     [myView addSubview:leftBtn];

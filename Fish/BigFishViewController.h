@@ -23,7 +23,7 @@
     BOOL isOpenR;
     
     int total;
-    NSMutableArray *BigFish_Description;
+    int sum;
     UIView *view1;
     IBOutlet UILabel *labelText;
     int index;

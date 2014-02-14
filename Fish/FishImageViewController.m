@@ -8,7 +8,7 @@
 
 #import "FishImageViewController.h"
 
-
+#import "MBProgressHUD.h"
 #import <ShareSDK/ShareSDK.h>
 #import "WeiboApi.h"
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
@@ -106,10 +106,10 @@
     [topBarView addSubview:name];
     
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    UIImageView *backView=[[[UIImageView alloc]initWithFrame:CGRectMake(10,15, 25, 27)]autorelease];
+    UIImageView *backView=[[[UIImageView alloc]initWithFrame:CGRectMake(270, littleHeinght, 30, 25)]autorelease];
     backView.image=[UIImage imageNamed:@"theGoBack@2X"];
     
-    leftBtn.frame=CGRectMake(10, littleHeinght, 13, 23);
+    leftBtn.frame=CGRectMake(10, littleHeinght, 30, 25);
     leftBtn.tag=10;
     [leftBtn setImage:backView.image forState:UIControlStateNormal];
     [self.view addSubview:leftBtn];
@@ -184,7 +184,7 @@
         sqlite3_close(database);
 
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
-            if(flag)
+            if(flag||[self isBlankString:strJson])
             {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                 message:@"该缓存为空，请连接网络使用"
@@ -199,9 +199,9 @@
             {
                 SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                 NSDictionary *jsonObj =[parser objectWithString: strJson];
-                
                 NSArray *data = [jsonObj objectForKey:@"data"];
                 NSMutableArray *arr=[[[NSMutableArray alloc]init]autorelease];
+                
                 for (int i =0; i <data.count; i++) {
                     [arr insertObject:[data objectAtIndex:i] atIndex: i];
                     //[Fish_arr insertObject:[data objectAtIndex:i] atIndex: i];
@@ -264,6 +264,9 @@
         }
         else
         {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeIndeterminate;
+            hud.labelText = @"正在加载图片~~";//加载提示语言
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 //耗时的一些操作
                 //NSString *strJson;
@@ -339,7 +342,9 @@
                         
                         [Fish_arr  insertObject:[data objectAtIndex:i] atIndex: i];
                     }
+                   
                     [self createView];
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
                 });
             });
             

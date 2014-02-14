@@ -314,7 +314,7 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 
-                if(flag)
+                if(flag||[self isBlankString:strJson])
                 {
                     [MBProgressHUD hideHUDForView:tabView animated:YES];
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"

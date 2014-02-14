@@ -302,7 +302,7 @@
         sqlite3_close(database);//创建数据库end
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
-            if(flag)
+            if(flag||[self isBlankString:strJson])
             {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
                                                                 message:@"该缓存为空，请连接网络使用"
@@ -520,7 +520,7 @@
                 
                 
                 NSLog(@"今天日期%@    创建日期%@",date_Today ,date_Create);
-                if([ date_Create isEqualToString:date_Today])///是今天的日期并且id不在数据库里 是未读  插入数据库
+                if(![ date_Create isEqualToString:date_Today])///是今天的日期并且id不在数据库里 是未读  插入数据库
                 {
                     char *Sql = "insert into 'isReadList' ('ID')values (?);";
                     if (sqlite3_prepare_v2(database1, Sql, -1, &stmt1, nil) == SQLITE_OK) {
@@ -958,8 +958,8 @@ didFailWithError:(NSError *)error
 ///收藏提示对话框
 -(void)SaveBook :(id)sender
 {
-    UIAlertView *alert =[[[UIAlertView alloc] initWithTitle:@"hello"
-                                                   message:@"收藏当前阅读内容"
+    UIAlertView *alert =[[[UIAlertView alloc] initWithTitle:@"亲～"
+                                                   message:@"您要收藏当前阅读内容么"
                                                   delegate:self
                                          cancelButtonTitle:@"确定"
                                          otherButtonTitles:@"取消",nil ]autorelease];

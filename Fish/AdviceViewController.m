@@ -125,7 +125,7 @@
     UIImageView *backView=[[[UIImageView alloc]initWithFrame:CGRectMake(10,15, 25, 27)]autorelease];
     backView.image=[UIImage imageNamed:@"theGoBack@2X"];
  
-    leftBtn.frame=CGRectMake(10, 20-Height/2-2, 13, 23);
+    leftBtn.frame=CGRectMake(10, 20-Height/2-2, 22, 25);
     leftBtn.tag=10;
     [leftBtn setImage:backView.image forState:UIControlStateNormal];
     [self.view addSubview:leftBtn];
