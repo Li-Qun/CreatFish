@@ -23,7 +23,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "InformationCell.h"
 #import "OneCell.h"
-#import "skyCell.h"
 #import "NewCell.h"
 #import "UIImageView+WebCache.h"
 #import "DetailViewController.h"
@@ -710,7 +709,7 @@
             NSArray *jsonObj =[parser objectWithString:app.jsonStringOne];
             for(int i=0;i<jsonObj.count ;i++)
             {
-                [dataPic insertObject:[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[[jsonObj objectAtIndex:i] objectForKey:@"image"]] atIndex:i];
+                [dataPic insertObject:[NSString stringWithFormat:@"%@%@",Image_Head,[[jsonObj objectAtIndex:i] objectForKey:@"image"]] atIndex:i];
                 [dataLabel insertObject: [[jsonObj objectAtIndex:i]objectForKey:@"name"] atIndex:i];
                 [arrTopId insertObject:  [[jsonObj objectAtIndex:i]objectForKey:@"id"]  atIndex:i];
             }
@@ -795,7 +794,7 @@
         cell.labelForID.textColor=[UIColor grayColor];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
+        NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[dict objectForKey:@"image"]];
         //#import "UIImageView+WebCache.h" 加载网络图片方法start
         [cell.imgView setImageWithURL:[NSURL URLWithString: imgURL]
                      placeholderImage:[UIImage imageNamed:@"placeholder.png"]

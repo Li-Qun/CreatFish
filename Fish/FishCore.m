@@ -57,7 +57,9 @@
 {
     if([self isConnectionAvailable])
     {
-        NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/category/read_lst" ];
+        NSString *string=[NSString stringWithFormat:@"%@category/read_lst",Root];
+        NSLog(@"%@",string);
+        NSURL *url = [ NSURL URLWithString :  string ];
         __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
         [request setRequestMethod:@"POST"];
         // ASIHTTPRequest 支持 iOS 4.0 的块语法，你可以把委托方法定义到块中
@@ -88,7 +90,9 @@
 {
    if([self isConnectionAvailable])
    {
-       NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/content/read_lst" ];
+       NSString *string=[NSString stringWithFormat:@"%@content/read_lst",Root];
+       
+       NSURL *url = [ NSURL URLWithString :  string ];
        __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
        [request setRequestMethod:@"POST"];
        [request setPostValue:ID forKey:@"filter_category_id"];
@@ -125,7 +129,8 @@
 {
     if([self isConnectionAvailable])
     {
-        NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/gallery/read_lst" ];
+        NSString *string=[NSString stringWithFormat:@"%@gallery/read_lst",Root];
+        NSURL *url = [ NSURL URLWithString :  string ];
         __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
         [request setRequestMethod:@"POST"];
         [request setPostValue:content_id forKey:@"content_id"];
@@ -157,7 +162,9 @@
 {
     if([self isConnectionAvailable])
     {
-        NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/content/read_dtl" ];
+        NSString *string=[NSString stringWithFormat:@"%@content/read_dtl",Root];
+        NSURL *url = [ NSURL URLWithString :  string ];
+      
         __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
         [request setRequestMethod:@"POST"];
         
@@ -184,43 +191,13 @@
     }
     
 }
-////查询 - 详细 [content/read_dtl
-//-(void)ContentDetail:(NSString*) content_id
-//{
-//    if([self isConnectionAvailable])
-//    {
-//        NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/content/read_dtl" ];
-//        __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
-//        [request setRequestMethod:@"POST"];
-//        [request setPostValue:content_id forKey:@"content_id"];
-//        
-//        [request setDelegate:self];
-//        [request setCompletionBlock :^{
-//            // 请求响应结束，返回 responseString
-//            NSString * jsonString  =  [request responseString];
-//            [delegate reBack :jsonString];
-//        }];
-//        [request setFailedBlock :^{
-//            // 请求响应失败，返回错误信息
-//            NSError *error = [request error ];
-//            NSLog ( @"error:%@" ,[error userInfo ]);
-//             [self mention ];
-//            
-//        }];
-//        [request startAsynchronous ];//异步
-//    }
-//    else
-//    {
-//        [delegate reBack:content_id reLoad:content_id];
-//    }
-//    
-//}
-//setting/read_lst查询 - 列表
+ //setting/read_lst查询 - 列表
 -(void)ContentSetting
 {
     if([self isConnectionAvailable])
     {
-        NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/setting/read_lst"];
+        NSString *string=[NSString stringWithFormat:@"%@setting/read_lst",Root];
+        NSURL *url = [ NSURL URLWithString :  string ];
         __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
         [request setRequestMethod:@"POST"];
         [request setCompletionBlock :^{
@@ -246,7 +223,8 @@
 //【反馈】添加 [feedback/create]
 -(void)Submmit:(NSString *)contact typeBack:(NSString *)feedback_category content:(NSString *)feedback_content
 {
-     NSURL *url = [ NSURL URLWithString : @"http://42.96.192.186/ifish/server/index.php/app/mgz/feedback/create"];
+    NSString *string=[NSString stringWithFormat:@"%@feedback/create",Root];
+    NSURL *url = [ NSURL URLWithString :  string ];
     __block ASIFormDataRequest *request = [ ASIFormDataRequest requestWithURL :url];
     [request setRequestMethod:@"POST"];
     [request setPostValue:contact forKey:@"contact"];

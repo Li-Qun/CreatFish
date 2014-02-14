@@ -585,7 +585,7 @@
     else
     {
         NSDictionary* dict = [app.BigFish_Description objectAtIndex:(index1)];
-        NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"]];
+        NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[dict objectForKey:@"image"]];
         UIImageView *ImageView=[[[UIImageView alloc]initWithFrame:carousel1.frame ]autorelease];
         [ImageView  setImageWithURL:[NSURL URLWithString: imgURL]
                    placeholderImage:[UIImage imageNamed:@"placeholder.png"]

@@ -436,7 +436,7 @@
     for (int i=0; i <Fish_arr.count; i++) {
         NSDictionary* dict = [Fish_arr objectAtIndex:i];
         UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(width+20+size.width * i, 0, size.width-40-width*2, size.height+height)]autorelease];
-        NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"] ];
+        NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[dict objectForKey:@"image"] ];
         [iv setImageWithURL:[NSURL URLWithString: imgURL]
            placeholderImage:[UIImage imageNamed:@"placeholder.png"]
                     success:^(UIImage *image) {NSLog(@"OK");}

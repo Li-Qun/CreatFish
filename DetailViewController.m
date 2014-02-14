@@ -575,7 +575,7 @@
                 app.jsonString=jsonString;
                 ///////////
                 
-                NSURL *urlBai=[NSURL URLWithString:@"http://42.96.192.186"];
+                NSURL *urlBai=[NSURL URLWithString:ImageWeb_Head];
                 [showWebView loadHTMLString:jsString baseURL:   urlBai];
                 showWebView.delegate=self;
                 showWebView.scrollView.delegate=self;

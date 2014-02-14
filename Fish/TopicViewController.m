@@ -7,7 +7,7 @@
 //
 
 #import "TopicViewController.h"
-#import "NewsController.h"
+#import "BookViewController.h"
 #import "BigFishViewController.h"
 #import "DetailViewController.h"
 
@@ -500,7 +500,7 @@
     for (int i=0; i <arr.count; i++) {
         NSDictionary* dict = [arr objectAtIndex:i];
         UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height+height)]autorelease];
-        NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[dict objectForKey:@"image"] ];
+        NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[dict objectForKey:@"image"] ];
         [iv setImageWithURL:[NSURL URLWithString: imgURL]
            placeholderImage:[UIImage imageNamed:@"placeholder.png"]
                     success:^(UIImage *image) {NSLog(@"OK");}
@@ -657,7 +657,7 @@
     
     if([isGallery integerValue]==0&& [isTopic integerValue]==0)
     {
-        NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
+        BookViewController *newVC = [[[BookViewController alloc] initWithNibName:@"BookViewController" bundle:nil]autorelease];
         newVC.hidesBottomBarWhenPushed = YES;
         newVC.target=btn.tag;
         newVC.NewsName=name;

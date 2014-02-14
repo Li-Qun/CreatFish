@@ -14,7 +14,6 @@
 #import "AppDelegate.h"
 #import "EGORefreshTableHeaderView.h"
 #import "EGORefreshTableFooterView.h"
-#import "skyCell.h"
 
 @protocol myNewDelegate
 @optional

@@ -8,7 +8,6 @@
 
 #import "ViewController.h"
 #import "IIViewDeckController.h"
-#import "NewsController.h"
 #import "BigFishViewController.h"
 #import "TopicViewController.h"
 #import  "DetailViewController.h"
@@ -681,20 +680,15 @@
   //  if(height_Momente==480)  height=60;
     for (int i=0; i < [firstPageImage count]; i++) {
         UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(size.width * i, 0, size.width, size.height)]autorelease];
-        NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[[firstPageImage objectAtIndex:i]objectForKey:@"image"]];
+        NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[[firstPageImage objectAtIndex:i]objectForKey:@"image"]];
+
         [iv setImageWithURL:[NSURL URLWithString: imgURL]
            placeholderImage:[UIImage imageNamed:@"placeholder.png"]
                     success:^(UIImage *image) {NSLog(@"OK");}
                     failure:^(NSError *error) {NSLog(@"NO");}];
         [self.klpScrollView1 addSubview:iv];
         
-//        UIButton *share=[UIButton buttonWithType:UIButtonTypeCustom];
-//        share.frame=CGRectMake(280, 150+share_height, 35,35 );
-//        [share setImage:[UIImage imageNamed:@"shareFirstView@2X"] forState:UIControlStateNormal];
-//        [share addTarget:self action:@selector(Press_share) forControlEvents:UIControlEventTouchDown];
-//
-//        [iv addSubview:share];
-        
+         
         iv = nil;
         
     }
@@ -967,13 +961,6 @@
     
     if([isGallery integerValue]==0&& [isTopic integerValue]==0)
     {
-//        NewsController *newVC = [[[NewsController alloc] initWithNibName:@"NewsController" bundle:nil]autorelease];
-//        newVC.hidesBottomBarWhenPushed = YES;
-//        newVC.target=btn.tag;
-//        newVC.NewsName=name;
-//        newVC.NewsPid=[NSString stringWithFormat:@"%d",btn.tag];
-//        [self.navigationController pushViewController :newVC animated:YES];
-        
         BookViewController *newVC = [[[BookViewController alloc] initWithNibName:@"BookViewController" bundle:nil]autorelease];
         newVC.hidesBottomBarWhenPushed = YES;
         newVC.target=btn.tag;

@@ -181,7 +181,7 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    NSString *imgURL=[NSString stringWithFormat:@"http://42.96.192.186/ifish/server/upload/%@",[jsonObj objectForKey:@"image"]];
+    NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[jsonObj objectForKey:@"image"]];
     [cell.imgView setImageWithURL:[NSURL URLWithString: imgURL]
                  placeholderImage:[UIImage imageNamed:@"placeholder.png"]
                           success:^(UIImage *image) {NSLog(@"OK");}

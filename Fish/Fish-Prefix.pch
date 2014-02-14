@@ -32,6 +32,8 @@ DISPATCH_EXPORT struct dispatch_queue_s _dispatch_main_q;
 #define dispatch_get_main_queue() \
 DISPATCH_GLOBAL_OBJECT(dispatch_queue_t, _dispatch_main_q)
 
-
+#define Root @"http://42.96.192.186/app/mgz/"
+#define Image_Head @"http://42.96.192.186/upload/"
+#define ImageWeb_Head @"http://42.96.192.186/"
 
 #endif
