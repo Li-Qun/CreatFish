@@ -18,10 +18,6 @@
 #import "SDWebImageDownloader.h"
 #import "UIMenuItem+CXAImageSupport.h"
 
-#import "HTMLParser.h"
-
-
-
 #import "Singleton.h"
 #import "IsRead.h"
 
@@ -66,7 +62,7 @@
         CGSize size = rect.size;
         
         totalHeight = size.height;
-
+        
         if(totalHeight==480)
         {
             isFive=NO;
@@ -203,7 +199,7 @@
     
 }
 - (void)handleSwipes:(UISwipeGestureRecognizer *)sender
-{
+{//关闭了 详细页面 detail  的 右边栏
     if (sender.direction == UISwipeGestureRecognizerDirectionRight)//na
     {
         if(!isOpenL&&!isOpenR)
@@ -213,7 +209,7 @@
         }
         if(!isOpenL&&isOpenR)
         {
-            [self.viewDeckController toggleRightViewAnimated:YES];
+          //  [self.viewDeckController toggleRightViewAnimated:YES];
             isOpenR=NO;
         }
         
@@ -222,8 +218,8 @@
         
         if(!isOpenR&&!isOpenL)
         {
-            [self.viewDeckController toggleRightViewAnimated:YES];
-            isOpenR=YES;
+           // [self.viewDeckController toggleRightViewAnimated:YES];
+            isOpenR=YES;//
         }
         if(isOpenL&&!isOpenR)
         {
@@ -613,7 +609,7 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
     [showWebView stringByEvaluatingJavaScriptFromString:@"imageWidth(305);"];//设置网络图片统一宽度320
-    NSString *str1= [showWebView stringByEvaluatingJavaScriptFromString:@"init();"];
+   // NSString *str1= [showWebView stringByEvaluatingJavaScriptFromString:@"init();"];
     [self.view addSubview:showWebView];
     //刷新设置
     [self createHeaderView];
@@ -623,6 +619,7 @@
    [self addTapOnWebView];//调用触摸图片事件
    
 }
+//创建UIwebView 网络浏览图片start
 -( UIView *)creat_theScrollview
 {
     NSString *searchText = [showWebView stringByEvaluatingJavaScriptFromString:@"document.documentElement.innerHTML"];
@@ -631,7 +628,7 @@
     arr=[self match_fun:searchText Regex:regTags];
     // NSLog(@"结果 arr :%@",arr);
     int count=arr.count;
-    UIView *showView = [[UIView alloc] initWithFrame:self.view.frame  ];
+    UIView *showView = [[UIView alloc] initWithFrame:self.view.frame];
     UIScrollView *scrowllView_detail=[[[UIScrollView alloc]init]autorelease];
     scrowllView_detail.frame=CGRectMake(10, 95, 300, 240);
     scrowllView_detail.backgroundColor=[UIColor blackColor];
@@ -643,7 +640,8 @@
         NSString *str1=[NSString stringWithFormat:@"%@",[arr objectAtIndex:i]];
         str1= [str1 substringFromIndex:5];
         NSString *imgURL=[NSString stringWithFormat:@"%@%@",ImageWeb_Head,str1];
-        NSLog(@"%@",imgURL);
+       // NSLog(@"打印网络图片相对路径%@",imgURL);
+        app.pic_URL=imgURL;
         UIImageView *imageView=[[UIImageView alloc]initWithFrame:CGRectMake(310*i, 0, 300, 240)];
         [imageView setImageWithURL:[NSURL URLWithString:imgURL]
                   placeholderImage:[UIImage imageNamed:@"moren.png"]
@@ -670,16 +668,17 @@
     [isCloseBtn addTarget:self action:@selector(isCancelBtn) forControlEvents:UIControlEventTouchUpInside];
     [bottomBackBar addSubview:isCloseBtn];
     bottomBackBar.userInteractionEnabled=YES;
-    
     [self.view addSubview:showView];
+    return showView;
 }
-
+//创建UIwebView 网络浏览图片end
 //网络请求过程中，出现任何错误（断网，连接超时等）会进入此方法
 -(void)connection:(NSURLConnection *)connection
 didFailWithError:(NSError *)error
 {
     NSLog(@"%@",[error localizedDescription]);
 }
+//正则法则start
 -(NSMutableArray*)match_fun:(NSString *)searchText Regex:(NSString *)regTags
 {
     NSMutableArray *arr=[[[NSMutableArray alloc]init]autorelease];
@@ -713,7 +712,7 @@ didFailWithError:(NSError *)error
     }
     return  arr;
 }
-
+//正则法则end
 /////查看web 图片
 -(void)addTapOnWebView
 {
@@ -744,11 +743,10 @@ didFailWithError:(NSError *)error
 -(void)showImageURL:(NSString *)url point:(CGPoint)point
 {
     app.pic_URL=url;
-    
-    [self creat_theScrollview];
-  
- 
+//    UIView *showView=[[[UIView alloc]init]autorelease];
+      [self creat_theScrollview] ;
 }
+
 -(void)shareThewebImage
 {
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
@@ -810,6 +808,8 @@ didFailWithError:(NSError *)error
     [imgView release];
     [self buildTheTopBar];
     [self.view addSubview:showWebView];
+    [showWebView.scrollView setScrollEnabled:YES];
+
 }
 //////查看web图片  end
 
@@ -1264,27 +1264,54 @@ didFailWithError:(NSError *)error
 #pragma mark UIScrollViewDelegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-	if (_refreshHeaderView)
-	{
-        [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    //把在浏览图片时候 webview 上的滚动 加载功能 屏蔽掉
+    if(scrollView==showWebView.scrollView)
+    {
+        isImage_scrollView=NO;
     }
-	if (_refreshFooterView)
-	{
-        [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
+    else
+    {
+        [showWebView.scrollView setScrollEnabled:NO];
+        isImage_scrollView=YES;
     }
+    if(!isImage_scrollView)
+    {
+        if (_refreshHeaderView)
+        {
+            [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+        }
+        else  if (_refreshFooterView)
+        {
+            [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
+        }
+    }
+	
+    
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     
-    
-	if (_refreshHeaderView)
-	{
-        [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    if(scrollView==showWebView.scrollView)
+    {
+        isImage_scrollView=NO;
     }
-	
-	if (_refreshFooterView)
-	{
-        [_refreshFooterView egoRefreshScrollViewDidEndDragging:scrollView];
+    else
+    {
+        [showWebView.scrollView setScrollEnabled:NO];
+        isImage_scrollView=YES;
+    }
+    if(!isImage_scrollView)
+    {
+        if (_refreshHeaderView)
+        {
+            [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+        }
+        
+        if (_refreshFooterView)
+        {
+            [_refreshFooterView egoRefreshScrollViewDidEndDragging:scrollView];
+        }
+
     }
 }
 

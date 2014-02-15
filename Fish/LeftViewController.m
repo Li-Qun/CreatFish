@@ -157,9 +157,10 @@
                     [OneButton addSubview:OneName];
                     [OneButton addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
                     UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(10, 10,25 , 25)] autorelease];
+                    NSString *btnImg=[NSString stringWithFormat:@"%d.png",i];
                     NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[[jsonObj  objectAtIndex:i] objectForKey:@"image"] ];
                     [pictureOneName setImageWithURL:[NSURL URLWithString: imgURL]
-                       placeholderImage:[UIImage imageNamed:@"moren.png"]
+                       placeholderImage:[UIImage imageNamed:btnImg]
                                 success:^(UIImage *image) {NSLog(@"OK");}
                                 failure:^(NSError *error) {NSLog(@"NO");}];
                     

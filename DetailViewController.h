@@ -22,6 +22,7 @@
 {
     
     UIWebView *showWebView;
+    BOOL isImage_scrollView;
     UIImageView *topBarView;
     CGFloat height_Mag;//获取webView 高度
     NSMutableDictionary *Data;

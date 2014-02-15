@@ -687,8 +687,6 @@
                     success:^(UIImage *image) {NSLog(@"OK");}
                     failure:^(NSError *error) {NSLog(@"NO");}];
         [self.klpScrollView1 addSubview:iv];
-        
-         
         iv = nil;
         
     }
