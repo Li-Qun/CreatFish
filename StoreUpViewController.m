@@ -183,7 +183,7 @@
     
     NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[jsonObj objectForKey:@"image"]];
     [cell.imgView setImageWithURL:[NSURL URLWithString: imgURL]
-                 placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                 placeholderImage:[UIImage imageNamed:@"moren.png"]
                           success:^(UIImage *image) {NSLog(@"OK");}
                           failure:^(NSError *error) {NSLog(@"NO");}];
     

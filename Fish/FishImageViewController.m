@@ -443,7 +443,7 @@
         UIImageView *iv = [[[UIImageView alloc] initWithFrame:CGRectMake(width+20+size.width * i, 0, size.width-40-width*2, size.height+height)]autorelease];
         NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[dict objectForKey:@"image"] ];
         [iv setImageWithURL:[NSURL URLWithString: imgURL]
-           placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+           placeholderImage:[UIImage imageNamed:@"moren.png"]
                     success:^(UIImage *image) {NSLog(@"OK");}
                     failure:^(NSError *error) {NSLog(@"NO");}];
         

@@ -586,7 +586,7 @@
         NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[dict objectForKey:@"image"]];
         UIImageView *ImageView=[[[UIImageView alloc]initWithFrame:carousel1.frame ]autorelease];
         [ImageView  setImageWithURL:[NSURL URLWithString: imgURL]
-                   placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                   placeholderImage:[UIImage imageNamed:@"moren.png"]
                             success:^(UIImage *image) {NSLog(@"OK");}
                             failure:^(NSError *error) {NSLog(@"NO");}];
         [view addSubview:ImageView];

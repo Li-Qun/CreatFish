@@ -301,6 +301,9 @@
 		BBD67E411876D6E800A6CD87 /* StoreUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD67E3F1876D6E800A6CD87 /* StoreUpViewController.m */; };
 		BBD67E421876D6E800A6CD87 /* StoreUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */; };
 		BBD780E818ADEB9400A7D200 /* theGoBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD780E718ADEB9400A7D200 /* theGoBack@2X.png */; };
+		BBD7811218AE0CC300A7D200 /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD7810F18AE0CC300A7D200 /* HTMLNode.m */; };
+		BBD7811318AE0CC300A7D200 /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD7811118AE0CC300A7D200 /* HTMLParser.m */; };
+		BBD7811518AE0D6300A7D200 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BBD7811418AE0D6300A7D200 /* libxml2.2.dylib */; };
 		BBD81B87186C2EFF000DBEEE /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD81B86186C2EFF000DBEEE /* iCarousel.m */; };
 		BBDA38D9188A6FAD006A90F9 /* TopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDA38D7188A6FAD006A90F9 /* TopicViewController.m */; };
 		BBDA38DA188A6FAD006A90F9 /* TopicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBDA38D8188A6FAD006A90F9 /* TopicViewController.xib */; };
@@ -728,6 +731,11 @@
 		BBD67E3F1876D6E800A6CD87 /* StoreUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreUpViewController.m; sourceTree = "<group>"; };
 		BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreUpViewController.xib; sourceTree = "<group>"; };
 		BBD780E718ADEB9400A7D200 /* theGoBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "theGoBack@2X.png"; sourceTree = "<group>"; };
+		BBD7810E18AE0CC300A7D200 /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLNode.h; sourceTree = "<group>"; };
+		BBD7810F18AE0CC300A7D200 /* HTMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLNode.m; sourceTree = "<group>"; };
+		BBD7811018AE0CC300A7D200 /* HTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLParser.h; sourceTree = "<group>"; };
+		BBD7811118AE0CC300A7D200 /* HTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLParser.m; sourceTree = "<group>"; };
+		BBD7811418AE0D6300A7D200 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		BBD81B85186C2EFF000DBEEE /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		BBD81B86186C2EFF000DBEEE /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		BBDA38D6188A6FAD006A90F9 /* TopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicViewController.h; sourceTree = "<group>"; };
@@ -760,6 +768,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBD7811518AE0D6300A7D200 /* libxml2.2.dylib in Frameworks */,
 				BBA4729E189787D8000E4EFF /* libstdc++.dylib in Frameworks */,
 				BBA4729D18978583000E4EFF /* AdSupport.framework in Frameworks */,
 				BBA4BE9A1884018B0008643E /* MessageUI.framework in Frameworks */,
@@ -877,6 +886,7 @@
 		9006F332184D59250091B69F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BBD7811418AE0D6300A7D200 /* libxml2.2.dylib */,
 				BBA4729C18978583000E4EFF /* AdSupport.framework */,
 				BB9921B3189529F60093DC84 /* StoreKit.framework */,
 				BB9921B1189526CD0093DC84 /* CoreLocation.framework */,
@@ -964,6 +974,7 @@
 		BB78463A1859A71000260712 /* Resourse */ = {
 			isa = PBXGroup;
 			children = (
+				BBD780E918ADF97600A7D200 /* HTML_Img */,
 				BBA69871186FD43E00DE10AB /* DropDown Fresh */,
 				BBD81B84186C2ED5000DBEEE /* Magzine Classe */,
 				BBD1340B1869BF51008657B6 /* button List */,
@@ -1739,6 +1750,17 @@
 			name = "button List";
 			sourceTree = "<group>";
 		};
+		BBD780E918ADF97600A7D200 /* HTML_Img */ = {
+			isa = PBXGroup;
+			children = (
+				BBD7810E18AE0CC300A7D200 /* HTMLNode.h */,
+				BBD7810F18AE0CC300A7D200 /* HTMLNode.m */,
+				BBD7811018AE0CC300A7D200 /* HTMLParser.h */,
+				BBD7811118AE0CC300A7D200 /* HTMLParser.m */,
+			);
+			name = HTML_Img;
+			sourceTree = "<group>";
+		};
 		BBD81B84186C2ED5000DBEEE /* Magzine Classe */ = {
 			isa = PBXGroup;
 			children = (
@@ -2051,10 +2073,12 @@
 				BBA11CF8185EDAAF000D39F8 /* SBJsonWriter.m in Sources */,
 				BBA11CF1185EDAAF000D39F8 /* SBJsonStreamParserAdapter.m in Sources */,
 				BB7846331859A3D600260712 /* MyRect.m in Sources */,
+				BBD7811218AE0CC300A7D200 /* HTMLNode.m in Sources */,
 				BBAC873E18602E8B00A36D8A /* JSONKit.m in Sources */,
 				BBA4789C185721A000E64289 /* SDWebImageManager.m in Sources */,
 				BBB79BD518618C5A007DCEEA /* InformationCell.m in Sources */,
 				BBA478821857215E00E64289 /* Util.m in Sources */,
+				BBD7811318AE0CC300A7D200 /* HTMLParser.m in Sources */,
 				BBDCDB9A18A8729D0059E7AE /* BookViewController.m in Sources */,
 				BBA11CEE185EDAAF000D39F8 /* SBJsonParser.m in Sources */,
 				BB7846301859A38B00260712 /* TileView.m in Sources */,
@@ -2265,6 +2289,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Fish/Fish-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = "Fish/Fish-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2311,6 +2340,11 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Fish/Fish-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = "Fish/Fish-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

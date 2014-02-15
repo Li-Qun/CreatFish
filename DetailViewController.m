@@ -18,6 +18,9 @@
 #import "SDWebImageDownloader.h"
 #import "UIMenuItem+CXAImageSupport.h"
 
+#import "HTMLParser.h"
+
+
 
 #import "Singleton.h"
 #import "IsRead.h"
@@ -610,63 +613,48 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
     [showWebView stringByEvaluatingJavaScriptFromString:@"imageWidth(305);"];//设置网络图片统一宽度320
-    [showWebView stringByEvaluatingJavaScriptFromString:@"init();"];
+    NSString *str1= [showWebView stringByEvaluatingJavaScriptFromString:@"init();"];
     [self.view addSubview:showWebView];
     //刷新设置
     [self createHeaderView];
 	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
     [_refreshHeaderView refreshLastUpdatedDate];
     //刷新设置end
-    [self addTapOnWebView];//调用触摸图片事件
+   [self addTapOnWebView];//调用触摸图片事件
+   
 }
-//网络请求过程中，出现任何错误（断网，连接超时等）会进入此方法
--(void)connection:(NSURLConnection *)connection
-didFailWithError:(NSError *)error
+-( UIView *)creat_theScrollview
 {
-    NSLog(@"%@",[error localizedDescription]);
-}
-/////查看web 图片
--(void)addTapOnWebView
-{
-    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-    [self.showWebView addGestureRecognizer:singleTap];
-    singleTap.delegate = self;
-    singleTap.cancelsTouchesInView = NO;
-}
-#pragma mark- TapGestureRecognizer
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    return YES;
-}
-
--(void)handleSingleTap:(UITapGestureRecognizer *)sender
-{
-    CGPoint pt = [sender locationInView:self.showWebView];
-    NSString *imgURL = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).src", pt.x, pt.y];
-    NSString *urlToSave = [self.showWebView stringByEvaluatingJavaScriptFromString:imgURL];
-    NSLog(@"image url=%@", urlToSave);
-    if (urlToSave.length > 0) {
-        [self showImageURL:urlToSave point:pt];
-    }
-}
-
-//呈现图片
--(void)showImageURL:(NSString *)url point:(CGPoint)point
-{
-    app.pic_URL=url;
+    NSString *searchText = [showWebView stringByEvaluatingJavaScriptFromString:@"document.documentElement.innerHTML"];
+    NSString *regTags = @"src=((.+)('|\.gif|\.jpg|\.png))";//@"<img [^>]*src\\s*=\\s*\"([^>]+)\"";
+    NSMutableArray *arr=[[[NSMutableArray alloc]init]autorelease];
+    arr=[self match_fun:searchText Regex:regTags];
+    // NSLog(@"结果 arr :%@",arr);
+    int count=arr.count;
+    UIView *showView = [[UIView alloc] initWithFrame:self.view.frame  ];
+    UIScrollView *scrowllView_detail=[[[UIScrollView alloc]init]autorelease];
+    scrowllView_detail.frame=CGRectMake(10, 95, 300, 240);
+    scrowllView_detail.backgroundColor=[UIColor blackColor];
+    scrowllView_detail. contentSize = CGSizeMake(320*count, 0);
+    scrowllView_detail. delegate=self;
     
-    UIImageView *showView = [[UIImageView alloc] initWithFrame:self.view.frame  ];
-    showView.center = point;
-    [UIView animateWithDuration:0.5f animations:^{
-        CGPoint newPoint = self.view.center;
-        newPoint.y += 20;
-        showView.center = newPoint;
-    }];
-    showView.backgroundColor = [UIColor clearColor];
-    showView.alpha = 0.9;
-    showView.userInteractionEnabled = YES;
-    [self.view addSubview:showView];
+    for(int i=0;i<count;i++)
+    {
+        NSString *str1=[NSString stringWithFormat:@"%@",[arr objectAtIndex:i]];
+        str1= [str1 substringFromIndex:5];
+        NSString *imgURL=[NSString stringWithFormat:@"%@%@",ImageWeb_Head,str1];
+        NSLog(@"%@",imgURL);
+        UIImageView *imageView=[[UIImageView alloc]initWithFrame:CGRectMake(310*i, 0, 300, 240)];
+        [imageView setImageWithURL:[NSURL URLWithString:imgURL]
+                  placeholderImage:[UIImage imageNamed:@"moren.png"]
+                           success:^(UIImage *image) {NSLog(@"UIwebView图片显示成功OK");}
+                           failure:^(NSError *error) {NSLog(@"UIwebView顶图片显示失败NO");}];
+        [scrowllView_detail addSubview:imageView];
+    }
+    
+    [showView addSubview:scrowllView_detail];
+    showView.backgroundColor = [UIColor blackColor];
+    
     UIImageView * bottomBackBar=[[[UIImageView alloc]initWithFrame:CGRectMake(0, showView.frame.size.height-80, 320,80 )]autorelease];
     bottomBackBar.image=[UIImage imageNamed:@"BottomBar_webImage"];
     [showView addSubview:bottomBackBar];
@@ -682,13 +670,84 @@ didFailWithError:(NSError *)error
     [isCloseBtn addTarget:self action:@selector(isCancelBtn) forControlEvents:UIControlEventTouchUpInside];
     [bottomBackBar addSubview:isCloseBtn];
     bottomBackBar.userInteractionEnabled=YES;
+    
+    [self.view addSubview:showView];
+}
 
-    [showView setImageWithURL:[NSURL URLWithString:url]];
-//    
-//    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleViewTap:)];
-//    [showView addGestureRecognizer:singleTap];
-//    
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+//网络请求过程中，出现任何错误（断网，连接超时等）会进入此方法
+-(void)connection:(NSURLConnection *)connection
+didFailWithError:(NSError *)error
+{
+    NSLog(@"%@",[error localizedDescription]);
+}
+-(NSMutableArray*)match_fun:(NSString *)searchText Regex:(NSString *)regTags
+{
+    NSMutableArray *arr=[[[NSMutableArray alloc]init]autorelease];
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regTags
+                                  
+                                                                           options:NSRegularExpressionCaseInsensitive    // 还可以加一些选项，例如：不区分大小写
+                                  
+                                                                             error:&error];
+    NSLog(@"正则法则 判断结果：   %@",error);
+    NSArray *matches = [regex matchesInString:searchText
+                        
+                                      options:0
+                        
+                                        range:NSMakeRange(0, [searchText length])];
+   // NSLog(@"%@",matches);
+    // 用下面的办法来遍历每一条匹配记录
+    // NSString *re=@"[iI][mM][gG][\s]*[sS][rR][cC][\s]*=[\s'\"]*(?<ref_value>.*?(\.gif|\.jpg|\.png)) ";
+    int i=0;
+    for (NSTextCheckingResult *match in matches) {
+        
+        NSRange matchRange = [match range];
+        
+        NSString *tagString = [searchText substringWithRange:matchRange];  // 整个匹配串
+
+        [arr insertObject:tagString atIndex:i];
+        i++;
+        //NSLog(@"tagString:     %@",tagString);
+
+        
+    }
+    return  arr;
+}
+
+/////查看web 图片
+-(void)addTapOnWebView
+{
+    UITapGestureRecognizer* singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    [self.showWebView addGestureRecognizer:singleTap];
+    singleTap.delegate = self;
+    singleTap.cancelsTouchesInView = NO;
+}
+#pragma mark- TapGestureRecognizer
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+-(void)handleSingleTap:(UITapGestureRecognizer *)sender
+{
+ 
+    CGPoint pt = [sender locationInView:self.showWebView];
+    NSString *imgURL = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).src", pt.x, pt.y];
+    NSString *urlToSave = [self.showWebView stringByEvaluatingJavaScriptFromString:imgURL];
+    NSLog(@"image url=%@", urlToSave);
+    if (urlToSave.length > 0) {
+        [self showImageURL:urlToSave point:pt];
+    }
+}
+
+//呈现图片
+-(void)showImageURL:(NSString *)url point:(CGPoint)point
+{
+    app.pic_URL=url;
+    
+    [self creat_theScrollview];
+  
+ 
 }
 -(void)shareThewebImage
 {
@@ -740,16 +799,17 @@ didFailWithError:(NSError *)error
 -(void)isCancelBtn//-(void)handleSingleViewTap:(UITapGestureRecognizer *)sender
 {
     for (id obj in self.view.subviews) {
-        if ([obj isKindOfClass:[UIImageView class]]) {
+        if ([obj isKindOfClass:[UIImageView class]]||[obj isKindOfClass:[UIView class]]) {
             [obj removeFromSuperview];
         }
     }
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"readBack@2X.png"]];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"readBack@2X.png"]];//防止浏览网络图片后的阴影
     imgView.frame = self.view.bounds;
     imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [self.view insertSubview:imgView atIndex:0];
     [imgView release];
     [self buildTheTopBar];
+    [self.view addSubview:showWebView];
 }
 //////查看web图片  end
 

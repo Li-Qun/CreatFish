@@ -721,7 +721,7 @@
                 UIImageView *imageView=[[[UIImageView alloc]initWithFrame:CGRectMake(320*i, 0, 320,  178)]autorelease];
                 imageView.tag = i+1;
                 [imageView setImageWithURL:[NSURL URLWithString: [dataPic objectAtIndex:i]]
-                                  placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                                  placeholderImage:[UIImage imageNamed:@"moren.png"]
                                            success:^(UIImage *image) {NSLog(@"资讯置顶图片显示成功OK");}
                                            failure:^(NSError *error) {NSLog(@"资讯置顶图片显示失败NO");}];
                 
@@ -797,7 +797,7 @@
         NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[dict objectForKey:@"image"]];
         //#import "UIImageView+WebCache.h" 加载网络图片方法start
         [cell.imgView setImageWithURL:[NSURL URLWithString: imgURL]
-                     placeholderImage:[UIImage imageNamed:@"placeholder.png"]
+                     placeholderImage:[UIImage imageNamed:@"moren.png"]
                               success:^(UIImage *image) {NSLog(@"OK");}
                               failure:^(NSError *error) {NSLog(@"NO");}];
         
