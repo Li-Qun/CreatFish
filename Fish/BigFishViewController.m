@@ -133,6 +133,7 @@
         NSString *str=[NSString stringWithFormat:@"%d",target];
         
         [contentRead setDelegate:self];//设置代理
+        sum=0;
         [contentRead fetchList:str isPri:@"0" Out:@"0"];
         isFirstOpen=YES;
     }
@@ -506,7 +507,7 @@
             
             if(!isOpenR&&!isOpenL)
             {
-                app.targetCenter=1;
+                //app.targetCenter=1;
                 [self.viewDeckController toggleRightViewAnimated:YES];
                 isOpenR=YES;
             }
@@ -523,11 +524,16 @@
 -(void)SwimSwitch_BtnTag:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    if(btn.tag==10)//zuo
+    if(btn.tag==10)//左按钮
     {
+        
         [self.viewDeckController toggleLeftViewAnimated:YES];
     }
-    else [self.viewDeckController toggleRightViewAnimated:YES];
+    else
+    {
+      //  app.targetCenter=target;
+        [self.viewDeckController toggleRightViewAnimated:YES];
+    }
     
 }
 #pragma mark -

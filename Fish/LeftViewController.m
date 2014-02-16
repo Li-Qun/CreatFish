@@ -326,7 +326,7 @@
                 BigFishViewController *apiVC = [[[BigFishViewController alloc] init] autorelease];
                 apiVC.target=btn.tag;
                 apiVC.BigFishName=name;
-                apiVC.BigFishPid=[NSString stringWithFormat:@"%d",btn.tag];
+                apiVC.BigFishPid=[NSString stringWithFormat:@"%d@2X",btn.tag];
                 UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
                 self.viewDeckController.centerController = navApiVC;
                 self.view.userInteractionEnabled = YES;

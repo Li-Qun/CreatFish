@@ -67,40 +67,33 @@
     target_centerView=app.targetCenter;
     // else target_centerView=app.targetCenter;
     BOOL flag=NO;
-    if(target_centerView==0)
+    int i=0;
+    
+    for(int j=0;j<jsonObj.count;j++)
     {
-        flag=NO;
-    }
-    else
-    {
-        int i=0;
-        
-        for(int j=0;j<jsonObj.count;j++)
+        if([ [NSString stringWithFormat:@"%d",target_centerView]isEqualToString:[[jsonObj  objectAtIndex:j] objectForKey:@"pid"]])
         {
-            if([ [NSString stringWithFormat:@"%d",target_centerView]isEqualToString:[[jsonObj  objectAtIndex:j] objectForKey:@"pid"]])
-            {
-                flag=YES;
-                //  NSLog(@"%@",[[jsonObj  objectAtIndex:j] objectForKey:@"name"]);
-                UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
-                OneButton.frame=CGRectMake(0, 20+i*45, 320, 44);
-                [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
-                [myView addSubview:OneButton ];
-                UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(145, 0, 320, 44)]autorelease];
-                OneName.textColor=[UIColor whiteColor];
-                OneName.text=[[jsonObj  objectAtIndex:j] objectForKey:@"name"];
-                [OneButton addSubview:OneName];
-                [OneButton addTarget:self action:@selector(PessSwitchRight_Tag:) forControlEvents:UIControlEventTouchUpInside];
-                UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(90, 10,25 , 25)] autorelease];
-                pictureOneName.image=[UIImage imageNamed:@"News@2X.png"];
-                [OneButton  addSubview:pictureOneName];
-                OneButton.tag=[ [[jsonObj  objectAtIndex:j] objectForKey:@"id"] integerValue];
-                OneName.backgroundColor=[UIColor clearColor];
-                OneButton.backgroundColor=[UIColor clearColor];
-                i++;
-            }
+            flag=YES;
+            //  NSLog(@"%@",[[jsonObj  objectAtIndex:j] objectForKey:@"name"]);
+            UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
+            OneButton.frame=CGRectMake(0, 20+i*45, 320, 44);
+            [OneButton setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
+            [myView addSubview:OneButton ];
+            UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(145, 0, 320, 44)]autorelease];
+            OneName.textColor=[UIColor whiteColor];
+            OneName.text=[[jsonObj  objectAtIndex:j] objectForKey:@"name"];
+            [OneButton addSubview:OneName];
+            [OneButton addTarget:self action:@selector(PessSwitchRight_Tag:) forControlEvents:UIControlEventTouchUpInside];
+            UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(90, 10,25 , 25)] autorelease];
+            pictureOneName.image=[UIImage imageNamed:@"News@2X.png"];
+            [OneButton  addSubview:pictureOneName];
+            OneButton.tag=[ [[jsonObj  objectAtIndex:j] objectForKey:@"id"] integerValue];
+            OneName.backgroundColor=[UIColor clearColor];
+            OneButton.backgroundColor=[UIColor clearColor];
+            i++;
         }
-
     }
+
        if(!flag)
     {
         UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"暂无子分类哦 >_<"
@@ -224,6 +217,7 @@
         [self.viewDeckController closeRightViewBouncing:^(IIViewDeckController *controller) {
             BigFishViewController *apiVC = [[[BigFishViewController alloc] init] autorelease];
             apiVC.target=btn.tag;
+            [app.BigFish_Description removeAllObjects];
             apiVC.BigFishName=name;
             apiVC.BigFishPid=fatherID;
             app.targetCenter=[fatherID intValue];
@@ -232,9 +226,6 @@
             self.view.userInteractionEnabled = YES;
         }];
     }
-    
-    
-    
 }
  
 @end
