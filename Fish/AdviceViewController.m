@@ -179,22 +179,88 @@
 
     
 }
-
 -(void)backSet
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+//判断邮箱格式是否正确的代码：
+//利用正则表达式验证
+-(BOOL)isValidateEmail:(NSString *)email
+{
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES%@",emailRegex];
+    return [emailTest evaluateWithObject:email];
+}
+//手机号码验证
+/*
+ 130~139  145,147 15[012356789] 180~189
+*/
+-(BOOL) validateMobile:(NSString *)mobile
+{
+    //手机号以13， 15，18开头，八个 \d 数字字符
+    NSString *phoneRegex = @"^(0|86|17951)?(13[0-9]|15[012356789]|18[0-9]|14[57])[0-9]{8}$";
+    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
+    return [phoneTest evaluateWithObject:mobile];
+}
+//判断字符串是否为空 方法
+- (BOOL) isBlankString:(NSString *)string {
+    
+    if (string == nil || string == NULL) {
+        
+        return YES;
+        
+    }
+    
+    if ([string isKindOfClass:[NSNull class]]) {
+        
+        return YES;
+        
+    }
+    
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        
+        return YES;
+        
+    }
+    
+    return NO;
+    
+}
 -(void)pressSubmmit
 {
-    if([callNumber.text  isEqualToString: @""])
+     int i=0;
+    if([self isBlankString:callNumber.text])
     {
         [self lockAnimationForView:callNumber];
+    }
+    else if(![callNumber.text  isEqualToString: @""])
+    {
+       
+        if([self isValidateEmail:callNumber.text])
+        {
+            i=1;
+        }
+        else if([self validateMobile:callNumber.text])
+        {
+            i=2;
+        }
+        if(i==0)
+        {
+            UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"请输入合法的邮箱或手机号"
+                                                             message:nil
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"确定"
+                                                   otherButtonTitles: nil]autorelease];
+            [alert show];
+            return;
+        }
     }
     if([textView.text isEqualToString: @""])
     {
         [self lockAnimationForView:textView];
     }
-    if(![callNumber.text  isEqualToString: @""]&&![textView.text isEqualToString: @""])
+    if((i==1||i==2)&&![self isBlankString:textView.text])
     {
         //NSLog(@"%@  %@ %@",callNumber.text,labelType.text,textView.text);
         [content_Read Submmit:callNumber.text typeBack:labelType.text content:textView.text];
