@@ -24,6 +24,7 @@
 #import "InformationCell.h"
 #import "OneCell.h"
 #import "NewCell.h"
+#import "LoadMoreCell.h"
 #import "UIImageView+WebCache.h"
 #import "DetailViewController.h"
 #import "IIViewDeckController.h"
@@ -159,7 +160,6 @@
                 [self.viewDeckController toggleRightViewAnimated:YES];
                 isOpenR=NO;
             }
-            
         }
         if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {//bie
             
@@ -203,7 +203,7 @@
         littleHeinght=10;
         labelName=12;
     }
-    
+    tabView.frame=CGRectMake(0,45, 320, height_Momente);
     UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
@@ -234,8 +234,6 @@
     [self.view addSubview:rightBtn];
     [rightBtn addTarget:self action:@selector(PessSwitch_BtnTag:) forControlEvents:UIControlEventTouchUpInside];
     rightBtn.tag=20;
-    
-    tabView.frame=CGRectMake(0, heightTopbar, 320, height_Momente);
     
 }
 -(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID Offent:(NSString *)Out
@@ -332,14 +330,14 @@
                     }
                     [MBProgressHUD hideHUDForView:tabView animated:YES];
                     [self build_TableView];
+                    [self buildTheTopBar];
                 }
             });
         });
     }
     else{
         
-        [self buildTheTopBar];
-        
+    
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             //耗时的一些操作
             
@@ -539,6 +537,7 @@
                         }
                         [MBProgressHUD hideHUDForView:tabView animated:YES];
                         [self build_TableView];
+                         [self buildTheTopBar];
                     });
                 });
                 
@@ -547,7 +546,7 @@
         }
         else if (isFistLevel==1)
         {
-            [self buildTheTopBar];
+           
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 //耗时的一些操作
@@ -627,8 +626,7 @@
 }
 -(void)build_TableView
 {
-    
-    [self createHeaderView];
+    //[self createHeaderView];
     [self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
     [_refreshHeaderView refreshLastUpdatedDate];
     
@@ -669,7 +667,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSLog(@"%d",total);
-    return (total+1);
+    return (total+1+1);
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -678,7 +676,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     InformationCell *cell=(InformationCell*)[tableView dequeueReusableCellWithIdentifier:@"InformationCell"];
-    
     
     if(indexPath.row==0)
     {
@@ -750,6 +747,19 @@
         
         return cellOne;
     }
+    else if(indexPath.row>total)
+    {
+        LoadMoreCell *cell_last=(LoadMoreCell*)[tableView dequeueReusableCellWithIdentifier:@"LoadMoreCell"];
+        static NSString *cellIdentifiter = @"Cellidentifiter";
+        if(cell_last==nil)
+        {
+            cell_last= [[[LoadMoreCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier: cellIdentifiter]autorelease];
+            //cell_last.contentView.backgroundColor = [UIColor whiteColor];
+        }
+        cell_last.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell_last;
+    }
+
     else
     {
         if(cell==nil)
@@ -776,8 +786,6 @@
             }
         }
         cell.labelForName.font=[UIFont systemFontOfSize:15.0f];
-        
-        
         cell.labelForID.text=[dict objectForKey:@"description"];
         cell.labelForID.font=[UIFont systemFontOfSize:12.0f];
         cell.labelForID.textColor=[UIColor grayColor];
@@ -798,7 +806,11 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row>0)
+    if(indexPath.row>total)
+    {
+        
+    }
+    else
     {
         CGRect cellFrameInTableView = [tableView rectForRowAtIndexPath:indexPath];
         CGRect cellFrameInSuperview = [tableView convertRect:cellFrameInTableView toView:[tableView superview]];
@@ -813,10 +825,7 @@
         [self.navigationController pushViewController:detail animated:YES];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
-    else
-    {
-        NSLog(@"%@",app.next_Page);
-    }
+    
 }
 
 -(void)theFirstCell_Transport:(NSString *)ID_Num
@@ -876,6 +885,7 @@
 //
 //    [super dealloc];
 //}
+
 //加载瀑布流start
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //初始化刷新视图

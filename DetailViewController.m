@@ -147,19 +147,19 @@
     if(isSeven&&isFive)
     {
         heightTopbar=60;
-        littleHeinght=23;
+        littleHeinght=10;
     }
     else if(isSeven&&!isFive)
     {
         heightTopbar=60;
-        littleHeinght=23;
+        littleHeinght=10;
     }else if(!isSeven&&isFive)//
     {
         heightTopbar=60;
-        littleHeinght=20;
+        littleHeinght=10;
     }else {
         heightTopbar=45;
-        littleHeinght=10;
+        littleHeinght=0;
     }
 
     //创建导航按钮start
@@ -168,25 +168,25 @@
     [self.view addSubview:app.topBarView];
     
     UIButton *backBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame=CGRectMake(10, littleHeinght, 26, 25);
+    backBtn.frame=CGRectMake(10, littleHeinght, 60, 60);
     [backBtn setImage:[UIImage imageNamed:@"BackImg@2X"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backParentView) forControlEvents:UIControlEventTouchUpInside];
     [app.topBarView  addSubview:backBtn];
     
     UIButton *wordBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    wordBtn.frame=CGRectMake(175, littleHeinght+3, 28, 20);
+    wordBtn.frame=CGRectMake(160, littleHeinght,60, 60);
     [wordBtn setImage:[UIImage imageNamed:@"AaImg@2X"] forState:UIControlStateNormal];
     [wordBtn addTarget:self action:@selector(PressWord:) forControlEvents:UIControlEventTouchUpInside];
     [app.topBarView  addSubview:wordBtn];
     
     UIButton *shareBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    shareBtn.frame=CGRectMake(280, littleHeinght, 26, 25);
+    shareBtn.frame=CGRectMake(260, littleHeinght, 60, 60);
     [shareBtn setImage:[UIImage imageNamed:@"shareImg@2X"] forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(shareBtn) forControlEvents:UIControlEventTouchUpInside];
     [app.topBarView  addSubview:shareBtn];
     
     saveBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    saveBtn.frame=CGRectMake(230, littleHeinght, 26, 25);
+    saveBtn.frame=CGRectMake(225, littleHeinght*2, 30, 30);
     
     [saveBtn setImage:[UIImage imageNamed:@"saveImgNormal@2X"] forState:UIControlStateNormal];
     [saveBtn addTarget:self action:@selector(SaveBook:) forControlEvents:UIControlEventTouchUpInside];
