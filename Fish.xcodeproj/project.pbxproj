@@ -318,6 +318,9 @@
 		BBDCDBA218A878380059E7AE /* NewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBDCDBA118A878380059E7AE /* NewCell.xib */; };
 		BBE61232188BAA3F00DCCB52 /* topicBack.png in Resources */ = {isa = PBXBuildFile; fileRef = BBE61230188BAA3F00DCCB52 /* topicBack.png */; };
 		BBE61233188BAA3F00DCCB52 /* topicBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBE61231188BAA3F00DCCB52 /* topicBack@2X.png */; };
+		BBE6793518B1F4680050A7B3 /* selectTwo.png in Resources */ = {isa = PBXBuildFile; fileRef = BBE6793318B1F4680050A7B3 /* selectTwo.png */; };
+		BBE6793618B1F4680050A7B3 /* selectTwo@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBE6793418B1F4680050A7B3 /* selectTwo@2X.png */; };
+		BBE6793818B200DA0050A7B3 /* mentionArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BBE6793718B200DA0050A7B3 /* mentionArrow.png */; };
 		BBEB52C31867169B00527C90 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBEB52C21867169B00527C90 /* ViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -754,6 +757,9 @@
 		BBDCDBA118A878380059E7AE /* NewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCell.xib; sourceTree = "<group>"; };
 		BBE61230188BAA3F00DCCB52 /* topicBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topicBack.png; sourceTree = "<group>"; };
 		BBE61231188BAA3F00DCCB52 /* topicBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topicBack@2X.png"; sourceTree = "<group>"; };
+		BBE6793318B1F4680050A7B3 /* selectTwo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selectTwo.png; path = "../../../杂志切图/selectTwo.png"; sourceTree = "<group>"; };
+		BBE6793418B1F4680050A7B3 /* selectTwo@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selectTwo@2X.png"; path = "../../../杂志切图/selectTwo@2X.png"; sourceTree = "<group>"; };
+		BBE6793718B200DA0050A7B3 /* mentionArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mentionArrow.png; path = "../../../新界面/mentionArrow.png"; sourceTree = "<group>"; };
 		BBEB52C21867169B00527C90 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1622,6 +1628,8 @@
 				BBB2CF16187BF01C00C8F210 /* LeftTitle@2X.png */,
 				BBB2CF19187BF80C00C8F210 /* selectOne.png */,
 				BBB2CF1A187BF80C00C8F210 /* selectOne@2X.png */,
+				BBE6793318B1F4680050A7B3 /* selectTwo.png */,
+				BBE6793418B1F4680050A7B3 /* selectTwo@2X.png */,
 				BBB2CF1D187BFAA600C8F210 /* firstPage.png */,
 				BBB2CF1E187BFAA600C8F210 /* firstPage@2X.png */,
 				BBB2CF21187C00E800C8F210 /* 1.png */,
@@ -1691,6 +1699,7 @@
 		BBD0E1DA18781429000D1141 /* set */ = {
 			isa = PBXGroup;
 			children = (
+				BBE6793718B200DA0050A7B3 /* mentionArrow.png */,
 				BBD780E718ADEB9400A7D200 /* theGoBack@2X.png */,
 				BBA1CA0D187FF6F60028E5BC /* selectedNow.png */,
 				BBA1CA0E187FF6F60028E5BC /* selectedNow@2X.png */,
@@ -1911,6 +1920,7 @@
 				BBA492FD187CF0BE0089D35E /* slideLeft_Back.png in Resources */,
 				BBAF28D1187E451E005A3FCB /* shareImg@2X.png in Resources */,
 				BBACEFE118A526370031C6AE /* 80X80.png in Resources */,
+				BBE6793818B200DA0050A7B3 /* mentionArrow.png in Resources */,
 				BB992197189523400093DC84 /* PinterestSDKResources.bundle in Resources */,
 				BBDBE94D184DD6CB009FA292 /* RightViewController.xib in Resources */,
 				BBA4931C187D6C390089D35E /* clearBack@2X.png in Resources */,
@@ -1964,6 +1974,7 @@
 				BBA5B7E3187ABF4A00D55899 /* toolBar@2X.png in Resources */,
 				BBA49305187D2F090089D35E /* TitleWhiteBack.png in Resources */,
 				BBAF28CE187E451E005A3FCB /* saveImgNormal.png in Resources */,
+				BBE6793518B1F4680050A7B3 /* selectTwo.png in Resources */,
 				BBB2CF20187BFAA600C8F210 /* firstPage@2X.png in Resources */,
 				BBD067C5188F78CF00DBC8B9 /* Share_webImage@2X.png in Resources */,
 				BBA5B7D6187A8EB600D55899 /* theLineSet@2X.png in Resources */,
@@ -2005,6 +2016,7 @@
 				BBD0E1DE18781444000D1141 /* set_Nav@2X.png in Resources */,
 				BBA352A818792A2900A8239C /* TypeNormal.png in Resources */,
 				BB99219A189523400093DC84 /* RennSDK.bundle in Resources */,
+				BBE6793618B1F4680050A7B3 /* selectTwo@2X.png in Resources */,
 				BBA5B7D9187AB21F00D55899 /* xinlang.png in Resources */,
 				BBA69898186FE9DD00DE10AB /* blueArrow.png in Resources */,
 				BBD067C3188F78CF00DBC8B9 /* Close_webImage@2X.png in Resources */,

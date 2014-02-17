@@ -39,6 +39,7 @@
 @synthesize contentRead=contentRead;
 @synthesize jsonString=jsonString;
 @synthesize jsonStringOne=jsonStringOne;
+@synthesize share_String=share_String;
 @synthesize targetCenter=targetCenter;
 @synthesize center=centre;
 @synthesize fatherID=fatherID;
@@ -60,6 +61,7 @@
 @synthesize isRead_arr=isRead_arr;
 @synthesize BigFish_Description=BigFish_Description;
 @synthesize toolbar_js=toolbar_js;
+@synthesize showView=showView;
 
 -(void)build
 {
@@ -119,7 +121,14 @@
                   clientKey:@"cPCuhXPQKHBzv0ucOFfm0TmuYhMKcQyMEH0LxZJG"];
 
 }
-
+-(void)didReceiveWeiboResponse:(WBBaseResponse *)response
+{
+    
+}
+-(void)didReceiveWeiboRequest:(WBBaseRequest *)request
+{
+    
+}
 //先生成 再替换
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

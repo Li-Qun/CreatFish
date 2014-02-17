@@ -23,6 +23,8 @@
     
     UIWebView *showWebView;
     BOOL isImage_scrollView;
+    int timeCount;
+ 
     UIImageView *topBarView;
     CGFloat height_Mag;//获取webView 高度
     NSMutableDictionary *Data;

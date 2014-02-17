@@ -35,7 +35,6 @@
 @end
 
 @implementation BookViewController
-@synthesize Delegate;
 @synthesize arr=arr;
 @synthesize arrPic=arrPic;
 @synthesize arrLabel=arrLabel;
@@ -95,16 +94,6 @@
     
     
 }
-//-(void)translate:(NSString *)ID_Num
-//{
-//    DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
-//    detail.momentID=ID_Num;
-//    [self.navigationController pushViewController:detail animated:YES];
-//}
-//-(void)make_Sure_theCenter:(NSString *)ID_Num
-//{
-//
-//}
 
 - (void)viewDidLoad
 {
@@ -225,7 +214,7 @@
     UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105,littleHeinght/2+3-labelName,95,65-littleHeinght)]autorelease];
     name.textColor=[UIColor whiteColor];
     name.text=NewsName;
-    name.textAlignment = UITextAlignmentCenter;
+    name.textAlignment = NSTextAlignmentCenter;
     name.font =[UIFont boldSystemFontOfSize:21];
     name.shadowColor = [UIColor grayColor];
     name.shadowOffset = CGSizeMake(0.0,0.5);

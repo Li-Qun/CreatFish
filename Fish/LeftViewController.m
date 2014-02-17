@@ -157,13 +157,12 @@
                     [OneButton addSubview:OneName];
                     [OneButton addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
                     UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(10, 10,25 , 25)] autorelease];
-                    NSString *btnImg=[NSString stringWithFormat:@"%d.png",i];
+                    NSString *btnImg=[NSString stringWithFormat:@"%d@2X.png",i];
                     NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[[jsonObj  objectAtIndex:i] objectForKey:@"image"] ];
                     [pictureOneName setImageWithURL:[NSURL URLWithString: imgURL]
                        placeholderImage:[UIImage imageNamed:btnImg]
                                 success:^(UIImage *image) {NSLog(@"OK");}
                                 failure:^(NSError *error) {NSLog(@"NO");}];
-                    
                     
                     [OneButton  addSubview:pictureOneName];
                     OneButton.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
@@ -186,9 +185,6 @@
                     /////动态创建按钮end
                 }
             }
-            
-            
-            
             //收藏&设置
             for(int i=0;i<2;i++)
             {
@@ -326,7 +322,7 @@
                 BigFishViewController *apiVC = [[[BigFishViewController alloc] init] autorelease];
                 apiVC.target=btn.tag;
                 apiVC.BigFishName=name;
-                apiVC.BigFishPid=[NSString stringWithFormat:@"%d@2X",btn.tag];
+                apiVC.BigFishPid=[NSString stringWithFormat:@"%d",btn.tag];
                 UINavigationController *navApiVC = [[[UINavigationController alloc] initWithRootViewController:apiVC] autorelease];
                 self.viewDeckController.centerController = navApiVC;
                 self.view.userInteractionEnabled = YES;
@@ -334,6 +330,8 @@
         }
 
     }
+    //[btn setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
+
 }
 - (void)didReceiveMemoryWarning
 {

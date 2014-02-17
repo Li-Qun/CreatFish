@@ -98,7 +98,7 @@
     UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
     name.textColor=[UIColor whiteColor];
     name.text=detailName;
-    name.textAlignment = UITextAlignmentCenter;
+    name.textAlignment = NSTextAlignmentCenter;
     name.font =[UIFont boldSystemFontOfSize:21];
     name.shadowColor = [UIColor grayColor];
     name.shadowOffset = CGSizeMake(0.0,0.5);
@@ -200,6 +200,7 @@
                 SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                 NSDictionary *jsonObj =[parser objectWithString: strJson];
                 NSArray *data = [jsonObj objectForKey:@"data"];
+                app.share_String=[jsonObj objectForKey:@"name"];
                 NSMutableArray *arr=[[[NSMutableArray alloc]init]autorelease];
                 
                 for (int i =0; i <data.count; i++) {
@@ -336,6 +337,7 @@
                     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                     NSDictionary *jsonObj =[parser objectWithString:jsonString];
                     
+                    app.share_String=[jsonObj objectForKey:@"name"];
                     NSArray *data = [jsonObj objectForKey:@"data"];
                     
                     for (int i =0; i <data.count; i++) {
@@ -383,7 +385,9 @@
                                                                 shareViewDelegate:self
                                                               friendsViewDelegate:self
                                                             picViewerViewDelegate:nil];
-        id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
+        
+         NSString *string=[NSString stringWithFormat:@"%@浏览图片%@",shareContent1,shareContent2];
+        id<ISSContent> publishContent = [ShareSDK content:string
                                            defaultContent:@"分享一下你的心情吧"
                                                     image:[ShareSDK imageWithPath:imagePath]
                                                     title:@"ShareSDK"
@@ -455,7 +459,7 @@
         lable.textColor=[UIColor whiteColor];
         //文字居中显示
         
-        lable.textAlignment= UITextAlignmentCenter;
+        lable.textAlignment= NSTextAlignmentCenter;
         lable.text=[NSString stringWithFormat:@"%d/%d",i+1,Fish_arr.count];
         [red addSubview:lable];
         [iv addSubview:red];
@@ -504,54 +508,7 @@
     }
     //进入详细阅读
     NSLog(@"touch index %d",touchIndex);
-    NSDictionary* dict = [app.firstPageImage objectAtIndex:touchIndex];
-    
-    shareImage=[NSString stringWithFormat:@"http://42.96.192.186/%@",[dict objectForKey:@"image"]];
-    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
-    
-    
-    
-    id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
-                                                         allowCallback:NO
-                                                         authViewStyle:SSAuthViewStyleFullScreenPopup
-                                                          viewDelegate:self
-                                               authManagerViewDelegate:self];
-    
-    id<ISSShareOptions> shareOptions = [ShareSDK defaultShareOptionsWithTitle:@"内容分享"
-                                                              oneKeyShareList:[NSArray defaultOneKeyShareList]
-                                                               qqButtonHidden:YES
-                                                        wxSessionButtonHidden:YES
-                                                       wxTimelineButtonHidden:YES
-                                                         showKeyboardOnAppear:NO
-                                                            shareViewDelegate:self
-                                                          friendsViewDelegate:self
-                                                        picViewerViewDelegate:nil];
-    //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content:shareImage
-                                       defaultContent:@"分享一下你的心情吧"
-                                                image:[ShareSDK imageWithPath:imagePath]
-                                                title:@"ShareSDK"
-                                                  url:@"http://www.huiztech.com"
-                                          description:@"这是一条测试信息"
-                                            mediaType:SSPublishContentMediaTypeNews];
-    
-    
-    [ShareSDK showShareActionSheet:nil
-                         shareList:nil
-                           content:publishContent
-                     statusBarTips:YES
-                       authOptions:authOptions
-                      shareOptions: shareOptions
-                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                if (state == SSResponseStateSuccess)
-                                {
-                                    NSLog(@"分享成功");
-                                }
-                                else if (state == SSResponseStateFail)
-                                {
-                                    NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode], [error errorDescription]);
-                                }
-                            }];}
+}
 
 #pragma mark-- UIScrollViewDelegate
 

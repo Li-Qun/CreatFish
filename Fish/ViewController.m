@@ -301,12 +301,10 @@
                         flag=YES;
                         break;
                     }
-                    int i=sqlite3_column_int(stmt, 0)-1;
+                    //int i=sqlite3_column_int(stmt, 0)-1;
                     const unsigned char *_pic= sqlite3_column_text(stmt, 1);
                     strJson= [NSString stringWithUTF8String: _pic];
-                    
                     break;
-                    
                 }
             }
             sqlite3_finalize(stmt);
@@ -739,7 +737,8 @@
     
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
     //构造分享内容
-    id<ISSContent> publishContent = [ShareSDK content: [ [arr objectAtIndex:index] objectForKey:@"description"]
+    NSString *string=[NSString stringWithFormat:@"%@%@%@",shareContent1,[ [arr objectAtIndex:index] objectForKey:@"description"],shareContent2];
+    id<ISSContent> publishContent = [ShareSDK content:string
                                        defaultContent:@"分享我的阅钓心得"
                                                 image:[ShareSDK imageWithPath:imagePath]
                                                 title:@"ShareSDK"

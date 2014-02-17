@@ -134,7 +134,7 @@
     UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(100, 20-Height/2, 120, 21)]autorelease];
     name.textColor=[UIColor whiteColor];
     name.text=@"意见反馈";
-    name.textAlignment = UITextAlignmentCenter;
+    name.textAlignment = NSTextAlignmentCenter;
     name.font =[UIFont boldSystemFontOfSize:21];
     name.shadowColor = [UIColor grayColor];
     name.shadowOffset = CGSizeMake(0.0,0.5);

@@ -86,7 +86,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         cell.textLabel.font = [UIFont systemFontOfSize:15];
-        cell.textLabel.textAlignment = UITextAlignmentCenter;
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }
     cell.textLabel.text =[list objectAtIndex:indexPath.row];
     cell.textLabel.textColor = [UIColor whiteColor];

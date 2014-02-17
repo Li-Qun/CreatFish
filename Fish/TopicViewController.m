@@ -366,7 +366,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                 NSDictionary *jsonObj =[parser objectWithString: jsonString];
-                NSDictionary *data = [jsonObj objectForKey:@"data"];
+                NSArray *data = [jsonObj objectForKey:@"data"];
                 
                 for (int i =0; i <data.count; i++) {
                     
@@ -527,7 +527,7 @@
         numlable.textColor=[UIColor whiteColor];
         //文字居中显示
         
-        numlable.textAlignment= UITextAlignmentCenter;
+        numlable.textAlignment= NSTextAlignmentCenter;
         numlable.text=[NSString stringWithFormat:@"%d/%d",i+1,arr.count];
         numlable.font=[UIFont boldSystemFontOfSize:14];
         [clearBack addSubview:numlable];

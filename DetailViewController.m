@@ -314,7 +314,7 @@
             }
             else
             {
-                [self buildTheTopBar];
+                //[self buildTheTopBar];
                 SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                 NSDictionary *jsonObj =[parser objectWithString:strJson];
                 
@@ -325,6 +325,8 @@
                 htmlText=[[[NSString alloc]init]retain];
                 app.saveId=[jsonObj objectForKey:@"id"];
                 app.saveImage=strJson;
+                app.share_String=[jsonObj objectForKey:@"name"];
+                
                 htmlText=[jsonObj objectForKey:@"content"];
                 app.next_Page=[jsonObj objectForKey:@"next_id"];
                 app.pre_Page=[jsonObj objectForKey:@"prev_id"];
@@ -542,7 +544,7 @@
             //建立是否已读数据库
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 
-                [self buildTheTopBar];
+               // [self buildTheTopBar];
                 SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                 NSDictionary *jsonObj =[parser objectWithString:jsonString];
                 
@@ -553,6 +555,7 @@
                 htmlText=[[[NSString alloc]init]retain];
                 app.saveId=[jsonObj objectForKey:@"id"];
                 app.saveImage=jsonString;
+                app.share_String=[jsonObj objectForKey:@"name"];
                 
                 htmlText=[jsonObj objectForKey:@"content"];
                 app.next_Page=[jsonObj objectForKey:@"next_id"];
@@ -606,10 +609,10 @@
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
     showWebView.scrollView.delegate=self;
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    
     [showWebView stringByEvaluatingJavaScriptFromString:@"imageWidth(305);"];//设置网络图片统一宽度320
+    app.showView=[self creat_theScrollview];
    // NSString *str1= [showWebView stringByEvaluatingJavaScriptFromString:@"init();"];
+    [self buildTheTopBar];
     [self.view addSubview:showWebView];
     //刷新设置
     [self createHeaderView];
@@ -617,7 +620,7 @@
     [_refreshHeaderView refreshLastUpdatedDate];
     //刷新设置end
    [self addTapOnWebView];//调用触摸图片事件
-   
+   [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 //创建UIwebView 网络浏览图片start
 -( UIView *)creat_theScrollview
@@ -626,7 +629,7 @@
     NSString *regTags = @"src=((.+)('|\.gif|\.jpg|\.png))";//@"<img [^>]*src\\s*=\\s*\"([^>]+)\"";
     NSMutableArray *arr=[[[NSMutableArray alloc]init]autorelease];
     arr=[self match_fun:searchText Regex:regTags];
-    // NSLog(@"结果 arr :%@",arr);
+   // NSLog(@"结果 arr :%@",arr);
     int count=arr.count;
     UIView *showView = [[UIView alloc] initWithFrame:self.view.frame];
     UIScrollView *scrowllView_detail=[[[UIScrollView alloc]init]autorelease];
@@ -646,20 +649,20 @@
         [imageView setImageWithURL:[NSURL URLWithString:imgURL]
                   placeholderImage:[UIImage imageNamed:@"moren.png"]
                            success:^(UIImage *image) {NSLog(@"UIwebView图片显示成功OK");}
-                           failure:^(NSError *error) {NSLog(@"UIwebView顶图片显示失败NO");}];
+                           failure:^(NSError *error) {NSLog(@"UIwebView顶图片显示失败NO%@",error);}];
         [scrowllView_detail addSubview:imageView];
     }
     
     [showView addSubview:scrowllView_detail];
     showView.backgroundColor = [UIColor blackColor];
-    
+   
     UIImageView * bottomBackBar=[[[UIImageView alloc]initWithFrame:CGRectMake(0, showView.frame.size.height-80, 320,80 )]autorelease];
     bottomBackBar.image=[UIImage imageNamed:@"BottomBar_webImage"];
     [showView addSubview:bottomBackBar];
     UIButton *shareBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     shareBtn.frame=CGRectMake(218, 10, 32, 31);
     [shareBtn setImage:[UIImage imageNamed:@"Share_webImage@2X"] forState:UIControlStateNormal];
-    [shareBtn addTarget:self action:@selector(shareThewebImage) forControlEvents:UIControlEventTouchUpInside];
+    [shareBtn addTarget:self action:@selector(shareBtn) forControlEvents:UIControlEventTouchUpInside];
     [bottomBackBar  addSubview:shareBtn];
     
     UIButton *isCloseBtn=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -668,7 +671,7 @@
     [isCloseBtn addTarget:self action:@selector(isCancelBtn) forControlEvents:UIControlEventTouchUpInside];
     [bottomBackBar addSubview:isCloseBtn];
     bottomBackBar.userInteractionEnabled=YES;
-    [self.view addSubview:showView];
+   // [self.view addSubview:showView];
     return showView;
 }
 //创建UIwebView 网络浏览图片end
@@ -743,55 +746,7 @@ didFailWithError:(NSError *)error
 -(void)showImageURL:(NSString *)url point:(CGPoint)point
 {
     app.pic_URL=url;
-//    UIView *showView=[[[UIView alloc]init]autorelease];
-      [self creat_theScrollview] ;
-}
-
--(void)shareThewebImage
-{
-    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
-    //构造分享内容
-    id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
-                                                         allowCallback:NO
-                                                         authViewStyle:SSAuthViewStyleFullScreenPopup
-                                                          viewDelegate:self
-                                               authManagerViewDelegate:self];
-    
-    id<ISSShareOptions> shareOptions = [ShareSDK defaultShareOptionsWithTitle:@"内容分享"
-                                                              oneKeyShareList:[NSArray defaultOneKeyShareList]
-                                                               qqButtonHidden:YES
-                                                        wxSessionButtonHidden:YES
-                                                       wxTimelineButtonHidden:YES
-                                                         showKeyboardOnAppear:NO
-                                                            shareViewDelegate:self
-                                                          friendsViewDelegate:self
-                                                        picViewerViewDelegate:nil];
-
-    id<ISSContent> publishContent = [ShareSDK content:app.pic_URL
-                                       defaultContent:@"分享我的阅钓心得"
-                                                image:[ShareSDK imageWithPath:imagePath]
-                                                title:@"ShareSDK"
-                                                  url:@"http://www.huiztech.com"
-                                          description:@"这是一条测试信息"
-                                            mediaType:SSPublishContentMediaTypeNews];
-    
-    [ShareSDK showShareActionSheet:nil
-                         shareList:nil
-                           content:publishContent
-                     statusBarTips:YES
-                       authOptions:authOptions
-                      shareOptions: shareOptions
-                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                if (state == SSResponseStateSuccess)
-                                {
-                                    NSLog(@"分享成功");
-                                }
-                                else if (state == SSResponseStateFail)
-                                {
-                                    NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode], [error errorDescription]);
-                                }
-                            }];
-
+    [self.view addSubview:app.showView];
 }
 //移除图片查看视图
 -(void)isCancelBtn//-(void)handleSingleViewTap:(UITapGestureRecognizer *)sender
@@ -972,7 +927,6 @@ didFailWithError:(NSError *)error
 -(void)shareBtn
 {
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
-    
     //构造分享内容
     id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
                                                          allowCallback:NO
@@ -989,14 +943,15 @@ didFailWithError:(NSError *)error
                                                             shareViewDelegate:self
                                                           friendsViewDelegate:self
                                                         picViewerViewDelegate:nil];
-    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
-                                       defaultContent:@"默认分享内容，没内容时显示"
+    NSString *string=[NSString stringWithFormat:@"%@%@%@",shareContent1,app.share_String,shareContent2];
+    id<ISSContent> publishContent = [ShareSDK content:string
+                                       defaultContent:string
                                                 image:[ShareSDK imageWithPath:imagePath]
                                                 title:@"ShareSDK"
                                                   url:@"http://www.huiztech.com"
                                           description:@"这是一条测试信息"
                                             mediaType:SSPublishContentMediaTypeNews];
-
+    
     [ShareSDK showShareActionSheet:nil
                          shareList:nil
                            content:publishContent
@@ -1013,7 +968,7 @@ didFailWithError:(NSError *)error
                                     NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode], [error errorDescription]);
                                 }
                             }];
-    
+   
 }
 ///收藏提示对话框
 -(void)SaveBook :(id)sender
@@ -1364,7 +1319,7 @@ didFailWithError:(NSError *)error
    // [showWebView reload];
     
     
-    [self buildTheTopBar];
+   // [self buildTheTopBar];
    
     [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.view cache:YES];
     [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
@@ -1387,7 +1342,7 @@ didFailWithError:(NSError *)error
     [contentRead Content:app.fatherID Detail:app.pre_Page];
    // [showWebView reload];
     
-    [self buildTheTopBar];
+   // [self buildTheTopBar];
     app.topBarView.userInteractionEnabled = YES;//使添加的按钮可选
     [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:self.view cache:YES];
     [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];

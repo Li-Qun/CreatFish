@@ -15,11 +15,7 @@
 #import "EGORefreshTableHeaderView.h"
 #import "EGORefreshTableFooterView.h"
 
-@protocol myNewDelegate
-@optional
--(void)make_Sure_theCenter:(NSString *)ID_Num;
 
-@end
 @interface BookViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,FishDelegate,UIScrollViewDelegate,UIScrollViewAccessibilityDelegate,EGORefreshTableDelegate>
 {
     int total;
@@ -30,7 +26,6 @@
     NSMutableArray *arrLabel;
     NSMutableArray *arrID;
     klpView *klpPic;
-    id<myNewDelegate>Delegate;
     //单元属性
     NSString *NewsId;
     NSString *NewsName;
@@ -76,7 +71,6 @@
 @property(nonatomic,retain)NSMutableArray *arrPic;
 @property(nonatomic,retain)NSMutableArray *arrLabel;
 @property(nonatomic,retain)NSMutableArray *arrID;
-@property(assign,nonatomic)id<myNewDelegate> Delegate;
 @property(nonatomic,retain)NSString *NewsId;
 @property(nonatomic,retain)NSString *NewsName;
 @property(nonatomic,retain)NSString *NewsImage;

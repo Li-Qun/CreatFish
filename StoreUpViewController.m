@@ -100,7 +100,7 @@
     UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(105, littleHeinght, 100, 25)]autorelease];
     name.textColor=[UIColor whiteColor];
     name.text=@"收藏";
-    name.textAlignment = UITextAlignmentCenter;
+    name.textAlignment = NSTextAlignmentCenter;
     name.font =[UIFont boldSystemFontOfSize:22];
     name.shadowColor = [UIColor grayColor];
     name.shadowOffset = CGSizeMake(0.0,0.5);

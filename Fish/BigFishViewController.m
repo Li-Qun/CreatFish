@@ -96,7 +96,7 @@
     UILabel *name=[[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
     name.textColor=[UIColor whiteColor];
     name.text=BigFishName;
-    name.textAlignment = UITextAlignmentCenter;
+    name.textAlignment = NSTextAlignmentCenter;
     name.font =[UIFont boldSystemFontOfSize:21];
     name.shadowColor = [UIColor grayColor];
     name.shadowOffset = CGSizeMake(0.0,0.5);

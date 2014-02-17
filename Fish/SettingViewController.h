@@ -15,6 +15,10 @@
     IBOutlet UIScrollView *ScrollView;
     UIView *myView;
     int Height;
+    UIButton *readed;
+    UIButton *clear;
+    UIButton *advice;
+    UIButton *share;
 }
 @property (retain, nonatomic) IBOutlet UIScrollView *ScrollView;
 

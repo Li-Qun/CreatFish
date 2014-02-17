@@ -31,6 +31,7 @@ typedef enum
 
     NSString *jsonString;
     NSString *jsonStringOne;
+    NSString *share_String;
  
     //收藏name\image\id 数量、容器
     NSString *fatherID;
@@ -54,8 +55,7 @@ typedef enum
     NSMutableArray *BigFish_Description;
     //toolbar 原始 js串
     NSString *toolbar_js;
- 
-    
+    UIView *showView;
 }
 @property (nonatomic, retain)NSMutableArray  *array;
 @property (nonatomic,retain)NSMutableArray *arrayData;
@@ -74,6 +74,7 @@ typedef enum
 
 @property(nonatomic,retain)NSString *jsonString;
 @property(nonatomic,retain)NSString *jsonStringOne;
+@property(nonatomic,retain) NSString *share_String;
 @property(nonatomic)int targetCenter;
 
 @property (nonatomic)int  center;
@@ -104,6 +105,8 @@ typedef enum
 @property (nonatomic,retain)NSMutableArray *BigFish_Description;
 //tool_bar
 @property(nonatomic,retain)NSString *toolbar_js;
+//UIview  detail滚动视图
+@property(nonatomic,retain)UIView *showView;
 @end
 
 

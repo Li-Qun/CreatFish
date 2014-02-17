@@ -34,7 +34,9 @@ DISPATCH_GLOBAL_OBJECT(dispatch_queue_t, _dispatch_main_q)
 
 #define Root @"http://42.96.192.186/app/mgz/"
 #define Image_Head @"http://42.96.192.186/upload/"
-#define ImageWeb_Head @"http://42.96.192.186/"
+#define ImageWeb_Head @"http://42.96.192.186"
 
+#define shareContent1 @"我正在使用IOS版垂钓人的资讯客户端《阅钓》阅读:"
+#define shareContent2 @"应用下载地址:https://itunes.apple.com/us/app/yue-diao/id808099487?ls=1&mt=8"
 
 #endif
