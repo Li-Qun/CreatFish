@@ -137,9 +137,8 @@
             for(int i=0;i<app.saveNum;i++)
             {
                 NSDictionary *jsonObj =[parser objectWithString: [[Singleton sharedInstance].single_Data objectAtIndex:i]];
-                [arrSave_ID insertObject:[jsonObj objectForKey:@"category_id"] atIndex:i];
-            }[
-              self.view addSubview:tableView_Store];
+                [arrSave_ID insertObject:[jsonObj objectForKey:@"id"] atIndex:i];
+            }[self.view addSubview:tableView_Store];
             
         });
     });

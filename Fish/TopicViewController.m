@@ -486,11 +486,6 @@
     textView.font=[UIFont systemFontOfSize:14.0f];
     [textView setEditable:NO];
     textView.scrollEnabled=YES;
-    
-    
-    
-    
-    
     //2.image
     index = 0;
     self.klpImgArr = [[NSMutableArray alloc] initWithCapacity:arr.count];
@@ -554,10 +549,10 @@
         iv = nil;
     }
     
-//    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-//    [singleTap setNumberOfTapsRequired:1];
-//    
-//    [self.klpScrollView1 addGestureRecognizer:singleTap];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+    [singleTap setNumberOfTapsRequired:1];
+    
+    [self.klpScrollView1 addGestureRecognizer:singleTap];
     //[klpScrollView1 release];
     // [klpImgArr release];
     //  [app.firstPageImage release];
@@ -617,13 +612,25 @@
         return;
     }
     //进入详细阅读
-    NSDictionary* dict = [arr objectAtIndex:touchIndex];
- 
+    if(touchIndex>0)
+    {
+        NSDictionary* dict = [arr objectAtIndex:touchIndex];
+        
+        DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
+        
+        detail.momentID=[dict objectForKey:@"id"];
+        [self.navigationController pushViewController:detail animated:YES];
+
+    }
+}
+- (void) handleSingleTap:(UITapGestureRecognizer *) gestureRecognizer{
+	     //进入详细阅读
+    NSDictionary* dict = [arr objectAtIndex:0];
+    
     DetailViewController *detail=[[[DetailViewController alloc]initWithNibName:@"DetailViewController" bundle:nil]autorelease];
- 
+    
     detail.momentID=[dict objectForKey:@"id"];
     [self.navigationController pushViewController:detail animated:YES];
-
 }
 - (void)didReceiveMemoryWarning
 {

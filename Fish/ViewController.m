@@ -702,16 +702,14 @@
         iv = nil;
     }
     
-//    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)]autorelease];
-//    [singleTap setNumberOfTapsRequired:1];
-//    
-//    [self.klpScrollView1 addGestureRecognizer:singleTap];
+    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap1:)]autorelease];
+    [singleTap setNumberOfTapsRequired:1];
+    
+    [self.klpScrollView1 addGestureRecognizer:singleTap];
     //[klpScrollView1 release];
     // [klpImgArr release];
     //  [app.firstPageImage release];
     ///UIScrollerView
-    
-
 }
 -(void)Press_share
 {
@@ -918,6 +916,7 @@
     [self.navigationController pushViewController:detail animated:YES];
   
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

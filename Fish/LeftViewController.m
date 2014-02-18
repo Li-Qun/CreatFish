@@ -257,7 +257,7 @@
             break;
         }
     }
-    
+    app.jsonStringOne=@"";
     if(btn.tag==101)//收藏
     {
         [self.viewDeckController closeLeftViewBouncing:^(IIViewDeckController *controller) {

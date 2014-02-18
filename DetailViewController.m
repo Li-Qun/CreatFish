@@ -85,60 +85,68 @@
     NSString *cName=[NSString stringWithFormat:@"detail&阅读"];
     [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
+- (void)viewDidLoad
+{
+    isShare=NO;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {//视图即将可见时调用。默认情况下不执行任何操作
      self.navigationController.toolbarHidden = YES;
     [self.navigationController setNavigationBarHidden:YES];
     
     [super viewWillAppear:animated];
-    self.view.backgroundColor=[UIColor whiteColor];
-    app=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-    for (UIView *subviews in [self.view subviews])
+    if(isShare==NO)
     {
-        [subviews removeFromSuperview];
+        self.view.backgroundColor=[UIColor whiteColor];
+        app=(AppDelegate *)[[UIApplication sharedApplication] delegate];
+        
+        for (UIView *subviews in [self.view subviews])
+        {
+            [subviews removeFromSuperview];
+        }
+        [super viewDidLoad];
+        
+        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"readBack@2X.png"]];
+        imgView.frame = self.view.bounds;
+        imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self.view insertSubview:imgView atIndex:0];
+        [imgView release];
+        
+        app.topBarView.userInteractionEnabled = YES;//使添加的按钮可选
+        fontSize=16.0;
+        line_height=18.0;
+        Data=[[NSMutableDictionary alloc]init];
+        jsString=[[[NSString alloc]init]retain] ;
+        htmlTextTotals=[[NSMutableString alloc]init];
+        
+        NSLog(@" fa :%@  child :%@",fatherID,momentID);
+        app.momentID=momentID;
+        app.fatherID=fatherID;
+        
+        ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
+        [contentRead setDelegate:self];//设置代理
+        
+        [contentRead Content:fatherID Detail:momentID];
+
+        showWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, 320, totalHeight)];
+        showWebView.delegate=self;
+        showWebView.scrollView.delegate=self;
+        showWebView.backgroundColor=[UIColor clearColor];
+        showWebView.opaque = NO;
+        
+        self.leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+        self.rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
+        self.leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+        self.rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+        [self.view addGestureRecognizer:self.leftSwipeGestureRecognizer];
+        [self.view addGestureRecognizer:self.rightSwipeGestureRecognizer];
+        isShare=YES;
     }
-    
-    
-    [super viewDidLoad];
-    
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"readBack@2X.png"]];
-    imgView.frame = self.view.bounds;
-    imgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    [self.view insertSubview:imgView atIndex:0];
-    [imgView release];
-    
-    
-    app.topBarView.userInteractionEnabled = YES;//使添加的按钮可选
-    fontSize=16.0;
-    line_height=18.0;
-    Data=[[NSMutableDictionary alloc]init];
-    jsString=[[[NSString alloc]init]retain] ;
-    htmlTextTotals=[[NSMutableString alloc]init];
-    
-    NSLog(@" fa :%@  child :%@",fatherID,momentID);
-    app.momentID=momentID;
-    app.fatherID=fatherID;
-    
-    ContentRead * contentRead =[[[ContentRead alloc]init]autorelease];
-    [contentRead setDelegate:self];//设置代理
-    
-    [contentRead Content:fatherID Detail:momentID];
-    
-    
-    
-    showWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 60, 320, totalHeight)];
-    showWebView.delegate=self;
-    showWebView.scrollView.delegate=self;
-    showWebView.backgroundColor=[UIColor clearColor];
-    showWebView.opaque = NO;
-    
-    self.leftSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
-    self.rightSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipes:)];
-    self.leftSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-    self.rightSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.view addGestureRecognizer:self.leftSwipeGestureRecognizer];
-    [self.view addGestureRecognizer:self.rightSwipeGestureRecognizer];
+    else
+    {
+        
+    }
 }
 -(void)buildTheTopBar
 {
@@ -188,7 +196,23 @@
     saveBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     saveBtn.frame=CGRectMake(225, littleHeinght*2, 30, 30);
     
+     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+    int j=0;
     [saveBtn setImage:[UIImage imageNamed:@"saveImgNormal@2X"] forState:UIControlStateNormal];
+    for(int i=0;i<app.saveNum;i++)
+    {
+        NSDictionary *jsonObj =[parser objectWithString: [[Singleton sharedInstance].single_Data objectAtIndex:i]];
+        if([momentID isEqualToString:[jsonObj objectForKey:@"id"]])
+        {
+            [saveBtn setImage:[UIImage imageNamed:@"saveImgHighted@2X"] forState:UIControlStateNormal];
+            j=1;
+            break;
+        }
+    }
+    if(j==0)
+    {
+        
+    }
     [saveBtn addTarget:self action:@selector(SaveBook:) forControlEvents:UIControlEventTouchUpInside];
     [app.topBarView  addSubview:saveBtn];
     [saveBtn setImage:[UIImage imageNamed:@"saveImgHighted@2X"] forState:UIControlStateHighlighted];
@@ -228,12 +252,6 @@
         }
     }
 }
-
-- (void)viewDidLoad
-{
-    
-}
-
 -(void)reBack:(NSString *)jsonString reLoad:(NSString *)ID Offent:(NSString *)Out
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -614,13 +632,8 @@
    // NSString *str1= [showWebView stringByEvaluatingJavaScriptFromString:@"init();"];
     [self buildTheTopBar];
     [self.view addSubview:showWebView];
-    //刷新设置
-    [self createHeaderView];
-	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
-    [_refreshHeaderView refreshLastUpdatedDate];
-    //刷新设置end
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
    [self addTapOnWebView];//调用触摸图片事件
-   [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 //创建UIwebView 网络浏览图片start
 -( UIView *)creat_theScrollview
@@ -823,17 +836,6 @@ didFailWithError:(NSError *)error
 {
     return YES;
 }
-
-- (BOOL)canPerformAction:(SEL)action
-              withSender:(id)sender
-{
-    if (action == @selector(cameraAction:) ||
-        action == @selector(broomAction:) ||
-        action == @selector(textAction:))
-        return YES;
-    
-    return [super canPerformAction:action withSender:sender];
-}
 #pragma mark -响应对UIWebView 文本操作start
 -(void)wordBigAction:(id)sender
 {
@@ -929,7 +931,7 @@ didFailWithError:(NSError *)error
     NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"ShareSDK"  ofType:@"jpg"];
     //构造分享内容
     id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
-                                                         allowCallback:NO
+                                                         allowCallback:YES
                                                          authViewStyle:SSAuthViewStyleFullScreenPopup
                                                           viewDelegate:self
                                                authManagerViewDelegate:self];
@@ -1059,7 +1061,9 @@ didFailWithError:(NSError *)error
 #pragma mark -响应对UIWebView 文本操作start
 -(void)PressWord:(id)sender
 {
-    [[UIMenuController sharedMenuController] setTargetRect:[sender frame] inView:self.view];
+    
+     //菜单按钮选项
+    [[UIMenuController sharedMenuController] setTargetRect:[sender frame] inView:app.topBarView];
     [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES];
     
     UIMenuItem *wordBig = [[[UIMenuItem alloc] initWithTitle:nil action:@selector(wordBigAction:)]autorelease];
@@ -1071,10 +1075,7 @@ didFailWithError:(NSError *)error
     
     UIMenuItem *lineBig = [[[UIMenuItem alloc] initWithTitle: @"间距宽" action:@selector(lineBigAction:)]autorelease];
     [UIMenuController sharedMenuController].menuItems = @[wordBig,wordSmall,lineSmall,lineBig ];
-    //菜单按钮选项
-    [[UIMenuController sharedMenuController] setTargetRect:CGRectMake(175, 23, 28, 20) inView:self.view];
-    [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES];
-
+    NSLog(@"XXX进入字体调整");
 }
 
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
@@ -1217,7 +1218,15 @@ didFailWithError:(NSError *)error
 
 #pragma mark -
 #pragma mark UIScrollViewDelegate Methods
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView//防止加载提示页面滞留
+{
+    //刷新设置
+    [self createHeaderView];
+	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
+    [_refreshHeaderView refreshLastUpdatedDate];
+    //刷新设置end
 
+}
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     //把在浏览图片时候 webview 上的滚动 加载功能 屏蔽掉
     if(scrollView==showWebView.scrollView)

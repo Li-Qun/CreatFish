@@ -65,6 +65,8 @@
     
     BOOL isOpenL;
     BOOL isOpenR;
+    //是否分享了
+    BOOL isShare;
 }
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipeGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipeGestureRecognizer;

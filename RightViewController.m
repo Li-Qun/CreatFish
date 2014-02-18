@@ -179,6 +179,7 @@
     NSArray *jsonObj =[parser objectWithString: app.saveName];
     NSLog(@"%@",jsonObj);
     int i;
+    app.jsonStringOne=@"";
     for(i=1;i<jsonObj.count;i++)
     {
         if([[[jsonObj  objectAtIndex:i] objectForKey:@"id"] integerValue]==btn.tag)

@@ -92,8 +92,6 @@
     str=[NSString stringWithFormat:@"%d",target];
     NewsID=[str integerValue];
     [contentRead fetchList:[NSString stringWithFormat:@"%d",app.targetCenter] isPri:@"1" Out:@"0"];
-    
-    
 }
 
 - (void)viewDidLoad
