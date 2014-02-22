@@ -295,6 +295,8 @@
 		BBD5D1FF18ACD7EC009823B5 /* moveFirstImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BBD5D1FE18ACD7EC009823B5 /* moveFirstImage.jpg */; };
 		BBD67E411876D6E800A6CD87 /* StoreUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD67E3F1876D6E800A6CD87 /* StoreUpViewController.m */; };
 		BBD67E421876D6E800A6CD87 /* StoreUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */; };
+		BBD74AF318B5CBC000EF1573 /* todayCount.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD74AF218B5CBC000EF1573 /* todayCount.m */; };
+		BBD74AF618B5CE8000EF1573 /* ButtonName.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD74AF518B5CE8000EF1573 /* ButtonName.m */; };
 		BBD780E818ADEB9400A7D200 /* theGoBack@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBD780E718ADEB9400A7D200 /* theGoBack@2X.png */; };
 		BBD7811518AE0D6300A7D200 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BBD7811418AE0D6300A7D200 /* libxml2.2.dylib */; };
 		BBD81B87186C2EFF000DBEEE /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD81B86186C2EFF000DBEEE /* iCarousel.m */; };
@@ -728,6 +730,10 @@
 		BBD67E3E1876D6E800A6CD87 /* StoreUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreUpViewController.h; sourceTree = "<group>"; };
 		BBD67E3F1876D6E800A6CD87 /* StoreUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreUpViewController.m; sourceTree = "<group>"; };
 		BBD67E401876D6E800A6CD87 /* StoreUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoreUpViewController.xib; sourceTree = "<group>"; };
+		BBD74AF118B5CBC000EF1573 /* todayCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = todayCount.h; sourceTree = "<group>"; };
+		BBD74AF218B5CBC000EF1573 /* todayCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = todayCount.m; sourceTree = "<group>"; };
+		BBD74AF418B5CE8000EF1573 /* ButtonName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonName.h; sourceTree = "<group>"; };
+		BBD74AF518B5CE8000EF1573 /* ButtonName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonName.m; sourceTree = "<group>"; };
 		BBD780E718ADEB9400A7D200 /* theGoBack@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "theGoBack@2X.png"; sourceTree = "<group>"; };
 		BBD7811418AE0D6300A7D200 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		BBD81B85186C2EFF000DBEEE /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
@@ -1476,6 +1482,10 @@
 				BBD0E1CD1877D8D1000D1141 /* Singleton.m */,
 				BB9921181894ADA20093DC84 /* IsRead.h */,
 				BB9921191894ADA20093DC84 /* IsRead.m */,
+				BBD74AF118B5CBC000EF1573 /* todayCount.h */,
+				BBD74AF218B5CBC000EF1573 /* todayCount.m */,
+				BBD74AF418B5CE8000EF1573 /* ButtonName.h */,
+				BBD74AF518B5CE8000EF1573 /* ButtonName.m */,
 			);
 			name = FishCores;
 			sourceTree = "<group>";
@@ -2089,6 +2099,7 @@
 				BBDCDBA018A878230059E7AE /* NewCell.m in Sources */,
 				BBC4401E1870185A006FF280 /* DetailViewController.m in Sources */,
 				BBD52A94185D471D00575349 /* GMGridViewCell.m in Sources */,
+				BBD74AF318B5CBC000EF1573 /* todayCount.m in Sources */,
 				BBA11CF4185EDAAF000D39F8 /* SBJsonStreamWriterAccumulator.m in Sources */,
 				BBD0E1E2187817D3000D1141 /* AdviceViewController.m in Sources */,
 				BBA11CD1185ECABC000D39F8 /* ASINetworkQueue.m in Sources */,
@@ -2125,6 +2136,7 @@
 				BBD31896188D0CCD00618A5A /* FishImageViewController.m in Sources */,
 				BBA4789B185721A000E64289 /* SDWebImageDownloader.m in Sources */,
 				BBA47332189792D4000E4EFF /* CJSONSerializer.m in Sources */,
+				BBD74AF618B5CE8000EF1573 /* ButtonName.m in Sources */,
 				BBD52A95185D471D00575349 /* GMGridViewLayoutStrategies.m in Sources */,
 				BBA4732F189792D4000E4EFF /* NSDictionary_JSONExtensions.m in Sources */,
 				BBD52A93185D471D00575349 /* GMGridView.m in Sources */,

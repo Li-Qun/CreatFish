@@ -16,6 +16,8 @@
 #import "AppDelegate.h"
 #import "StoreUpViewController.h"
 #import "Singleton.h"
+#import "ButtonName.h"
+#import "todayCount.h"
 #import "IsRead.h"
 #import <ShareSDK/ShareSDK.h>
 #import "WeiboApi.h"
@@ -100,6 +102,7 @@
         [self BuildFirstPage];
         isFirstOpen=NO;
     }
+    
 }
 - (void)viewDidLoad
 {
@@ -144,7 +147,7 @@
             NSString *strJson;
             NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsPaths=[array objectAtIndex:0];
-            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar7"];
+            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"NewsViewController"];
             //  然后建立数据库，新建数据库这个苹果做的非常好，非常方便
             sqlite3 *database;
             //新建数据库，存在则打开，不存在则创建
@@ -183,12 +186,128 @@
                     break;
                 }
             }
+            /////start
+            SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+            NSArray *jsonObj =[parser objectWithString:strJson];
+            
+            
+            //
+            NSString* date_Today;
+            NSDateFormatter* formatter = [[[NSDateFormatter alloc]init]autorelease];
+            [formatter  setDateFormat:@"20YY-MM-dd"];
+            date_Today = [formatter stringFromDate:[NSDate date]];
 
+            
+            ///今天新闻条数 数据库start
+            
+            
+            sql=@"CREATE TABLE IF NOT EXISTS todaySum (ID TEXT,date TEXT)";
+            //创建表
+            if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+            {
+                NSLog(@"创建打开toolbar");
+            }else{
+                NSLog(@"create error:%s",errorMsg);
+                sqlite3_free(errorMsg);
+            }
+//            sqlite3_stmt *stmt;
+            BOOL isFresh=NO;
+            sql=[NSString stringWithFormat:@"select date from todaySum where date ='%@'",date_Today];
+            if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+            {
+                
+                while (sqlite3_step(stmt)==SQLITE_ROW) {
+                    if(sqlite3_column_count(stmt)==0)
+                        break;
+                    else
+                    {
+                        isFresh=YES;
+                        break;
+                    }
+                }
+            }
+            int j=0;
+            if(isFresh)//数据库的存储是当天的Today-count
+            {
+                NSString *today_count=@"0";
+                BOOL flag=NO;
+                sql= @"select ID  from todaySum";
+                if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+                {
+                    
+                    [[todayCount sharedInstance].todayCount_Data removeAllObjects];
+                    while (sqlite3_step(stmt)==SQLITE_ROW) {
+                        if(sqlite3_column_count(stmt)==0)
+                        {
+                            flag=YES;
+                            break;
+                        }
+                        const unsigned char *_id= sqlite3_column_text(stmt, 0);
+                        if(_id==NULL)break;//字符串为空
+                        today_count= [NSString stringWithUTF8String: _id];
+                        [[todayCount sharedInstance].todayCount_Data insertObject:today_count atIndex:j];
+                        j++;
+                    }
+                }
+                
+            }
+            else
+            {
+                if(flag||!isFresh)
+                {
+                    int k=0;
+                    [app.array_btID removeAllObjects];
+                    for(int i=0;i<jsonObj.count;i++)
+                    {
+                        [[todayCount sharedInstance].todayCount_Data removeAllObjects];
+                        for(int i=1;i<jsonObj.count;i++)
+                        {
+                            if([[[jsonObj  objectAtIndex:i] objectForKey:@"pid"] integerValue]==0)
+                            {
+                                [[todayCount sharedInstance].todayCount_Data addObject:[[jsonObj  objectAtIndex:i] objectForKey:@"today_count"] ];
+                            }
+                        }
+                    }
+                }
+            }
+            int k=0;
+            [app.array_btID removeAllObjects];
+            for(int i=0;i<jsonObj.count;i++)
+            {
+                if([[[jsonObj  objectAtIndex:i] objectForKey:@"pid"] integerValue]==0&&i!=0)
+                {
+                    
+                    [app.array_btID insertObject:[[jsonObj  objectAtIndex:i] objectForKey:@"id"] atIndex:k];
+                    
+                    k++;
+                }
+            }
             sqlite3_finalize(stmt);
-            
             sqlite3_close(database);
-            
-            
+
+/*
+            sqlite3_finalize(stmt);
+ 
+            sqlite3_close(database);
+ 
+            SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+            NSArray *jsonObj =[parser objectWithString: strJson];
+ 
+            int j=0;
+            [app.array_btID removeAllObjects];
+            for(int i=0;i<jsonObj.count;i++)
+            {
+                if([[[jsonObj  objectAtIndex:i] objectForKey:@"pid"] integerValue]==0&&i!=0)
+                {
+                    
+                    [app.array_btID insertObject:[[jsonObj  objectAtIndex:i] objectForKey:@"id"] atIndex:j];
+                    
+                    
+                    j++;
+                }
+            }
+ */
+
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 if(flag)
                 {
@@ -202,7 +321,79 @@
                 }
                 else
                 {
+//                    app.saveName=strJson;
+//                    SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+//                    NSArray *jsonObj =[parser objectWithString: strJson];
+//                    UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];
+//                    imgToolView.image=[UIImage imageNamed:@"toolBar@2X.png"];
+//                    imgToolView.tag=22;
+//                    UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)]autorelease];
+//                    int j=0;
+//                    for(int i=1;i<jsonObj.count;i++)
+//                    {
+//                        if([[[jsonObj  objectAtIndex:i] objectForKey:@"pid"] integerValue]==0)
+//                        {
+//                            NSLog(@"%@",[[jsonObj  objectAtIndex:i] objectForKey:@"name"]);
+//                            
+//                            UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
+//                            NSString* name= [[jsonObj  objectAtIndex:i] objectForKey:@"name"];
+//                            button.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
+//                            ////////
+//                            if([Singleton sharedInstance].isFirstOpen_View)
+//                            {
+//                                [[ButtonName sharedInstance].buttonName addObject:name];
+//                                [[todayCount sharedInstance].todayCount_Data addObject:[[jsonObj  objectAtIndex:i] objectForKey:@"today_count"] ];
+//                            }
+//                            button.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
+//                            ///////
+// 
+//                            
+//                            [arrName insertObject:name atIndex:j];
+//                            
+//                            button.frame=CGRectMake(10+j*60, 0, 30, 40);
+//                            button.showsTouchWhenHighlighted = YES;
+//                            [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
+//                            UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
+//                            label.text=name;
+//                            label.font  = [UIFont fontWithName:@"Arial" size:15.0];
+//                            label.backgroundColor=[UIColor clearColor];
+//                            
+//                            UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
+//                            labelNum.text=[NSString stringWithFormat:@"%@",[[todayCount sharedInstance].todayCount_Data objectAtIndex:j]];
+//                            
+//                            labelNum.text=[NSString stringWithFormat:@"%@", [[jsonObj  objectAtIndex:i] objectForKey:@"today_count"]];
+//                            labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
+//                            labelNum.textColor=[UIColor whiteColor];
+//                            labelNum.backgroundColor=[UIColor clearColor];
+//                            UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
+//                            if([labelNum.text  integerValue]<=0)
+//                            {
+//                                imgViewRed.image=[UIImage imageNamed:@"whiteBack.png"];
+//                            }
+//                            else
+//                                imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
+//                            [imgViewRed addSubview:labelNum];
+//                            [button addSubview:imgViewRed];
+//                            [button addSubview:label];
+//                            button.backgroundColor=[UIColor clearColor];
+//                            [scrollView addSubview:button];
+//                            [label release];
+//                        
+//                            j++;
+//                        }
+//                    } [Singleton sharedInstance].isFirstOpen_View=NO;
+//                    scrollView.contentSize = CGSizeMake(640, 44);
+//                    [scrollView setShowsHorizontalScrollIndicator:NO];//隐藏横向滚动条
+//                    [imgToolView addSubview:scrollView];
+//                    imgToolView . userInteractionEnabled = YES;
+//                    [self.view addSubview:imgToolView];
+//                }
+//
+                    
+                    
+                    
                     app.saveName=strJson;
+                    app.toolbar_js=strJson;
                     SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                     NSArray *jsonObj =[parser objectWithString: strJson];
                     UIImageView *imgToolView=[[[UIImageView alloc]initWithFrame:CGRectMake(0,heightTooBar, 320, 44)]autorelease];
@@ -210,49 +401,70 @@
                     imgToolView.tag=22;
                     UIScrollView *scrollView=[[[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 320, 44)]autorelease];
                     
-                    for(int i=0;i<5;i++)
+                    int j=0;
+                    for(int i=1;i<jsonObj.count;i++)
                     {
-                        UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
-                        NSString* name= [[jsonObj  objectAtIndex:i+1] objectForKey:@"name"];
-                        button.tag=[[[jsonObj  objectAtIndex:i+1] objectForKey:@"id"]integerValue];
+                        if([[[jsonObj  objectAtIndex:i] objectForKey:@"pid"] integerValue]==0)
+                        {
+                            NSLog(@"%@",[[jsonObj  objectAtIndex:i] objectForKey:@"name"]);
+                            
+                            UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
+                            NSString* name= [[jsonObj  objectAtIndex:i] objectForKey:@"name"];
+                            ////////
+                            if([Singleton sharedInstance].isFirstOpen_View)
+                            {
+                                [[ButtonName sharedInstance].buttonName addObject:name];
+                                // [[todayCount sharedInstance].todayCount_Data addObject:[[jsonObj  objectAtIndex:i] objectForKey:@"today_count"] ];
+                            }
+                            button.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
+                            ///////
+                            
+                            [arrName insertObject:name atIndex:j];
+                            
+                            button.frame=CGRectMake(10+j*60, 0, 30, 40);
+                            button.showsTouchWhenHighlighted = YES;
+                            [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
+                            UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
+                            label.text=name;
+                            label.font  = [UIFont fontWithName:@"Arial" size:15.0];
+                            label.backgroundColor=[UIColor clearColor];
+                            UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
+                            
+                            
+                            
+                            labelNum.text=[NSString stringWithFormat:@"%@",[[todayCount sharedInstance].todayCount_Data objectAtIndex:j]];
+                            
+                            labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
+                            labelNum.textColor=[UIColor whiteColor];
+                            labelNum.backgroundColor=[UIColor clearColor];
+                            UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
+                            if([labelNum.text  integerValue]<=0)
+                            {
+                                // labelNum.text=@"0";
+                                imgViewRed.image=[UIImage imageNamed:@"whiteBack.png"];
+                            }
+                            
+                            else
+                                imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
+                            [imgViewRed addSubview:labelNum];
+                            [button addSubview:imgViewRed];
+                            [button addSubview:label];
+                            button.backgroundColor=[UIColor clearColor];
+                            [scrollView addSubview:button];
+                            [label release];
+                            
+                            j++;
+                        }
                         
-                        [arrName insertObject:name atIndex:i];
-                        
-                        
-                        
-                        button.frame=CGRectMake(10+i*60, 0, 30, 40);
-                        button.showsTouchWhenHighlighted = YES;
-                        [button addTarget:self action:@selector(Press_Tag:) forControlEvents:UIControlEventTouchDown];
-                        UILabel *label=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 30, 40)];
-                        label.text=name;
-                        label.font  = [UIFont fontWithName:@"Arial" size:15.0];
-                        label.backgroundColor=[UIColor clearColor];
-                        UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
-                        labelNum.text=[NSString stringWithFormat:@"%@", [[jsonObj  objectAtIndex:i+1] objectForKey:@"today_count"]];
-                        labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
-                        labelNum.textColor=[UIColor whiteColor];
-                        labelNum.backgroundColor=[UIColor clearColor];
-                        UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
-                        if([labelNum.text isEqual:@"0"])
-                            imgViewRed.image=[UIImage imageNamed:@"whiteBack.png"];
-                        else
-                            imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
-                        [imgViewRed addSubview:labelNum];
-                        [button addSubview:imgViewRed];
-                        [button addSubview:label];
-                        button.backgroundColor=[UIColor clearColor];
-                        [scrollView addSubview:button];
-                        [label release];
-                        
-                        
-                    }
+                    }[Singleton sharedInstance].isFirstOpen_View=NO;
+                    
                     scrollView.contentSize = CGSizeMake(640, 44);
                     [scrollView setShowsHorizontalScrollIndicator:NO];//隐藏横向滚动条
                     [imgToolView addSubview:scrollView];
                     imgToolView . userInteractionEnabled = YES;
                     [self.view addSubview:imgToolView];
                 }
-                
+
                 
             });
         });
@@ -268,7 +480,7 @@
             NSString *strJson;
             NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsPaths=[array objectAtIndex:0];
-            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_Pic3"];
+            NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"NewsViewController"];
             sqlite3 *database;
             
             if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
@@ -279,7 +491,7 @@
                 NSLog(@"open failed");
             }
             char *errorMsg;
-            NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
+            NSString *sql=@"CREATE TABLE IF NOT EXISTS firstViewImages (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
             if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
             {
                 NSLog(@"create success");
@@ -288,7 +500,7 @@
                 sqlite3_free(errorMsg);
             }
             
-            sql = @"select * from picture";
+            sql = @"select * from firstViewImages";
             sqlite3_stmt *stmt;
             //查找数据
             BOOL flag=NO;
@@ -307,6 +519,7 @@
                     break;
                 }
             }
+            
             sqlite3_finalize(stmt);
             
             //  最后，关闭数据库：
@@ -412,7 +625,7 @@
                 ///start database
                 NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                 NSString *documentsPaths=[array objectAtIndex:0];
-                NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_Pic3"];
+                NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"NewsViewController"];
                 sqlite3 *database;
                 
                 if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
@@ -423,7 +636,7 @@
                     NSLog(@"open failed");
                 }
                 char *errorMsg;
-                NSString* sql=@"CREATE TABLE IF NOT EXISTS picture (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
+                NSString* sql=@"CREATE TABLE IF NOT EXISTS firstViewImages (ID INTEGER PRIMARY KEY AUTOINCREMENT,pic TEXT)";         //创建表
                 if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
                 {
                     NSLog(@"首页图片表打开");
@@ -433,7 +646,7 @@
                 }
                 // 删除所有数据 并进行更新数据库操作
                 //删除所有数据，条件为1>0永真
-                const char *deleteAllSql="delete from picture where 1>0";
+                const char *deleteAllSql="delete from firstViewImages where 1>0";
                 //执行删除语句
                 if(sqlite3_exec(database, deleteAllSql, NULL, NULL, &errorMsg)==SQLITE_OK){
                     NSLog(@"删除所有数据成功");
@@ -442,7 +655,7 @@
                 
                 
                 NSString *insertSQLStr = [NSString stringWithFormat:
-                                          @"INSERT INTO 'picture' ('pic' ) VALUES ('%@')", jsonString];
+                                          @"INSERT INTO 'firstViewImages' ('pic' ) VALUES ('%@')", jsonString];
                 const char *insertSQL=[insertSQLStr UTF8String];
                 //插入数据 进行更新操作
                 if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
@@ -474,17 +687,10 @@
                         [arr insertObject:[data objectAtIndex:i] atIndex: i];
                     }
                     
-                    
                     [self createView:firstPageImage];
-                    
-                    
-                    
-                    
                     
                 });
             });
-            
-            
         }
         else
         {
@@ -492,7 +698,7 @@
                 
                 NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
                 NSString *documentsPaths=[array objectAtIndex:0];
-                NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar7"];
+                NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"NewsViewController"];
                 //  然后建立数据库，新建数据库这个苹果做的非常好，非常方便
                 sqlite3 *database;
                 //新建数据库，存在则打开，不存在则创建
@@ -536,9 +742,107 @@
                     sqlite3_free(errorMsg);
                 }
                 
+  /////start
+                SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+                NSArray *jsonObj =[parser objectWithString: jsonString];
                 
-                //  最后，关闭数据库：
-                sqlite3_close(database);
+                
+                //
+                NSString* date_Today;
+                NSDateFormatter* formatter = [[[NSDateFormatter alloc]init]autorelease];
+                [formatter  setDateFormat:@"20YY-MM-dd"];
+                date_Today = [formatter stringFromDate:[NSDate date]];
+                
+                
+                
+                
+                ///今天新闻条数 数据库start
+                
+                
+                sql=@"CREATE TABLE IF NOT EXISTS todaySum (ID TEXT,date TEXT)";
+                //创建表
+                if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+                {
+                    NSLog(@"创建打开toolbar");
+                }else{
+                    NSLog(@"create error:%s",errorMsg);
+                    sqlite3_free(errorMsg);
+                }
+                sqlite3_stmt *stmt;
+                BOOL isFresh=NO;
+                sql=[NSString stringWithFormat:@"select date from todaySum where date ='%@'",date_Today];
+                if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+                {
+                    
+                    while (sqlite3_step(stmt)==SQLITE_ROW) {
+                        if(sqlite3_column_count(stmt)==0)
+                            break;
+                        else
+                        {
+                            isFresh=YES;
+                            break;
+                        }
+                    }
+                }
+                int j=0;
+                if(isFresh)//数据库的存储是当天的Today-count
+                {
+                    NSString *today_count=@"0";
+                    BOOL flag=NO;
+                    sql= @"select ID  from todaySum";
+                    if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+                    {
+                        
+                        [[todayCount sharedInstance].todayCount_Data removeAllObjects];
+                        while (sqlite3_step(stmt)==SQLITE_ROW) {
+                            if(sqlite3_column_count(stmt)==0)
+                            {
+                                flag=YES;
+                                break;
+                            }
+                            const unsigned char *_id= sqlite3_column_text(stmt, 0);
+                            if(_id==NULL)break;//字符串为空
+                            today_count= [NSString stringWithUTF8String: _id];
+                            [[todayCount sharedInstance].todayCount_Data insertObject:today_count atIndex:j];
+                            j++;
+                        }
+                    }
+                    
+                }
+                else
+                {
+                    if(flag||!isFresh)
+                    {
+                        int k=0;
+                        [app.array_btID removeAllObjects];
+                        for(int i=0;i<jsonObj.count;i++)
+                        {
+                            [[todayCount sharedInstance].todayCount_Data removeAllObjects];
+                            for(int i=1;i<jsonObj.count;i++)
+                            {
+                                if([[[jsonObj  objectAtIndex:i] objectForKey:@"pid"] integerValue]==0)
+                                {
+                                    [[todayCount sharedInstance].todayCount_Data addObject:[[jsonObj  objectAtIndex:i] objectForKey:@"today_count"] ];
+                                }
+                            }
+                        }
+                    }
+                }
+                int k=0;
+                [app.array_btID removeAllObjects];
+                for(int i=0;i<jsonObj.count;i++)
+                {
+                    if([[[jsonObj  objectAtIndex:i] objectForKey:@"pid"] integerValue]==0&&i!=0)
+                    {
+                        
+                        [app.array_btID insertObject:[[jsonObj  objectAtIndex:i] objectForKey:@"id"] atIndex:k];
+                        
+                        k++;
+                    }
+                }
+               sqlite3_finalize(stmt);
+               sqlite3_close(database);
+  
                 
                 dispatch_async(dispatch_get_main_queue(), ^{//主线程
                     
@@ -560,7 +864,14 @@
                             
                             UIButton *button=[UIButton buttonWithType:UIButtonTypeCustom];
                             NSString* name= [[jsonObj  objectAtIndex:i] objectForKey:@"name"];
+                            ////////
+                            if([Singleton sharedInstance].isFirstOpen_View)
+                            {
+                                [[ButtonName sharedInstance].buttonName addObject:name];
+                               // [[todayCount sharedInstance].todayCount_Data addObject:[[jsonObj  objectAtIndex:i] objectForKey:@"today_count"] ];
+                            }
                             button.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
+                            ///////
                             
                             [arrName insertObject:name atIndex:j];
                             
@@ -572,13 +883,21 @@
                             label.font  = [UIFont fontWithName:@"Arial" size:15.0];
                             label.backgroundColor=[UIColor clearColor];
                             UILabel *labelNum=[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 25)];
-                            labelNum.text=[NSString stringWithFormat:@"%@", [[jsonObj  objectAtIndex:i] objectForKey:@"today_count"]];
+                            
+                            
+                            
+                            labelNum.text=[NSString stringWithFormat:@"%@",[[todayCount sharedInstance].todayCount_Data objectAtIndex:j]];
+                                           
                             labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
                             labelNum.textColor=[UIColor whiteColor];
                             labelNum.backgroundColor=[UIColor clearColor];
                             UIImageView *imgViewRed=[[[UIImageView alloc]initWithFrame:CGRectMake(30, 7, 28, 25)]autorelease];
-                            if([labelNum.text isEqual:@"0"])
-                                imgViewRed.image=[UIImage imageNamed:@"whiteBack.png"];
+                            if([labelNum.text  integerValue]<=0)
+                            {
+                               // labelNum.text=@"0";
+                                 imgViewRed.image=[UIImage imageNamed:@"whiteBack.png"];
+                            }
+                            
                             else
                                 imgViewRed.image=[UIImage imageNamed:@"redBack.png"];
                             [imgViewRed addSubview:labelNum];
@@ -587,25 +906,24 @@
                             button.backgroundColor=[UIColor clearColor];
                             [scrollView addSubview:button];
                             [label release];
+                           
                             j++;
                         }
                         
-                    }
+                    }[Singleton sharedInstance].isFirstOpen_View=NO;
+                    
                     scrollView.contentSize = CGSizeMake(640, 44);
                     [scrollView setShowsHorizontalScrollIndicator:NO];//隐藏横向滚动条
                     [imgToolView addSubview:scrollView];
                     imgToolView . userInteractionEnabled = YES;
                     [self.view addSubview:imgToolView];
                     
-                    
                 });
             });
-            
             
         }
 
     }
-    
 }
 -(void)createView:(NSMutableArray *)firstPageImage
 {
@@ -761,12 +1079,10 @@
                                     NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode], [error errorDescription]);
                                 }
                             }];
-    
-
 }
+
 -(void)theTopBar
 {
- 
     int height_sum;
     if(height5_flag&&Kind7)
     {
@@ -784,7 +1100,6 @@
     {
         height_sum=10;
     }
-
     UIImageView *topBarWhite=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 60)]autorelease];
     topBarWhite.image=[UIImage imageNamed:@"TitleWhiteBack"];
     [self.view addSubview:topBarWhite];

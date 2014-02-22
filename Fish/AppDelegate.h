@@ -45,12 +45,13 @@ typedef enum
     //首页幻灯片
     NSMutableArray *firstPageImage;
     int height_First;
+    //首页按钮数字参数、id
+    NSMutableArray *array_btID;
     
     NSString *pre_Page;
     NSString *next_Page;
     //设置
     BOOL isRead;//全部标记为已读；
-    NSMutableArray *isRead_arr;
     //游钓
     NSMutableArray *BigFish_Description;
     //toolbar 原始 js串
@@ -98,7 +99,6 @@ typedef enum
 //阅读详细 的最上边bar
 @property (nonatomic,retain)UIImageView *topBarView;
 @property (nonatomic)BOOL isRead;//全部标记为已读；
-@property (nonatomic,retain)NSMutableArray *isRead_arr;
 @property(nonatomic)int isReadCount;
 //分享好友
 //游钓
@@ -107,6 +107,8 @@ typedef enum
 @property(nonatomic,retain)NSString *toolbar_js;
 //UIview  detail滚动视图
 @property(nonatomic,retain)UIView *showView;
+@property(nonatomic,retain)NSMutableArray *array_btID;
+
 @end
 
 

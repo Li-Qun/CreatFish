@@ -43,6 +43,7 @@
     //
     BOOL _reloading;
     BOOL isFirstLoad;
+    BOOL isFirstOpen;
     //
     int newSumCount;
     int NewsID;

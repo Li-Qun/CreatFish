@@ -10,6 +10,9 @@
 #import "AdviceViewController.h"
 #import "ViewController.h"
 #import "Singleton.h"
+#import "IsRead.h"
+
+
 
 #import <ShareSDK/ShareSDK.h>
 #import "WeiboApi.h"
@@ -135,7 +138,7 @@
             NSLog(@"open failed");
         }
         char *errorMsg_listNew;
-        const char *deleteListNewAllSql="delete from picture where 1>0";
+        const char *deleteListNewAllSql="delete from news_list where 1>0";
         //执行删除语句
         if(sqlite3_exec(database_ListNew, deleteListNewAllSql, NULL, NULL, &errorMsg_listNew)==SQLITE_OK){
             NSLog(@"删除所有数据成功");
@@ -247,12 +250,11 @@
         else NSLog(@"delect failde!!!!%s",errorMsg_LifeItem);
         sqlite3_close(database_LifeItem);//*/
 ///删除是否已读News_dataBases
-        if(app.isRead_arr.count!=0)
-        [app.isRead_arr removeAllObjects];
+        [[IsRead sharedInstance].single_isRead_Data removeAllObjects];
         app.isReadCount=0;
         NSArray *array_isRead=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths_isRead=[array_isRead objectAtIndex:0];
-        NSString *str_isRead=[NSString stringWithFormat:@"News_dataBases"];
+        NSString *str_isRead=[NSString stringWithFormat:@"NewsViewController"];
         NSString *databasePaths_isRead=[documentsPaths_isRead stringByAppendingPathComponent:str_isRead];
         sqlite3 *database_isRead;
         
@@ -271,13 +273,13 @@
             NSLog(@"删除所有数据成功");
         }
         else NSLog(@"delect failde!!!!");
-        deleteAllSql_detailRead="delete from picture where 1>0";
-        //执行删除语句
-        
-        if(sqlite3_exec(database_isRead, deleteAllSql_isRead, NULL, NULL, &errorMsg_isRead)==SQLITE_OK){
-            NSLog(@"删除所有数据成功");
-        }
-        else NSLog(@"delect failde!!!!");
+//        deleteAllSql_detailRead="delete from picture where 1>0";
+//        //执行删除语句
+//        
+//        if(sqlite3_exec(database_isRead, deleteAllSql_isRead, NULL, NULL, &errorMsg_isRead)==SQLITE_OK){
+//            NSLog(@"删除所有数据成功");
+//        }
+//        else NSLog(@"delect failde!!!!");
         sqlite3_close(database_isRead);//
  
         dispatch_async(dispatch_get_main_queue(), ^{//主线程

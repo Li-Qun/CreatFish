@@ -1,19 +1,20 @@
 //
-//  Singleton.m
+//  ButtonName.m
 //  Fish
 //
-//  Created by DAWEI FAN on 04/01/2014.
+//  Created by DAWEI FAN on 20/02/2014.
 //  Copyright (c) 2014 liqun. All rights reserved.
 //
 
-#import "Singleton.h"
+#import "ButtonName.h"
 
-@implementation Singleton
-@synthesize single_Data=single_Data;
-@synthesize isFirstOpen_View=isFirstOpen_View;
-static Singleton * sharedSingleton = nil; //第一步：静态实例，并初始化。
+@implementation ButtonName
 
-+ (Singleton *) sharedInstance
+@synthesize buttonName=buttonName;
+
+static ButtonName * sharedSingleton = nil; //第一步：静态实例，并初始化。
+
++ (ButtonName *) sharedInstance
 {
     if (sharedSingleton == nil) {
         sharedSingleton = [[super allocWithZone:NULL] init];//第二步：实例构造检查静态实例是否为nil
@@ -44,7 +45,7 @@ static Singleton * sharedSingleton = nil; //第一步：静态实例，并初始
 
 - (oneway void) release
 {
-    [single_Data release];
+    [buttonName release];
 }
 
 - (id) autorelease
@@ -54,8 +55,7 @@ static Singleton * sharedSingleton = nil; //第一步：静态实例，并初始
 -(id)init
 {
     @synchronized(self) {
-        single_Data=[[NSMutableArray alloc]init];
-        isFirstOpen_View=YES;
+        buttonName=[[NSMutableArray alloc]init];
         return self;
     }
 }

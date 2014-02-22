@@ -53,7 +53,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+        isFirstOpen=YES;
     }
     return self;
 }
@@ -91,7 +91,18 @@
     NSLog(@"%d %d",target,app.targetCenter);
     str=[NSString stringWithFormat:@"%d",target];
     NewsID=[str integerValue];
-    [contentRead fetchList:[NSString stringWithFormat:@"%d",app.targetCenter] isPri:@"1" Out:@"0"];
+   
+    if(isFirstOpen)
+    {
+        [contentRead fetchList:[NSString stringWithFormat:@"%d",app.targetCenter] isPri:@"1" Out:@"0"];
+        isFirstOpen=NO;
+    }
+    else
+    {
+        [self build_TableView];
+        [self buildTheTopBar];
+    }
+    
 }
 
 - (void)viewDidLoad
@@ -258,7 +269,7 @@
 
             BOOL flag=NO;
             //初始查询该条记录是否存在 不存在 提示 存在 读取并 加载
-            NSString* sql =[NSString stringWithFormat:@"select  count(*) from picture where ID='%@' and Offent='%@'",ID,Out];
+            NSString* sql =[NSString stringWithFormat:@"select  count(*) from news_list where ID='%@' and Offent='%@'",ID,Out];
              sqlite3_stmt *stmt;
              if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
              {
@@ -273,7 +284,7 @@
                  }
              }
             
-            sql =[NSString stringWithFormat:@"select pic from picture where ID='%@' and Offent='%@'",ID,Out];
+            sql =[NSString stringWithFormat:@"select pic from news_list where ID='%@' and Offent='%@'",ID,Out];
        
             //查找数据
            
@@ -473,7 +484,7 @@
                     }
                     
                     char *errorMsg;
-                    NSString *sql=@"CREATE TABLE IF NOT EXISTS picture (ID TEXT,Offent TEXT,pic TEXT)"; //创建表
+                    NSString *sql=@"CREATE TABLE IF NOT EXISTS news_list (ID TEXT,Offent TEXT,pic TEXT)"; //创建表
                     if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
                     {
                         NSLog(@"create success");
@@ -481,7 +492,7 @@
                         NSLog(@"create error:%s",errorMsg);
                         sqlite3_free(errorMsg);
                     }
-                    sql =[NSString stringWithFormat:@"select ID from picture where ID='%@' and Offent='%@'",ID,Out];
+                    sql =[NSString stringWithFormat:@"select ID from news_list where ID='%@' and Offent='%@'",ID,Out];
                     sqlite3_stmt *stmt;
                     //查找数据
                     BOOL OK=NO;
@@ -505,7 +516,7 @@
                     if(!OK)
                     {
                         NSString *insertSQLStr = [NSString stringWithFormat:
-                                                  @"INSERT INTO 'picture' ('ID','Offent','pic' ) VALUES ('%@','%@','%@')", ID,Out,jsonString];
+                                                  @"INSERT INTO 'news_list' ('ID','Offent','pic' ) VALUES ('%@','%@','%@')", ID,Out,jsonString];
                         const char *insertSQL=[insertSQLStr UTF8String];
                         //插入数据 进行更新操作
                         if (sqlite3_exec(database, insertSQL , NULL, NULL, &errorMsg)==SQLITE_OK) {
@@ -534,7 +545,7 @@
                             newSumCount++;
                         }
                         [MBProgressHUD hideHUDForView:tabView animated:YES];
-                        [self build_TableView];
+                         [self build_TableView];
                          [self buildTheTopBar];
                     });
                 });
@@ -767,22 +778,38 @@
             cell.contentView.backgroundColor = [UIColor whiteColor];
         }
         NSDictionary* dict = [arr objectAtIndex:(indexPath.row-1)];
-        
-        cell.labelForCategory_id.text=[dict objectForKey:@"category_id"];
-        
         cell.labelForName.text=[dict objectForKey:@"name"];
+         cell.labelForCategory_id.text=[dict objectForKey:@"category_id"];
          cell.labelForName.textColor =[UIColor redColor ];
         NSLog(@"%d",[IsRead sharedInstance].single_isRead_Data.count);
-        if(app.isRead)
+        ////标记是否已读start   逻辑：if已读的id 变黑 else为红  if全部标记为已读 全黑
+        BOOL flag=NO;
+        for(int i=0;i<[IsRead sharedInstance].single_isRead_Data.count;i++)
         {
-            for(int i=0;i<app.isReadCount;i++)
+            if([[[IsRead sharedInstance].single_isRead_Data objectAtIndex:i] isEqualToString:[dict objectForKey:@"id"]])
             {
-                if([[dict objectForKey:@"id"]isEqualToString: [[IsRead sharedInstance].single_isRead_Data objectAtIndex:i]  ])
-                {
-                    cell.labelForName.textColor =[UIColor blackColor ];
-                }
+                flag=YES;
+                break;
             }
         }
+        if(flag)
+        {
+            cell.labelForName.textColor =[UIColor blackColor];
+        }
+        if(app.isRead)//全部标记为已读
+        {
+            cell.labelForName.textColor =[UIColor blackColor];
+
+//            for(int i=0;i<app.isReadCount;i++)
+//            {
+//                if([[dict objectForKey:@"id"]isEqualToString: [[IsRead sharedInstance].single_isRead_Data objectAtIndex:i]  ])
+//                {
+//                    cell.labelForName.textColor =[UIColor blackColor ];
+//                }
+//            }
+        }
+        ////标记是否已读end
+        
         cell.labelForName.font=[UIFont systemFontOfSize:15.0f];
         cell.labelForID.text=[dict objectForKey:@"description"];
         cell.labelForID.font=[UIFont systemFontOfSize:12.0f];

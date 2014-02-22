@@ -11,8 +11,11 @@
 @interface Singleton : NSObject
 {
     NSMutableArray *single_Data;
+    int isFirstOpen_View;
 }
 
 + (Singleton *) sharedInstance;
 @property(nonatomic,retain)   NSMutableArray *single_Data;
+@property(nonatomic)int isFirstOpen_View;
+
 @end

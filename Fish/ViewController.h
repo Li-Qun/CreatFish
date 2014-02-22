@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "klpView.h"
 #import "AppDelegate.h"
+#import "Singleton.h"
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 @interface ViewController : UIViewController<FishDelegate,ISSShareViewDelegate,

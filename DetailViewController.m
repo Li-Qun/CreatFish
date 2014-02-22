@@ -20,6 +20,7 @@
 
 #import "Singleton.h"
 #import "IsRead.h"
+#import "todayCount.h"
 
 #import <ShareSDK/ShareSDK.h>
 #import "WeiboApi.h"
@@ -317,6 +318,8 @@
         }
         sqlite3_finalize(stmt);//  最后，关闭数据库：
         sqlite3_close(database);//创建数据库end
+        
+ 
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             
             if(flag||[self isBlankString:strJson])
@@ -482,7 +485,7 @@
             NSString *strID;
             NSArray *array1=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsPaths1=[array1 objectAtIndex:0];
-            NSString *str=[NSString stringWithFormat:@"News_dataBases"];
+            NSString *str=[NSString stringWithFormat:@"NewsViewController"];
             NSString *databasePaths1=[documentsPaths1 stringByAppendingPathComponent:str];
             sqlite3 *database1;
             
@@ -526,6 +529,15 @@
             }
             if(OK==0)
             {
+                char *Sql = "insert into 'isReadList' ('ID')values (?);";
+                if (sqlite3_prepare_v2(database1, Sql, -1, &stmt1, nil) == SQLITE_OK) {
+                    sqlite3_bind_text(stmt1, 1,[ID  UTF8String], -1, NULL);
+                    [[IsRead sharedInstance].single_isRead_Data insertObject: ID atIndex:app.isReadCount++] ;
+                }
+                if (sqlite3_step(stmt1) != SQLITE_DONE)
+                    NSLog(@"Something is Wrong!");
+                NSLog(@"插入已读数据库");
+
                 NSString *date_Create=[jsonObj1 objectForKey:@"create_time"];
                 NSString* date_Today;
                 NSDateFormatter* formatter = [[[NSDateFormatter alloc]init]autorelease];
@@ -537,18 +549,79 @@
                 
                 date_Create =[formatter stringFromDate:date_Created];
                 
-                
+                //判断是否已读 是指对于今天 created 的日期的新闻是否已读
                 NSLog(@"今天日期%@    创建日期%@",date_Today ,date_Create);
-                if(![ date_Create isEqualToString:date_Today])///是今天的日期并且id不在数据库里 是未读  插入数据库
+               // if(![ date_Create isEqualToString:date_Today])///是今天的日期并且id不在数据库里 是未读  插入数据库
+                if([ date_Create isEqualToString:date_Today])///是今天的日期并且id不在数据库里 是未读  插入数据库
                 {
-                    char *Sql = "insert into 'isReadList' ('ID')values (?);";
-                    if (sqlite3_prepare_v2(database1, Sql, -1, &stmt1, nil) == SQLITE_OK) {
-                        sqlite3_bind_text(stmt1, 1,[ID  UTF8String], -1, NULL);
-                        [[IsRead sharedInstance].single_isRead_Data insertObject: ID atIndex:app.isReadCount++] ;
+                    //判断 是否是今天 的资讯start catogory_id->pid
+                    SBJsonParser *_parser = [[[SBJsonParser alloc] init]autorelease];
+                    NSArray *_jsonObj =[_parser objectWithString: app.toolbar_js];
+                    
+                    for(int i=1;i<_jsonObj.count;i++)
+                    {
+                        if([[jsonObj1 objectForKey:@"category_id"]isEqualToString:[[_jsonObj  objectAtIndex:i] objectForKey:@"id"]])
+                        {
+                            for(int j=0;j<app.array_btID.count;j++)
+                            {
+                                if([[app.array_btID objectAtIndex:j] isEqualToString:[[_jsonObj  objectAtIndex:i] objectForKey:@"pid"]]||[[[_jsonObj  objectAtIndex:i] objectForKey:@"pid"]isEqualToString:@"0"])
+                                {
+                                    
+                                    NSLog(@"%@",[todayCount sharedInstance].todayCount_Data);
+                                    
+                                    
+                                    int  plus=   [[[todayCount sharedInstance].todayCount_Data objectAtIndex:j]integerValue]-1;
+                                    [[todayCount sharedInstance].todayCount_Data removeObjectAtIndex:j];
+                                    
+                                    NSString *str=[NSString stringWithFormat:@"%d",plus];
+                                    
+                                    [[todayCount sharedInstance].todayCount_Data insertObject:str atIndex:j];
+                                    NSLog(@"%@",[todayCount sharedInstance].todayCount_Data);
+                                    
+                                    
+                        ///今天新闻条数 数据库start
+                                    sql=@"CREATE TABLE IF NOT EXISTS todaySum (ID TEXT,date,TEXT)";//创建表
+                                    if (sqlite3_exec(database1, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+                                    {
+                                        NSLog(@"创建打开toolbar");
+                                    }else{
+                                        NSLog(@"create error:%s",errorMsg);
+                                        sqlite3_free(errorMsg);
+                                    }
+                                    // 删除所有数据 并进行更新数据库操作
+                                    //删除所有数据，条件为1>0永真
+                                    const char *deleteAllSql_count="delete from todaySum where 1>0";
+                                    //执行删除语句
+                                    if(sqlite3_exec(database1, deleteAllSql_count, NULL, NULL, &errorMsg)==SQLITE_OK){
+                                        NSLog(@"删除所有数据成功");
+                                    }
+                                    else NSLog(@"delect failde!!!!");
+                                    
+                                    //插入数据
+                                    for(int i=0;i<[todayCount sharedInstance].todayCount_Data.count;i++)
+                                    {
+                                        NSString* insertSQLStr = [NSString stringWithFormat:
+                                                        @"INSERT INTO 'todaySum' ('ID','date') VALUES ('%@','%@')",[[todayCount sharedInstance].todayCount_Data objectAtIndex:i],date_Create];
+                                        const char *insertSQL_count=[insertSQLStr UTF8String];
+                                        
+                                        if (sqlite3_exec(database1, insertSQL_count , NULL, NULL, &errorMsg)==SQLITE_OK) {
+                                            NSLog(@"insert operation is ok.");
+                                        }
+                                        else{
+                                            NSLog(@"insert error:%s",errorMsg);
+                                            sqlite3_free(errorMsg);
+                                        }
+                                        
+                                    }
+                                    
+                        ///今天新闻条数 end*/
+ 
+                                }
+                            }
+                        }
                     }
-                    if (sqlite3_step(stmt1) != SQLITE_DONE)
-                        NSLog(@"Something is Wrong!");
-                    NSLog(@"插入已读数据库");
+                    //判断 是否是今天 的资讯end
+                    
                 }
                 else
                 {
@@ -563,7 +636,8 @@
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 
                // [self buildTheTopBar];
-                SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+                SBJsonParser *parser =
+                [[[SBJsonParser alloc] init]autorelease];
                 NSDictionary *jsonObj =[parser objectWithString:jsonString];
                 
                 

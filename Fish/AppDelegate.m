@@ -25,6 +25,7 @@
 #import <sqlite3.h>
 #import "Singleton.h"
 #import "IsRead.h"
+#import "todayCount.h"
 
 #define IosAppVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 @implementation AppDelegate
@@ -58,10 +59,11 @@
 @synthesize pic_URL;
 @synthesize topBarView;
 @synthesize isRead=isRead;
-@synthesize isRead_arr=isRead_arr;
 @synthesize BigFish_Description=BigFish_Description;
 @synthesize toolbar_js=toolbar_js;
 @synthesize showView=showView;
+@synthesize array_btID=array_btID;
+
 
 -(void)build
 {
@@ -73,7 +75,7 @@
     saveDataImage=[[NSMutableArray  alloc]init];
     firstPageImage=[[NSMutableArray  alloc]init];
     BigFish_Description=[[NSMutableArray  alloc]init];
-    
+    array_btID=[[NSMutableArray alloc]init];
     next_Page=@"11";
     pre_Page=@"11";
 }
@@ -91,8 +93,8 @@
     [saveDataName release];
     [saveDataImage release];
     [firstPageImage release];
-    [isRead_arr release];
     [BigFish_Description release];
+    [array_btID release];
     [super dealloc];
 }
 -(void)setShare
@@ -153,7 +155,7 @@
         NSString *strID;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *str=[NSString stringWithFormat:@"News_dataBases"];
+        NSString *str=[NSString stringWithFormat:@"NewsViewController"];
         NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:str];
         sqlite3 *database;
         
@@ -177,8 +179,6 @@
          sql= @"select ID from isReadList";
         sqlite3_stmt *stmt;
         //查找数据
-        
-        isRead_arr=[[NSMutableArray  alloc]init];
         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
         {
             
@@ -192,9 +192,29 @@
                 
             }
         }
+//        ///今天新闻条数 数据库start
+//       sql= @"select ID from today_count";
+//        //查找数据
+//        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+//        {
+//            int j=0;
+//            while (sqlite3_step(stmt)==SQLITE_ROW) {
+//                if(sqlite3_column_count(stmt)==0)
+//                    break;
+//                const unsigned char *_id= sqlite3_column_text(stmt, 0);
+//                if(_id==NULL)break;//字符串为空
+//                strID= [NSString stringWithUTF8String: _id];
+//                 [[todayCount sharedInstance].todayCount_Data insertObject:strID atIndex:j];
+//                j++;
+//            }
+//        }
+//
+//        
+//        ///今天新闻条数 end
         sqlite3_finalize(stmt);
         sqlite3_close(database);
 //打开判断可读数据库end
+        
 //打开 判断收藏数据库start
         
         NSArray *array1=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -228,7 +248,6 @@
                 // const unsigned char *_pic= sqlite3_column_text(stmt, 1);
                 NSString *str= [NSString stringWithUTF8String:_id];
                 [[Singleton sharedInstance].single_Data insertObject:str atIndex:saveNum++] ;
-                
             }
         }
         sqlite3_finalize(stmt1);//  最后，关闭数据库：

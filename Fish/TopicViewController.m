@@ -101,7 +101,7 @@
         NSString *strJson;
         NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar7"];
+        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"NewsViewController"];
         //  然后建立数据库，新建数据库这个苹果做的非常好，非常方便
         sqlite3 *database;
         //新建数据库，存在则打开，不存在则创建

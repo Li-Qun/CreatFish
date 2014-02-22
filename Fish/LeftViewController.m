@@ -13,6 +13,9 @@
 #import "ViewController.h"
 #import "AppDelegate.h"
 
+#import "todayCount.h"
+#import "ButtonName.h"
+
 #import "BigFishViewController.h"
 #import "StoreUpViewController.h"
 #import "SettingViewController.h"
@@ -64,46 +67,47 @@
     if(isFirstOpen)
     {
         isFirstOpen=NO;
-        [self visitDataBase];
+        
     }
+    [self visitDataBase];
 }
 -(void)visitDataBase
 {
    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *strJson;
-        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsPaths=[array objectAtIndex:0];
-        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"test_DB_toolBar7"];
-        //  然后建立数据库，新建数据库这个苹果做的非常好，非常方便
-        sqlite3 *database;
-        //新建数据库，存在则打开，不存在则创建
-        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
-        {
-            NSLog(@"打开toolbar表");
-        }
-        else {
-            NSLog(@"open failed");
-        }
-        // 查找数据
-        NSString* sql = @"select * from buttonList";
-        sqlite3_stmt *stmt;
-        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
-        {
-            while (sqlite3_step(stmt)==SQLITE_ROW) {
-                const unsigned char *theName= sqlite3_column_text(stmt, 1);
-                strJson= [NSString stringWithUTF8String: theName];
-                break;
-            }
-        }
-        sqlite3_finalize(stmt);
-        sqlite3_close(database);
- 
-        dispatch_async(dispatch_get_main_queue(), ^{//主线程
-            
-            
-           app.saveName=strJson;
-  //  app.saveName=[whole sharedInstance].wholeString;
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        NSString *strJson;
+//        NSArray *array=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString *documentsPaths=[array objectAtIndex:0];
+//        NSString *databasePaths=[documentsPaths stringByAppendingPathComponent:@"NewsViewController"];
+//        //  然后建立数据库，新建数据库这个苹果做的非常好，非常方便
+//        sqlite3 *database;
+//        //新建数据库，存在则打开，不存在则创建
+//        if (sqlite3_open([databasePaths UTF8String], &database)==SQLITE_OK)
+//        {
+//            NSLog(@"打开toolbar表");
+//        }
+//        else {
+//            NSLog(@"open failed");
+//        }
+//        // 查找数据
+//        NSString* sql = @"select * from buttonList";
+//        sqlite3_stmt *stmt;
+//        if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+//        {
+//            while (sqlite3_step(stmt)==SQLITE_ROW) {
+//                const unsigned char *theName= sqlite3_column_text(stmt, 1);
+//                strJson= [NSString stringWithUTF8String: theName];
+//                break;
+//            }
+//        }
+//        sqlite3_finalize(stmt);
+//        sqlite3_close(database);
+// 
+//        dispatch_async(dispatch_get_main_queue(), ^{//主线程
+//            
+//            
+//           app.saveName=strJson;
+//  //  app.saveName=[whole sharedInstance].wholeString;
             int height;
             if(isSeven) height=60;
             else height=45;
@@ -122,8 +126,8 @@
             mainTitle.textColor=[UIColor whiteColor];
             [imageViewTitle addSubview:mainTitle];
             
-            SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
-            NSMutableArray *jsonObj =[parser objectWithString: strJson ];
+//            SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
+//            NSMutableArray *jsonObj =[parser objectWithString: strJson ];
             //首页
             UIButton *firstBtn=[UIButton buttonWithType:UIButtonTypeCustom];
             firstBtn.frame=CGRectMake(0, height+2, 320, 44);
@@ -140,11 +144,9 @@
             [firstBtn addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
             firstPageName.backgroundColor=[UIColor clearColor];
             
-            int j=0;
-            for(int i=1;i<jsonObj.count;i++)
+            for(int j=0;j<[ButtonName sharedInstance].buttonName.count;j++)
             {
-                if([[[jsonObj  objectAtIndex:i] objectForKey:@"pid"] integerValue]==0)
-                {
+                
                     //////创建动态按钮start
                     //NSString *key=[NSString stringWithFormat:@"%d",i];
                     UIButton *OneButton=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -153,23 +155,21 @@
                     [myView addSubview:OneButton ];
                     UILabel *OneName=[[[UILabel alloc]initWithFrame:CGRectMake(60, 0, 320, 44)]autorelease];
                     OneName.textColor=[UIColor whiteColor];
-                    OneName.text=[[jsonObj  objectAtIndex:i] objectForKey:@"name"];
+                    OneName.text=[[ButtonName sharedInstance].buttonName objectAtIndex:j];
                     [OneButton addSubview:OneName];
                     [OneButton addTarget:self action:@selector(PessSwitch_Tag:) forControlEvents:UIControlEventTouchUpInside];
                     UIImageView *pictureOneName=[[[UIImageView alloc]initWithFrame:CGRectMake(10, 10,25 , 25)] autorelease];
-                    NSString *btnImg=[NSString stringWithFormat:@"%d@2X.png",i];
-                    NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[[jsonObj  objectAtIndex:i] objectForKey:@"image"] ];
-                    [pictureOneName setImageWithURL:[NSURL URLWithString: imgURL]
-                       placeholderImage:[UIImage imageNamed:btnImg]
-                                success:^(UIImage *image) {NSLog(@"OK");}
-                                failure:^(NSError *error) {NSLog(@"NO");}];
+                    NSString *btnImg=[NSString stringWithFormat:@"%d@2X.png",j+1];
+                 //   NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[[jsonObj  objectAtIndex:j+1] objectForKey:@"image"] ];
+                    pictureOneName.image=[UIImage imageNamed:btnImg];
+                
                     
                     [OneButton  addSubview:pictureOneName];
-                    OneButton.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
+                    OneButton.tag=[[app.array_btID objectAtIndex:j]integerValue];
                     UIImageView *theRedNum=[[[UIImageView alloc]initWithFrame:CGRectMake(200, 10, 28, 22)]autorelease];
                     [OneButton addSubview:theRedNum];
                     UILabel *labelNum=[[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 28, 22)]autorelease];
-                    labelNum.text=[NSString stringWithFormat:@"%@", [[jsonObj  objectAtIndex:i] objectForKey:@"today_count"]];
+                    labelNum.text=[NSString stringWithFormat:@"%@",[[todayCount sharedInstance].todayCount_Data objectAtIndex:j]];
                     labelNum.textColor=[UIColor whiteColor];
                     labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
                     [theRedNum addSubview:labelNum];
@@ -181,10 +181,10 @@
                     labelNum.backgroundColor=[UIColor clearColor];
                     OneButton.backgroundColor=[UIColor clearColor];
                     OneName.backgroundColor=[UIColor clearColor];
-                    j++;
-                    /////动态创建按钮end
-                }
+                /////动态创建按钮end
+                
             }
+            
             //收藏&设置
             for(int i=0;i<2;i++)
             {
@@ -228,10 +228,10 @@
             [self.view addSubview:scrollView];
  
             
-        });
-    });
-    
-    //创建数据库end
+//        });
+//    });
+//    
+//    //创建数据库end
 
 }
 -(void)PessSwitch_Tag:(id)sender
