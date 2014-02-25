@@ -13,7 +13,7 @@
 #import "BigFishViewController.h"
 #import "AppDelegate.h"
 #import <sqlite3.h>
-#import "BaiduMobStat.h"
+//#import "BaiduMobStat.h"
 @interface RightViewController ()
 
 @end
@@ -30,13 +30,13 @@
 //百度页面统计
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSString *cName=@"Right&右侧边栏 ";
-    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+//    NSString *cName=@"Right&右侧边栏 ";
+//    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
-    NSString *cName=@"Right&右侧边栏 ";
-    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+//    NSString *cName=@"Right&右侧边栏 ";
+//    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 -(void)viewWillAppear:(BOOL)animated
 {

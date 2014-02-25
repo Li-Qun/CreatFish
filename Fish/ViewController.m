@@ -24,7 +24,7 @@
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-#import "BaiduMobStat.h"
+//#import "BaiduMobStat.h"
 @interface ViewController ()
 
 @end
@@ -42,13 +42,13 @@
 //百度页面统计
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSString *cName=@"View&首页";
-    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+//    NSString *cName=@"View&首页";
+//    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
-    NSString *cName=@"View&首页";
-    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+//    NSString *cName=@"View&首页";
+//    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -102,7 +102,7 @@
         [self BuildFirstPage];
         isFirstOpen=NO;
     }
-    
+
 }
 - (void)viewDidLoad
 {
@@ -189,8 +189,8 @@
             /////start
             SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
             NSArray *jsonObj =[parser objectWithString:strJson];
-            
-            
+   
+     /*
             //
             NSString* date_Today;
             NSDateFormatter* formatter = [[[NSDateFormatter alloc]init]autorelease];
@@ -281,7 +281,7 @@
                     
                     k++;
                 }
-            }
+            }*/
             sqlite3_finalize(stmt);
             sqlite3_close(database);
 
@@ -308,6 +308,19 @@
             }
  */
 
+            int j=0;
+            [app.array_btID removeAllObjects];
+            for(int i=0;i<jsonObj.count;i++)
+            {
+                if([[[jsonObj  objectAtIndex:i] objectForKey:@"pid"] integerValue]==0&&i!=0)
+                {
+                    
+                    [app.array_btID insertObject:[[jsonObj  objectAtIndex:i] objectForKey:@"id"] atIndex:j];
+                    
+                    
+                    j++;
+                }
+            }
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 if(flag)
                 {
@@ -413,8 +426,8 @@
                             ////////
                             if([Singleton sharedInstance].isFirstOpen_View)
                             {
-                                [[ButtonName sharedInstance].buttonName addObject:name];
-                                // [[todayCount sharedInstance].todayCount_Data addObject:[[jsonObj  objectAtIndex:i] objectForKey:@"today_count"] ];
+                                 [[ButtonName sharedInstance].buttonName addObject:name];
+                                 [[todayCount sharedInstance].todayCount_Data addObject:[[jsonObj  objectAtIndex:i] objectForKey:@"today_count"] ];
                             }
                             button.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
                             ///////
@@ -506,8 +519,9 @@
             BOOL flag=NO;
             if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
             {
-                
+                int i=0;
                 while (sqlite3_step(stmt)==SQLITE_ROW) {
+                    i=1;
                     if(sqlite3_column_count(stmt)==0)
                     {
                         flag=YES;
@@ -518,6 +532,18 @@
                     strJson= [NSString stringWithUTF8String: _pic];
                     break;
                 }
+                if(i==0)
+                {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                    message:@"该缓存为空，请连接网络使用"
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"确定"
+                                                          otherButtonTitles: nil];
+                    [alert release];
+                    sqlite3_finalize(stmt);
+                    sqlite3_close(database);
+                    return ;
+                }
             }
             
             sqlite3_finalize(stmt);
@@ -526,18 +552,6 @@
             sqlite3_close(database);
             
             //创建数据库end
-            
-            SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
-            NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
-            
-            NSArray *data = [jsonObj1 objectForKey:@"data"];
-            //NSString *str;
-            NSMutableArray *firstPageImage= [[[NSMutableArray alloc] initWithCapacity:data.count]autorelease];
-            for (int i =0; i <data.count; i++) {
-                
-                [firstPageImage insertObject:[data objectAtIndex:i] atIndex: i];
-                [arr insertObject:[data objectAtIndex:i] atIndex: i];
-            }
             
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 
@@ -551,8 +565,22 @@
                     [alert release];
                     
                 }else
+                {
+                    SBJsonParser *parser1 = [[[SBJsonParser alloc] init]autorelease];
+                    NSDictionary *jsonObj1 =[parser1 objectWithString:  strJson];
+                    
+                    NSArray *data = [jsonObj1 objectForKey:@"data"];
+                    //NSString *str;
+                    NSMutableArray *firstPageImage= [[[NSMutableArray alloc] initWithCapacity:data.count]autorelease];
+                    for (int i =0; i <data.count; i++) {
+                        
+                        [firstPageImage insertObject:[data objectAtIndex:i] atIndex: i];
+                        [arr insertObject:[data objectAtIndex:i] atIndex: i];
+                    }
+                    [self createView:firstPageImage];
 
-                 [self createView:firstPageImage];
+                }
+
             });
         });
        
@@ -741,12 +769,15 @@
                     NSLog(@"insert error:%s",errorMsg);
                     sqlite3_free(errorMsg);
                 }
+
+                sqlite3_close(database);
                 
   /////start
+               
                 SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
                 NSArray *jsonObj =[parser objectWithString: jsonString];
                 
-                
+                 /*
                 //
                 NSString* date_Today;
                 NSDateFormatter* formatter = [[[NSDateFormatter alloc]init]autorelease];
@@ -757,21 +788,33 @@
                 
                 
                 ///今天新闻条数 数据库start
+                NSArray *arr1=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString *documentsPaths_Today=[arr1 objectAtIndex:0];
+                NSString *databasePaths2=[documentsPaths_Today stringByAppendingPathComponent:@"today_total"];
+                sqlite3 *database2;
                 
-                
-                sql=@"CREATE TABLE IF NOT EXISTS todaySum (ID TEXT,date TEXT)";
-                //创建表
-                if (sqlite3_exec(database, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+                if (sqlite3_open([databasePaths2 UTF8String], &database2)==SQLITE_OK)
+                {
+                    NSLog(@"open success");
+                }
+                else {
+                    NSLog(@"open failed");
+                }
+                 char *errorMsg1;
+                NSString* Sql1=@"CREATE TABLE IF NOT EXISTS todaySum (ID TEXT,date,TEXT)";//创建表
+                if (sqlite3_exec(database2, [Sql1 UTF8String], NULL, NULL, &errorMsg1)==SQLITE_OK )
                 {
                     NSLog(@"创建打开toolbar");
                 }else{
-                    NSLog(@"create error:%s",errorMsg);
-                    sqlite3_free(errorMsg);
+                    NSLog(@"create error:%s",errorMsg1);
+                    sqlite3_free(errorMsg1);
                 }
+
+                
                 sqlite3_stmt *stmt;
                 BOOL isFresh=NO;
-                sql=[NSString stringWithFormat:@"select date from todaySum where date ='%@'",date_Today];
-                if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+                Sql1=[NSString stringWithFormat:@"select date from todaySum where date ='%@'",date_Today];
+                if(sqlite3_prepare_v2(database2, [Sql1 UTF8String], -1, &stmt, nil)==SQLITE_OK)
                 {
                     
                     while (sqlite3_step(stmt)==SQLITE_ROW) {
@@ -789,8 +832,8 @@
                 {
                     NSString *today_count=@"0";
                     BOOL flag=NO;
-                    sql= @"select ID  from todaySum";
-                    if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
+                    Sql1= @"select ID  from todaySum";
+                    if(sqlite3_prepare_v2(database2, [Sql1 UTF8String], -1, &stmt, nil)==SQLITE_OK)
                     {
                         
                         [[todayCount sharedInstance].todayCount_Data removeAllObjects];
@@ -806,8 +849,11 @@
                             [[todayCount sharedInstance].todayCount_Data insertObject:today_count atIndex:j];
                             j++;
                         }
-                    }
-                    
+                     }
+                     if(!flag)
+                     {
+                        
+                     }
                 }
                 else
                 {
@@ -828,6 +874,9 @@
                         }
                     }
                 }
+                  sqlite3_finalize(stmt);
+                  sqlite3_close(database2);
+                 */
                 int k=0;
                 [app.array_btID removeAllObjects];
                 for(int i=0;i<jsonObj.count;i++)
@@ -840,8 +889,7 @@
                         k++;
                     }
                 }
-               sqlite3_finalize(stmt);
-               sqlite3_close(database);
+
   
                 
                 dispatch_async(dispatch_get_main_queue(), ^{//主线程
@@ -868,7 +916,7 @@
                             if([Singleton sharedInstance].isFirstOpen_View)
                             {
                                 [[ButtonName sharedInstance].buttonName addObject:name];
-                               // [[todayCount sharedInstance].todayCount_Data addObject:[[jsonObj  objectAtIndex:i] objectForKey:@"today_count"] ];
+                                [[todayCount sharedInstance].todayCount_Data addObject:[[jsonObj  objectAtIndex:i] objectForKey:@"today_count"] ];
                             }
                             button.tag=[[[jsonObj  objectAtIndex:i] objectForKey:@"id"]integerValue];
                             ///////
@@ -953,7 +1001,8 @@
     labelText.backgroundColor=[UIColor clearColor];
     labelText.font=[UIFont systemFontOfSize:15.0f];
     labelText.numberOfLines = 0;
-    [labelText sizeToFit];
+    labelText.lineBreakMode = UILineBreakModeTailTruncation;
+    //[labelText sizeToFit];
     
     textView.text= [ [arr objectAtIndex:0] objectForKey:@"description"];
     textView.backgroundColor=[UIColor clearColor];
@@ -1156,7 +1205,8 @@
         labelText.backgroundColor=[UIColor clearColor];
         labelText.font=[UIFont systemFontOfSize:15.0f];
         labelText.numberOfLines = 0;
-        [labelText sizeToFit];
+        labelText.lineBreakMode = UILineBreakModeTailTruncation;
+        //[labelText sizeToFit];
         
         textView.text= [ [arr objectAtIndex:index] objectForKey:@"description"];
         textView.backgroundColor=[UIColor clearColor];

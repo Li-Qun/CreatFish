@@ -15,7 +15,6 @@
 #import "MBProgressHUD.h"
 #import "Reachability.h"
 
-
 #import "SBJson.h"
 #import "JSONKit.h"
 #import "ASIFormDataRequest.h"
@@ -30,7 +29,7 @@
 #import "IIViewDeckController.h"
 #import "RightViewController.h"
 #import "sqlite3.h"
-#import "BaiduMobStat.h"
+//#import "BaiduMobStat.h"
 @interface BookViewController ()
 
 @end
@@ -60,13 +59,13 @@
 //百度页面统计
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSString *cName=[NSString stringWithFormat:@"Book&%@",NewsName];
-    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+//    NSString *cName=[NSString stringWithFormat:@"Book&%@",NewsName];
+//    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
-   NSString *cName=[NSString stringWithFormat:@"Book&%@",NewsName];
-    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+//   NSString *cName=[NSString stringWithFormat:@"Book&%@",NewsName];
+//    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -196,6 +195,7 @@
         heightTopbar=65;
         littleHeinght=20+5;
         labelName=0;
+        NSLog(@"1=========%f",heightTopbar);
     }
     else if(isSeven&&!isFive)
     {
@@ -212,7 +212,10 @@
         littleHeinght=10;
         labelName=12;
     }
-    tabView.frame=CGRectMake(0,45, 320, height_Momente);
+    NSLog(@"2======i===%f",heightTopbar);
+
+    tabView.frame=CGRectMake(0,heightTopbar, 320, height_Momente);
+     NSLog(@"3=====i====%f",heightTopbar);
     UIImageView *topBarView=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, heightTopbar)]autorelease];
     topBarView.image=[UIImage imageNamed:@"topBarRed"];
     [self.view addSubview:topBarView];
@@ -291,9 +294,10 @@
             
             if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
             {
+                int i=0;
                 
                 while (sqlite3_step(stmt)==SQLITE_ROW) {
-                    
+                    i=1;
                     if(sqlite3_column_count(stmt)==0)
                     {
                         flag=YES;
@@ -301,6 +305,14 @@
                     }
                     const unsigned char *_id= sqlite3_column_text(stmt, 0);
                     strJson= [NSString stringWithUTF8String: _id];
+                    
+                }
+                if(i==0)
+                {
+                    [MBProgressHUD hideHUDForView:tabView animated:YES];
+                    sqlite3_finalize(stmt);
+                    sqlite3_close(database);
+                    return ;
                 }
             }
             
@@ -339,7 +351,6 @@
                     }
                     [MBProgressHUD hideHUDForView:tabView animated:YES];
                     [self build_TableView];
-                    [self buildTheTopBar];
                 }
             });
         });
@@ -377,28 +388,51 @@
             sql =[NSString stringWithFormat:@"select pic from picture where ID='%@'",ID];
             sqlite3_stmt *stmt;
             //查找数据
+            BOOL flag=NO;
+
+            
             
             if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
             {
-                
+                int i=0;
                 while (sqlite3_step(stmt)==SQLITE_ROW) {
-                    
-                    
+                    i=1;
+                    flag=YES;
                     const unsigned char *_id= sqlite3_column_text(stmt, 0);
                     strJson= [NSString stringWithUTF8String: _id];
                     // const unsigned char *_pic= sqlite3_column_text(stmt, 1);
                     //strJson= [NSString stringWithUTF8String: _pic];
                     break;
                 }
+                if(i==0)
+                {
+                    [MBProgressHUD hideHUDForView:tabView animated:YES];
+                    sqlite3_finalize(stmt);
+                    sqlite3_close(database);
+                     return ;
+                }
             }
             sqlite3_finalize(stmt);
             sqlite3_close(database);
-            
-            app.jsonStringOne=strJson;
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 
-                app.jsonStringOne=strJson;
-                
+                if([self isBlankString:strJson ])
+                {
+                    [MBProgressHUD hideHUDForView:tabView animated:YES];
+                    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"提示"
+                                                                    message:@"该缓存为空，请连接网络使用"
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"确定"
+                                                          otherButtonTitles: nil]autorelease];
+                    [alert show];
+                    
+
+                }
+                else
+                {
+                    app.jsonStringOne=strJson;
+                    [self build_TableView];
+                }
             });
         });
     }
@@ -545,8 +579,7 @@
                             newSumCount++;
                         }
                         [MBProgressHUD hideHUDForView:tabView animated:YES];
-                         [self build_TableView];
-                         [self buildTheTopBar];
+                        [self build_TableView];
                     });
                 });
                 
@@ -625,7 +658,8 @@
                     
                     
                     app.jsonStringOne=jsonString;
-                    
+                    [self build_TableView];
+                  
                 });
             });
         }
@@ -645,6 +679,7 @@
     [tabView setSeparatorStyle:UITableViewCellSeparatorStyleNone];//hidden the lines
     [tabView reloadData];
     [self.view addSubview:tabView];
+    [self buildTheTopBar];
     
 }
 -(void)PessSwitch_BtnTag:(id)sender
@@ -697,7 +732,7 @@
             cellOne= [[NewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifiter];
             NSMutableArray* dataPic;
             NSMutableArray* dataLabel;
-            NSMutableArray *dataTitle;
+          //  NSMutableArray *dataTitle;
             dataPic=[[[NSMutableArray alloc]init]autorelease];
             dataLabel=[[[NSMutableArray alloc]init]autorelease];
             SBJsonParser *parser = [[[SBJsonParser alloc] init]autorelease];
@@ -711,7 +746,7 @@
             
             scrollView_Book.contentSize = CGSizeMake(320*dataPic.count, 0);
             scrollView_Book.delegate=self;
-            for(int i=0;i<dataPic.count;i++)
+            for(int i=0;i<jsonObj.count;i++)
             {
                 UIImageView *imageView=[[[UIImageView alloc]initWithFrame:CGRectMake(320*i, 0, 320,  178)]autorelease];
                 imageView.tag = i+1;
@@ -721,6 +756,8 @@
                                            failure:^(NSError *error) {NSLog(@"资讯置顶图片显示失败NO");}];
                 
                 
+                //自适应图片宽高比例
+                //imageView.contentMode = UIViewContentModeScaleAspectFit;
                 
                 UIImageView *clearBack=[[[UIImageView alloc]initWithFrame:CGRectMake(0, 143, 320,30)]autorelease];
                 clearBack.image=[UIImage imageNamed:@"clearBack@2X"];
@@ -751,7 +788,6 @@
             
             [scrollView_Book  addGestureRecognizer:singleTap];
             [cellOne addSubview:scrollView_Book];
-            
         }
         
         return cellOne;

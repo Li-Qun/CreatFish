@@ -23,7 +23,7 @@
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-#import "BaiduMobStat.h"
+//#import "BaiduMobStat.h"
 @interface LeftViewController ()
 
 @end
@@ -41,13 +41,13 @@
 //百度页面统计
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSString *cName=@"Left&左侧边栏";
-    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+//    NSString *cName=@"Left&左侧边栏";
+//    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
-    NSString *cName=@"Left&左侧边栏";
-    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+//    NSString *cName=@"Left&左侧边栏";
+//    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 
 - (void)viewDidLoad
@@ -67,9 +67,9 @@
     if(isFirstOpen)
     {
         isFirstOpen=NO;
-        
+         [self visitDataBase];
     }
-    [self visitDataBase];
+   
 }
 -(void)visitDataBase
 {
@@ -108,6 +108,8 @@
 //            
 //           app.saveName=strJson;
 //  //  app.saveName=[whole sharedInstance].wholeString;
+    
+             NSLog(@"%@",[ButtonName sharedInstance].buttonName);
             int height;
             if(isSeven) height=60;
             else height=45;
@@ -173,7 +175,7 @@
                     labelNum.textColor=[UIColor whiteColor];
                     labelNum.font  = [UIFont fontWithName:@"Arial" size:12.0];
                     [theRedNum addSubview:labelNum];
-                    if([labelNum.text isEqualToString:@"0"])
+                    if([labelNum.text integerValue]<=0)
                         theRedNum.image=[UIImage imageNamed:@"whiteBack.png"];
                     else  theRedNum.image=[UIImage imageNamed:@"redBack.png"];
                     
@@ -328,7 +330,6 @@
                 self.view.userInteractionEnabled = YES;
             }];
         }
-
     }
     //[btn setImage:[UIImage imageNamed:@"selectOne@2X"] forState:UIControlStateNormal];
 

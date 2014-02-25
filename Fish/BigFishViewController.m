@@ -15,7 +15,7 @@
 
 #import "MBProgressHUD.h"
 #import <sqlite3.h>
-#import "BaiduMobStat.h"
+//#import "BaiduMobStat.h"
 
 
 #define ITEM_SPACING 200
@@ -48,13 +48,13 @@
 //百度页面统计
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSString *cName=[NSString stringWithFormat:@"BigFish&%@",BigFishName];
-    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+//    NSString *cName=[NSString stringWithFormat:@"BigFish&%@",BigFishName];
+//    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
-    NSString *cName=[NSString stringWithFormat:@"BigFish&%@",BigFishName];
-    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+//    NSString *cName=[NSString stringWithFormat:@"BigFish&%@",BigFishName];
+//    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 - (void)dealloc
 {
@@ -201,10 +201,10 @@
         //查找数据
         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
         {
-            
+            int i=0;
             while (sqlite3_step(stmt)==SQLITE_ROW) {
                 //  int i=sqlite3_column_int(stmt, 0)-1;
-                
+                i=1;
                 if(sqlite3_column_count(stmt)==0)
                 {
                     flag=YES;
@@ -213,6 +213,21 @@
                 const unsigned char *_pic= sqlite3_column_text(stmt, 0);
                 strJson= [NSString stringWithUTF8String: _pic];
                 
+            }
+            if(i==0)
+            {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                message:@"该缓存为空，请连接网络使用"
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"确定"
+                                                      otherButtonTitles: nil];
+                [alert show];
+                [alert release];
+
+                sqlite3_finalize(stmt);
+                sqlite3_close(database);
+                return ;
             }
             
         }
@@ -728,8 +743,11 @@
         NSLog(@"%@",BigFishName);
         [self.navigationController pushViewController:detail animated:YES];
         
+    
         
-        
+        /*
+         
+    
         //建立是否已读数据库
         NSString *strID;
         NSArray *array1=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -793,6 +811,7 @@
             
             
             date_Create =[formatter stringFromDate:date_Created];
+            
             
             //判断是否已读 是指对于今天 created 的日期的新闻是否已读
             NSLog(@"今天日期%@    创建日期%@",date_Today ,date_Create);
@@ -859,7 +878,7 @@
                                     
                                 }
                                 
-                                ///今天新闻条数 end*/
+                                ///今天新闻条数 end
                                 
                             }
                         }
@@ -871,6 +890,7 @@
         }
         sqlite3_finalize(stmt1);
         sqlite3_close(database1);
+         */
     }
 }
 - (BOOL)carouselShouldWrap:(iCarousel *)carousel

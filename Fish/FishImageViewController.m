@@ -13,7 +13,7 @@
 #import "WeiboApi.h"
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import <sqlite3.h>
-#import "BaiduMobStat.h"
+//#import "BaiduMobStat.h"
 @interface FishImageViewController ()
 
 @end
@@ -38,13 +38,13 @@
 //百度页面统计
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSString *cName=[NSString stringWithFormat:@"FishItem&%@",detailName];
-    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+//    NSString *cName=[NSString stringWithFormat:@"FishItem&%@",detailName];
+//    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
-     NSString *cName=[NSString stringWithFormat:@"FishItem&%@",detailName];
-    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+//     NSString *cName=[NSString stringWithFormat:@"FishItem&%@",detailName];
+//    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -165,9 +165,9 @@
         
         if(sqlite3_prepare_v2(database, [sql UTF8String], -1, &stmt, nil)==SQLITE_OK)
         {
-            
+            int i=0;
             while (sqlite3_step(stmt)==SQLITE_ROW) {
-                
+                i=1;
                 if(sqlite3_column_count(stmt)==0)
                 {
                     flag=YES;
@@ -178,6 +178,20 @@
                 //const unsigned char *_pic= sqlite3_column_text(stmt, 1);
                 //strJson= [NSString stringWithUTF8String: _pic];
                 break;
+            }
+            if(i==0)
+            {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                message:@"该缓存为空，请连接网络使用"
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"确定"
+                                                      otherButtonTitles: nil];
+                [alert show];
+                [alert release];
+
+                sqlite3_finalize(stmt);
+                sqlite3_close(database);
+                return ;
             }
         }
         sqlite3_finalize(stmt);

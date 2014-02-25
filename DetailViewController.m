@@ -26,7 +26,7 @@
 #import "WeiboApi.h"
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import "sqlite3.h"
-#import "BaiduMobStat.h"
+//#import "BaiduMobStat.h"
 @interface DetailViewController ()
 
 @end
@@ -78,13 +78,13 @@
 //百度页面统计
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSString *cName=[NSString stringWithFormat:@"detail&阅读"];
-    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+//    NSString *cName=[NSString stringWithFormat:@"detail&阅读"];
+//    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
-    NSString *cName=[NSString stringWithFormat:@"detail&阅读"];
-    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+//    NSString *cName=[NSString stringWithFormat:@"detail&阅读"];
+//    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 - (void)viewDidLoad
 {
@@ -331,6 +331,7 @@
                                                       otherButtonTitles: nil];
                 [alert show];
                 [alert release];
+                [self buildTheTopBar];
                 
             }
             else
@@ -482,6 +483,7 @@
             sqlite3_close(database);//创建数据库end
             
             //建立是否已读数据库
+          //  /*
             NSString *strID;
             NSArray *array1=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
             NSString *documentsPaths1=[array1 objectAtIndex:0];
@@ -527,6 +529,8 @@
                     }
                 }
             }
+          // */
+            
             if(OK==0)
             {
                 char *Sql = "insert into 'isReadList' ('ID')values (?);";
@@ -537,7 +541,14 @@
                 if (sqlite3_step(stmt1) != SQLITE_DONE)
                     NSLog(@"Something is Wrong!");
                 NSLog(@"插入已读数据库");
-
+                
+                
+                sqlite3_finalize(stmt1);
+                sqlite3_close(database1);
+                
+                /*
+        
+                
                 NSString *date_Create=[jsonObj1 objectForKey:@"create_time"];
                 NSString* date_Today;
                 NSDateFormatter* formatter = [[[NSDateFormatter alloc]init]autorelease];
@@ -578,24 +589,42 @@
                                     [[todayCount sharedInstance].todayCount_Data insertObject:str atIndex:j];
                                     NSLog(@"%@",[todayCount sharedInstance].todayCount_Data);
                                     
+
                                     
                         ///今天新闻条数 数据库start
-                                    sql=@"CREATE TABLE IF NOT EXISTS todaySum (ID TEXT,date,TEXT)";//创建表
-                                    if (sqlite3_exec(database1, [sql UTF8String], NULL, NULL, &errorMsg)==SQLITE_OK )
+                                    
+      /*
+                                    
+                                   // NSString *strID;
+                                    NSArray *arr=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                                    NSString *documentsPaths_Today=[arr objectAtIndex:0];
+                                    NSString *databasePaths2=[documentsPaths_Today stringByAppendingPathComponent:@"today_total"];
+                                    sqlite3 *database2;
+                                    
+                                    if (sqlite3_open([databasePaths2 UTF8String], &database2)==SQLITE_OK)
+                                    {
+                                        NSLog(@"open success");
+                                    }
+                                    else {
+                                        NSLog(@"open failed");
+                                    }
+  
+                                   NSString* Sql1=@"CREATE TABLE IF NOT EXISTS todaySum (ID TEXT,date,TEXT)";//创建表
+                                    if (sqlite3_exec(database2, [Sql1 UTF8String], NULL, NULL, &errorMsg1)==SQLITE_OK )
                                     {
                                         NSLog(@"创建打开toolbar");
                                     }else{
-                                        NSLog(@"create error:%s",errorMsg);
-                                        sqlite3_free(errorMsg);
+                                        NSLog(@"create error:%s",errorMsg1);
+                                    
                                     }
                                     // 删除所有数据 并进行更新数据库操作
                                     //删除所有数据，条件为1>0永真
                                     const char *deleteAllSql_count="delete from todaySum where 1>0";
                                     //执行删除语句
-                                    if(sqlite3_exec(database1, deleteAllSql_count, NULL, NULL, &errorMsg)==SQLITE_OK){
+                                    if(sqlite3_exec(database2, deleteAllSql_count, NULL, NULL, &errorMsg1)==SQLITE_OK){
                                         NSLog(@"删除所有数据成功");
                                     }
-                                    else NSLog(@"delect failde!!!!");
+                                    else NSLog(@"delect failde!!!!%s",errorMsg1);
                                     
                                     //插入数据
                                     for(int i=0;i<[todayCount sharedInstance].todayCount_Data.count;i++)
@@ -604,17 +633,19 @@
                                                         @"INSERT INTO 'todaySum' ('ID','date') VALUES ('%@','%@')",[[todayCount sharedInstance].todayCount_Data objectAtIndex:i],date_Create];
                                         const char *insertSQL_count=[insertSQLStr UTF8String];
                                         
-                                        if (sqlite3_exec(database1, insertSQL_count , NULL, NULL, &errorMsg)==SQLITE_OK) {
+                                        if (sqlite3_exec(database2, insertSQL_count , NULL, NULL, &errorMsg1)==SQLITE_OK) {
                                             NSLog(@"insert operation is ok.");
                                         }
                                         else{
-                                            NSLog(@"insert error:%s",errorMsg);
-                                            sqlite3_free(errorMsg);
+                                            NSLog(@"insert error:%s",errorMsg1);
+                                            
                                         }
                                         
                                     }
+                                    sqlite3_free(errorMsg1);
+                                    sqlite3_close(database2);
                                     
-                        ///今天新闻条数 end*/
+                        ///今天新闻条数 end
  
                                 }
                             }
@@ -626,16 +657,14 @@
                 else
                 {
                     
-                }
+                }//*/
             }
-            sqlite3_finalize(stmt1);
-            sqlite3_close(database1);
-            
+             
             
             //建立是否已读数据库
             dispatch_async(dispatch_get_main_queue(), ^{//主线程
                 
-               // [self buildTheTopBar];
+                
                 SBJsonParser *parser =
                 [[[SBJsonParser alloc] init]autorelease];
                 NSDictionary *jsonObj =[parser objectWithString:jsonString];
@@ -700,9 +729,9 @@
 }
 -(void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    app.showView=[self creat_theScrollview];
     showWebView.scrollView.delegate=self;
     [showWebView stringByEvaluatingJavaScriptFromString:@"imageWidth(305);"];//设置网络图片统一宽度320
-    app.showView=[self creat_theScrollview];
    // NSString *str1= [showWebView stringByEvaluatingJavaScriptFromString:@"init();"];
     [self buildTheTopBar];
     [self.view addSubview:showWebView];
@@ -1381,6 +1410,8 @@ didFailWithError:(NSError *)error
 -(void)backParentView
 {
     [self.navigationController popViewControllerAnimated:YES];
+    
+    
 }
 
 -(void)PressGo

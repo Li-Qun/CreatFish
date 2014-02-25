@@ -8,7 +8,7 @@
 
 #import "AdviceViewController.h"
 #import "FishCore.h"
-#import "BaiduMobStat.h"
+//#import "BaiduMobStat.h"
 @interface AdviceViewController ()
 
 @end
@@ -35,13 +35,13 @@
 //百度页面统计
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSString *cName=@"AdviceVC&建议";
-    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+//    NSString *cName=@"AdviceVC&建议";
+//    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
-    NSString *cName=@"AdviceVC&建议";
-    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+//    NSString *cName=@"AdviceVC&建议";
+//    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 -(void)build_Tool
 {

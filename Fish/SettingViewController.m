@@ -12,15 +12,15 @@
 #import "Singleton.h"
 #import "IsRead.h"
 
-
-
+#import "SDImageCache.h"
+#import "SDWebImageManager.h"
 #import <ShareSDK/ShareSDK.h>
 #import "WeiboApi.h"
 #import <ShareSDKCoreService/ShareSDKCoreService.h>
 #import  "WeiboSDK.h"
 #import <Parse/Parse.h>
 #import "sqlite3.h"
-#import "BaiduMobStat.h"
+//#import "BaiduMobStat.h"
 @interface SettingViewController ()
 
 @end
@@ -41,13 +41,13 @@
 //百度页面统计
 -(void)viewDidAppear:(BOOL)animated
 {
-    NSString *cName=@"Setting&设置";
-    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
+//    NSString *cName=@"Setting&设置";
+//    [[BaiduMobStat defaultStat]pageviewStartWithName:cName ];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
-    NSString *cName=@"Setting&设置";
-    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
+//    NSString *cName=@"Setting&设置";
+//    [[BaiduMobStat defaultStat]pageviewEndWithName:cName ];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -281,6 +281,29 @@
 //        }
 //        else NSLog(@"delect failde!!!!");
         sqlite3_close(database_isRead);//
+        
+///清除所有网络图片缓存start
+        //1.
+        /*
+        NSFileManager *filemgr;
+        
+        filemgr = [NSFileManager defaultManager];
+        
+        if ([filemgr removeItemAtPath: [NSHomeDirectory() stringByAppendingString:@"/Library/Caches"] error: NULL]  == YES)
+            NSLog (@"Remove successful");
+        else
+            NSLog (@"Remove failed");
+        
+        [filemgr createDirectoryAtPath: [NSHomeDirectory() stringByAppendingString:@"/Library/Caches"] withIntermediateDirectories:NO attributes:nil error:nil];
+         */
+        //2.
+        [[SDImageCache sharedImageCache] clearDisk];//清除内存缓存区的图片
+        [[SDImageCache sharedImageCache] clearMemory];//清除物理存储上的图片
+        [[SDImageCache sharedImageCache] cleanDisk];//清除过期缓存的图片
+        
+///清除所有网络图片缓存end
+        
+        
  
         dispatch_async(dispatch_get_main_queue(), ^{//主线程
             

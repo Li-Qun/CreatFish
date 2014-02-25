@@ -153,7 +153,6 @@
     else
     {
         [delegate reBack:@"0" reLoad:content_id Offent:@"0"];
-
     }
    
 }
