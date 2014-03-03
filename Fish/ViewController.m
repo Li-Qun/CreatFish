@@ -1001,7 +1001,7 @@
     labelText.backgroundColor=[UIColor clearColor];
     labelText.font=[UIFont systemFontOfSize:15.0f];
     labelText.numberOfLines = 0;
-    labelText.lineBreakMode = UILineBreakModeTailTruncation;
+    labelText.lineBreakMode =  NSLineBreakByTruncatingTail;
     //[labelText sizeToFit];
     
     textView.text= [ [arr objectAtIndex:0] objectForKey:@"description"];
