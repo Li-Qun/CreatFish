@@ -13,6 +13,8 @@
 #import "IsRead.h"
 #import "todayCount.h"
 
+#import "CutImage.h"
+
 #import "MBProgressHUD.h"
 #import <sqlite3.h>
 //#import "BaiduMobStat.h"
@@ -277,15 +279,6 @@
                     view.alpha = 1.0;
                 }
                 
-                labelText.text=[[app.BigFish_Description objectAtIndex:0] objectForKey:@"description"];
-                labelText.textColor=[UIColor whiteColor];
-                labelText.backgroundColor=[UIColor clearColor];
-                labelText.font=[UIFont systemFontOfSize:14.0f];
-                labelText.numberOfLines = 0;
-                [labelText sizeToFit];
-                labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
-                
-                
                 
                 [UIView beginAnimations:nil context:nil];
                 carousel.type=5;
@@ -450,30 +443,7 @@
                     {
                         view.alpha = 1.0;
                     }
-                    if(isSeven&&isFive)
-                    {
-                        img_height=20;
-                        lab_height=80;
-                    }
-                    else if(isSeven&&!isFive)
-                    {
-                        lab_height=100;
-                    }else if(!isSeven&&isFive)//
-                    {
-                        img_height=20;
-                        lab_height=20;
-                    }else {
-                        img_height=20;
-                        lab_height=100;
-                    }
                     
-                    labelText.text=[[app.BigFish_Description objectAtIndex:0] objectForKey:@"description"];
-                    labelText.textColor=[UIColor whiteColor];
-                    labelText.backgroundColor=[UIColor clearColor];
-                    labelText.font=[UIFont systemFontOfSize:14.0f];
-                    labelText.numberOfLines = 0;
-                    [labelText sizeToFit];
-                    labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
                     
                     
                     [UIView beginAnimations:nil context:nil];
@@ -597,33 +567,48 @@
         lab_height=100;
     }
     
-    carousel1.frame=CGRectMake(24, 30+img_height, 220, 289);
+  //  carousel1.frame=CGRectMake(24, 30+img_height, 220, 289);
     UIView* view = [[[UIImageView alloc] init ] autorelease];
     if(index1==total)
     {
-        UIImageView *imageView_LoadMore=[[[UIImageView alloc]initWithFrame:carousel1.frame]autorelease];
+        UIImageView *imageView_LoadMore=[[[UIImageView alloc]init]autorelease];
         imageView_LoadMore.image=[UIImage imageNamed:@"moren.png"];
+        imageView_LoadMore.frame=CGRectMake(60, 30+img_height, 200, 289);
         [view addSubview:imageView_LoadMore];
     }
     else
     {
         NSDictionary* dict = [app.BigFish_Description objectAtIndex:(index1)];
         NSString *imgURL=[NSString stringWithFormat:@"%@%@",Image_Head,[dict objectForKey:@"image"]];
-        UIImageView *ImageView=[[[UIImageView alloc]initWithFrame:carousel1.frame ]autorelease];
+        UIImageView *ImageView=[[[UIImageView alloc]init]autorelease];
         [ImageView  setImageWithURL:[NSURL URLWithString: imgURL]
                    placeholderImage:[UIImage imageNamed:@"moren.png"]
-                            success:^(UIImage *image) {NSLog(@"OK");}
+                            success:^(UIImage *image)
+         {
+             NSLog(@"OK");
+
+            CGRect rect= [CutImage scaleImage:image toSize: CGRectMake(0.0, 0.0, 200, 289)];
+             ImageView.image=image;
+             ImageView.frame=CGRectMake((320-rect.size.width)/2, 30+img_height,rect.size.width,rect.size.height);
+             labelText.text=[[app.BigFish_Description objectAtIndex:0] objectForKey:@"description"];
+             labelText.textColor=[UIColor whiteColor];
+             labelText.backgroundColor=[UIColor clearColor];
+             labelText.font=[UIFont systemFontOfSize:14.0f];
+             labelText.numberOfLines = 0;
+             [labelText sizeToFit];
+
+             labelText.frame=CGRectMake(35, 470-lab_height+20, 250, 79);
+         }
                             failure:^(NSError *error) {NSLog(@"NO");}];
         [view addSubview:ImageView];
         
     }
-    view.frame =CGRectMake(0, 0, 220, 289); //CGRectMake(0, -littleHeinght*6, 280, 400-littleHeinght*6);
+    view.frame =CGRectMake(0, 0, 320, 289);
     view.layer.shadowColor = [UIColor blackColor].CGColor;
     view.layer.shadowOpacity = 1.0;
     view.layer.shadowRadius = 5.0;
     view.layer.shadowOffset = CGSizeMake(1, 1);
     view.clipsToBounds = NO;
-    labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
     
     [self.view  reloadInputViews];
     
@@ -674,19 +659,19 @@
         labelText.font=[UIFont systemFontOfSize:14.0f];
         labelText.numberOfLines = 0;
         [labelText sizeToFit];
-        labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
+       
     }
     else
     {
-        labelText.text=@"点击默认图片加载更多...";
+        labelText.text=@"     点击默认图片加载更多...";
         labelText.textColor=[UIColor whiteColor];
         labelText.backgroundColor=[UIColor clearColor];
-        labelText.font=[UIFont systemFontOfSize:18.0f];
+        labelText.font=[UIFont systemFontOfSize:16.0f];
         labelText.numberOfLines = 0;
         [labelText sizeToFit];
-        labelText.frame=CGRectMake(59, 462-lab_height, 230, 99);
     }
-    
+    labelText.frame=CGRectMake(35, 470-lab_height+20, 250, 79);
+
     
 }
 

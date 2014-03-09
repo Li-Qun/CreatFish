@@ -189,6 +189,7 @@
 		BBB2CF24187C00E800C8F210 /* 1@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = BBB2CF22187C00E800C8F210 /* 1@2X.png */; };
 		BBB79BD518618C5A007DCEEA /* InformationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB79BD418618C5A007DCEEA /* InformationCell.m */; };
 		BBB79BD718618C85007DCEEA /* InformationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBB79BD618618C85007DCEEA /* InformationCell.xib */; };
+		BBC15D6418C9D45800458060 /* CutImage.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC15D6318C9D45800458060 /* CutImage.m */; };
 		BBC4401B187017B6006FF280 /* EGORefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC44017187017B6006FF280 /* EGORefreshTableFooterView.m */; };
 		BBC4401C187017B6006FF280 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC44019187017B6006FF280 /* EGORefreshTableHeaderView.m */; };
 		BBC4401E1870185A006FF280 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBC4401D1870185A006FF280 /* DetailViewController.m */; };
@@ -524,6 +525,8 @@
 		BBB79BD318618C5A007DCEEA /* InformationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationCell.h; sourceTree = "<group>"; };
 		BBB79BD418618C5A007DCEEA /* InformationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationCell.m; sourceTree = "<group>"; };
 		BBB79BD618618C85007DCEEA /* InformationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationCell.xib; sourceTree = "<group>"; };
+		BBC15D6218C9D45800458060 /* CutImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CutImage.h; sourceTree = "<group>"; };
+		BBC15D6318C9D45800458060 /* CutImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CutImage.m; sourceTree = "<group>"; };
 		BBC44016187017B6006FF280 /* EGORefreshTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableFooterView.h; sourceTree = "<group>"; };
 		BBC44017187017B6006FF280 /* EGORefreshTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableFooterView.m; sourceTree = "<group>"; };
 		BBC44018187017B6006FF280 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
@@ -687,7 +690,7 @@
 		9006F327184D59250091B69F = {
 			isa = PBXGroup;
 			children = (
-				BBA4BE7E1883FDCD0008643E /* add Share */,
+				BBA4BE7E1883FDCD0008643E /* addShare */,
 				BB78463A1859A71000260712 /* Resourse */,
 				9006F339184D59250091B69F /* Fish */,
 				9006F35D184D59260091B69F /* FishTests */,
@@ -795,6 +798,7 @@
 		BB78463A1859A71000260712 /* Resourse */ = {
 			isa = PBXGroup;
 			children = (
+				BBC15D6118C9D42200458060 /* function */,
 				BBA69871186FD43E00DE10AB /* DropDown Fresh */,
 				BBD81B84186C2ED5000DBEEE /* Magzine Classe */,
 				BBD1340B1869BF51008657B6 /* button List */,
@@ -1081,14 +1085,14 @@
 			name = NewsImg;
 			sourceTree = "<group>";
 		};
-		BBA4BE7E1883FDCD0008643E /* add Share */ = {
+		BBA4BE7E1883FDCD0008643E /* addShare */ = {
 			isa = PBXGroup;
 			children = (
 				BB99211F1895233F0093DC84 /* ShareSDK */,
 				BB99211D18951FC10093DC84 /* Parse.framework */,
 				BBAF982118852EB2002DDA7A /* Extend */,
 			);
-			name = "add Share";
+			name = addShare;
 			sourceTree = "<group>";
 		};
 		BBA5B7DF187ABF2C00D55899 /* firstView */ = {
@@ -1259,6 +1263,15 @@
 				BBB2CF22187C00E800C8F210 /* 1@2X.png */,
 			);
 			name = slideLeft;
+			sourceTree = "<group>";
+		};
+		BBC15D6118C9D42200458060 /* function */ = {
+			isa = PBXGroup;
+			children = (
+				BBC15D6218C9D45800458060 /* CutImage.h */,
+				BBC15D6318C9D45800458060 /* CutImage.m */,
+			);
+			name = function;
 			sourceTree = "<group>";
 		};
 		BBC95B1B1853279F00A10431 /* Web */ = {
@@ -1724,6 +1737,7 @@
 				BBA4789F185721A000E64289 /* UIImageView+WebCache.m in Sources */,
 				BBA11CF6185EDAAF000D39F8 /* SBJsonTokeniser.m in Sources */,
 				BB31A48B186ED7F600F23782 /* OneCell.m in Sources */,
+				BBC15D6418C9D45800458060 /* CutImage.m in Sources */,
 				BBA11CED185EDAAF000D39F8 /* NSObject+SBJson.m in Sources */,
 				BBD31896188D0CCD00618A5A /* FishImageViewController.m in Sources */,
 				BBA4789B185721A000E64289 /* SDWebImageDownloader.m in Sources */,
@@ -1864,17 +1878,17 @@
 		9006F369184D59260091B69F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: shenyang huizhi internet technology Co. Ltd (79HCYXD36A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: shenyang huizhi internet technology Co. Ltd (79HCYXD36A)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/daweifan/Desktop/here/CreatFish,
+					"$(SRCROOT)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					/Users/daweifan/Desktop/here/CreatFish/Extend,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK/Connection,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK/Core,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK/UI,
+					"$(SRCROOT)/Extend",
+					"$(SRCROOT)/ShareSDK/Connection",
+					"$(SRCROOT)/ShareSDK/Core",
+					"$(SRCROOT)/ShareSDK",
+					"$(SRCROOT)/ShareSDK/UI",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Fish/Fish-Prefix.pch";
@@ -1886,18 +1900,18 @@
 				INFOPLIST_FILE = "Fish/Fish-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/daweifan/Desktop/here/CreatFish,
-					/Users/daweifan/Desktop/here/CreatFish/Extend/TencentWeiboSSO,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK/Extend/SinaWeiboSDK,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK/Extend/TencentWeiboSDK,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK/Extend/WeChatSDK,
-					"/Users/daweifan/Desktop/here/CreatFish/ios_api/Release-iphoneos",
-					"/Users/daweifan/Desktop/here/CreatFish/ios_api/universal-bin",
-					"/Users/daweifan/Desktop/here/CreatFish/ios_api/Release-iphoneos",
-					"/Users/daweifan/Desktop/here/CreatFish/ios_api/Release-iphonesimulator",
+					"$(SRCROOT)",
+					"$(SRCROOT)/Extend/TencentWeiboSSO",
+					"$(SRCROOT)/ShareSDK/Extend/SinaWeiboSDK",
+					"$(SRCROOT)/ShareSDK/Extend/TencentWeiboSDK",
+					"$(SRCROOT)/ShareSDK/Extend/WeChatSDK",
+					"$(SRCROOT)/ios_api/Release-iphoneos",
+					"$(SRCROOT)/ios_api/universal-bin",
+					"$(SRCROOT)/ios_api/Release-iphoneos",
+					"$(SRCROOT)/ios_api/Release-iphonesimulator",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F23E5510-9018-4403-80A3-48633E178665";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1905,17 +1919,17 @@
 		9006F36A184D59260091B69F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: shenyang huizhi internet technology Co. Ltd (79HCYXD36A)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: shenyang huizhi internet technology Co. Ltd (79HCYXD36A)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/daweifan/Desktop/here/CreatFish,
+					"$(SRCROOT)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					/Users/daweifan/Desktop/here/CreatFish/Extend,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK/Connection,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK/Core,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK/UI,
+					"$(SRCROOT)/Extend",
+					"$(SRCROOT)/ShareSDK/Connection",
+					"$(SRCROOT)/ShareSDK/Core",
+					"$(SRCROOT)/ShareSDK",
+					"$(SRCROOT)/ShareSDK/UI",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Fish/Fish-Prefix.pch";
@@ -1927,18 +1941,18 @@
 				INFOPLIST_FILE = "Fish/Fish-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/daweifan/Desktop/here/CreatFish,
-					/Users/daweifan/Desktop/here/CreatFish/Extend/TencentWeiboSSO,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK/Extend/SinaWeiboSDK,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK/Extend/TencentWeiboSDK,
-					/Users/daweifan/Desktop/here/CreatFish/ShareSDK/Extend/WeChatSDK,
-					"/Users/daweifan/Desktop/here/CreatFish/ios_api/Release-iphoneos",
-					"/Users/daweifan/Desktop/here/CreatFish/ios_api/universal-bin",
-					"/Users/daweifan/Desktop/here/CreatFish/ios_api/Release-iphoneos",
-					"/Users/daweifan/Desktop/here/CreatFish/ios_api/Release-iphonesimulator",
+					"$(SRCROOT)",
+					"$(SRCROOT)/Extend/TencentWeiboSSO",
+					"$(SRCROOT)/ShareSDK/Extend/SinaWeiboSDK",
+					"$(SRCROOT)/ShareSDK/Extend/TencentWeiboSDK",
+					"$(SRCROOT)/ShareSDK/Extend/WeChatSDK",
+					"$(SRCROOT)/ios_api/Release-iphoneos",
+					"$(SRCROOT)/ios_api/universal-bin",
+					"$(SRCROOT)/ios_api/Release-iphoneos",
+					"$(SRCROOT)/ios_api/Release-iphonesimulator",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F23E5510-9018-4403-80A3-48633E178665";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
