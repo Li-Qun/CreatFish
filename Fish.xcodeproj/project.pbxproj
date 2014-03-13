@@ -690,8 +690,6 @@
 		9006F327184D59250091B69F = {
 			isa = PBXGroup;
 			children = (
-				BBA4BE7E1883FDCD0008643E /* addShare */,
-				BB78463A1859A71000260712 /* Resourse */,
 				9006F339184D59250091B69F /* Fish */,
 				9006F35D184D59260091B69F /* FishTests */,
 				9006F332184D59250091B69F /* Frameworks */,
@@ -744,6 +742,8 @@
 		9006F339184D59250091B69F /* Fish */ = {
 			isa = PBXGroup;
 			children = (
+				BBA4BE7E1883FDCD0008643E /* addShare */,
+				BB78463A1859A71000260712 /* Resourse */,
 				BBD0E1D4187808E6000D1141 /* Beauty */,
 				BBA689F418613DB1007CB68E /* FishCores */,
 				BBA49307187D48590089D35E /* Mostly */,
@@ -809,6 +809,7 @@
 				BBDBE93D184DCF52009FA292 /* Slide */,
 			);
 			name = Resourse;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		BB99211F1895233F0093DC84 /* ShareSDK */ = {
@@ -1093,6 +1094,7 @@
 				BBAF982118852EB2002DDA7A /* Extend */,
 			);
 			name = addShare;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		BBA5B7DF187ABF2C00D55899 /* firstView */ = {
